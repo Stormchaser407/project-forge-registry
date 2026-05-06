@@ -1,0 +1,29 @@
+# OS/editor
+.DS_Store
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+dist/
+build/
+
+# Nix
+result
+result-*
+
+# Env/secrets
+.env
+.env.*
+!.env.example
+
+# Local artifacts
+tmp/

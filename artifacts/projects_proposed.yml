@@ -1,0 +1,870 @@
+projects:
+  - slug: agentzero
+    name: AgentZero
+    status: review
+    classification: active_project
+    category: active_project
+    local_path: /mnt/storage/Cole/Projects/AgentZero
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/agentzero.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/agentzero
+    registry_action: register_full
+    launch:
+      command: code-agentzero
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: andclaw_comms
+    name: andclaw-comms
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /mnt/storage/Cole/Projects/andclaw-comms
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/andclaw_comms.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/andclaw_comms
+    registry_action: review_required
+    launch:
+      command: code-andclaw_comms
+    git:
+      default_branch: null
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - contains_env_files
+      - not_a_git_repo
+  - slug: archive
+    name: archive
+    status: review
+    classification: archive
+    category: archive
+    local_path: /mnt/storage/Cole/Projects/archive
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/archive.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/archive
+    registry_action: ignore
+    launch:
+      command: code-archive
+    git:
+      default_branch: null
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - not_a_git_repo
+      - name_suggests_archive_or_duplicate
+  - slug: casebot_public_record_checks
+    name: casebot_public_record_checks
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /mnt/storage/Cole/Projects/casebot_public_record_checks
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/casebot_public_record_checks.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/casebot_public_record_checks
+    registry_action: review_required
+    launch:
+      command: code-casebot_public_record_checks
+    git:
+      default_branch: null
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - not_a_git_repo
+  - slug: cerberus
+    name: Cerberus
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /mnt/storage/Cole/Projects/Cerberus
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/cerberus.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/cerberus
+    registry_action: review_required
+    launch:
+      command: code-cerberus
+    git:
+      default_branch: null
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - not_a_git_repo
+  - slug: cerberus_case_workspace
+    name: cerberus_case_workspace
+    status: review
+    classification: active_project
+    category: active_project
+    local_path: /mnt/storage/Cole/Projects/cerberus_case_workspace
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/cerberus_case_workspace.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/cerberus_case_workspace
+    registry_action: review_required
+    launch:
+      command: code-cerberus_case_workspace
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - contains_env_files
+  - slug: dj_request_system
+    name: DJ_request_system
+    status: review
+    classification: active_project
+    category: active_project
+    local_path: /mnt/storage/Cole/Projects/DJ_request_system
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/dj_request_system.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/dj_request_system
+    registry_action: review_required
+    launch:
+      command: code-dj_request_system
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - contains_env_files
+  - slug: endgame_solutions
+    name: endgame-solutions
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /mnt/storage/Cole/Projects/endgame-solutions
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/endgame_solutions.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/endgame_solutions
+    registry_action: review_required
+    launch:
+      command: code-endgame_solutions
+    git:
+      default_branch: null
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - not_a_git_repo
+  - slug: extension_blip
+    name: Extension-Blip
+    status: review
+    classification: active_project
+    category: active_project
+    local_path: /mnt/storage/Cole/Projects/Extension-Blip
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/extension_blip.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/extension_blip
+    registry_action: register_full
+    launch:
+      command: code-extension_blip
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: homeassistant
+    name: HomeAssistant
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /mnt/storage/Cole/Projects/HomeAssistant
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/homeassistant.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/homeassistant
+    registry_action: review_required
+    launch:
+      command: code-homeassistant
+    git:
+      default_branch: null
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - not_a_git_repo
+  - slug: maltego
+    name: Maltego
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /mnt/storage/Cole/Projects/Maltego
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/maltego.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/maltego
+    registry_action: review_required
+    launch:
+      command: code-maltego
+    git:
+      default_branch: null
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - not_a_git_repo
+  - slug: media_dedupe
+    name: media-dedupe
+    status: review
+    classification: active_project
+    category: active_project
+    local_path: /mnt/storage/Cole/Projects/media-dedupe
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/media_dedupe.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/media_dedupe
+    registry_action: register_full
+    launch:
+      command: code-media_dedupe
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: notevil
+    name: NotEvil
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /mnt/storage/Cole/Projects/NotEvil
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/notevil.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/notevil
+    registry_action: review_required
+    launch:
+      command: code-notevil
+    git:
+      default_branch: null
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - not_a_git_repo
+  - slug: notevil_inc
+    name: NOTEvil-Inc
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /mnt/storage/Cole/Projects/NOTEvil-Inc
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/notevil_inc.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/notevil_inc
+    registry_action: review_required
+    launch:
+      command: code-notevil_inc
+    git:
+      default_branch: null
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - not_a_git_repo
+  - slug: primal
+    name: Primal
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /mnt/storage/Cole/Projects/Primal
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/primal.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/primal
+    registry_action: review_required
+    launch:
+      command: code-primal
+    git:
+      default_branch: null
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - not_a_git_repo
+  - slug: primal_web_app
+    name: primal-web-app
+    status: review
+    classification: active_project
+    category: active_project
+    local_path: /mnt/storage/Cole/Projects/primal-web-app
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/primal_web_app.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/primal_web_app
+    registry_action: review_required
+    launch:
+      command: code-primal_web_app
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - contains_env_files
+      - contains_node_modules
+  - slug: project_forge_registry
+    name: project-forge-registry
+    status: review
+    classification: active_project
+    category: active_project
+    local_path: /mnt/storage/Cole/Projects/project-forge-registry
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/project_forge_registry.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/project_forge_registry
+    registry_action: register_full
+    launch:
+      command: code-project_forge_registry
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: project_katrina
+    name: project_katrina
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /mnt/storage/Cole/Projects/project_katrina
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/project_katrina.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/project_katrina
+    registry_action: register_full
+    launch:
+      command: code-project_katrina
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: recon_housekeeping
+    name: recon_housekeeping
+    status: review
+    classification: active_project
+    category: active_project
+    local_path: /mnt/storage/Cole/Projects/recon_housekeeping
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/recon_housekeeping.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/recon_housekeeping
+    registry_action: register_full
+    launch:
+      command: code-recon_housekeeping
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: sillytavern
+    name: SillyTavern
+    status: review
+    classification: active_project
+    category: active_project
+    local_path: /mnt/storage/Cole/Projects/SillyTavern
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/sillytavern.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/sillytavern
+    registry_action: review_required
+    launch:
+      command: code-sillytavern
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - contains_node_modules
+  - slug: spiderfoot_peoplesearch
+    name: SpiderFoot_PeopleSearch
+    status: review
+    classification: active_project
+    category: active_project
+    local_path: /mnt/storage/Cole/Projects/SpiderFoot_PeopleSearch
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/spiderfoot_peoplesearch.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/spiderfoot_peoplesearch
+    registry_action: register_full
+    launch:
+      command: code-spiderfoot_peoplesearch
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: steelseries_rgb
+    name: SteelSeries_RGB
+    status: review
+    classification: active_project
+    category: active_project
+    local_path: /mnt/storage/Cole/Projects/SteelSeries_RGB
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/steelseries_rgb.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/steelseries_rgb
+    registry_action: register_full
+    launch:
+      command: code-steelseries_rgb
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: stormchaser407
+    name: Stormchaser407
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /mnt/storage/Cole/Projects/Stormchaser407
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/stormchaser407.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/stormchaser407
+    registry_action: review_required
+    launch:
+      command: code-stormchaser407
+    git:
+      default_branch: null
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - not_a_git_repo

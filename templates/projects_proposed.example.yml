@@ -1,0 +1,118 @@
+projects:
+  - slug: example_project
+    name: Example Project
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /mnt/storage/Cole/Projects/example_project
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/example_project.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/example_project
+    registry_action: register_full
+    launch:
+      command: code-example_project
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: cerberus
+    name: cerberus
+    status: active_special_case
+    classification: system_bound_project
+    category: system_bound_project
+    local_path: /home/cole/cerberus
+    canonical_path: /home/cole/cerberus
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/cerberus.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/cerberus
+    registry_action: document_only_for_now
+    launch:
+      command: code-cerberus
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: true
+      do_not_delete: false
+      exclude_from_bulk_sync: true
+      obsidian_note_policy: high_level_notes_only
+    safety_warnings:
+      - system_bound_path
+      - no_bulk_sync_automation
+      - obsidian_high_level_notes_only
+  - slug: cerberus_storage_copy
+    name: cerberus
+    status: old_copy_with_possible_operational_material
+    classification: reconciliation_required
+    category: reconciliation_required
+    local_path: /mnt/storage/Cole/cerberus
+    canonical_path: /home/cole/cerberus
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/cerberus_storage_copy.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/cerberus_storage_copy
+    registry_action: compare_only
+    launch:
+      command: code-cerberus_storage_copy
+    git:
+      default_branch: null
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: true
+      exclude_from_bulk_sync: true
+      obsidian_note_policy: reconciliation_note_only
+    safety_warnings:
+      - reconciliation_required
+      - contains_possible_operational_material
+      - do_not_delete_automatically
