@@ -42,6 +42,7 @@ def build_registry_record(result: ProjectScanResult) -> dict[str, object]:
             "repo_to_obsidian": "docs_only",
             "allow_code_to_obsidian": False,
             "allow_secrets": False,
+            "do_not_sync": result.do_not_sync,
         },
         "visibility": {
             "github": "private",
@@ -56,6 +57,7 @@ def build_registry_record(result: ProjectScanResult) -> dict[str, object]:
         "constraints": {
             "do_not_move": result.do_not_move,
             "do_not_delete": result.do_not_delete,
+            "do_not_sync": result.do_not_sync,
             "exclude_from_bulk_sync": result.exclude_from_bulk_sync,
             "obsidian_note_policy": result.obsidian_note_policy,
         },
@@ -210,7 +212,7 @@ def write_command_board(path: Path, results: list[ProjectScanResult]) -> None:
                 f"- Workspace target: `/home/cole/.config/Code/User/workspaces/{result.safe_slug}.code-workspace`",
                 f"- Obsidian target: `{OBSIDIAN_PROJECT_ROOT}/{result.safe_slug}`",
                 f"- Canonical path: `{result.canonical_path or result.path}`",
-                f"- Constraints: do_not_move={str(result.do_not_move).lower()}, do_not_delete={str(result.do_not_delete).lower()}, exclude_from_bulk_sync={str(result.exclude_from_bulk_sync).lower()}, obsidian_note_policy={result.obsidian_note_policy}",
+                f"- Constraints: do_not_move={str(result.do_not_move).lower()}, do_not_delete={str(result.do_not_delete).lower()}, do_not_sync={str(result.do_not_sync).lower()}, exclude_from_bulk_sync={str(result.exclude_from_bulk_sync).lower()}, obsidian_note_policy={result.obsidian_note_policy}",
                 f"- Warnings: {', '.join(result.safety_warnings) if result.safety_warnings else 'none'}",
                 "",
             ]

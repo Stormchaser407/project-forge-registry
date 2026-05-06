@@ -86,7 +86,6 @@ Eligible by default:
 
 - `active_project`
 - `operated_tool`
-- `vendor_clone`
 
 Additional default gating:
 
@@ -103,6 +102,7 @@ Skipped by default:
 - `archive`
 - `lab`
 - `unknown`
+- `vendor_clone`
 
 Also skipped by default:
 
@@ -130,6 +130,16 @@ Also skipped by default:
 
 - Must be skipped by default.
 - May only be considered if explicitly included by operator flag.
+
+### `vendor_clone`
+
+- Must be skipped by default.
+- May only be considered if explicitly included with `--include-category vendor_clone`.
+
+### `lab`
+
+- Must be skipped by default.
+- May only be considered if explicitly included with `--include-category lab`.
 
 ### Command Center Workspace
 

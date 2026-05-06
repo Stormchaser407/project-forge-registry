@@ -14,7 +14,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/agentzero.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/agentzero`
 - Canonical path: `/mnt/storage/Cole/Projects/AgentZero`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: none
 
 ### andclaw-comms
@@ -27,7 +27,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/andclaw_comms.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/andclaw_comms`
 - Canonical path: `/mnt/storage/Cole/Projects/andclaw-comms`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: contains_env_files, not_a_git_repo
 
 ### archive
@@ -40,7 +40,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/archive.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/archive`
 - Canonical path: `/mnt/storage/Cole/Projects/archive`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: not_a_git_repo, name_suggests_archive_or_duplicate
 
 ### casebot_public_record_checks
@@ -53,34 +53,34 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/casebot_public_record_checks.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/casebot_public_record_checks`
 - Canonical path: `/mnt/storage/Cole/Projects/casebot_public_record_checks`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: not_a_git_repo
 
 ### Cerberus
 - Slug: `cerberus`
 - Path: `/mnt/storage/Cole/Projects/Cerberus`
-- Category: `unknown`
+- Category: `reconciliation_required`
 - Status: `review`
 - Recommended action: `review_required`
 - Suggested launcher: `code-cerberus`
 - Workspace target: `/home/cole/.config/Code/User/workspaces/cerberus.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/cerberus`
 - Canonical path: `/mnt/storage/Cole/Projects/Cerberus`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
-- Warnings: not_a_git_repo
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=true, exclude_from_bulk_sync=true, obsidian_note_policy=docs_only
+- Warnings: not_a_git_repo, cerberus_special_case_candidate, do_not_sync, cerberus_name_requires_manual_reconciliation_review
 
 ### cerberus_case_workspace
 - Slug: `cerberus_case_workspace`
 - Path: `/mnt/storage/Cole/Projects/cerberus_case_workspace`
-- Category: `active_project`
+- Category: `unknown`
 - Status: `review`
 - Recommended action: `review_required`
 - Suggested launcher: `code-cerberus_case_workspace`
 - Workspace target: `/home/cole/.config/Code/User/workspaces/cerberus_case_workspace.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/cerberus_case_workspace`
 - Canonical path: `/mnt/storage/Cole/Projects/cerberus_case_workspace`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
-- Warnings: contains_env_files
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=true, exclude_from_bulk_sync=true, obsidian_note_policy=docs_only
+- Warnings: contains_env_files, cerberus_special_case_candidate, do_not_sync, cerberus_related_project_requires_manual_review
 
 ### DJ_request_system
 - Slug: `dj_request_system`
@@ -92,7 +92,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/dj_request_system.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/dj_request_system`
 - Canonical path: `/mnt/storage/Cole/Projects/DJ_request_system`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: contains_env_files
 
 ### endgame-solutions
@@ -105,7 +105,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/endgame_solutions.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/endgame_solutions`
 - Canonical path: `/mnt/storage/Cole/Projects/endgame-solutions`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: not_a_git_repo
 
 ### Extension-Blip
@@ -118,7 +118,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/extension_blip.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/extension_blip`
 - Canonical path: `/mnt/storage/Cole/Projects/Extension-Blip`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: none
 
 ### HomeAssistant
@@ -131,7 +131,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/homeassistant.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/homeassistant`
 - Canonical path: `/mnt/storage/Cole/Projects/HomeAssistant`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: not_a_git_repo
 
 ### Maltego
@@ -144,7 +144,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/maltego.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/maltego`
 - Canonical path: `/mnt/storage/Cole/Projects/Maltego`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: not_a_git_repo
 
 ### media-dedupe
@@ -157,7 +157,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/media_dedupe.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/media_dedupe`
 - Canonical path: `/mnt/storage/Cole/Projects/media-dedupe`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: none
 
 ### NotEvil
@@ -170,7 +170,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/notevil.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/notevil`
 - Canonical path: `/mnt/storage/Cole/Projects/NotEvil`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: not_a_git_repo
 
 ### NOTEvil-Inc
@@ -183,7 +183,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/notevil_inc.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/notevil_inc`
 - Canonical path: `/mnt/storage/Cole/Projects/NOTEvil-Inc`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: not_a_git_repo
 
 ### Primal
@@ -196,7 +196,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/primal.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/primal`
 - Canonical path: `/mnt/storage/Cole/Projects/Primal`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: not_a_git_repo
 
 ### primal-web-app
@@ -209,7 +209,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/primal_web_app.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/primal_web_app`
 - Canonical path: `/mnt/storage/Cole/Projects/primal-web-app`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: contains_env_files, contains_node_modules
 
 ### project-forge-registry
@@ -222,7 +222,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/project_forge_registry.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/project_forge_registry`
 - Canonical path: `/mnt/storage/Cole/Projects/project-forge-registry`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: none
 
 ### project_katrina
@@ -235,7 +235,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/project_katrina.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/project_katrina`
 - Canonical path: `/mnt/storage/Cole/Projects/project_katrina`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: none
 
 ### recon_housekeeping
@@ -248,7 +248,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/recon_housekeeping.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/recon_housekeeping`
 - Canonical path: `/mnt/storage/Cole/Projects/recon_housekeeping`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: none
 
 ### SillyTavern
@@ -261,7 +261,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/sillytavern.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/sillytavern`
 - Canonical path: `/mnt/storage/Cole/Projects/SillyTavern`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: contains_node_modules
 
 ### SpiderFoot_PeopleSearch
@@ -274,7 +274,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/spiderfoot_peoplesearch.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/spiderfoot_peoplesearch`
 - Canonical path: `/mnt/storage/Cole/Projects/SpiderFoot_PeopleSearch`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: none
 
 ### SteelSeries_RGB
@@ -287,7 +287,7 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/steelseries_rgb.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/steelseries_rgb`
 - Canonical path: `/mnt/storage/Cole/Projects/SteelSeries_RGB`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: none
 
 ### Stormchaser407
@@ -300,5 +300,5 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/stormchaser407.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/stormchaser407`
 - Canonical path: `/mnt/storage/Cole/Projects/Stormchaser407`
-- Constraints: do_not_move=false, do_not_delete=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: not_a_git_repo

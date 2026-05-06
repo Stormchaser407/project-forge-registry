@@ -23,10 +23,12 @@ PATH_CLASSIFICATION_OVERRIDES = {
         "canonical_path": "/home/cole/cerberus",
         "do_not_move": True,
         "do_not_delete": False,
+        "do_not_sync": True,
         "exclude_from_bulk_sync": True,
         "obsidian_note_policy": "high_level_notes_only",
         "extra_warnings": [
             "system_bound_path",
+            "do_not_sync",
             "no_bulk_sync_automation",
             "obsidian_high_level_notes_only",
         ],
@@ -38,12 +40,14 @@ PATH_CLASSIFICATION_OVERRIDES = {
         "canonical_path": "/home/cole/cerberus",
         "do_not_move": False,
         "do_not_delete": True,
+        "do_not_sync": True,
         "exclude_from_bulk_sync": True,
         "obsidian_note_policy": "reconciliation_note_only",
         "extra_warnings": [
             "reconciliation_required",
             "contains_possible_operational_material",
             "do_not_delete_automatically",
+            "do_not_sync",
         ],
     },
 }
@@ -52,6 +56,11 @@ PATH_CLASSIFICATION_OVERRIDES = {
 def slugify(name: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "_", name.lower()).strip("_")
     return slug or "project"
+
+
+def is_cerberus_candidate(project_dir: Path) -> bool:
+    slug = slugify(project_dir.name)
+    return slug == "cerberus" or slug.startswith("cerberus_") or "_cerberus" in slug
 
 
 def first_level_directories(root: Path) -> list[Path]:
@@ -138,6 +147,8 @@ def collect_safety_warnings(
         warnings.append("not_a_git_repo")
     if any(token in name for token in ("backup", "archive", "copy", "old")):
         warnings.append("name_suggests_archive_or_duplicate")
+    if is_cerberus_candidate(project_dir):
+        warnings.append("cerberus_special_case_candidate")
     return warnings
 
 
@@ -169,12 +180,44 @@ def apply_path_override(project_dir: Path, result: dict[str, object], warnings: 
     result["canonical_path"] = override["canonical_path"]
     result["do_not_move"] = override["do_not_move"]
     result["do_not_delete"] = override["do_not_delete"]
+    result["do_not_sync"] = override["do_not_sync"]
     result["exclude_from_bulk_sync"] = override["exclude_from_bulk_sync"]
     result["obsidian_note_policy"] = override["obsidian_note_policy"]
 
     for warning in override["extra_warnings"]:
         if warning not in warnings:
             warnings.append(warning)
+
+
+def apply_special_case_rules(project_dir: Path, result: dict[str, object], warnings: list[str]) -> None:
+    try:
+        resolved = str(project_dir.resolve())
+    except OSError:
+        resolved = str(project_dir)
+
+    if resolved in PATH_CLASSIFICATION_OVERRIDES:
+        return
+    if not is_cerberus_candidate(project_dir):
+        return
+
+    result["do_not_sync"] = True
+    result["exclude_from_bulk_sync"] = True
+    if "do_not_sync" not in warnings:
+        warnings.append("do_not_sync")
+
+    if slugify(project_dir.name) == "cerberus":
+        result["recommended_category"] = "reconciliation_required"
+        result["recommended_status"] = "review"
+        result["recommended_action"] = "review_required"
+        if "cerberus_name_requires_manual_reconciliation_review" not in warnings:
+            warnings.append("cerberus_name_requires_manual_reconciliation_review")
+        return
+
+    result["recommended_category"] = "unknown"
+    result["recommended_status"] = "review"
+    result["recommended_action"] = "review_required"
+    if "cerberus_related_project_requires_manual_review" not in warnings:
+        warnings.append("cerberus_related_project_requires_manual_review")
 
 
 def scan_project_dir(project_dir: Path) -> ProjectScanResult:
@@ -218,6 +261,7 @@ def scan_project_dir(project_dir: Path) -> ProjectScanResult:
     canonical_path: str | None = None
     do_not_move = False
     do_not_delete = False
+    do_not_sync = False
     exclude_from_bulk_sync = False
     obsidian_note_policy = "docs_only"
 
@@ -228,10 +272,12 @@ def scan_project_dir(project_dir: Path) -> ProjectScanResult:
         "canonical_path": canonical_path,
         "do_not_move": do_not_move,
         "do_not_delete": do_not_delete,
+        "do_not_sync": do_not_sync,
         "exclude_from_bulk_sync": exclude_from_bulk_sync,
         "obsidian_note_policy": obsidian_note_policy,
     }
     apply_path_override(project_dir, result_data, safety_warnings)
+    apply_special_case_rules(project_dir, result_data, safety_warnings)
 
     return ProjectScanResult(
         path=str(project_dir),
@@ -255,6 +301,7 @@ def scan_project_dir(project_dir: Path) -> ProjectScanResult:
         canonical_path=result_data["canonical_path"] if isinstance(result_data["canonical_path"], str) else None,
         do_not_move=bool(result_data["do_not_move"]),
         do_not_delete=bool(result_data["do_not_delete"]),
+        do_not_sync=bool(result_data["do_not_sync"]),
         exclude_from_bulk_sync=bool(result_data["exclude_from_bulk_sync"]),
         obsidian_note_policy=str(result_data["obsidian_note_policy"]),
         safety_warnings=safety_warnings,

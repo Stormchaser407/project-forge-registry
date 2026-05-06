@@ -9,8 +9,9 @@
 
 ## Summary
 
-- Category `active_project`: 11
+- Category `active_project`: 10
 - Category `archive`: 1
+- Category `reconciliation_required`: 1
 - Category `unknown`: 11
 - Action `ignore`: 1
 - Action `register_full`: 8
@@ -21,8 +22,8 @@
 - `andclaw-comms`: contains_env_files, not_a_git_repo
 - `archive`: not_a_git_repo, name_suggests_archive_or_duplicate
 - `casebot_public_record_checks`: not_a_git_repo
-- `Cerberus`: not_a_git_repo
-- `cerberus_case_workspace`: contains_env_files
+- `Cerberus`: not_a_git_repo, cerberus_special_case_candidate, do_not_sync, cerberus_name_requires_manual_reconciliation_review
+- `cerberus_case_workspace`: contains_env_files, cerberus_special_case_candidate, do_not_sync, cerberus_related_project_requires_manual_review
 - `DJ_request_system`: contains_env_files
 - `endgame-solutions`: not_a_git_repo
 - `HomeAssistant`: not_a_git_repo
@@ -42,8 +43,8 @@
 | andclaw-comms | andclaw_comms | unknown | review | unknown | review_required | contains_env_files, not_a_git_repo |
 | archive | archive | unknown | review | archive | ignore | not_a_git_repo, name_suggests_archive_or_duplicate |
 | casebot_public_record_checks | casebot_public_record_checks | unknown | review | unknown | review_required | not_a_git_repo |
-| Cerberus | cerberus | unknown | review | unknown | review_required | not_a_git_repo |
-| cerberus_case_workspace | cerberus_case_workspace | python | review | active_project | review_required | contains_env_files |
+| Cerberus | cerberus | unknown | review | reconciliation_required | review_required | not_a_git_repo, cerberus_special_case_candidate, do_not_sync, cerberus_name_requires_manual_reconciliation_review |
+| cerberus_case_workspace | cerberus_case_workspace | python | review | unknown | review_required | contains_env_files, cerberus_special_case_candidate, do_not_sync, cerberus_related_project_requires_manual_review |
 | DJ_request_system | dj_request_system | unknown | review | active_project | review_required | contains_env_files |
 | endgame-solutions | endgame_solutions | unknown | review | unknown | review_required | not_a_git_repo |
 | Extension-Blip | extension_blip | unknown | review | active_project | register_full | none |

@@ -102,3 +102,45 @@ All proposed Obsidian mirrors use `/home/cole/main_vault/10 Projects/<project-sl
 
 See [docs/later_phase_roadmap.md](/mnt/storage/Cole/Projects/project-forge-registry/docs/later_phase_roadmap.md:1) for the phase outline.
 See [docs/SITREP_2026-05-06_housekeeping.md](/mnt/storage/Cole/Projects/project-forge-registry/docs/SITREP_2026-05-06_housekeeping.md:1) for the formal housekeeping constraints.
+See [docs/SITREP_2026-05-06_workspace_launcher_phase2.md](/mnt/storage/Cole/Projects/project-forge-registry/docs/SITREP_2026-05-06_workspace_launcher_phase2.md:1) for the Phase 2 workspace and launcher design record.
+
+## Phase 2 Command
+
+`project-forge-workspace-generate` consumes `artifacts/project_scan_report.json` and plans or generates:
+
+- `~/.config/Code/User/workspaces/<slug>.code-workspace`
+- `~/.local/bin/code-<slug>`
+- a report inside this repository's `artifacts/` directory
+
+Default behavior is dry-run. In dry-run mode, only the artifact report is written.
+
+Example dry-run:
+
+```bash
+PYTHONPATH=src python3 -m project_forge_registry.workspace_generation --dry-run
+```
+
+Example apply:
+
+```bash
+PYTHONPATH=src python3 -m project_forge_registry.workspace_generation --apply
+```
+
+### Phase 2 Defaults
+
+- Eligible by default: `active_project`, `operated_tool`
+- Skipped by default: `system_bound_project`, `reconciliation_required`, `archive`, `lab`, `unknown`, `vendor_clone`
+- `vendor_clone` requires `--include-category vendor_clone`
+- `lab` requires `--include-category lab`
+- `archive` requires `--include-archive` or `--include-category archive`
+- `project-forge-command-center.code-workspace` is preserved as an operator workspace
+
+### Phase 2 Safety Rules
+
+- Dry-run first.
+- No writes outside approved target types unless `--apply` is explicitly used.
+- No project folder modifications.
+- No git initialization.
+- No GitHub or Codeberg remote creation.
+- No Obsidian sync.
+- Existing workspace and launcher files are backed up before overwrite.

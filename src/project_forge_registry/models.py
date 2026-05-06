@@ -26,6 +26,7 @@ class ProjectScanResult:
     canonical_path: str | None
     do_not_move: bool
     do_not_delete: bool
+    do_not_sync: bool
     exclude_from_bulk_sync: bool
     obsidian_note_policy: str
     safety_warnings: list[str]

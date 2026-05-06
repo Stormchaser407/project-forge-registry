@@ -47,6 +47,7 @@ class ScannerTests(unittest.TestCase):
         self.assertEqual(record["status"], "review")
         self.assertEqual(record["classification"], result.recommended_category)
         self.assertFalse(record["sync"]["allow_code_to_obsidian"])
+        self.assertFalse(record["sync"]["do_not_sync"])
         self.assertTrue(record["automation"]["require_safety_check_before_push"])
 
     def test_system_bound_override_for_cerberus(self) -> None:
@@ -61,10 +62,12 @@ class ScannerTests(unittest.TestCase):
                 "canonical_path": str(project_dir.resolve()),
                 "do_not_move": True,
                 "do_not_delete": False,
+                "do_not_sync": True,
                 "exclude_from_bulk_sync": True,
                 "obsidian_note_policy": "high_level_notes_only",
                 "extra_warnings": [
                     "system_bound_path",
+                    "do_not_sync",
                     "no_bulk_sync_automation",
                     "obsidian_high_level_notes_only",
                 ],
@@ -79,8 +82,39 @@ class ScannerTests(unittest.TestCase):
         self.assertEqual(result.recommended_status, "active_special_case")
         self.assertEqual(result.recommended_action, "document_only_for_now")
         self.assertTrue(result.do_not_move)
+        self.assertTrue(result.do_not_sync)
         self.assertTrue(result.exclude_from_bulk_sync)
         self.assertEqual(result.obsidian_note_policy, "high_level_notes_only")
+
+    def test_cerberus_named_project_is_protected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            project_dir = Path(tmp) / "Cerberus"
+            project_dir.mkdir()
+            (project_dir / ".git").mkdir()
+            (project_dir / "README.md").write_text("hello", encoding="utf-8")
+
+            result = scan_project_dir(project_dir)
+
+        self.assertEqual(result.recommended_category, "reconciliation_required")
+        self.assertEqual(result.recommended_action, "review_required")
+        self.assertTrue(result.do_not_sync)
+        self.assertIn("cerberus_special_case_candidate", result.safety_warnings)
+        self.assertIn("cerberus_name_requires_manual_reconciliation_review", result.safety_warnings)
+
+    def test_cerberus_related_project_is_not_normal_active_project(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            project_dir = Path(tmp) / "cerberus_case_workspace"
+            project_dir.mkdir()
+            (project_dir / ".git").mkdir()
+            (project_dir / "README.md").write_text("hello", encoding="utf-8")
+
+            result = scan_project_dir(project_dir)
+
+        self.assertEqual(result.recommended_category, "unknown")
+        self.assertEqual(result.recommended_action, "review_required")
+        self.assertTrue(result.do_not_sync)
+        self.assertIn("cerberus_special_case_candidate", result.safety_warnings)
+        self.assertIn("cerberus_related_project_requires_manual_review", result.safety_warnings)
 
 
 if __name__ == "__main__":
