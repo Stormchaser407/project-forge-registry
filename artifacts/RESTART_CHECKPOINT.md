@@ -1,14 +1,14 @@
 # Restart Checkpoint
 
-- Timestamp: `2026-05-06T18:49:01-04:00`
-- Current branch: `main`
-- Latest commit hash before checkpoint commit: `d0a9881a887bea69376ba4512eae4360bfb0bad4`
-- Working tree status when note was written: `dirty`
+- Timestamp: `2026-05-06T18:49:06-04:00`
+- Branch: `main`
+- Latest commit hash at checkpoint note creation: `d0a9881a887bea69376ba4512eae4360bfb0bad4`
+- Dirty/clean status target after checkpoint: `clean`
 
 ## Tests
 
 - Command: `PYTHONPATH=src python3 -m unittest discover -s tests`
-- Result: `Ran 38 tests in 0.030s` / `OK`
+- Result: `Ran 38 tests in 0.249s - OK`
 
 ## Files Changed For Checkpoint
 
@@ -24,8 +24,13 @@
 
 ## What I Was Doing
 
-Implementing Phase 4 dry-run-first Obsidian mirror proposal generation inside this repository only. The work adds mirror planning, repo-local artifact generation, tests, README usage notes, and `capture-for-chat` verification examples without writing to the real Obsidian vault.
+- Saving the current local Phase 4 Obsidian mirror generation work.
+- Preserving the dry-run artifact report and generated repo-local mirror proposal files.
+- Avoiding any external Obsidian sync, remote push, or project-folder mutation.
 
 ## Next Safest Step After Reboot
 
-Open this repo, review `artifacts/obsidian_mirror_generation_report.md`, inspect `artifacts/obsidian_mirrors/`, and decide whether to refine mirror content or begin a later explicitly approved real-vault sync phase.
+- Reopen this repository.
+- Review `git status --short`.
+- Re-run `PYTHONPATH=src python3 -m unittest discover -s tests`.
+- Resume from the repo-local Phase 4 artifacts and command behavior before any new apply step.
