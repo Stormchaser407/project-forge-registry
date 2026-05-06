@@ -1,0 +1,42 @@
+project:
+  slug: extension_blip
+  name: Extension-Blip
+  category: active_project
+  status: review
+  registry_action: register_full
+  local_path: /mnt/storage/Cole/Projects/Extension-Blip
+  created_by: project-forge-registry
+  schema_version: 0.1
+paths:
+  local: /mnt/storage/Cole/Projects/Extension-Blip
+  workspace: /home/cole/.config/Code/User/workspaces/extension_blip.code-workspace
+  obsidian: /home/cole/main_vault/10 Projects/extension_blip
+launch:
+  command: code-extension_blip
+git:
+  default_branch: main
+  github: null
+  codeberg: null
+  mirror_mode: disabled_for_now
+sync:
+  obsidian_to_repo: export_only
+  repo_to_obsidian: docs_only
+  allow_code_to_obsidian: false
+  allow_secrets: false
+visibility:
+  github: private
+  codeberg: private
+  public_ready: false
+automation:
+  auto_doc_sync: false
+  auto_git_sync: false
+  require_safety_check_before_push: true
+safety:
+  warnings: []
+  do_not_move: false
+  do_not_delete: false
+  do_not_sync: false
+  notes:
+    - generated_from_registry_category=active_project
+    - generated_from_registry_action=register_full
+    - obsidian_note_policy=docs_only

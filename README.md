@@ -144,3 +144,40 @@ PYTHONPATH=src python3 -m project_forge_registry.workspace_generation --apply
 - No GitHub or Codeberg remote creation.
 - No Obsidian sync.
 - Existing workspace and launcher files are backed up before overwrite.
+
+## Phase 3 Command
+
+`project-forge-passport-generate` consumes `artifacts/project_scan_report.json` and plans or generates passport proposal files at:
+
+- `artifacts/project_passports/<slug>.project.yml`
+- `artifacts/project_passport_generation_report.md`
+
+Default behavior is dry-run. In dry-run mode, only the artifact report is written.
+
+Example dry-run:
+
+```bash
+PYTHONPATH=src python3 -m project_forge_registry.passport_generation --dry-run
+```
+
+Example apply:
+
+```bash
+PYTHONPATH=src python3 -m project_forge_registry.passport_generation --apply
+```
+
+### Phase 3 Defaults
+
+- Eligible by default: `active_project`, `operated_tool`
+- Skipped by default: `system_bound_project`, `reconciliation_required`, `archive`, `lab`, `unknown`, `vendor_clone`
+- Cerberus-related entries remain protected and skipped
+
+### Phase 3 Safety Rules
+
+- Dry-run first.
+- `--apply` writes only inside this repository's `artifacts/project_passports/` directory in this phase.
+- No project folder modifications.
+- No git initialization.
+- No GitHub or Codeberg remote creation.
+- No Obsidian sync.
+- Existing passport proposal files are backed up before overwrite.

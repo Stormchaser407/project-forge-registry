@@ -13,6 +13,7 @@ dependencies = []
 [project.scripts]
 project-forge-registry = "project_forge_registry.cli:main"
 project-forge-workspace-generate = "project_forge_registry.workspace_generation:main"
+project-forge-passport-generate = "project_forge_registry.passport_generation:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
