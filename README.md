@@ -181,3 +181,65 @@ PYTHONPATH=src python3 -m project_forge_registry.passport_generation --apply
 - No GitHub or Codeberg remote creation.
 - No Obsidian sync.
 - Existing passport proposal files are backed up before overwrite.
+
+## Phase 4 Command
+
+`project-forge-obsidian-mirror-generate` consumes `artifacts/project_passports/*.project.yml` and plans or generates mirror proposal files at:
+
+- `artifacts/obsidian_mirrors/<slug>/`
+- `artifacts/obsidian_mirror_generation_report.md`
+
+Default behavior is dry-run. In dry-run mode, only the artifact report is written.
+
+Example dry-run:
+
+```bash
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_mirror_generation --dry-run
+```
+
+Example apply:
+
+```bash
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_mirror_generation --apply
+```
+
+### Phase 4 Defaults
+
+- Eligible by default: `active_project`, `operated_tool`
+- Skipped by default: `system_bound_project`, `reconciliation_required`, `archive`, `lab`, `unknown`, `vendor_clone`
+- Additional safety skips: `safety.do_not_sync=true`, `sync.allow_code_to_obsidian=true`, `sync.allow_secrets=true`, and Cerberus-related entries
+
+### Phase 4 Safety Rules
+
+- Dry-run first.
+- `--apply` writes proposed mirror files only inside this repository's `artifacts/obsidian_mirrors/` directory in this phase.
+- No writes to `/home/cole/main_vault`.
+- No project folder modifications.
+- No source code copy into mirror proposal files.
+- No git initialization.
+- No GitHub or Codeberg remote creation.
+- No Obsidian sync.
+- Existing mirror proposal files are backed up before overwrite.
+
+### Capture For Chat
+
+The Phase 4 Python command prints the mirror proposal directory and report path clearly so terminal wrappers can capture verification output without any clipboard dependency inside Python.
+
+Suggested dry-run verification capture:
+
+```bash
+{
+  PYTHONPATH=src python3 -m project_forge_registry.obsidian_mirror_generation --dry-run
+  sed -n '1,220p' artifacts/obsidian_mirror_generation_report.md
+} | capture-for-chat phase4-obsidian-mirror-check
+```
+
+Suggested apply verification capture:
+
+```bash
+{
+  PYTHONPATH=src python3 -m project_forge_registry.obsidian_mirror_generation --apply
+  rg --files artifacts/obsidian_mirrors
+  sed -n '1,220p' artifacts/obsidian_mirror_generation_report.md
+} | capture-for-chat phase4-obsidian-mirror-check
+```
