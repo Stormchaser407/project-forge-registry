@@ -203,6 +203,48 @@ projects:
       - cerberus_special_case_candidate
       - do_not_sync
       - cerberus_name_requires_manual_reconciliation_review
+  - slug: cerberus_mgm_boot
+    name: cerberus-mgm-boot
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /mnt/storage/Cole/Projects/cerberus-mgm-boot
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/cerberus_mgm_boot.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/cerberus_mgm_boot
+    registry_action: review_required
+    launch:
+      command: code-cerberus_mgm_boot
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: true
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: true
+      exclude_from_bulk_sync: true
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - cerberus_special_case_candidate
+      - do_not_sync
+      - cerberus_related_project_requires_manual_review
   - slug: cerberus_case_workspace
     name: cerberus_case_workspace
     status: review
@@ -564,6 +606,46 @@ projects:
       obsidian_note_policy: docs_only
     safety_warnings:
       - not_a_git_repo
+  - slug: pixel_root_lab
+    name: pixel-root-lab
+    status: review
+    classification: lab
+    category: lab
+    local_path: /mnt/storage/Cole/Projects/pixel-root-lab
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/pixel_root_lab.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/pixel_root_lab
+    registry_action: review_required
+    launch:
+      command: code-pixel_root_lab
+    git:
+      default_branch: null
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - not_a_git_repo
   - slug: primal
     name: Primal
     status: review
@@ -694,7 +776,7 @@ projects:
     paths:
       workspace: /home/cole/.config/Code/User/workspaces/project_katrina.code-workspace
       obsidian: /home/cole/main_vault/10 Projects/project_katrina
-    registry_action: register_full
+    registry_action: review_required
     launch:
       command: code-project_katrina
     git:

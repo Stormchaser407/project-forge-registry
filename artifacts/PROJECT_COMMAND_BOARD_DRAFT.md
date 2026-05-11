@@ -69,6 +69,19 @@ Dry-run planning board generated from project scan results.
 - Constraints: do_not_move=false, do_not_delete=false, do_not_sync=true, exclude_from_bulk_sync=true, obsidian_note_policy=docs_only
 - Warnings: not_a_git_repo, cerberus_special_case_candidate, do_not_sync, cerberus_name_requires_manual_reconciliation_review
 
+### cerberus-mgm-boot
+- Slug: `cerberus_mgm_boot`
+- Path: `/mnt/storage/Cole/Projects/cerberus-mgm-boot`
+- Category: `unknown`
+- Status: `review`
+- Recommended action: `review_required`
+- Suggested launcher: `code-cerberus_mgm_boot`
+- Workspace target: `/home/cole/.config/Code/User/workspaces/cerberus_mgm_boot.code-workspace`
+- Obsidian target: `/home/cole/main_vault/10 Projects/cerberus_mgm_boot`
+- Canonical path: `/mnt/storage/Cole/Projects/cerberus-mgm-boot`
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=true, exclude_from_bulk_sync=true, obsidian_note_policy=docs_only
+- Warnings: cerberus_special_case_candidate, do_not_sync, cerberus_related_project_requires_manual_review
+
 ### cerberus_case_workspace
 - Slug: `cerberus_case_workspace`
 - Path: `/mnt/storage/Cole/Projects/cerberus_case_workspace`
@@ -186,6 +199,19 @@ Dry-run planning board generated from project scan results.
 - Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: not_a_git_repo
 
+### pixel-root-lab
+- Slug: `pixel_root_lab`
+- Path: `/mnt/storage/Cole/Projects/pixel-root-lab`
+- Category: `lab`
+- Status: `review`
+- Recommended action: `review_required`
+- Suggested launcher: `code-pixel_root_lab`
+- Workspace target: `/home/cole/.config/Code/User/workspaces/pixel_root_lab.code-workspace`
+- Obsidian target: `/home/cole/main_vault/10 Projects/pixel_root_lab`
+- Canonical path: `/mnt/storage/Cole/Projects/pixel-root-lab`
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Warnings: not_a_git_repo
+
 ### Primal
 - Slug: `primal`
 - Path: `/mnt/storage/Cole/Projects/Primal`
@@ -230,7 +256,7 @@ Dry-run planning board generated from project scan results.
 - Path: `/mnt/storage/Cole/Projects/project_katrina`
 - Category: `unknown`
 - Status: `review`
-- Recommended action: `register_full`
+- Recommended action: `review_required`
 - Suggested launcher: `code-project_katrina`
 - Workspace target: `/home/cole/.config/Code/User/workspaces/project_katrina.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/project_katrina`

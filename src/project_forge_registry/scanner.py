@@ -122,6 +122,8 @@ def detect_action(
         return "workspace_only"
     if category == "lab":
         return "obsidian_notes_only"
+    if category == "unknown":
+        return "review_required"
     if has_git or has_project_yml or has_code_workspace:
         return "register_full"
     return "review_required"

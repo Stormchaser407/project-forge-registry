@@ -3,7 +3,7 @@
     "/mnt/storage/Cole/Projects",
     "/home/cole/Projects"
   ],
-  "project_count": 23,
+  "project_count": 25,
   "projects": [
     {
       "path": "/mnt/storage/Cole/Projects/AgentZero",
@@ -161,6 +161,39 @@
         "cerberus_special_case_candidate",
         "do_not_sync",
         "cerberus_name_requires_manual_reconciliation_review"
+      ]
+    },
+    {
+      "path": "/mnt/storage/Cole/Projects/cerberus-mgm-boot",
+      "folder_name": "cerberus-mgm-boot",
+      "safe_slug": "cerberus_mgm_boot",
+      "has_git": true,
+      "has_readme": true,
+      "has_code_workspace": false,
+      "has_project_yml": false,
+      "has_package_json": false,
+      "has_pyproject_toml": false,
+      "has_flake_nix": false,
+      "has_docker_compose": false,
+      "has_env_files": false,
+      "has_sqlite_or_db_files": false,
+      "has_node_modules": false,
+      "likely_stack": [
+        "unknown"
+      ],
+      "recommended_status": "review",
+      "recommended_category": "unknown",
+      "recommended_action": "review_required",
+      "canonical_path": null,
+      "do_not_move": false,
+      "do_not_delete": false,
+      "do_not_sync": true,
+      "exclude_from_bulk_sync": true,
+      "obsidian_note_policy": "docs_only",
+      "safety_warnings": [
+        "cerberus_special_case_candidate",
+        "do_not_sync",
+        "cerberus_related_project_requires_manual_review"
       ]
     },
     {
@@ -442,6 +475,37 @@
       ]
     },
     {
+      "path": "/mnt/storage/Cole/Projects/pixel-root-lab",
+      "folder_name": "pixel-root-lab",
+      "safe_slug": "pixel_root_lab",
+      "has_git": false,
+      "has_readme": false,
+      "has_code_workspace": false,
+      "has_project_yml": false,
+      "has_package_json": false,
+      "has_pyproject_toml": false,
+      "has_flake_nix": false,
+      "has_docker_compose": false,
+      "has_env_files": false,
+      "has_sqlite_or_db_files": false,
+      "has_node_modules": false,
+      "likely_stack": [
+        "unknown"
+      ],
+      "recommended_status": "review",
+      "recommended_category": "lab",
+      "recommended_action": "review_required",
+      "canonical_path": null,
+      "do_not_move": false,
+      "do_not_delete": false,
+      "do_not_sync": false,
+      "exclude_from_bulk_sync": false,
+      "obsidian_note_policy": "docs_only",
+      "safety_warnings": [
+        "not_a_git_repo"
+      ]
+    },
+    {
       "path": "/mnt/storage/Cole/Projects/Primal",
       "folder_name": "Primal",
       "safe_slug": "primal",
@@ -553,7 +617,7 @@
       ],
       "recommended_status": "review",
       "recommended_category": "unknown",
-      "recommended_action": "register_full",
+      "recommended_action": "review_required",
       "canonical_path": null,
       "do_not_move": false,
       "do_not_delete": false,

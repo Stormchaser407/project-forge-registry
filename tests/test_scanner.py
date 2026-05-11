@@ -116,6 +116,20 @@ class ScannerTests(unittest.TestCase):
         self.assertIn("cerberus_special_case_candidate", result.safety_warnings)
         self.assertIn("cerberus_related_project_requires_manual_review", result.safety_warnings)
 
+    def test_unknown_git_project_stays_review_required(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            project_dir = Path(tmp) / "project_katrina"
+            project_dir.mkdir()
+            (project_dir / ".git").mkdir()
+            (project_dir / "Projects.code-workspace").write_text("{}", encoding="utf-8")
+
+            result = scan_project_dir(project_dir)
+
+        self.assertEqual(result.recommended_category, "unknown")
+        self.assertEqual(result.recommended_action, "review_required")
+        self.assertTrue(result.has_git)
+        self.assertTrue(result.has_code_workspace)
+
 
 if __name__ == "__main__":
     unittest.main()
