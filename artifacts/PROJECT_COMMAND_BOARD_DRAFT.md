@@ -134,6 +134,32 @@ Dry-run planning board generated from project scan results.
 - Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: none
 
+### foundations-of-git-exercise-repo
+- Slug: `foundations_of_git_exercise_repo`
+- Path: `/mnt/storage/Cole/Projects/foundations-of-git-exercise-repo`
+- Category: `active_project`
+- Status: `review`
+- Recommended action: `register_full`
+- Suggested launcher: `code-foundations_of_git_exercise_repo`
+- Workspace target: `/home/cole/.config/Code/User/workspaces/foundations_of_git_exercise_repo.code-workspace`
+- Obsidian target: `/home/cole/main_vault/10 Projects/foundations_of_git_exercise_repo`
+- Canonical path: `/mnt/storage/Cole/Projects/foundations-of-git-exercise-repo`
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Warnings: none
+
+### hermes-agent
+- Slug: `hermes_agent`
+- Path: `/mnt/storage/Cole/Projects/hermes-agent`
+- Category: `active_project`
+- Status: `review`
+- Recommended action: `review_required`
+- Suggested launcher: `code-hermes_agent`
+- Workspace target: `/home/cole/.config/Code/User/workspaces/hermes_agent.code-workspace`
+- Obsidian target: `/home/cole/main_vault/10 Projects/hermes_agent`
+- Canonical path: `/mnt/storage/Cole/Projects/hermes-agent`
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Warnings: contains_env_files, contains_node_modules
+
 ### HomeAssistant
 - Slug: `homeassistant`
 - Path: `/mnt/storage/Cole/Projects/HomeAssistant`
@@ -146,6 +172,19 @@ Dry-run planning board generated from project scan results.
 - Canonical path: `/mnt/storage/Cole/Projects/HomeAssistant`
 - Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: not_a_git_repo
+
+### lifesaver-ledger
+- Slug: `lifesaver_ledger`
+- Path: `/mnt/storage/Cole/Projects/lifesaver-ledger`
+- Category: `active_project`
+- Status: `review`
+- Recommended action: `register_full`
+- Suggested launcher: `code-lifesaver_ledger`
+- Workspace target: `/home/cole/.config/Code/User/workspaces/lifesaver_ledger.code-workspace`
+- Obsidian target: `/home/cole/main_vault/10 Projects/lifesaver_ledger`
+- Canonical path: `/mnt/storage/Cole/Projects/lifesaver-ledger`
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Warnings: none
 
 ### Maltego
 - Slug: `maltego`
@@ -173,18 +212,18 @@ Dry-run planning board generated from project scan results.
 - Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: none
 
-### NotEvil
-- Slug: `notevil`
-- Path: `/mnt/storage/Cole/Projects/NotEvil`
-- Category: `unknown`
+### neon-district
+- Slug: `neon_district`
+- Path: `/mnt/storage/Cole/Projects/neon-district`
+- Category: `active_project`
 - Status: `review`
-- Recommended action: `review_required`
-- Suggested launcher: `code-notevil`
-- Workspace target: `/home/cole/.config/Code/User/workspaces/notevil.code-workspace`
-- Obsidian target: `/home/cole/main_vault/10 Projects/notevil`
-- Canonical path: `/mnt/storage/Cole/Projects/NotEvil`
+- Recommended action: `register_full`
+- Suggested launcher: `code-neon_district`
+- Workspace target: `/home/cole/.config/Code/User/workspaces/neon_district.code-workspace`
+- Obsidian target: `/home/cole/main_vault/10 Projects/neon_district`
+- Canonical path: `/mnt/storage/Cole/Projects/neon-district`
 - Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
-- Warnings: not_a_git_repo
+- Warnings: none
 
 ### NOTEvil-Inc
 - Slug: `notevil_inc`
@@ -198,6 +237,19 @@ Dry-run planning board generated from project scan results.
 - Canonical path: `/mnt/storage/Cole/Projects/NOTEvil-Inc`
 - Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: not_a_git_repo
+
+### openclaw-workspace
+- Slug: `openclaw_workspace`
+- Path: `/mnt/storage/Cole/Projects/openclaw-workspace`
+- Category: `unknown`
+- Status: `review`
+- Recommended action: `review_required`
+- Suggested launcher: `code-openclaw_workspace`
+- Workspace target: `/home/cole/.config/Code/User/workspaces/openclaw_workspace.code-workspace`
+- Obsidian target: `/home/cole/main_vault/10 Projects/openclaw_workspace`
+- Canonical path: `/mnt/storage/Cole/Projects/openclaw-workspace`
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Warnings: none
 
 ### pixel-root-lab
 - Slug: `pixel_root_lab`
@@ -326,5 +378,44 @@ Dry-run planning board generated from project scan results.
 - Workspace target: `/home/cole/.config/Code/User/workspaces/stormchaser407.code-workspace`
 - Obsidian target: `/home/cole/main_vault/10 Projects/stormchaser407`
 - Canonical path: `/mnt/storage/Cole/Projects/Stormchaser407`
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Warnings: not_a_git_repo
+
+### this-was-avoidable
+- Slug: `this_was_avoidable`
+- Path: `/mnt/storage/Cole/Projects/this-was-avoidable`
+- Category: `active_project`
+- Status: `review`
+- Recommended action: `register_full`
+- Suggested launcher: `code-this_was_avoidable`
+- Workspace target: `/home/cole/.config/Code/User/workspaces/this_was_avoidable.code-workspace`
+- Obsidian target: `/home/cole/main_vault/10 Projects/this_was_avoidable`
+- Canonical path: `/mnt/storage/Cole/Projects/this-was-avoidable`
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Warnings: none
+
+### tidal-hifi
+- Slug: `tidal_hifi`
+- Path: `/mnt/storage/Cole/Projects/tidal-hifi`
+- Category: `active_project`
+- Status: `review`
+- Recommended action: `review_required`
+- Suggested launcher: `code-tidal_hifi`
+- Workspace target: `/home/cole/.config/Code/User/workspaces/tidal_hifi.code-workspace`
+- Obsidian target: `/home/cole/main_vault/10 Projects/tidal_hifi`
+- Canonical path: `/mnt/storage/Cole/Projects/tidal-hifi`
+- Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
+- Warnings: contains_node_modules
+
+### tidal-scrobble-cop
+- Slug: `tidal_scrobble_cop`
+- Path: `/mnt/storage/Cole/Projects/tidal-scrobble-cop`
+- Category: `unknown`
+- Status: `review`
+- Recommended action: `review_required`
+- Suggested launcher: `code-tidal_scrobble_cop`
+- Workspace target: `/home/cole/.config/Code/User/workspaces/tidal_scrobble_cop.code-workspace`
+- Obsidian target: `/home/cole/main_vault/10 Projects/tidal_scrobble_cop`
+- Canonical path: `/mnt/storage/Cole/Projects/tidal-scrobble-cop`
 - Constraints: do_not_move=false, do_not_delete=false, do_not_sync=false, exclude_from_bulk_sync=false, obsidian_note_policy=docs_only
 - Warnings: not_a_git_repo

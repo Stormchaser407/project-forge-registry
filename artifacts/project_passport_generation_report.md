@@ -10,41 +10,14 @@
 
 ## Summary
 
-- Eligible projects: 7
-- Skipped projects: 16
-- Planned proposal writes: 7
-- Planned backups: 7
-- Completed proposal writes: 7
-- Completed backups: 7
+- Eligible projects: 1
+- Skipped projects: 31
+- Planned proposal writes: 1
+- Planned backups: 1
+- Completed proposal writes: 1
+- Completed backups: 1
 
 ## Generated Passport Proposals
-
-### agentzero
-- Name: `AgentZero`
-- Category: `active_project`
-- Status: `review`
-- Registry action: `register_full`
-- Local path: `/mnt/storage/Cole/Projects/AgentZero`
-- Proposal path: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/agentzero.project.yml`
-- file: exists_before=true, backup=`/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/agentzero.project.yml.bak.20260508-133240`, written=true, backup_created=true
-
-### extension_blip
-- Name: `Extension-Blip`
-- Category: `active_project`
-- Status: `review`
-- Registry action: `register_full`
-- Local path: `/mnt/storage/Cole/Projects/Extension-Blip`
-- Proposal path: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/extension_blip.project.yml`
-- file: exists_before=true, backup=`/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/extension_blip.project.yml.bak.20260508-133240`, written=true, backup_created=true
-
-### media_dedupe
-- Name: `media-dedupe`
-- Category: `active_project`
-- Status: `review`
-- Registry action: `register_full`
-- Local path: `/mnt/storage/Cole/Projects/media-dedupe`
-- Proposal path: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/media_dedupe.project.yml`
-- file: exists_before=true, backup=`/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/media_dedupe.project.yml.bak.20260508-133240`, written=true, backup_created=true
 
 ### project_forge_registry
 - Name: `project-forge-registry`
@@ -53,50 +26,38 @@
 - Registry action: `register_full`
 - Local path: `/mnt/storage/Cole/Projects/project-forge-registry`
 - Proposal path: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/project_forge_registry.project.yml`
-- file: exists_before=true, backup=`/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/project_forge_registry.project.yml.bak.20260508-133240`, written=true, backup_created=true
-
-### recon_housekeeping
-- Name: `recon_housekeeping`
-- Category: `active_project`
-- Status: `review`
-- Registry action: `register_full`
-- Local path: `/mnt/storage/Cole/Projects/recon_housekeeping`
-- Proposal path: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/recon_housekeeping.project.yml`
-- file: exists_before=true, backup=`/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/recon_housekeeping.project.yml.bak.20260508-133240`, written=true, backup_created=true
-
-### spiderfoot_peoplesearch
-- Name: `SpiderFoot_PeopleSearch`
-- Category: `active_project`
-- Status: `review`
-- Registry action: `register_full`
-- Local path: `/mnt/storage/Cole/Projects/SpiderFoot_PeopleSearch`
-- Proposal path: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/spiderfoot_peoplesearch.project.yml`
-- file: exists_before=true, backup=`/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/spiderfoot_peoplesearch.project.yml.bak.20260508-133240`, written=true, backup_created=true
-
-### steelseries_rgb
-- Name: `SteelSeries_RGB`
-- Category: `active_project`
-- Status: `review`
-- Registry action: `register_full`
-- Local path: `/mnt/storage/Cole/Projects/SteelSeries_RGB`
-- Proposal path: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/steelseries_rgb.project.yml`
-- file: exists_before=true, backup=`/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/steelseries_rgb.project.yml.bak.20260508-133240`, written=true, backup_created=true
+- file: exists_before=true, backup=`/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/project_forge_registry.project.yml.bak.20260513-194311`, written=true, backup_created=true
 
 ## Skipped Projects
 
-- `andclaw_comms`: registry_action=review_required, classification=unknown
-- `archive`: registry_action=ignore, classification=archive
-- `casebot_public_record_checks`: registry_action=review_required, classification=unknown
-- `cerberus`: do_not_sync=true, classification=reconciliation_required, registry_action=review_required, safety_warning=cerberus_special_case_candidate, cerberus_protected
-- `cerberus_case_workspace`: do_not_sync=true, registry_action=review_required, safety_warning=cerberus_special_case_candidate, cerberus_protected, classification=unknown
-- `dj_request_system`: registry_action=review_required
-- `endgame_solutions`: registry_action=review_required, classification=unknown
-- `homeassistant`: registry_action=review_required, classification=unknown
-- `maltego`: registry_action=review_required, classification=unknown
-- `notevil`: registry_action=review_required, classification=unknown
-- `notevil_inc`: registry_action=review_required, classification=unknown
-- `primal`: registry_action=review_required, classification=unknown
-- `primal_web_app`: registry_action=review_required
-- `project_katrina`: classification=unknown
-- `sillytavern`: registry_action=review_required
-- `stormchaser407`: registry_action=review_required, classification=unknown
+- `agentzero`: not_selected_by_include_slug
+- `andclaw_comms`: not_selected_by_include_slug, registry_action=review_required, classification=unknown
+- `archive`: not_selected_by_include_slug, registry_action=ignore, classification=archive
+- `casebot_public_record_checks`: not_selected_by_include_slug, registry_action=review_required, classification=unknown
+- `cerberus`: not_selected_by_include_slug, do_not_sync=true, classification=reconciliation_required, registry_action=review_required, safety_warning=cerberus_special_case_candidate, cerberus_protected
+- `cerberus_mgm_boot`: not_selected_by_include_slug, do_not_sync=true, registry_action=review_required, safety_warning=cerberus_special_case_candidate, cerberus_protected, classification=unknown
+- `cerberus_case_workspace`: not_selected_by_include_slug, do_not_sync=true, registry_action=review_required, safety_warning=cerberus_special_case_candidate, cerberus_protected, classification=unknown
+- `dj_request_system`: not_selected_by_include_slug, registry_action=review_required
+- `endgame_solutions`: not_selected_by_include_slug, registry_action=review_required, classification=unknown
+- `extension_blip`: not_selected_by_include_slug
+- `foundations_of_git_exercise_repo`: not_selected_by_include_slug
+- `hermes_agent`: not_selected_by_include_slug, registry_action=review_required
+- `homeassistant`: not_selected_by_include_slug, registry_action=review_required, classification=unknown
+- `lifesaver_ledger`: not_selected_by_include_slug
+- `maltego`: not_selected_by_include_slug, registry_action=review_required, classification=unknown
+- `media_dedupe`: not_selected_by_include_slug
+- `neon_district`: not_selected_by_include_slug
+- `notevil_inc`: not_selected_by_include_slug, registry_action=review_required, classification=unknown
+- `openclaw_workspace`: not_selected_by_include_slug, registry_action=review_required, classification=unknown
+- `pixel_root_lab`: not_selected_by_include_slug, registry_action=review_required, classification=lab
+- `primal`: not_selected_by_include_slug, registry_action=review_required, classification=unknown
+- `primal_web_app`: not_selected_by_include_slug, registry_action=review_required
+- `project_katrina`: not_selected_by_include_slug, registry_action=review_required, classification=unknown
+- `recon_housekeeping`: not_selected_by_include_slug
+- `sillytavern`: not_selected_by_include_slug, registry_action=review_required
+- `spiderfoot_peoplesearch`: not_selected_by_include_slug
+- `steelseries_rgb`: not_selected_by_include_slug
+- `stormchaser407`: not_selected_by_include_slug, registry_action=review_required, classification=unknown
+- `this_was_avoidable`: not_selected_by_include_slug
+- `tidal_hifi`: not_selected_by_include_slug, registry_action=review_required
+- `tidal_scrobble_cop`: not_selected_by_include_slug, registry_action=review_required, classification=unknown

@@ -407,6 +407,86 @@ projects:
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
     safety_warnings: []
+  - slug: foundations_of_git_exercise_repo
+    name: foundations-of-git-exercise-repo
+    status: review
+    classification: active_project
+    category: active_project
+    local_path: /mnt/storage/Cole/Projects/foundations-of-git-exercise-repo
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/foundations_of_git_exercise_repo.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/foundations_of_git_exercise_repo
+    registry_action: register_full
+    launch:
+      command: code-foundations_of_git_exercise_repo
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: hermes_agent
+    name: hermes-agent
+    status: review
+    classification: active_project
+    category: active_project
+    local_path: /mnt/storage/Cole/Projects/hermes-agent
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/hermes_agent.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/hermes_agent
+    registry_action: review_required
+    launch:
+      command: code-hermes_agent
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - contains_env_files
+      - contains_node_modules
   - slug: homeassistant
     name: HomeAssistant
     status: review
@@ -447,6 +527,45 @@ projects:
       obsidian_note_policy: docs_only
     safety_warnings:
       - not_a_git_repo
+  - slug: lifesaver_ledger
+    name: lifesaver-ledger
+    status: review
+    classification: active_project
+    category: active_project
+    local_path: /mnt/storage/Cole/Projects/lifesaver-ledger
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/lifesaver_ledger.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/lifesaver_ledger
+    registry_action: register_full
+    launch:
+      command: code-lifesaver_ledger
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
   - slug: maltego
     name: Maltego
     status: review
@@ -526,21 +645,21 @@ projects:
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
     safety_warnings: []
-  - slug: notevil
-    name: NotEvil
+  - slug: neon_district
+    name: neon-district
     status: review
-    classification: unknown
-    category: unknown
-    local_path: /mnt/storage/Cole/Projects/NotEvil
+    classification: active_project
+    category: active_project
+    local_path: /mnt/storage/Cole/Projects/neon-district
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/notevil.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/notevil
-    registry_action: review_required
+      workspace: /home/cole/.config/Code/User/workspaces/neon_district.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/neon_district
+    registry_action: register_full
     launch:
-      command: code-notevil
+      command: code-neon_district
     git:
-      default_branch: null
+      default_branch: main
       github: null
       codeberg: null
       mirror_mode: dual_push
@@ -564,8 +683,7 @@ projects:
       do_not_sync: false
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
-    safety_warnings:
-      - not_a_git_repo
+    safety_warnings: []
   - slug: notevil_inc
     name: NOTEvil-Inc
     status: review
@@ -606,6 +724,45 @@ projects:
       obsidian_note_policy: docs_only
     safety_warnings:
       - not_a_git_repo
+  - slug: openclaw_workspace
+    name: openclaw-workspace
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /mnt/storage/Cole/Projects/openclaw-workspace
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/openclaw_workspace.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/openclaw_workspace
+    registry_action: review_required
+    launch:
+      command: code-openclaw_workspace
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
   - slug: pixel_root_lab
     name: pixel-root-lab
     status: review
@@ -975,6 +1132,125 @@ projects:
     registry_action: review_required
     launch:
       command: code-stormchaser407
+    git:
+      default_branch: null
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - not_a_git_repo
+  - slug: this_was_avoidable
+    name: this-was-avoidable
+    status: review
+    classification: active_project
+    category: active_project
+    local_path: /mnt/storage/Cole/Projects/this-was-avoidable
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/this_was_avoidable.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/this_was_avoidable
+    registry_action: register_full
+    launch:
+      command: code-this_was_avoidable
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: tidal_hifi
+    name: tidal-hifi
+    status: review
+    classification: active_project
+    category: active_project
+    local_path: /mnt/storage/Cole/Projects/tidal-hifi
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/tidal_hifi.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/tidal_hifi
+    registry_action: review_required
+    launch:
+      command: code-tidal_hifi
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - contains_node_modules
+  - slug: tidal_scrobble_cop
+    name: tidal-scrobble-cop
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /mnt/storage/Cole/Projects/tidal-scrobble-cop
+    canonical_path: null
+    paths:
+      workspace: /home/cole/.config/Code/User/workspaces/tidal_scrobble_cop.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/tidal_scrobble_cop
+    registry_action: review_required
+    launch:
+      command: code-tidal_scrobble_cop
     git:
       default_branch: null
       github: null

@@ -3,7 +3,7 @@
     "/mnt/storage/Cole/Projects",
     "/home/cole/Projects"
   ],
-  "project_count": 25,
+  "project_count": 32,
   "projects": [
     {
       "path": "/mnt/storage/Cole/Projects/AgentZero",
@@ -322,6 +322,70 @@
       "safety_warnings": []
     },
     {
+      "path": "/mnt/storage/Cole/Projects/foundations-of-git-exercise-repo",
+      "folder_name": "foundations-of-git-exercise-repo",
+      "safe_slug": "foundations_of_git_exercise_repo",
+      "has_git": true,
+      "has_readme": true,
+      "has_code_workspace": false,
+      "has_project_yml": false,
+      "has_package_json": false,
+      "has_pyproject_toml": false,
+      "has_flake_nix": false,
+      "has_docker_compose": false,
+      "has_env_files": false,
+      "has_sqlite_or_db_files": false,
+      "has_node_modules": false,
+      "likely_stack": [
+        "unknown"
+      ],
+      "recommended_status": "review",
+      "recommended_category": "active_project",
+      "recommended_action": "register_full",
+      "canonical_path": null,
+      "do_not_move": false,
+      "do_not_delete": false,
+      "do_not_sync": false,
+      "exclude_from_bulk_sync": false,
+      "obsidian_note_policy": "docs_only",
+      "safety_warnings": []
+    },
+    {
+      "path": "/mnt/storage/Cole/Projects/hermes-agent",
+      "folder_name": "hermes-agent",
+      "safe_slug": "hermes_agent",
+      "has_git": true,
+      "has_readme": true,
+      "has_code_workspace": false,
+      "has_project_yml": false,
+      "has_package_json": true,
+      "has_pyproject_toml": true,
+      "has_flake_nix": true,
+      "has_docker_compose": true,
+      "has_env_files": true,
+      "has_sqlite_or_db_files": false,
+      "has_node_modules": true,
+      "likely_stack": [
+        "node",
+        "python",
+        "nix",
+        "docker"
+      ],
+      "recommended_status": "review",
+      "recommended_category": "active_project",
+      "recommended_action": "review_required",
+      "canonical_path": null,
+      "do_not_move": false,
+      "do_not_delete": false,
+      "do_not_sync": false,
+      "exclude_from_bulk_sync": false,
+      "obsidian_note_policy": "docs_only",
+      "safety_warnings": [
+        "contains_env_files",
+        "contains_node_modules"
+      ]
+    },
+    {
       "path": "/mnt/storage/Cole/Projects/HomeAssistant",
       "folder_name": "HomeAssistant",
       "safe_slug": "homeassistant",
@@ -351,6 +415,35 @@
       "safety_warnings": [
         "not_a_git_repo"
       ]
+    },
+    {
+      "path": "/mnt/storage/Cole/Projects/lifesaver-ledger",
+      "folder_name": "lifesaver-ledger",
+      "safe_slug": "lifesaver_ledger",
+      "has_git": true,
+      "has_readme": true,
+      "has_code_workspace": false,
+      "has_project_yml": false,
+      "has_package_json": false,
+      "has_pyproject_toml": false,
+      "has_flake_nix": false,
+      "has_docker_compose": false,
+      "has_env_files": false,
+      "has_sqlite_or_db_files": false,
+      "has_node_modules": false,
+      "likely_stack": [
+        "unknown"
+      ],
+      "recommended_status": "review",
+      "recommended_category": "active_project",
+      "recommended_action": "register_full",
+      "canonical_path": null,
+      "do_not_move": false,
+      "do_not_delete": false,
+      "do_not_sync": false,
+      "exclude_from_bulk_sync": false,
+      "obsidian_note_policy": "docs_only",
+      "safety_warnings": []
     },
     {
       "path": "/mnt/storage/Cole/Projects/Maltego",
@@ -413,11 +506,11 @@
       "safety_warnings": []
     },
     {
-      "path": "/mnt/storage/Cole/Projects/NotEvil",
-      "folder_name": "NotEvil",
-      "safe_slug": "notevil",
-      "has_git": false,
-      "has_readme": false,
+      "path": "/mnt/storage/Cole/Projects/neon-district",
+      "folder_name": "neon-district",
+      "safe_slug": "neon_district",
+      "has_git": true,
+      "has_readme": true,
       "has_code_workspace": false,
       "has_project_yml": false,
       "has_package_json": false,
@@ -431,17 +524,15 @@
         "unknown"
       ],
       "recommended_status": "review",
-      "recommended_category": "unknown",
-      "recommended_action": "review_required",
+      "recommended_category": "active_project",
+      "recommended_action": "register_full",
       "canonical_path": null,
       "do_not_move": false,
       "do_not_delete": false,
       "do_not_sync": false,
       "exclude_from_bulk_sync": false,
       "obsidian_note_policy": "docs_only",
-      "safety_warnings": [
-        "not_a_git_repo"
-      ]
+      "safety_warnings": []
     },
     {
       "path": "/mnt/storage/Cole/Projects/NOTEvil-Inc",
@@ -473,6 +564,35 @@
       "safety_warnings": [
         "not_a_git_repo"
       ]
+    },
+    {
+      "path": "/mnt/storage/Cole/Projects/openclaw-workspace",
+      "folder_name": "openclaw-workspace",
+      "safe_slug": "openclaw_workspace",
+      "has_git": true,
+      "has_readme": false,
+      "has_code_workspace": false,
+      "has_project_yml": false,
+      "has_package_json": false,
+      "has_pyproject_toml": false,
+      "has_flake_nix": false,
+      "has_docker_compose": false,
+      "has_env_files": false,
+      "has_sqlite_or_db_files": false,
+      "has_node_modules": false,
+      "likely_stack": [
+        "unknown"
+      ],
+      "recommended_status": "review",
+      "recommended_category": "unknown",
+      "recommended_action": "review_required",
+      "canonical_path": null,
+      "do_not_move": false,
+      "do_not_delete": false,
+      "do_not_sync": false,
+      "exclude_from_bulk_sync": false,
+      "obsidian_note_policy": "docs_only",
+      "safety_warnings": []
     },
     {
       "path": "/mnt/storage/Cole/Projects/pixel-root-lab",
@@ -748,6 +868,97 @@
       "path": "/mnt/storage/Cole/Projects/Stormchaser407",
       "folder_name": "Stormchaser407",
       "safe_slug": "stormchaser407",
+      "has_git": false,
+      "has_readme": false,
+      "has_code_workspace": false,
+      "has_project_yml": false,
+      "has_package_json": false,
+      "has_pyproject_toml": false,
+      "has_flake_nix": false,
+      "has_docker_compose": false,
+      "has_env_files": false,
+      "has_sqlite_or_db_files": false,
+      "has_node_modules": false,
+      "likely_stack": [
+        "unknown"
+      ],
+      "recommended_status": "review",
+      "recommended_category": "unknown",
+      "recommended_action": "review_required",
+      "canonical_path": null,
+      "do_not_move": false,
+      "do_not_delete": false,
+      "do_not_sync": false,
+      "exclude_from_bulk_sync": false,
+      "obsidian_note_policy": "docs_only",
+      "safety_warnings": [
+        "not_a_git_repo"
+      ]
+    },
+    {
+      "path": "/mnt/storage/Cole/Projects/this-was-avoidable",
+      "folder_name": "this-was-avoidable",
+      "safe_slug": "this_was_avoidable",
+      "has_git": true,
+      "has_readme": true,
+      "has_code_workspace": false,
+      "has_project_yml": false,
+      "has_package_json": false,
+      "has_pyproject_toml": false,
+      "has_flake_nix": false,
+      "has_docker_compose": false,
+      "has_env_files": false,
+      "has_sqlite_or_db_files": false,
+      "has_node_modules": false,
+      "likely_stack": [
+        "unknown"
+      ],
+      "recommended_status": "review",
+      "recommended_category": "active_project",
+      "recommended_action": "register_full",
+      "canonical_path": null,
+      "do_not_move": false,
+      "do_not_delete": false,
+      "do_not_sync": false,
+      "exclude_from_bulk_sync": false,
+      "obsidian_note_policy": "docs_only",
+      "safety_warnings": []
+    },
+    {
+      "path": "/mnt/storage/Cole/Projects/tidal-hifi",
+      "folder_name": "tidal-hifi",
+      "safe_slug": "tidal_hifi",
+      "has_git": true,
+      "has_readme": true,
+      "has_code_workspace": false,
+      "has_project_yml": false,
+      "has_package_json": true,
+      "has_pyproject_toml": false,
+      "has_flake_nix": false,
+      "has_docker_compose": false,
+      "has_env_files": false,
+      "has_sqlite_or_db_files": false,
+      "has_node_modules": true,
+      "likely_stack": [
+        "node"
+      ],
+      "recommended_status": "review",
+      "recommended_category": "active_project",
+      "recommended_action": "review_required",
+      "canonical_path": null,
+      "do_not_move": false,
+      "do_not_delete": false,
+      "do_not_sync": false,
+      "exclude_from_bulk_sync": false,
+      "obsidian_note_policy": "docs_only",
+      "safety_warnings": [
+        "contains_node_modules"
+      ]
+    },
+    {
+      "path": "/mnt/storage/Cole/Projects/tidal-scrobble-cop",
+      "folder_name": "tidal-scrobble-cop",
+      "safe_slug": "tidal_scrobble_cop",
       "has_git": false,
       "has_readme": false,
       "has_code_workspace": false,
