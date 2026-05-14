@@ -7,11 +7,16 @@ from pathlib import Path
 from project_forge_registry.remote_policy import (
     build_parser,
     build_plan,
+    build_push_ready,
     build_verify,
     repository_root,
     resolve_repo_scoped_dir,
 )
-from project_forge_registry.remote_reporting import write_remote_plan_report, write_remote_verify_report
+from project_forge_registry.remote_reporting import (
+    write_push_ready_report,
+    write_remote_plan_report,
+    write_remote_verify_report,
+)
 
 
 def write_passport(
@@ -90,6 +95,9 @@ class RemotePolicyTests(unittest.TestCase):
         verify = parser.parse_args(["verify", "--slug", "demo", "--require-clean-tree"])
         self.assertEqual(verify.command, "verify")
         self.assertTrue(verify.require_clean_tree)
+        push_ready = parser.parse_args(["push-ready", "--slug", "demo", "--require-clean-tree"])
+        self.assertEqual(push_ready.command, "push-ready")
+        self.assertTrue(push_ready.require_clean_tree)
 
     def test_repo_scoped_dir_rejects_outside_repo(self) -> None:
         with self.assertRaises(ValueError):
@@ -227,6 +235,116 @@ class RemotePolicyTests(unittest.TestCase):
             verify.report_path.parent.mkdir(parents=True, exist_ok=True)
             write_remote_verify_report(verify.report_path, verify)
             self.assertTrue(verify.report_path.exists())
+
+            push_args = parser.parse_args(["push-ready", "--slug", "demo", "--passport-dir", str(passport_dir)])
+            push = build_push_ready(push_args)
+            push.report_path.parent.mkdir(parents=True, exist_ok=True)
+            write_push_ready_report(push.report_path, push)
+            self.assertTrue(push.report_path.exists())
+
+    def test_push_ready_incomplete_when_required_evidence_missing(self) -> None:
+        with self.temp_in_repo() as tmp:
+            root = Path(tmp)
+            repo = root / "repo"
+            repo.mkdir()
+            passport_dir = root / "project_passports"
+            passport_dir.mkdir()
+            write_passport(passport_dir / "demo.project.yml", local_path=str(repo))
+
+            from subprocess import run
+
+            run(["git", "-C", str(repo), "init", "-b", "main"], check=True, capture_output=True, text=True)
+            run(["git", "-C", str(repo), "config", "user.email", "tests@example.com"], check=True, capture_output=True, text=True)
+            run(["git", "-C", str(repo), "config", "user.name", "Test User"], check=True, capture_output=True, text=True)
+            (repo / "README.md").write_text("demo\n", encoding="utf-8")
+            run(["git", "-C", str(repo), "add", "README.md"], check=True, capture_output=True, text=True)
+            run(["git", "-C", str(repo), "commit", "-m", "init"], check=True, capture_output=True, text=True)
+
+            parser = build_parser()
+            args = parser.parse_args(
+                [
+                    "push-ready",
+                    "--slug",
+                    "demo",
+                    "--passport-dir",
+                    str(passport_dir),
+                    "--require-clean-tree",
+                    "--require-doc-reports-current",
+                    "--require-export-report-current",
+                ]
+            )
+            push = build_push_ready(args)
+            self.assertEqual(push.final_aggregate_status, "incomplete")
+            checks = {check.name: check for check in push.checks}
+            self.assertTrue(checks["working_tree_clean"].passed)
+            self.assertFalse(checks["docs_reports_current"].passed)
+            self.assertFalse(checks["export_report_current"].passed)
+
+    def test_push_ready_blocked_when_sensitive_tracked_file_found(self) -> None:
+        with self.temp_in_repo() as tmp:
+            root = Path(tmp)
+            repo = root / "repo"
+            repo.mkdir()
+            passport_dir = root / "project_passports"
+            passport_dir.mkdir()
+            write_passport(passport_dir / "demo.project.yml", local_path=str(repo))
+
+            from subprocess import run
+
+            run(["git", "-C", str(repo), "init", "-b", "main"], check=True, capture_output=True, text=True)
+            run(["git", "-C", str(repo), "config", "user.email", "tests@example.com"], check=True, capture_output=True, text=True)
+            run(["git", "-C", str(repo), "config", "user.name", "Test User"], check=True, capture_output=True, text=True)
+            (repo / ".env.local").write_text("TOKEN=abc\n", encoding="utf-8")
+            run(["git", "-C", str(repo), "add", ".env.local"], check=True, capture_output=True, text=True)
+            run(["git", "-C", str(repo), "commit", "-m", "add-env"], check=True, capture_output=True, text=True)
+
+            parser = build_parser()
+            args = parser.parse_args(["push-ready", "--slug", "demo", "--passport-dir", str(passport_dir)])
+            push = build_push_ready(args)
+            self.assertEqual(push.final_aggregate_status, "blocked")
+            self.assertGreater(len(push.secret_scan_summary.suspicious_files), 0)
+
+    def test_push_ready_ready_for_operator_review_when_gates_pass(self) -> None:
+        with self.temp_in_repo() as tmp:
+            root = Path(tmp)
+            repo = root / "repo"
+            repo.mkdir()
+            artifacts_dir = root
+            passport_dir = artifacts_dir / "project_passports"
+            passport_dir.mkdir()
+            write_passport(passport_dir / "demo.project.yml", local_path=str(repo))
+
+            from subprocess import run
+
+            run(["git", "-C", str(repo), "init", "-b", "main"], check=True, capture_output=True, text=True)
+            run(["git", "-C", str(repo), "config", "user.email", "tests@example.com"], check=True, capture_output=True, text=True)
+            run(["git", "-C", str(repo), "config", "user.name", "Test User"], check=True, capture_output=True, text=True)
+            (repo / "README.md").write_text("demo\n", encoding="utf-8")
+            (repo / "artifacts").mkdir(parents=True, exist_ok=True)
+            (repo / "artifacts" / "tests_pass_evidence.txt").write_text("ok\n", encoding="utf-8")
+            run(["git", "-C", str(repo), "add", "README.md"], check=True, capture_output=True, text=True)
+            run(["git", "-C", str(repo), "add", "artifacts/tests_pass_evidence.txt"], check=True, capture_output=True, text=True)
+            run(["git", "-C", str(repo), "commit", "-m", "init"], check=True, capture_output=True, text=True)
+            (artifacts_dir / "obsidian_sync_report.md").write_text("slug: demo\n", encoding="utf-8")
+            (artifacts_dir / "export_sync_report.md").write_text("slug: demo\n", encoding="utf-8")
+
+            parser = build_parser()
+            args = parser.parse_args(
+                [
+                    "push-ready",
+                    "--slug",
+                    "demo",
+                    "--passport-dir",
+                    str(passport_dir),
+                    "--require-clean-tree",
+                    "--require-tests-pass",
+                    "--require-doc-reports-current",
+                    "--require-export-report-current",
+                ]
+            )
+            push = build_push_ready(args)
+            self.assertEqual(push.final_aggregate_status, "ready_for_operator_review")
+            self.assertTrue(push.operator_approval_required)
 
 
 if __name__ == "__main__":

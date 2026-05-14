@@ -74,3 +74,39 @@ class RemoteVerify:
     reasons: list[str]
     remote_state: RemoteState
     checks: list[VerificationCheck]
+
+
+@dataclass(slots=True)
+class PushReadyReportEvidence:
+    path: Path
+    exists: bool
+    slug_mentioned: bool
+    detail: str
+
+
+@dataclass(slots=True)
+class SecretScanSummary:
+    implemented: bool
+    scanned_with_git: bool
+    suspicious_files: list[str] = field(default_factory=list)
+    detail: str = ""
+
+
+@dataclass(slots=True)
+class RemotePushReady:
+    mode: str
+    slug: str
+    passport_dir: Path
+    report_path: Path
+    record: RemotePassportRecord
+    defaults: RemotePolicyDefaults
+    eligible: bool
+    policy_status: str
+    reasons: list[str]
+    remote_state: RemoteState
+    checks: list[VerificationCheck]
+    docs_report_evidence: PushReadyReportEvidence
+    export_report_evidence: PushReadyReportEvidence
+    secret_scan_summary: SecretScanSummary
+    final_aggregate_status: str
+    operator_approval_required: bool

@@ -379,6 +379,7 @@ Phase 7 introduces local-only remote policy tooling:
 
 - `project-forge-remote-plan`
 - `project-forge-remote-verify`
+- `project-forge-push-ready`
 
 Both commands are dry-run/read-only in this phase. They do not add remotes, push, fetch, or contact remote services.
 
@@ -386,6 +387,7 @@ Module equivalent (subcommands):
 
 - `PYTHONPATH=src python3 -m project_forge_registry.remote_policy plan ...`
 - `PYTHONPATH=src python3 -m project_forge_registry.remote_policy verify ...`
+- `PYTHONPATH=src python3 -m project_forge_registry.remote_policy push-ready ...`
 
 ### Phase 7 CLI
 
@@ -406,6 +408,17 @@ Module equivalent (subcommands):
 - `--report-name <filename>` (default `remote_verify_report.md`)
 - `--dry-run`
 
+`project-forge-push-ready`:
+
+- `--slug <slug>` (required)
+- `--passport-dir <path>` (default `artifacts/project_passports`)
+- `--require-clean-tree`
+- `--require-tests-pass`
+- `--require-doc-reports-current`
+- `--require-export-report-current`
+- `--report-name <filename>` (default `push_ready_report.md`)
+- `--dry-run`
+
 ### Phase 7 Safety Rules
 
 - Read-only policy/report tooling only.
@@ -413,3 +426,13 @@ Module equivalent (subcommands):
 - No push, fetch, or external remote contact.
 - Protected projects (Cerberus-related, reconciliation/system-bound/unknown/review_required) are blocked by policy.
 - Push-ready is not granted in this phase.
+
+### Phase 7b Push-Ready Notes
+
+- `project-forge-push-ready` is a read-only preflight gate.
+- Final aggregate statuses are:
+- `blocked`
+- `incomplete`
+- `ready_for_operator_review`
+- `ready_to_push` is intentionally not returned in this phase.
+- Secret/sensitive scanning is filename-based for tracked/staged files and reports findings without reading secret contents.

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from .remote_models import RemotePlan, RemoteVerify
+from .remote_models import RemotePlan, RemotePushReady, RemoteVerify
 
 
 def write_remote_plan_report(path: Path, plan: RemotePlan) -> None:
@@ -123,6 +123,100 @@ def write_remote_verify_report(path: Path, verify: RemoteVerify) -> None:
             "- Push/fetch performed: no",
             "- Secret scan implementation: pending Phase 7b/8",
             "- Push-ready determination in this phase: no",
+        ]
+    )
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def write_push_ready_report(path: Path, push_ready: RemotePushReady) -> None:
+    lines = [
+        "# Push Ready Report",
+        "",
+        "## Scope",
+        "",
+        f"- Mode: `{push_ready.mode}`",
+        f"- Slug: `{push_ready.slug}`",
+        f"- Passport dir: `{push_ready.passport_dir}`",
+        f"- Passport file: `{push_ready.record.passport_path}`",
+        f"- Local repo path: `{push_ready.record.local_path}`",
+        "",
+        "## Eligibility",
+        "",
+        f"- Eligible: {str(push_ready.eligible).lower()}",
+        f"- Policy status: `{push_ready.policy_status}`",
+        f"- Final aggregate status: `{push_ready.final_aggregate_status}`",
+        f"- Operator approval still required: {str(push_ready.operator_approval_required).lower()}",
+    ]
+    if push_ready.reasons:
+        lines.extend(["", "## Eligibility Notes", ""])
+        for reason in push_ready.reasons:
+            lines.append(f"- {reason}")
+
+    lines.extend(["", "## Local Git State", ""])
+    lines.append(f"- Inside git repo: {str(push_ready.remote_state.inside_git_repo).lower()}")
+    lines.append(
+        f"- Current branch: `{push_ready.remote_state.current_branch if push_ready.remote_state.current_branch else 'unknown'}`"
+    )
+    lines.append(
+        f"- Working tree clean (if checked): "
+        f"`{push_ready.remote_state.clean_working_tree if push_ready.remote_state.clean_working_tree is not None else 'not_checked'}`"
+    )
+    if push_ready.remote_state.clean_working_tree_lines:
+        lines.append("- Working tree details:")
+        for row in push_ready.remote_state.clean_working_tree_lines:
+            lines.append(f"  - `{row}`")
+
+    lines.extend(["", "## Remote Snapshot", ""])
+    if not push_ready.remote_state.remotes:
+        lines.append("- No configured remotes detected.")
+    else:
+        for name, url, direction in push_ready.remote_state.remotes:
+            lines.append(f"- `{name}` `{direction}` -> `{url}`")
+
+    lines.extend(["", "## Gate Checks", ""])
+    for check in push_ready.checks:
+        lines.append(
+            f"- `{check.name}` required={str(check.required).lower()} "
+            f"passed={str(check.passed).lower()} detail={check.detail}"
+        )
+
+    lines.extend(["", "## Docs Report Evidence", ""])
+    lines.append(
+        f"- Obsidian sync report: `{push_ready.docs_report_evidence.path}` "
+        f"exists={str(push_ready.docs_report_evidence.exists).lower()} "
+        f"slug_mentioned={str(push_ready.docs_report_evidence.slug_mentioned).lower()} "
+        f"detail={push_ready.docs_report_evidence.detail}"
+    )
+    lines.append(
+        f"- Export sync report: `{push_ready.export_report_evidence.path}` "
+        f"exists={str(push_ready.export_report_evidence.exists).lower()} "
+        f"slug_mentioned={str(push_ready.export_report_evidence.slug_mentioned).lower()} "
+        f"detail={push_ready.export_report_evidence.detail}"
+    )
+
+    lines.extend(["", "## Secret Scan Summary", ""])
+    lines.append(
+        f"- Implemented: {str(push_ready.secret_scan_summary.implemented).lower()} "
+        f"(git-scoped={str(push_ready.secret_scan_summary.scanned_with_git).lower()})"
+    )
+    lines.append(f"- Detail: {push_ready.secret_scan_summary.detail}")
+    if push_ready.secret_scan_summary.suspicious_files:
+        lines.append("- Suspicious tracked/staged file names:")
+        for item in push_ready.secret_scan_summary.suspicious_files:
+            lines.append(f"  - `{item}`")
+    else:
+        lines.append("- Suspicious tracked/staged file names: none detected")
+
+    lines.extend(
+        [
+            "",
+            "## Safety Confirmation",
+            "",
+            "- Read-only preflight mode: yes",
+            "- Remotes added/modified: no",
+            "- Push/fetch performed: no",
+            "- GitHub/Codeberg network contact: no",
+            "- Ready to push returned in this phase: no",
         ]
     )
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
