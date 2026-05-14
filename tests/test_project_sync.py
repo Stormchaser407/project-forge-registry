@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import tempfile
+import contextlib
+import io
 import unittest
 import sys
 from pathlib import Path
@@ -25,11 +27,14 @@ class ProjectSyncTests(unittest.TestCase):
         args = parser.parse_args(["--slug", "demo"])
         self.assertEqual(parse_mode(args, parser), "dry-run")
 
-    def test_apply_is_rejected_in_phase_8_4(self) -> None:
+    def test_apply_is_rejected_in_dry_run_only_phase(self) -> None:
         parser = build_parser()
         args = parser.parse_args(["--slug", "demo", "--apply"])
-        with self.assertRaises(SystemExit):
-            parse_mode(args, parser)
+        stderr = io.StringIO()
+        with contextlib.redirect_stderr(stderr):
+            with self.assertRaises(SystemExit):
+                parse_mode(args, parser)
+        self.assertIn("dry-run-only project-sync phase", stderr.getvalue())
 
     def test_default_profile_selects_safe_dry_run_lanes_only(self) -> None:
         parser = build_parser()

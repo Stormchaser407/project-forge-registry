@@ -93,7 +93,7 @@ def parse_mode(args: argparse.Namespace, parser: argparse.ArgumentParser) -> str
     if args.apply and args.dry_run:
         parser.error("Use either --apply or --dry-run, not both.")
     if args.apply:
-        parser.error("--apply is intentionally disabled in Phase 8.4. Use dry-run only.")
+        parser.error("--apply is intentionally disabled for the current dry-run-only project-sync phase. Use dry-run only.")
     return "dry-run"
 
 
