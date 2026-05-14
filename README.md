@@ -243,3 +243,85 @@ Suggested apply verification capture:
   sed -n '1,220p' artifacts/obsidian_mirror_generation_report.md
 } | capture-for-chat phase4-obsidian-mirror-check
 ```
+
+## Phase 4b Command
+
+`project-forge-obsidian-sync` consumes:
+
+- `artifacts/project_passports/<slug>.project.yml`
+- `artifacts/obsidian_mirrors/<slug>/`
+
+and plans or performs a docs-only markdown sync to:
+
+- `/home/cole/main_vault/10 Projects/<project-folder>/`
+
+The project folder name is derived from `paths.obsidian` in the passport.
+
+Default behavior is dry-run. In dry-run mode, only the artifact report is written:
+
+- `artifacts/obsidian_sync_report.md`
+
+Example dry-run:
+
+```bash
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_sync \
+  --slug project_forge_registry \
+  --dry-run
+```
+
+Example apply:
+
+```bash
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_sync \
+  --slug project_forge_registry \
+  --apply
+```
+
+### Phase 4b CLI
+
+- `--slug <slug>`: required slug to sync.
+- `--passport-dir <path>`: defaults to `artifacts/project_passports`.
+- `--mirror-dir <path>`: defaults to `artifacts/obsidian_mirrors`.
+- `--vault-project-root <path>`: defaults to `/home/cole/main_vault/10 Projects`.
+- `--dry-run`: plan only (default mode).
+- `--apply`: perform copy.
+- `--report-name <filename>`: defaults to `obsidian_sync_report.md`.
+- `--backup-suffix <suffix>`: optional backup suffix, otherwise timestamp-based.
+
+### Phase 4b Safety Rules
+
+- Dry-run first.
+- Markdown only (`*.md`) from mirror source.
+- Excludes include `*.bak*`, `.env*`, `.py`, `.js`, `.ts`, `.nix`, `.json`, `.yml`, `.yaml`, `.db`, `.sqlite`, `.log`.
+- Excludes directories: `node_modules/`, `.venv/`, `__pycache__/`, `.git/`.
+- No destination deletes.
+- Existing destination markdown files are backed up before overwrite.
+- Destination must stay under `--vault-project-root`.
+- Source paths for passports and mirrors must stay inside this repository.
+- Cerberus-protected entries are skipped.
+- No GitHub/Codeberg sync and no external project-folder writes.
+
+### Phase 4b Capture For Chat
+
+Suggested dry-run verification capture:
+
+```bash
+{
+  PYTHONPATH=src python3 -m project_forge_registry.obsidian_sync \
+    --slug project_forge_registry \
+    --dry-run
+  sed -n '1,260p' artifacts/obsidian_sync_report.md
+} | capture-for-chat phase4b-obsidian-sync-dry-run
+```
+
+Suggested apply verification capture:
+
+```bash
+{
+  PYTHONPATH=src python3 -m project_forge_registry.obsidian_sync \
+    --slug project_forge_registry \
+    --apply
+  sed -n '1,260p' artifacts/obsidian_sync_report.md
+  find "/home/cole/main_vault/10 Projects/project-forge-registry" -maxdepth 3 -type f | sort
+} | capture-for-chat phase4b-obsidian-sync-apply
+```
