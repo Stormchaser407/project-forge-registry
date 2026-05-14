@@ -2,13 +2,13 @@
 
 - mode: `dry-run`
 - slug: `project_forge_registry`
-- lane_selection: `explicit`
+- lane_selection: `default_profile`
 - passport: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/project_forge_registry.project.yml`
 - final_status: `ready_for_operator_review`
 
 ## Lane Summary
 
-- selection_note: `explicit lane flags`
+- selection_note: `safe default dry-run profile`
 - requested_lanes: `5`
 - unrequested_skipped_lanes: `4`
 - passed_lanes: `5`
