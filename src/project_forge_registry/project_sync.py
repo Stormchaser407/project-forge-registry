@@ -62,7 +62,7 @@ def resolve_report_path(passport_dir: Path, report_name: str) -> Path:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="project-sync",
-        description="Phase 8.1 dry-run-only single-slug orchestrator for Project Forge lanes.",
+        description="Phase 8.2 dry-run-only single-slug orchestrator for Project Forge lanes.",
     )
     parser.add_argument("--slug", required=True, help="Project slug to orchestrate.")
     parser.add_argument("--passport-dir", default=DEFAULT_PASSPORT_DIR, help="Passport directory.")
@@ -90,7 +90,7 @@ def parse_mode(args: argparse.Namespace, parser: argparse.ArgumentParser) -> str
     if args.apply and args.dry_run:
         parser.error("Use either --apply or --dry-run, not both.")
     if args.apply:
-        parser.error("--apply is intentionally disabled in Phase 8.1. Use dry-run only.")
+        parser.error("--apply is intentionally disabled in Phase 8.2. Use dry-run only.")
     return "dry-run"
 
 
@@ -230,11 +230,11 @@ def run_lane(spec: LaneSpec) -> LaneResult:
 def derive_final_status(global_blocked: bool, results: list[LaneResult]) -> str:
     if global_blocked:
         return "blocked"
-    if any(item.status == "failed" for item in results):
+
+    requested_results = [item for item in results if item.requested]
+    if any(item.status in {"failed", "blocked"} for item in requested_results):
         return "blocked"
-    if any(item.status == "skipped" and item.requested for item in results):
-        return "incomplete"
-    if any(item.status == "skipped" for item in results):
+    if any(item.status in {"skipped", "incomplete"} for item in requested_results):
         return "incomplete"
     return "ready_for_operator_review"
 
@@ -252,7 +252,7 @@ def write_report(
     report_path.parent.mkdir(parents=True, exist_ok=True)
 
     lines: list[str] = [
-        "# Project Sync Report (Phase 8.1)",
+        "# Project Sync Report (Phase 8.2)",
         "",
         f"- mode: `{mode}`",
         f"- slug: `{slug}`",
@@ -272,7 +272,56 @@ def write_report(
             ]
         )
 
-    lines.extend(["## Lanes", ""])
+    requested_results = [item for item in results if item.requested]
+    unrequested_results = [item for item in results if not item.requested]
+    passed_results = [item for item in requested_results if item.status == "passed"]
+    problem_results = [
+        item for item in requested_results if item.status in {"failed", "blocked", "skipped", "incomplete"}
+    ]
+
+    lines.extend(
+        [
+            "## Lane Summary",
+            "",
+            f"- requested_lanes: `{len(requested_results)}`",
+            f"- unrequested_skipped_lanes: `{len([item for item in unrequested_results if item.status == 'skipped'])}`",
+            f"- passed_lanes: `{len(passed_results)}`",
+            f"- failed_or_incomplete_lanes: `{len(problem_results)}`",
+            "",
+            "## Requested Lanes",
+            "",
+        ]
+    )
+
+    if requested_results:
+        lines.extend([f"- {item.key}: `{item.status}`" for item in requested_results])
+    else:
+        lines.append("- none")
+    lines.append("")
+
+    lines.extend(["## Unrequested Skipped Lanes", ""])
+    skipped_unrequested = [item for item in unrequested_results if item.status == "skipped"]
+    if skipped_unrequested:
+        lines.extend([f"- {item.key}" for item in skipped_unrequested])
+    else:
+        lines.append("- none")
+    lines.append("")
+
+    lines.extend(["## Passed Lanes", ""])
+    if passed_results:
+        lines.extend([f"- {item.key}" for item in passed_results])
+    else:
+        lines.append("- none")
+    lines.append("")
+
+    lines.extend(["## Failed Or Incomplete Lanes", ""])
+    if problem_results:
+        lines.extend([f"- {item.key}: `{item.status}` ({item.note})" for item in problem_results])
+    else:
+        lines.append("- none")
+    lines.append("")
+
+    lines.extend(["## Lane Details", ""])
     for item in results:
         command_text = " ".join(item.command) if item.command else "(none)"
         lines.extend(
@@ -292,7 +341,7 @@ def write_report(
         [
             "## Safety Statement",
             "",
-            "- Phase 8.1 is dry-run only.",
+            "- Phase 8.2 is dry-run only.",
             "- No push or remote mutation actions are performed by this command.",
             "",
         ]

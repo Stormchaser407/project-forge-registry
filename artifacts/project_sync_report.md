@@ -1,11 +1,45 @@
-# Project Sync Report (Phase 8.1)
+# Project Sync Report (Phase 8.2)
 
 - mode: `dry-run`
 - slug: `project_forge_registry`
 - passport: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/project_forge_registry.project.yml`
-- final_status: `incomplete`
+- final_status: `ready_for_operator_review`
 
-## Lanes
+## Lane Summary
+
+- requested_lanes: `5`
+- unrequested_skipped_lanes: `4`
+- passed_lanes: `5`
+- failed_or_incomplete_lanes: `0`
+
+## Requested Lanes
+
+- sync_obsidian: `passed`
+- export_docs: `passed`
+- remote_plan: `passed`
+- remote_verify: `passed`
+- push_ready: `passed`
+
+## Unrequested Skipped Lanes
+
+- refresh_scan
+- refresh_workspace
+- refresh_passport
+- refresh_mirror
+
+## Passed Lanes
+
+- sync_obsidian
+- export_docs
+- remote_plan
+- remote_verify
+- push_ready
+
+## Failed Or Incomplete Lanes
+
+- none
+
+## Lane Details
 
 ### Refresh Classification
 - key: `refresh_scan`
@@ -81,5 +115,5 @@
 
 ## Safety Statement
 
-- Phase 8.1 is dry-run only.
+- Phase 8.2 is dry-run only.
 - No push or remote mutation actions are performed by this command.

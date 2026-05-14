@@ -8,6 +8,7 @@ from pathlib import Path
 from project_forge_registry.project_sync import (
     build_parser,
     build_lane_specs,
+    derive_final_status,
     detect_protected_project,
     parse_mode,
     repository_root,
@@ -74,6 +75,32 @@ class ProjectSyncTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             resolve_repo_scoped_dir("/tmp/outside", "passport dir")
 
+    def test_unrequested_skipped_lanes_do_not_make_final_status_incomplete(self) -> None:
+        results = [
+            LaneResult("sync_obsidian", "Obsidian Sync", True, "passed", ["python"], 0, "ok"),
+            LaneResult("export_docs", "Export Docs", True, "passed", ["python"], 0, "ok"),
+            LaneResult("remote_plan", "Remote Plan", False, "skipped", ["python"], None, "not requested"),
+        ]
+
+        self.assertEqual(derive_final_status(False, results), "ready_for_operator_review")
+
+    def test_requested_failed_lane_blocks_final_status(self) -> None:
+        results = [
+            LaneResult("sync_obsidian", "Obsidian Sync", True, "passed", ["python"], 0, "ok"),
+            LaneResult("export_docs", "Export Docs", True, "failed", ["python"], 1, "lane_failed"),
+            LaneResult("remote_plan", "Remote Plan", False, "skipped", ["python"], None, "not requested"),
+        ]
+
+        self.assertEqual(derive_final_status(False, results), "blocked")
+
+    def test_requested_skipped_lane_marks_final_status_incomplete(self) -> None:
+        results = [
+            LaneResult("refresh_scan", "Refresh Classification", True, "skipped", None, None, "missing evidence"),
+            LaneResult("remote_plan", "Remote Plan", False, "skipped", ["python"], None, "not requested"),
+        ]
+
+        self.assertEqual(derive_final_status(False, results), "incomplete")
+
     def test_detect_protected_project_from_slug_and_passport(self) -> None:
         with tempfile.TemporaryDirectory(dir=repository_root() / "artifacts") as artifacts_tmp:
             passport_dir = Path(artifacts_tmp) / "project_passports"
@@ -125,13 +152,37 @@ class ProjectSyncTests(unittest.TestCase):
                         ],
                         return_code=0,
                         note="ok",
+                    ),
+                    LaneResult(
+                        key="remote_plan",
+                        title="Remote Plan",
+                        requested=False,
+                        status="skipped",
+                        command=[
+                            sys.executable,
+                            "-m",
+                            "project_forge_registry.remote_policy",
+                            "plan",
+                            "--dry-run",
+                            "--slug",
+                            "demo",
+                        ],
+                        return_code=None,
+                        note="not requested",
                     )
                 ],
                 final_status="ready_for_operator_review",
             )
             text = report_path.read_text(encoding="utf-8")
-            self.assertIn("# Project Sync Report (Phase 8.1)", text)
+            self.assertIn("# Project Sync Report (Phase 8.2)", text)
             self.assertIn("final_status: `ready_for_operator_review`", text)
+            self.assertIn("## Requested Lanes", text)
+            self.assertIn("- refresh_workspace: `passed`", text)
+            self.assertIn("## Unrequested Skipped Lanes", text)
+            self.assertIn("- remote_plan", text)
+            self.assertIn("## Passed Lanes", text)
+            self.assertIn("## Failed Or Incomplete Lanes", text)
+            self.assertIn("- none", text)
 
 
 if __name__ == "__main__":
