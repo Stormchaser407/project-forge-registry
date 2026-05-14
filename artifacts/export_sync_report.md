@@ -2,7 +2,7 @@
 
 ## Scope
 
-- Mode: `dry-run`
+- Mode: `apply`
 - Slug: `project_forge_registry`
 - Passport dir: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports`
 - Passport file: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/project_forge_registry.project.yml`
@@ -15,19 +15,15 @@
 ## Summary
 
 - Eligible: true
-- Files planned: 0
-- Files copied: 0
+- Files planned: 1
+- Files copied: 1
 - Backups planned: 0
 - Backups created: 0
 - Excluded files: 0
 
-## Eligibility Notes
-
-- source_export_docs_missing
-
 ## Files Planned
 
-- None
+- source=`/home/cole/main_vault/10 Projects/project_forge_registry/_export/docs/PROJECT_FORGE_EXPORT_SYNC_PILOT.md` (relative_export=`docs/PROJECT_FORGE_EXPORT_SYNC_PILOT.md`) -> destination=`/mnt/storage/Cole/Projects/project-forge-registry/docs/PROJECT_FORGE_EXPORT_SYNC_PILOT.md` (exists_before=false, backup=`none`, copied=true, backup_created=false)
 
 ## Excluded Files
 
