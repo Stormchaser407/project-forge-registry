@@ -7,28 +7,33 @@ aliases:
 
 ## Thirty-Second Version
 
-Describe the shortest useful story for the project.
+`media-dedupe` is treated as a likely duplicate-media utility project in the registry. This demo focuses on safe project framing and verified documentation boundaries.
 
-## Why I Built This
+## Why This Exists
 
-Capture the user problem or workflow this project exists to serve.
+- Media duplicates are a common operational pain point.
+- Teams need clear understanding of tool intent before execution-level trust.
 
-## What It Does Right Now
+## Demo Flow
 
-List the current reliable capabilities only.
+1. Open workspace and launcher.
+2. Show registry status and mirror docs scope.
+3. Call out verified facts vs `needs review` items.
+4. Run dry-run sync command and show report output.
 
-## What Makes It Different
+## Demo Commands
 
-Note the differentiator without copying implementation details.
+```bash
+code "/home/cole/.config/Code/User/workspaces/media_dedupe.code-workspace"
+code-media_dedupe
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_sync --dry-run --slug media_dedupe
+```
 
-## Cool Part To Show First
+## Known vs Needs Review
 
-Call out the first moment that makes the project click.
-
-## Current Limitations
-
-Document the rough edges and what still needs operator care.
+- Known: project is tracked, active, and present in controlled docs-sync lanes.
+- Needs review: exact dedupe algorithms, safety behavior, and operational limits.
 
 ## Next Build Step
 
-Record the next concrete improvement worth building.
+After project review, add a verified one-page capability map with safe usage boundaries.

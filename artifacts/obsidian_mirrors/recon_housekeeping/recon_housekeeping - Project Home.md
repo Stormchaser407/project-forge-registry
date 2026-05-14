@@ -21,35 +21,44 @@ sync_policy: "docs_only / export_only"
 
 ## Purpose
 
-Placeholder planning note for the `recon_housekeeping` mirror proposal.
+`recon_housekeeping` is the local-first housekeeping and consolidation workspace for repo-sprawl triage, SITREPs, archaeology, and cleanup decision tracking.
 
 ## Current Status
 
 - Registry status: `review`
 - Category: `active_project`
 - Proposed mirror path: `/home/cole/main_vault/10 Projects/recon_housekeeping`
+- Documentation lane: showroom/memory-layer docs with controlled markdown-only sync planning
 
 ## What This Project Does
 
-Capture a safe documentation shell without copying source code into Obsidian.
+- Supports safe consolidation planning across sprawling local project directories.
+- Captures archaeology findings and operational SITREP context.
+- Preserves cleanup decisions so future work does not repeat earlier mistakes.
 
 ## Why It Matters
 
-Gives operators a clean project-facing surface for demos, status, handoff, and runbook material.
+- Reduces chaos during consolidation efforts.
+- Improves continuity between operators and agents.
+- Gives cleanup efforts an auditable, human-readable decision trail.
 
 ## Current Risks / Watch Items
 
-- None currently recorded.
+- Classification and cleanup recommendations still require human validation before action.
+- Consolidation work can unintentionally remove useful context if not tracked carefully.
+- Mirror docs must stay docs-only with no source code, secrets, logs, or databases.
 
 ## Next Actions
 
-- Review this proposal before any real vault sync is introduced.
-- Fill in purpose, risks, and roadmap details manually or through later approved automation.
+1. Continue recording archaeology outcomes and cleanup decisions in structured notes.
+2. Validate high-priority consolidation candidates before any destructive operations.
+3. Keep Obsidian sync in dry-run mode until apply is explicitly approved.
 
 ## Demo Notes
 
-- Start from the launcher or workspace path below.
-- Keep demo language high level until docs-only sync is approved.
+- Start with the problem: many repos, uncertain overlap, and hidden cleanup risk.
+- Show the safe command/report flow that creates confidence before changes.
+- End with review checkpoints, not automation hype.
 
 ## Links and Commands
 
@@ -61,4 +70,11 @@ Gives operators a clean project-facing surface for demos, status, handoff, and r
 ```bash
 code "/home/cole/.config/Code/User/workspaces/recon_housekeeping.code-workspace"
 code-recon_housekeeping
+
+PYTHONPATH=src python3 -m unittest discover -s tests
+./scripts/project-scan
+PYTHONPATH=src python3 -m project_forge_registry.workspace_generation --dry-run --input-json artifacts/project_scan_report.json
+PYTHONPATH=src python3 -m project_forge_registry.passport_generation --dry-run
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_mirror_generation --dry-run
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_sync --dry-run --slug recon_housekeeping
 ```

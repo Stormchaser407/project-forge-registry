@@ -14,12 +14,18 @@ code-media_dedupe
 
 ## Common Commands
 
-- Add the safest daily commands here.
+```bash
+PYTHONPATH=src python3 -m unittest discover -s tests
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_sync --dry-run --slug media_dedupe
+```
 
 ## Test Commands
 
-- Add non-destructive verification commands here.
+- Run full tests before workflow or sync changes.
+- Keep sync commands in dry-run mode during this phase.
 
 ## Recovery Notes
 
-- Record rollback or reset guidance that does not rely on destructive shortcuts.
+- Treat unknown behavior as `needs review`, not as operator truth.
+- If docs are regenerated, re-apply verified enrichment only.
+- Keep all changes scoped to repo mirror artifacts.

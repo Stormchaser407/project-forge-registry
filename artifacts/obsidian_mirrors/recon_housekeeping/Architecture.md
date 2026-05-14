@@ -7,13 +7,26 @@ aliases:
 
 ## Overview
 
-Summarize the major components at a high level without copying source code.
+High-level architecture centers on planning and memory, not mutation: collect evidence, classify work, stage decisions, and hand off cleanly.
+
+## Components
+
+- Workspace and launcher entry points for operators.
+- Registry-generated artifacts for scan/classification context.
+- Showroom docs for handoff, risks, and next-step planning.
 
 ## Boundaries
 
-- Local path is tracked in the passport.
-- Real Obsidian sync is not enabled in this phase.
+- No direct external folder modifications from this docs lane.
+- No source code or sensitive operational data in mirror docs.
+- Sync remains dry-run-first until explicit apply authorization.
 
 ## Interfaces
 
-List the main entry points, services, or integrations to describe later.
+- `./scripts/project-scan`
+- phase generator dry-runs
+- `project-forge-obsidian-sync --dry-run --slug recon_housekeeping`
+
+## Needs Review
+
+Internal implementation details of housekeeping scripts and heuristics should be documented only after direct repo review.

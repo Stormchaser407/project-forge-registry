@@ -14,12 +14,18 @@ code-steelseries_rgb
 
 ## Common Commands
 
-- Add the safest daily commands here.
+```bash
+PYTHONPATH=src python3 -m unittest discover -s tests
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_sync --dry-run --slug steelseries_rgb
+```
 
 ## Test Commands
 
-- Add non-destructive verification commands here.
+- Run full test suite before any sync-related changes.
+- Keep docs sync in dry-run mode during this phase.
 
 ## Recovery Notes
 
-- Record rollback or reset guidance that does not rely on destructive shortcuts.
+- If a capability statement is uncertain, mark it `needs review` immediately.
+- If generated docs are replaced, regenerate then re-apply verified enrichment.
+- Keep scope constrained to repository mirror artifacts only.

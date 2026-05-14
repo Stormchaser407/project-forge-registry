@@ -21,35 +21,43 @@ sync_policy: "docs_only / export_only"
 
 ## Purpose
 
-Placeholder planning note for the `steelseries_rgb` mirror proposal.
+`SteelSeries_RGB` is tracked as an RGB/hardware-lighting project and future visual sync candidate, with detailed implementation claims held behind review.
 
 ## Current Status
 
 - Registry status: `review`
 - Category: `active_project`
 - Proposed mirror path: `/home/cole/main_vault/10 Projects/steelseries_rgb`
+- Documentation lane: showroom/memory-layer docs with controlled markdown-only sync planning
 
 ## What This Project Does
 
-Capture a safe documentation shell without copying source code into Obsidian.
+- Supports RGB and lighting-scene workflow objectives.
+- Is associated with future visual sync targets (including Neon District context).
+- Requires direct project review before detailed capability claims are treated as verified.
 
 ## Why It Matters
 
-Gives operators a clean project-facing surface for demos, status, handoff, and runbook material.
+- Hardware-adjacent workflows benefit from careful safety language and reproducible runbooks.
+- Clear documentation improves handoff quality without exposing sensitive operational details.
+- Controlled sync lanes allow visibility while keeping risk low.
 
 ## Current Risks / Watch Items
 
-- None currently recorded.
+- Hardware interaction details and permissions posture need explicit verification before publishing specifics.
+- Avoid overstating supported devices/scenes without test evidence.
+- Keep docs free of source code, secrets, and operational artifacts.
 
 ## Next Actions
 
-- Review this proposal before any real vault sync is introduced.
-- Fill in purpose, risks, and roadmap details manually or through later approved automation.
+1. Validate current project capabilities and constraints from approved notes/artifacts.
+2. Replace `needs review` sections with evidence-backed summaries.
+3. Continue dry-run sync checks and keep apply out of scope until approved.
 
 ## Demo Notes
 
-- Start from the launcher or workspace path below.
-- Keep demo language high level until docs-only sync is approved.
+- Emphasize safety-first documentation and clear separation of known vs unverified behavior.
+- Show command flow and reporting, not live hardware actions.
 
 ## Links and Commands
 
@@ -61,4 +69,11 @@ Gives operators a clean project-facing surface for demos, status, handoff, and r
 ```bash
 code "/home/cole/.config/Code/User/workspaces/steelseries_rgb.code-workspace"
 code-steelseries_rgb
+
+PYTHONPATH=src python3 -m unittest discover -s tests
+./scripts/project-scan
+PYTHONPATH=src python3 -m project_forge_registry.workspace_generation --dry-run --input-json artifacts/project_scan_report.json
+PYTHONPATH=src python3 -m project_forge_registry.passport_generation --dry-run
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_mirror_generation --dry-run
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_sync --dry-run --slug steelseries_rgb
 ```

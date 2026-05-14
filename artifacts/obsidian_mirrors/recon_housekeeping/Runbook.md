@@ -14,12 +14,18 @@ code-recon_housekeeping
 
 ## Common Commands
 
-- Add the safest daily commands here.
+```bash
+PYTHONPATH=src python3 -m unittest discover -s tests
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_sync --dry-run --slug recon_housekeeping
+```
 
 ## Test Commands
 
-- Add non-destructive verification commands here.
+- Run full tests before changing sync or generation behavior.
+- Keep docs-sync checks in dry-run mode for this phase.
 
 ## Recovery Notes
 
-- Record rollback or reset guidance that does not rely on destructive shortcuts.
+- If notes drift from current cleanup reality, mark sections as `needs review` and re-validate.
+- If generated docs are overwritten, regenerate then re-apply approved enrichment.
+- Keep scope limited to this repo’s mirror artifact paths.

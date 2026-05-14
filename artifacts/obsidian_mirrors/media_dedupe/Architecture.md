@@ -7,13 +7,25 @@ aliases:
 
 ## Overview
 
-Summarize the major components at a high level without copying source code.
+This note records high-level documentation architecture and boundaries while project internals remain under review.
+
+## Components
+
+- Workspace/launcher entry points for operator access.
+- Registry artifacts for classification and sync posture.
+- Mirror docs for handoff and operational memory.
 
 ## Boundaries
 
-- Local path is tracked in the passport.
-- Real Obsidian sync is not enabled in this phase.
+- No claims about internal dedupe algorithms without direct verification.
+- No copying of source code or sensitive operational data into docs.
+- Dry-run sync planning only in this phase.
 
 ## Interfaces
 
-List the main entry points, services, or integrations to describe later.
+- Registry phase commands for scan/generation
+- `project-forge-obsidian-sync --dry-run --slug media_dedupe`
+
+## Needs Review
+
+Project-internal pipeline details, media handling semantics, and any destructive behavior safeguards.

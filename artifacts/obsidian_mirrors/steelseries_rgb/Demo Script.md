@@ -7,28 +7,33 @@ aliases:
 
 ## Thirty-Second Version
 
-Describe the shortest useful story for the project.
+`SteelSeries_RGB` is documented as a hardware-lighting project with a safety-first showroom layer. This demo explains current known context without claiming unverified runtime behavior.
 
-## Why I Built This
+## Why This Exists
 
-Capture the user problem or workflow this project exists to serve.
+- Hardware-focused projects need clear operational boundaries.
+- Showroom docs make handoff and status reviews easier without exposing sensitive internals.
 
-## What It Does Right Now
+## Demo Flow
 
-List the current reliable capabilities only.
+1. Open workspace and launcher.
+2. Summarize verified high-level goals.
+3. Call out `needs review` capability areas.
+4. Run dry-run sync command and show report path.
 
-## What Makes It Different
+## Demo Commands
 
-Note the differentiator without copying implementation details.
+```bash
+code "/home/cole/.config/Code/User/workspaces/steelseries_rgb.code-workspace"
+code-steelseries_rgb
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_sync --dry-run --slug steelseries_rgb
+```
 
-## Cool Part To Show First
+## Known vs Needs Review
 
-Call out the first moment that makes the project click.
-
-## Current Limitations
-
-Document the rough edges and what still needs operator care.
+- Known: project is active, mirrored in docs, and handled via controlled sync lanes.
+- Needs review: precise hardware support matrix, runtime write behavior, and environment assumptions.
 
 ## Next Build Step
 
-Record the next concrete improvement worth building.
+Integrate verified capability and safety notes from approved qualification records.

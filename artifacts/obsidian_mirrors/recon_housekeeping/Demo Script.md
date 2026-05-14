@@ -7,28 +7,33 @@ aliases:
 
 ## Thirty-Second Version
 
-Describe the shortest useful story for the project.
+`recon_housekeeping` is the safe operating layer for untangling project sprawl. It emphasizes evidence, review checkpoints, and clean handoff notes before any risky cleanup steps.
 
-## Why I Built This
+## Why This Exists
 
-Capture the user problem or workflow this project exists to serve.
+- Consolidation work fails when context is fragmented.
+- This project preserves context and rationale while cleanup work is planned.
 
-## What It Does Right Now
+## Demo Flow
 
-List the current reliable capabilities only.
+1. Open workspace and launcher.
+2. Show how reports and notes frame cleanup decisions.
+3. Show dry-run command path for docs sync and explain why apply is gated.
+4. Close with explicit “needs human review” checkpoints.
 
-## What Makes It Different
+## Demo Commands
 
-Note the differentiator without copying implementation details.
+```bash
+code "/home/cole/.config/Code/User/workspaces/recon_housekeeping.code-workspace"
+code-recon_housekeeping
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_sync --dry-run --slug recon_housekeeping
+```
 
-## Cool Part To Show First
+## Known vs Needs Review
 
-Call out the first moment that makes the project click.
-
-## Current Limitations
-
-Document the rough edges and what still needs operator care.
+- Known: this is a consolidation and archaeology support lane.
+- Needs review: any project-specific cleanup action plans that would alter source folders.
 
 ## Next Build Step
 
-Record the next concrete improvement worth building.
+Add short, verified before/after housekeeping examples once they are approved for publication.

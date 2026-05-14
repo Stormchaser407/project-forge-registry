@@ -7,13 +7,25 @@ aliases:
 
 ## Overview
 
-Summarize the major components at a high level without copying source code.
+This architecture note covers high-level documentation and workflow boundaries for a hardware-adjacent project under Project Forge governance.
+
+## Components
+
+- Workspace/launcher access for operator workflows.
+- Registry artifacts for project classification and sync posture.
+- Mirror docs for decisions, runbooks, and handoff continuity.
 
 ## Boundaries
 
-- Local path is tracked in the passport.
-- Real Obsidian sync is not enabled in this phase.
+- Do not document unverified hardware-write behavior as fact.
+- Keep mirror docs free from code and sensitive operational artifacts.
+- Use dry-run sync planning only during this phase.
 
 ## Interfaces
 
-List the main entry points, services, or integrations to describe later.
+- Registry scan/generation commands
+- `project-forge-obsidian-sync --dry-run --slug steelseries_rgb`
+
+## Needs Review
+
+Detailed runtime architecture, permission model, and device-control semantics.
