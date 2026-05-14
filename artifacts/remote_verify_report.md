@@ -29,7 +29,7 @@
 
 - Inside git repo: true
 - Current branch: `main`
-- Working tree clean (if checked): `True`
+- Working tree clean (if checked): `not_checked`
 
 ## Remote Snapshot
 
@@ -38,7 +38,7 @@
 ## Verification Checks
 
 - `local_git_repository_detected` required=true passed=true detail=local path is a git repository
-- `working_tree_clean` required=true passed=true detail=clean
+- `working_tree_clean` required=false passed=true detail=dirty or not checked
 - `tests_pass_check` required=false passed=true detail=pending Phase 7b/8 implementation
 - `docs_reports_current_check` required=false passed=true detail=pending Phase 7b/8 implementation
 

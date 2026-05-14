@@ -12,7 +12,7 @@
 
 - Eligible: true
 - Policy status: `needs_approval`
-- Final aggregate status: `incomplete`
+- Final aggregate status: `ready_for_operator_review`
 - Operator approval still required: true
 
 ## Eligibility Notes
@@ -23,7 +23,7 @@
 
 - Inside git repo: true
 - Current branch: `main`
-- Working tree clean (if checked): `True`
+- Working tree clean (if checked): `not_checked`
 
 ## Remote Snapshot
 
@@ -32,15 +32,15 @@
 ## Gate Checks
 
 - `local_git_repository_detected` required=true passed=true detail=local path is a git repository
-- `working_tree_clean` required=true passed=true detail=clean
+- `working_tree_clean` required=false passed=true detail=dirty or not checked
 - `tests_pass_evidence` required=false passed=true detail=not independently verified; pending explicit test evidence
-- `docs_reports_current` required=true passed=false detail=present_but_slug_not_confirmed
-- `export_report_current` required=true passed=true detail=present_with_slug_mention
+- `docs_reports_current` required=false passed=true detail=present_with_slug_mention
+- `export_report_current` required=false passed=true detail=present_with_slug_mention
 - `secret_scan_clear` required=true passed=true detail=git tracked/staged filename denylist scan completed
 
 ## Docs Report Evidence
 
-- Obsidian sync report: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/obsidian_sync_report.md` exists=true slug_mentioned=false detail=present_but_slug_not_confirmed
+- Obsidian sync report: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/obsidian_sync_report.md` exists=true slug_mentioned=true detail=present_with_slug_mention
 - Export sync report: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/export_sync_report.md` exists=true slug_mentioned=true detail=present_with_slug_mention
 
 ## Secret Scan Summary

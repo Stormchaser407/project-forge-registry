@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import subprocess
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -143,55 +144,59 @@ def build_lane_specs(args: argparse.Namespace) -> list[LaneSpec]:
         return run_all_default or explicit_flags[key]
 
     slug = args.slug
+
+    def module_command(module_name: str, *module_args: str) -> list[str]:
+        return [sys.executable, "-m", module_name, *module_args]
+
     return [
         LaneSpec("refresh_scan", "Refresh Classification", requested("refresh_scan"), None),
         LaneSpec(
             "refresh_workspace",
             "Refresh Workspace",
             requested("refresh_workspace"),
-            ["project-forge-workspace-generate", "--slug", slug, "--dry-run"],
+            module_command("project_forge_registry.workspace_generation", "--dry-run", "--include-slug", slug),
         ),
         LaneSpec(
             "refresh_passport",
             "Refresh Passport",
             requested("refresh_passport"),
-            ["project-forge-passport-generate", "--slug", slug, "--dry-run"],
+            module_command("project_forge_registry.passport_generation", "--dry-run", "--include-slug", slug),
         ),
         LaneSpec(
             "refresh_mirror",
             "Refresh Obsidian Mirror",
             requested("refresh_mirror"),
-            ["project-forge-obsidian-mirror-generate", "--slug", slug, "--dry-run"],
+            module_command("project_forge_registry.obsidian_mirror_generation", "--dry-run", "--include-slug", slug),
         ),
         LaneSpec(
             "sync_obsidian",
             "Obsidian Sync",
             requested("sync_obsidian"),
-            ["project-forge-obsidian-sync", "--slug", slug, "--dry-run"],
+            module_command("project_forge_registry.obsidian_sync", "--dry-run", "--slug", slug),
         ),
         LaneSpec(
             "export_docs",
             "Export Docs",
             requested("export_docs"),
-            ["project-forge-export-sync", "--slug", slug, "--dry-run"],
+            module_command("project_forge_registry.export_sync", "--dry-run", "--slug", slug),
         ),
         LaneSpec(
             "remote_plan",
             "Remote Plan",
             requested("remote_plan"),
-            ["project-forge-remote-plan", "--slug", slug, "--dry-run"],
+            module_command("project_forge_registry.remote_policy", "plan", "--dry-run", "--slug", slug),
         ),
         LaneSpec(
             "remote_verify",
             "Remote Verify",
             requested("remote_verify"),
-            ["project-forge-remote-verify", "--slug", slug, "--dry-run"],
+            module_command("project_forge_registry.remote_policy", "verify", "--dry-run", "--slug", slug),
         ),
         LaneSpec(
             "push_ready",
             "Push Ready",
             requested("push_ready"),
-            ["project-forge-push-ready", "--slug", slug, "--dry-run"],
+            module_command("project_forge_registry.remote_policy", "push-ready", "--dry-run", "--slug", slug),
         ),
     ]
 
@@ -211,7 +216,10 @@ def run_lane(spec: LaneSpec) -> LaneResult:
             "phase8_1_placeholder_no_runner",
         )
 
-    proc = subprocess.run(spec.command, capture_output=True, text=True, check=False)
+    try:
+        proc = subprocess.run(spec.command, capture_output=True, text=True, check=False)
+    except FileNotFoundError as exc:
+        return LaneResult(spec.key, spec.title, spec.requested, "failed", spec.command, None, str(exc))
     if proc.returncode == 0:
         return LaneResult(spec.key, spec.title, spec.requested, "passed", spec.command, 0, "ok")
 
