@@ -12,6 +12,7 @@ DEFAULT_PASSPORT_DIR = "artifacts/project_passports"
 DEFAULT_REPORT_NAME = "project_sync_report.md"
 PROTECTED_CATEGORIES = {"system_bound_project", "reconciliation_required", "unknown"}
 PROTECTED_REGISTRY_ACTIONS = {"review_required"}
+DEFAULT_PROFILE_LANES = {"sync_obsidian", "export_docs", "remote_plan", "remote_verify", "push_ready"}
 
 
 @dataclass(frozen=True)
@@ -64,13 +65,13 @@ def resolve_report_path(passport_dir: Path, report_name: str) -> Path:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="project-sync",
-        description="Phase 8.3 dry-run-only single-slug orchestrator for Project Forge lanes.",
+        description="Phase 8.4 dry-run-only single-slug orchestrator for Project Forge lanes.",
     )
     parser.add_argument("--slug", required=True, help="Project slug to orchestrate.")
     parser.add_argument("--passport-dir", default=DEFAULT_PASSPORT_DIR, help="Passport directory.")
     parser.add_argument("--dry-run", action="store_true", help="Dry-run mode. Default behavior.")
-    parser.add_argument("--apply", action="store_true", help="Not available in Phase 8.3.")
-    parser.add_argument("--refresh-scan", action="store_true", help="Phase 8.3 placeholder lane.")
+    parser.add_argument("--apply", action="store_true", help="Not available in Phase 8.4.")
+    parser.add_argument("--refresh-scan", action="store_true", help="Phase 8.4 placeholder lane.")
     parser.add_argument("--refresh-workspace", action="store_true", help="Run workspace lane.")
     parser.add_argument("--refresh-passport", action="store_true", help="Run passport lane.")
     parser.add_argument("--refresh-mirror", action="store_true", help="Run mirror lane.")
@@ -79,8 +80,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--remote-plan", action="store_true", help="Run remote plan lane in dry-run.")
     parser.add_argument("--remote-verify", action="store_true", help="Run remote verify lane in dry-run.")
     parser.add_argument("--push-ready", action="store_true", help="Run push-ready lane in dry-run.")
-    parser.add_argument("--allow-remote-setup", action="store_true", help="Phase 8.3: ignored in dry-run-only mode.")
-    parser.add_argument("--allow-push", action="store_true", help="Phase 8.3: ignored in dry-run-only mode.")
+    parser.add_argument("--allow-remote-setup", action="store_true", help="Phase 8.4: ignored in dry-run-only mode.")
+    parser.add_argument("--allow-push", action="store_true", help="Phase 8.4: ignored in dry-run-only mode.")
     parser.add_argument("--stop-on-warning", action="store_true", help="Stop at first failed lane.")
     parser.add_argument("--report-name", default=DEFAULT_REPORT_NAME, help="Combined report filename.")
     parser.add_argument("--include-category", action="append", default=[], help="Future multi-project filter placeholder.")
@@ -92,7 +93,7 @@ def parse_mode(args: argparse.Namespace, parser: argparse.ArgumentParser) -> str
     if args.apply and args.dry_run:
         parser.error("Use either --apply or --dry-run, not both.")
     if args.apply:
-        parser.error("--apply is intentionally disabled in Phase 8.3. Use dry-run only.")
+        parser.error("--apply is intentionally disabled in Phase 8.4. Use dry-run only.")
     return "dry-run"
 
 
@@ -128,8 +129,8 @@ def detect_protected_project(passport_path: Path, slug: str) -> list[str]:
     return reasons
 
 
-def build_lane_specs(args: argparse.Namespace) -> list[LaneSpec]:
-    explicit_flags = {
+def collect_lane_flags(args: argparse.Namespace) -> dict[str, bool]:
+    return {
         "refresh_scan": args.refresh_scan,
         "refresh_workspace": args.refresh_workspace,
         "refresh_passport": args.refresh_passport,
@@ -140,10 +141,22 @@ def build_lane_specs(args: argparse.Namespace) -> list[LaneSpec]:
         "remote_verify": args.remote_verify,
         "push_ready": args.push_ready,
     }
-    run_all_default = not any(explicit_flags.values())
+
+
+def determine_lane_selection_mode(args: argparse.Namespace) -> str:
+    if any(collect_lane_flags(args).values()):
+        return "explicit"
+    return "default_profile"
+
+
+def build_lane_specs(args: argparse.Namespace) -> list[LaneSpec]:
+    explicit_flags = collect_lane_flags(args)
+    use_default_profile = determine_lane_selection_mode(args) == "default_profile"
 
     def requested(key: str) -> bool:
-        return run_all_default or explicit_flags[key]
+        if use_default_profile:
+            return key in DEFAULT_PROFILE_LANES
+        return explicit_flags[key]
 
     slug = args.slug
 
@@ -286,7 +299,7 @@ def run_lane(spec: LaneSpec) -> LaneResult:
             "skipped",
             spec.command,
             None,
-            "phase8_3_placeholder_no_runner",
+            "phase8_4_placeholder_no_runner",
             spec.report_name,
         )
 
@@ -318,6 +331,7 @@ def write_report(
     *,
     mode: str,
     slug: str,
+    lane_selection_mode: str,
     passport_path: Path,
     protected_reasons: list[str],
     results: list[LaneResult],
@@ -326,10 +340,11 @@ def write_report(
     report_path.parent.mkdir(parents=True, exist_ok=True)
 
     lines: list[str] = [
-        "# Project Sync Report (Phase 8.3)",
+        "# Project Sync Report (Phase 8.4)",
         "",
         f"- mode: `{mode}`",
         f"- slug: `{slug}`",
+        f"- lane_selection: `{lane_selection_mode}`",
         f"- passport: `{passport_path}`",
         f"- final_status: `{final_status}`",
         "",
@@ -357,6 +372,7 @@ def write_report(
         [
             "## Lane Summary",
             "",
+            f"- selection_note: `{'safe default dry-run profile' if lane_selection_mode == 'default_profile' else 'explicit lane flags'}`",
             f"- requested_lanes: `{len(requested_results)}`",
             f"- unrequested_skipped_lanes: `{len([item for item in unrequested_results if item.status == 'skipped'])}`",
             f"- passed_lanes: `{len(passed_results)}`",
@@ -396,7 +412,7 @@ def write_report(
     lines.append("")
 
     lines.extend(["## Child Lane Reports", ""])
-    report_results = [item for item in results if item.report_name]
+    report_results = [item for item in results if item.requested and item.report_name]
     if report_results:
         lines.extend([f"- {item.key}: `artifacts/{item.report_name}`" for item in report_results])
     else:
@@ -406,7 +422,7 @@ def write_report(
     lines.extend(["## Lane Details", ""])
     for item in results:
         command_text = " ".join(item.command) if item.command else "(none)"
-        report_text = f"artifacts/{item.report_name}" if item.report_name else "n/a"
+        report_text = f"artifacts/{item.report_name}" if item.requested and item.report_name else "n/a"
         lines.extend(
             [
                 f"### {item.title}",
@@ -425,7 +441,7 @@ def write_report(
         [
             "## Safety Statement",
             "",
-            "- Phase 8.3 is dry-run only.",
+            "- Phase 8.4 is dry-run only.",
             "- No push or remote mutation actions are performed by this command.",
             "",
         ]
@@ -444,6 +460,7 @@ def main() -> int:
     passport_path = passport_path_for_slug(passport_dir, args.slug)
 
     protected_reasons = detect_protected_project(passport_path, args.slug)
+    lane_selection_mode = determine_lane_selection_mode(args)
     lane_specs = build_lane_specs(args)
 
     results: list[LaneResult] = []
@@ -486,6 +503,7 @@ def main() -> int:
         report_path,
         mode=mode,
         slug=args.slug,
+        lane_selection_mode=lane_selection_mode,
         passport_path=passport_path,
         protected_reasons=protected_reasons,
         results=results,

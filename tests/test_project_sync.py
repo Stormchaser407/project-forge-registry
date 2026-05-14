@@ -9,6 +9,7 @@ from project_forge_registry.project_sync import (
     build_parser,
     build_lane_specs,
     derive_final_status,
+    determine_lane_selection_mode,
     detect_protected_project,
     parse_mode,
     repository_root,
@@ -24,11 +25,42 @@ class ProjectSyncTests(unittest.TestCase):
         args = parser.parse_args(["--slug", "demo"])
         self.assertEqual(parse_mode(args, parser), "dry-run")
 
-    def test_apply_is_rejected_in_phase_8_3(self) -> None:
+    def test_apply_is_rejected_in_phase_8_4(self) -> None:
         parser = build_parser()
         args = parser.parse_args(["--slug", "demo", "--apply"])
         with self.assertRaises(SystemExit):
             parse_mode(args, parser)
+
+    def test_default_profile_selects_safe_dry_run_lanes_only(self) -> None:
+        parser = build_parser()
+        args = parser.parse_args(["--slug", "demo"])
+
+        specs = {spec.key: spec for spec in build_lane_specs(args)}
+
+        self.assertEqual(determine_lane_selection_mode(args), "default_profile")
+        self.assertFalse(specs["refresh_scan"].requested)
+        self.assertFalse(specs["refresh_workspace"].requested)
+        self.assertFalse(specs["refresh_passport"].requested)
+        self.assertFalse(specs["refresh_mirror"].requested)
+        self.assertTrue(specs["sync_obsidian"].requested)
+        self.assertTrue(specs["export_docs"].requested)
+        self.assertTrue(specs["remote_plan"].requested)
+        self.assertTrue(specs["remote_verify"].requested)
+        self.assertTrue(specs["push_ready"].requested)
+
+    def test_explicit_lane_flags_select_only_requested_lanes(self) -> None:
+        parser = build_parser()
+        args = parser.parse_args(["--slug", "demo", "--sync-obsidian", "--remote-plan"])
+
+        specs = {spec.key: spec for spec in build_lane_specs(args)}
+
+        self.assertEqual(determine_lane_selection_mode(args), "explicit")
+        self.assertTrue(specs["sync_obsidian"].requested)
+        self.assertTrue(specs["remote_plan"].requested)
+        self.assertFalse(specs["export_docs"].requested)
+        self.assertFalse(specs["remote_verify"].requested)
+        self.assertFalse(specs["push_ready"].requested)
+        self.assertFalse(specs["refresh_workspace"].requested)
 
     def test_internal_lanes_use_python_module_commands(self) -> None:
         parser = build_parser()
@@ -131,6 +163,22 @@ class ProjectSyncTests(unittest.TestCase):
 
         self.assertEqual(derive_final_status(False, results), "ready_for_operator_review")
 
+    def test_final_status_never_uses_ready_to_push(self) -> None:
+        passing_results = [
+            LaneResult("sync_obsidian", "Obsidian Sync", True, "passed", ["python"], 0, "ok"),
+            LaneResult("push_ready", "Push Ready", True, "passed", ["python"], 0, "ok"),
+        ]
+        failing_results = [
+            LaneResult("sync_obsidian", "Obsidian Sync", True, "failed", ["python"], 1, "lane_failed"),
+        ]
+
+        statuses = {
+            derive_final_status(False, passing_results),
+            derive_final_status(False, failing_results),
+            derive_final_status(True, passing_results),
+        }
+        self.assertNotIn("ready_to_push", statuses)
+
     def test_requested_failed_lane_blocks_final_status(self) -> None:
         results = [
             LaneResult("sync_obsidian", "Obsidian Sync", True, "passed", ["python"], 0, "ok"),
@@ -181,6 +229,7 @@ class ProjectSyncTests(unittest.TestCase):
                 report_path,
                 mode="dry-run",
                 slug="demo",
+                lane_selection_mode="default_profile",
                 passport_path=Path("artifacts/project_passports/demo.project.yml"),
                 protected_reasons=[],
                 results=[
@@ -223,7 +272,9 @@ class ProjectSyncTests(unittest.TestCase):
                 final_status="ready_for_operator_review",
             )
             text = report_path.read_text(encoding="utf-8")
-            self.assertIn("# Project Sync Report (Phase 8.3)", text)
+            self.assertIn("# Project Sync Report (Phase 8.4)", text)
+            self.assertIn("lane_selection: `default_profile`", text)
+            self.assertIn("selection_note: `safe default dry-run profile`", text)
             self.assertIn("final_status: `ready_for_operator_review`", text)
             self.assertIn("## Requested Lanes", text)
             self.assertIn("- refresh_workspace: `passed`", text)
@@ -234,7 +285,8 @@ class ProjectSyncTests(unittest.TestCase):
             self.assertIn("- none", text)
             self.assertIn("## Child Lane Reports", text)
             self.assertIn("- refresh_workspace: `artifacts/project_sync_workspace_generation_report.md`", text)
-            self.assertIn("- child_report: `artifacts/project_sync_remote_plan_report.md`", text)
+            self.assertIn("- child_report: `n/a`", text)
+            self.assertNotIn("- remote_plan: `artifacts/project_sync_remote_plan_report.md`", text)
 
 
 if __name__ == "__main__":

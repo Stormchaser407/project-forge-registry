@@ -1,12 +1,14 @@
-# Project Sync Report (Phase 8.3)
+# Project Sync Report (Phase 8.4)
 
 - mode: `dry-run`
 - slug: `project_forge_registry`
+- lane_selection: `explicit`
 - passport: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/project_forge_registry.project.yml`
 - final_status: `ready_for_operator_review`
 
 ## Lane Summary
 
+- selection_note: `explicit lane flags`
 - requested_lanes: `5`
 - unrequested_skipped_lanes: `4`
 - passed_lanes: `5`
@@ -41,9 +43,6 @@
 
 ## Child Lane Reports
 
-- refresh_workspace: `artifacts/project_sync_workspace_generation_report.md`
-- refresh_passport: `artifacts/project_sync_passport_generation_report.md`
-- refresh_mirror: `artifacts/project_sync_obsidian_mirror_generation_report.md`
 - sync_obsidian: `artifacts/project_sync_obsidian_sync_report.md`
 - export_docs: `artifacts/project_sync_export_sync_report.md`
 - remote_plan: `artifacts/project_sync_remote_plan_report.md`
@@ -66,7 +65,7 @@
 - requested: `false`
 - status: `skipped`
 - command: `/etc/profiles/per-user/cole/bin/python3 -m project_forge_registry.workspace_generation --dry-run --include-slug project_forge_registry --report-name project_sync_workspace_generation_report.md`
-- child_report: `artifacts/project_sync_workspace_generation_report.md`
+- child_report: `n/a`
 - return_code: `n/a`
 - note: `not requested`
 
@@ -75,7 +74,7 @@
 - requested: `false`
 - status: `skipped`
 - command: `/etc/profiles/per-user/cole/bin/python3 -m project_forge_registry.passport_generation --dry-run --include-slug project_forge_registry --report-name project_sync_passport_generation_report.md`
-- child_report: `artifacts/project_sync_passport_generation_report.md`
+- child_report: `n/a`
 - return_code: `n/a`
 - note: `not requested`
 
@@ -84,7 +83,7 @@
 - requested: `false`
 - status: `skipped`
 - command: `/etc/profiles/per-user/cole/bin/python3 -m project_forge_registry.obsidian_mirror_generation --dry-run --include-slug project_forge_registry --report-name project_sync_obsidian_mirror_generation_report.md`
-- child_report: `artifacts/project_sync_obsidian_mirror_generation_report.md`
+- child_report: `n/a`
 - return_code: `n/a`
 - note: `not requested`
 
@@ -135,5 +134,5 @@
 
 ## Safety Statement
 
-- Phase 8.3 is dry-run only.
+- Phase 8.4 is dry-run only.
 - No push or remote mutation actions are performed by this command.
