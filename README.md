@@ -436,3 +436,20 @@ Module equivalent (subcommands):
 - `ready_for_operator_review`
 - `ready_to_push` is intentionally not returned in this phase.
 - Secret/sensitive scanning is filename-based for tracked/staged files and reports findings without reading secret contents.
+
+
+## Phase 8.5: Safe project-sync wrapper
+
+Safe default operator command:
+
+    ./scripts/project-sync-safe
+
+Specific slug:
+
+    ./scripts/project-sync-safe project_forge_registry
+
+The wrapper runs `project-sync` in dry-run mode only. It does not pass `--apply`, does not add remotes, does not push/fetch, and does not contact GitHub or Codeberg.
+
+See:
+
+    docs/PROJECT_SYNC_OPERATOR_RUNBOOK.md

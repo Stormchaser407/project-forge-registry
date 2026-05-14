@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  cat <<'HELP'
+Usage:
+  ./scripts/project-sync-safe [slug]
+
+Default slug:
+  project_forge_registry
+
+Purpose:
+  Run the safe dry-run Project Forge project-sync profile.
+
+Safety:
+  - dry-run only
+  - no --apply
+  - no remotes
+  - no push/fetch
+  - no GitHub/Codeberg contact
+  - no external project folder writes
+
+Optional capture:
+  Set PROJECT_SYNC_SAFE_CAPTURE=1 to copy wrapper output with capture-for-chat.
+HELP
+  exit 0
+fi
+
+if [[ $# -gt 1 ]]; then
+  echo "ERROR: project-sync-safe accepts only one optional positional slug." >&2
+  echo "Usage: ./scripts/project-sync-safe [slug]" >&2
+  exit 2
+fi
+
+SLUG="${1:-project_forge_registry}"
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_ROOT"
+
+STAMP="$(date +%Y%m%d-%H%M%S)"
+SAFE_SLUG="$(printf '%s' "$SLUG" | tr -c 'A-Za-z0-9_.-' '_')"
+LOG_PATH="/tmp/project-sync-safe-${SAFE_SLUG}-${STAMP}.txt"
+
+{
+  echo "============================================================"
+  echo " PROJECT-SYNC SAFE DRY-RUN"
+  echo "============================================================"
+  echo "Repo: $REPO_ROOT"
+  echo "Slug: $SLUG"
+  echo "Mode: dry-run"
+  echo
+
+  PYTHONPATH=src python3 -m project_forge_registry.project_sync \
+    --dry-run \
+    --slug "$SLUG"
+
+  echo
+  echo "============================================================"
+  echo " PROJECT-SYNC SAFE SUMMARY"
+  echo "============================================================"
+  echo "Combined report:"
+  echo "  $REPO_ROOT/artifacts/project_sync_report.md"
+  echo
+  echo "Project-sync child lane reports:"
+  find "$REPO_ROOT/artifacts" -maxdepth 1 -type f -name 'project_sync_*_report.md' | sort | sed 's/^/  /'
+  echo
+  echo "Git status:"
+  git status --short
+} | tee "$LOG_PATH"
+
+echo
+echo "Saved wrapper output:"
+echo "  $LOG_PATH"
+
+if [[ "${PROJECT_SYNC_SAFE_CAPTURE:-0}" == "1" ]] && command -v capture-for-chat >/dev/null 2>&1; then
+  cat "$LOG_PATH" | capture-for-chat "project-sync-safe-${SAFE_SLUG}"
+  echo "Copied wrapper output via capture-for-chat."
+fi
