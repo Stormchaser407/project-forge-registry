@@ -16,6 +16,7 @@ project-forge-workspace-generate = "project_forge_registry.workspace_generation:
 project-forge-passport-generate = "project_forge_registry.passport_generation:main"
 project-forge-obsidian-mirror-generate = "project_forge_registry.obsidian_mirror_generation:main"
 project-forge-obsidian-sync = "project_forge_registry.obsidian_sync:main"
+project-forge-export-sync = "project_forge_registry.export_sync:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

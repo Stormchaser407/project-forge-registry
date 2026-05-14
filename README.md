@@ -325,3 +325,50 @@ Suggested apply verification capture:
   find "/home/cole/main_vault/10 Projects/project-forge-registry" -maxdepth 3 -type f | sort
 } | capture-for-chat phase4b-obsidian-sync-apply
 ```
+
+## Phase 5 Command
+
+`project-forge-export-sync` plans or performs a controlled reverse docs lane from Obsidian export staging to repository docs:
+
+- source root: `/home/cole/main_vault/10 Projects/<slug>/_export/`
+- default source sub-scope: `_export/docs/` only
+- destination root: `<project local_path>/docs/`
+
+Default behavior is dry-run. In dry-run mode, only the artifact report is written:
+
+- `artifacts/export_sync_report.md`
+
+Example dry-run:
+
+```bash
+PYTHONPATH=src python3 -m project_forge_registry.export_sync \
+  --slug project_forge_registry \
+  --dry-run
+```
+
+### Phase 5 CLI
+
+- `--slug <slug>`: required slug to sync.
+- `--passport-dir <path>`: defaults to `artifacts/project_passports`.
+- `--vault-project-root <path>`: defaults to `/home/cole/main_vault/10 Projects`.
+- `--repo-root-override <path>`: optional destination override; must stay inside `<local_path>/docs/`.
+- `--dry-run`: plan/report only (default mode).
+- `--apply`: perform copy (not required for planning workflows).
+- `--include-file <relative path>`: include specific `_export`-relative files.
+- `--exclude-file <relative path>`: exclude specific `_export`-relative files.
+- `--report-name <filename>`: defaults to `export_sync_report.md`.
+- `--backup-suffix <suffix>`: optional backup suffix, otherwise timestamp-based.
+
+### Phase 5 Safety Rules
+
+- Dry-run first.
+- Markdown-only lane (`*.md`).
+- Default source scope is `_export/docs/` only.
+- `_export/README.md` is not mapped automatically.
+- If explicitly included (`--include-file README.md`), it maps only to `docs/README.md`, never repo-root `README.md`.
+- No destination deletes.
+- Existing destination markdown files are backed up before overwrite.
+- Destination must stay inside `<project local_path>/docs/`.
+- Passport safety flags gate eligibility (`do_not_sync`, `allow_code_to_obsidian`, `allow_secrets`).
+- Cerberus-related slugs/paths are protected and skipped.
+- No GitHub/Codeberg sync actions in this lane.
