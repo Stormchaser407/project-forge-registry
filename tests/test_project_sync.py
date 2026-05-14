@@ -24,7 +24,7 @@ class ProjectSyncTests(unittest.TestCase):
         args = parser.parse_args(["--slug", "demo"])
         self.assertEqual(parse_mode(args, parser), "dry-run")
 
-    def test_apply_is_rejected_in_phase_8_1(self) -> None:
+    def test_apply_is_rejected_in_phase_8_3(self) -> None:
         parser = build_parser()
         args = parser.parse_args(["--slug", "demo", "--apply"])
         with self.assertRaises(SystemExit):
@@ -70,6 +70,53 @@ class ProjectSyncTests(unittest.TestCase):
         self.assertIn("plan", commands["remote_plan"])
         self.assertIn("verify", commands["remote_verify"])
         self.assertIn("push-ready", commands["push_ready"])
+
+    def test_internal_lanes_use_project_sync_report_names(self) -> None:
+        parser = build_parser()
+        args = parser.parse_args(
+            [
+                "--slug",
+                "demo",
+                "--refresh-workspace",
+                "--refresh-passport",
+                "--refresh-mirror",
+                "--sync-obsidian",
+                "--export-docs",
+                "--remote-plan",
+                "--remote-verify",
+                "--push-ready",
+            ]
+        )
+
+        specs = {spec.key: spec for spec in build_lane_specs(args)}
+        expected_report_names = {
+            "refresh_workspace": "project_sync_workspace_generation_report.md",
+            "refresh_passport": "project_sync_passport_generation_report.md",
+            "refresh_mirror": "project_sync_obsidian_mirror_generation_report.md",
+            "sync_obsidian": "project_sync_obsidian_sync_report.md",
+            "export_docs": "project_sync_export_sync_report.md",
+            "remote_plan": "project_sync_remote_plan_report.md",
+            "remote_verify": "project_sync_remote_verify_report.md",
+            "push_ready": "project_sync_push_ready_report.md",
+        }
+        canonical_report_names = {
+            "workspace_launcher_generation_report.md",
+            "project_passport_generation_report.md",
+            "obsidian_mirror_generation_report.md",
+            "obsidian_sync_report.md",
+            "export_sync_report.md",
+            "remote_plan_report.md",
+            "remote_verify_report.md",
+            "push_ready_report.md",
+        }
+
+        for key, report_name in expected_report_names.items():
+            command = specs[key].command
+            self.assertIsNotNone(command)
+            self.assertEqual(specs[key].report_name, report_name)
+            self.assertIn("--report-name", command)
+            self.assertIn(report_name, command)
+            self.assertTrue(canonical_report_names.isdisjoint(command))
 
     def test_repo_scoped_paths_reject_outside_repo(self) -> None:
         with self.assertRaises(ValueError):
@@ -152,6 +199,7 @@ class ProjectSyncTests(unittest.TestCase):
                         ],
                         return_code=0,
                         note="ok",
+                        report_name="project_sync_workspace_generation_report.md",
                     ),
                     LaneResult(
                         key="remote_plan",
@@ -169,12 +217,13 @@ class ProjectSyncTests(unittest.TestCase):
                         ],
                         return_code=None,
                         note="not requested",
+                        report_name="project_sync_remote_plan_report.md",
                     )
                 ],
                 final_status="ready_for_operator_review",
             )
             text = report_path.read_text(encoding="utf-8")
-            self.assertIn("# Project Sync Report (Phase 8.2)", text)
+            self.assertIn("# Project Sync Report (Phase 8.3)", text)
             self.assertIn("final_status: `ready_for_operator_review`", text)
             self.assertIn("## Requested Lanes", text)
             self.assertIn("- refresh_workspace: `passed`", text)
@@ -183,6 +232,9 @@ class ProjectSyncTests(unittest.TestCase):
             self.assertIn("## Passed Lanes", text)
             self.assertIn("## Failed Or Incomplete Lanes", text)
             self.assertIn("- none", text)
+            self.assertIn("## Child Lane Reports", text)
+            self.assertIn("- refresh_workspace: `artifacts/project_sync_workspace_generation_report.md`", text)
+            self.assertIn("- child_report: `artifacts/project_sync_remote_plan_report.md`", text)
 
 
 if __name__ == "__main__":

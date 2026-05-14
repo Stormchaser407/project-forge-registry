@@ -20,6 +20,7 @@ class LaneSpec:
     title: str
     requested: bool
     command: list[str] | None
+    report_name: str | None = None
 
 
 @dataclass
@@ -31,6 +32,7 @@ class LaneResult:
     command: list[str] | None
     return_code: int | None
     note: str
+    report_name: str | None = None
 
 
 def repository_root() -> Path:
@@ -62,13 +64,13 @@ def resolve_report_path(passport_dir: Path, report_name: str) -> Path:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="project-sync",
-        description="Phase 8.2 dry-run-only single-slug orchestrator for Project Forge lanes.",
+        description="Phase 8.3 dry-run-only single-slug orchestrator for Project Forge lanes.",
     )
     parser.add_argument("--slug", required=True, help="Project slug to orchestrate.")
     parser.add_argument("--passport-dir", default=DEFAULT_PASSPORT_DIR, help="Passport directory.")
     parser.add_argument("--dry-run", action="store_true", help="Dry-run mode. Default behavior.")
-    parser.add_argument("--apply", action="store_true", help="Not available in Phase 8.1.")
-    parser.add_argument("--refresh-scan", action="store_true", help="Phase 8.1 placeholder lane.")
+    parser.add_argument("--apply", action="store_true", help="Not available in Phase 8.3.")
+    parser.add_argument("--refresh-scan", action="store_true", help="Phase 8.3 placeholder lane.")
     parser.add_argument("--refresh-workspace", action="store_true", help="Run workspace lane.")
     parser.add_argument("--refresh-passport", action="store_true", help="Run passport lane.")
     parser.add_argument("--refresh-mirror", action="store_true", help="Run mirror lane.")
@@ -77,8 +79,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--remote-plan", action="store_true", help="Run remote plan lane in dry-run.")
     parser.add_argument("--remote-verify", action="store_true", help="Run remote verify lane in dry-run.")
     parser.add_argument("--push-ready", action="store_true", help="Run push-ready lane in dry-run.")
-    parser.add_argument("--allow-remote-setup", action="store_true", help="Phase 8.1: ignored in dry-run-only mode.")
-    parser.add_argument("--allow-push", action="store_true", help="Phase 8.1: ignored in dry-run-only mode.")
+    parser.add_argument("--allow-remote-setup", action="store_true", help="Phase 8.3: ignored in dry-run-only mode.")
+    parser.add_argument("--allow-push", action="store_true", help="Phase 8.3: ignored in dry-run-only mode.")
     parser.add_argument("--stop-on-warning", action="store_true", help="Stop at first failed lane.")
     parser.add_argument("--report-name", default=DEFAULT_REPORT_NAME, help="Combined report filename.")
     parser.add_argument("--include-category", action="append", default=[], help="Future multi-project filter placeholder.")
@@ -90,7 +92,7 @@ def parse_mode(args: argparse.Namespace, parser: argparse.ArgumentParser) -> str
     if args.apply and args.dry_run:
         parser.error("Use either --apply or --dry-run, not both.")
     if args.apply:
-        parser.error("--apply is intentionally disabled in Phase 8.2. Use dry-run only.")
+        parser.error("--apply is intentionally disabled in Phase 8.3. Use dry-run only.")
     return "dry-run"
 
 
@@ -148,62 +150,133 @@ def build_lane_specs(args: argparse.Namespace) -> list[LaneSpec]:
     def module_command(module_name: str, *module_args: str) -> list[str]:
         return [sys.executable, "-m", module_name, *module_args]
 
+    def report_command(module_name: str, report_name: str, *module_args: str) -> list[str]:
+        return module_command(module_name, *module_args, "--report-name", report_name)
+
     return [
         LaneSpec("refresh_scan", "Refresh Classification", requested("refresh_scan"), None),
         LaneSpec(
             "refresh_workspace",
             "Refresh Workspace",
             requested("refresh_workspace"),
-            module_command("project_forge_registry.workspace_generation", "--dry-run", "--include-slug", slug),
+            report_command(
+                "project_forge_registry.workspace_generation",
+                "project_sync_workspace_generation_report.md",
+                "--dry-run",
+                "--include-slug",
+                slug,
+            ),
+            "project_sync_workspace_generation_report.md",
         ),
         LaneSpec(
             "refresh_passport",
             "Refresh Passport",
             requested("refresh_passport"),
-            module_command("project_forge_registry.passport_generation", "--dry-run", "--include-slug", slug),
+            report_command(
+                "project_forge_registry.passport_generation",
+                "project_sync_passport_generation_report.md",
+                "--dry-run",
+                "--include-slug",
+                slug,
+            ),
+            "project_sync_passport_generation_report.md",
         ),
         LaneSpec(
             "refresh_mirror",
             "Refresh Obsidian Mirror",
             requested("refresh_mirror"),
-            module_command("project_forge_registry.obsidian_mirror_generation", "--dry-run", "--include-slug", slug),
+            report_command(
+                "project_forge_registry.obsidian_mirror_generation",
+                "project_sync_obsidian_mirror_generation_report.md",
+                "--dry-run",
+                "--include-slug",
+                slug,
+            ),
+            "project_sync_obsidian_mirror_generation_report.md",
         ),
         LaneSpec(
             "sync_obsidian",
             "Obsidian Sync",
             requested("sync_obsidian"),
-            module_command("project_forge_registry.obsidian_sync", "--dry-run", "--slug", slug),
+            report_command(
+                "project_forge_registry.obsidian_sync",
+                "project_sync_obsidian_sync_report.md",
+                "--dry-run",
+                "--slug",
+                slug,
+            ),
+            "project_sync_obsidian_sync_report.md",
         ),
         LaneSpec(
             "export_docs",
             "Export Docs",
             requested("export_docs"),
-            module_command("project_forge_registry.export_sync", "--dry-run", "--slug", slug),
+            report_command(
+                "project_forge_registry.export_sync",
+                "project_sync_export_sync_report.md",
+                "--dry-run",
+                "--slug",
+                slug,
+            ),
+            "project_sync_export_sync_report.md",
         ),
         LaneSpec(
             "remote_plan",
             "Remote Plan",
             requested("remote_plan"),
-            module_command("project_forge_registry.remote_policy", "plan", "--dry-run", "--slug", slug),
+            report_command(
+                "project_forge_registry.remote_policy",
+                "project_sync_remote_plan_report.md",
+                "plan",
+                "--dry-run",
+                "--slug",
+                slug,
+            ),
+            "project_sync_remote_plan_report.md",
         ),
         LaneSpec(
             "remote_verify",
             "Remote Verify",
             requested("remote_verify"),
-            module_command("project_forge_registry.remote_policy", "verify", "--dry-run", "--slug", slug),
+            report_command(
+                "project_forge_registry.remote_policy",
+                "project_sync_remote_verify_report.md",
+                "verify",
+                "--dry-run",
+                "--slug",
+                slug,
+            ),
+            "project_sync_remote_verify_report.md",
         ),
         LaneSpec(
             "push_ready",
             "Push Ready",
             requested("push_ready"),
-            module_command("project_forge_registry.remote_policy", "push-ready", "--dry-run", "--slug", slug),
+            report_command(
+                "project_forge_registry.remote_policy",
+                "project_sync_push_ready_report.md",
+                "push-ready",
+                "--dry-run",
+                "--slug",
+                slug,
+            ),
+            "project_sync_push_ready_report.md",
         ),
     ]
 
 
 def run_lane(spec: LaneSpec) -> LaneResult:
     if not spec.requested:
-        return LaneResult(spec.key, spec.title, spec.requested, "skipped", spec.command, None, "not requested")
+        return LaneResult(
+            spec.key,
+            spec.title,
+            spec.requested,
+            "skipped",
+            spec.command,
+            None,
+            "not requested",
+            spec.report_name,
+        )
 
     if spec.command is None:
         return LaneResult(
@@ -213,18 +286,19 @@ def run_lane(spec: LaneSpec) -> LaneResult:
             "skipped",
             spec.command,
             None,
-            "phase8_1_placeholder_no_runner",
+            "phase8_3_placeholder_no_runner",
+            spec.report_name,
         )
 
     try:
         proc = subprocess.run(spec.command, capture_output=True, text=True, check=False)
     except FileNotFoundError as exc:
-        return LaneResult(spec.key, spec.title, spec.requested, "failed", spec.command, None, str(exc))
+        return LaneResult(spec.key, spec.title, spec.requested, "failed", spec.command, None, str(exc), spec.report_name)
     if proc.returncode == 0:
-        return LaneResult(spec.key, spec.title, spec.requested, "passed", spec.command, 0, "ok")
+        return LaneResult(spec.key, spec.title, spec.requested, "passed", spec.command, 0, "ok", spec.report_name)
 
     note = proc.stderr.strip() or proc.stdout.strip() or "lane_failed"
-    return LaneResult(spec.key, spec.title, spec.requested, "failed", spec.command, proc.returncode, note)
+    return LaneResult(spec.key, spec.title, spec.requested, "failed", spec.command, proc.returncode, note, spec.report_name)
 
 
 def derive_final_status(global_blocked: bool, results: list[LaneResult]) -> str:
@@ -252,7 +326,7 @@ def write_report(
     report_path.parent.mkdir(parents=True, exist_ok=True)
 
     lines: list[str] = [
-        "# Project Sync Report (Phase 8.2)",
+        "# Project Sync Report (Phase 8.3)",
         "",
         f"- mode: `{mode}`",
         f"- slug: `{slug}`",
@@ -321,9 +395,18 @@ def write_report(
         lines.append("- none")
     lines.append("")
 
+    lines.extend(["## Child Lane Reports", ""])
+    report_results = [item for item in results if item.report_name]
+    if report_results:
+        lines.extend([f"- {item.key}: `artifacts/{item.report_name}`" for item in report_results])
+    else:
+        lines.append("- none")
+    lines.append("")
+
     lines.extend(["## Lane Details", ""])
     for item in results:
         command_text = " ".join(item.command) if item.command else "(none)"
+        report_text = f"artifacts/{item.report_name}" if item.report_name else "n/a"
         lines.extend(
             [
                 f"### {item.title}",
@@ -331,6 +414,7 @@ def write_report(
                 f"- requested: `{str(item.requested).lower()}`",
                 f"- status: `{item.status}`",
                 f"- command: `{command_text}`",
+                f"- child_report: `{report_text}`",
                 f"- return_code: `{item.return_code if item.return_code is not None else 'n/a'}`",
                 f"- note: `{item.note}`",
                 "",
@@ -341,7 +425,7 @@ def write_report(
         [
             "## Safety Statement",
             "",
-            "- Phase 8.2 is dry-run only.",
+            "- Phase 8.3 is dry-run only.",
             "- No push or remote mutation actions are performed by this command.",
             "",
         ]
@@ -366,7 +450,16 @@ def main() -> int:
     if protected_reasons:
         for spec in lane_specs:
             results.append(
-                LaneResult(spec.key, spec.title, spec.requested, "blocked", spec.command, None, "global_gate_blocked")
+                LaneResult(
+                    spec.key,
+                    spec.title,
+                    spec.requested,
+                    "blocked",
+                    spec.command,
+                    None,
+                    "global_gate_blocked",
+                    spec.report_name,
+                )
             )
     else:
         for spec in lane_specs:
@@ -383,6 +476,7 @@ def main() -> int:
                             pending.command,
                             None,
                             "stopped_on_warning",
+                            pending.report_name,
                         )
                     )
                 break

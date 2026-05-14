@@ -29,3 +29,4 @@ result-*
 tmp/
 *.bak.*
 **/*.bak.*
+artifacts/project_sync_*_report.md
