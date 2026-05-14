@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+LABEL="${1:-manual}"
+SAFE_LABEL="$(printf '%s' "$LABEL" | tr -c 'A-Za-z0-9_.-' '-' | sed 's/-$//')"
+STAMP="$(date +%Y%m%d-%H%M%S)"
+TAG="checkpoint-${STAMP}-${SAFE_LABEL}"
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_ROOT"
+
+echo "============================================================"
+echo " PROJECT FORGE CHECKPOINT"
+echo "============================================================"
+echo "Repo: $REPO_ROOT"
+echo "Label: $LABEL"
+echo "Proposed tag: $TAG"
+
+echo
+echo "=== 1) Starting status ==="
+git status --short
+
+echo
+echo "=== 2) Tests ==="
+PYTHONPATH=src python3 -m unittest discover -s tests
+
+echo
+echo "=== 3) Safe project-sync ==="
+./scripts/project-sync-safe
+
+echo
+echo "=== 4) Canonical report dirt check ==="
+git status --short \
+  artifacts/obsidian_sync_report.md \
+  artifacts/export_sync_report.md \
+  artifacts/remote_plan_report.md \
+  artifacts/remote_verify_report.md \
+  artifacts/push_ready_report.md
+
+echo
+echo "=== 5) Full repo status ==="
+STATUS="$(git status --short)"
+if [[ -n "$STATUS" ]]; then
+  echo "$STATUS"
+  echo
+  echo "REFUSING TO TAG: working tree is dirty."
+  echo "Commit or restore changes first, then rerun:"
+  echo "  ./scripts/project-forge-checkpoint $LABEL"
+  exit 1
+fi
+
+echo "Working tree clean."
+
+echo
+echo "=== 6) Create annotated checkpoint tag ==="
+if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
+  echo "Tag already exists: $TAG"
+else
+  git tag -a "$TAG" -m "Project Forge checkpoint: $LABEL"
+fi
+
+echo
+echo "=== 7) Confirm tag ==="
+git tag --list "$TAG" -n
+
+echo
+echo "=== 8) Recent commits ==="
+git --no-pager log --oneline -8
+
+echo
+echo "=== 9) Final status ==="
+git status --short
+
+echo
+echo "Checkpoint complete."
