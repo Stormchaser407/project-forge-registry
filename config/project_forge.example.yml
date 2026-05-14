@@ -1,0 +1,85 @@
+# Project Forge Registry Configuration (Example)
+#
+# Copy this file to config/project_forge.local.yml and customize for your environment.
+# The local file is git-ignored to protect sensitive paths and settings.
+#
+# Required fields:
+#   - projects_root
+#   - vault_project_root
+#
+# All other fields have safe defaults and are optional.
+
+# =============================================================================
+# Required: Project Storage
+# =============================================================================
+
+# Root directory for project storage.
+# This is where project directories are located and managed.
+# Supports ~ for home directory expansion.
+projects_root: ~/Projects
+
+# Root directory for Obsidian vault projects.
+# This is where Obsidian project notes and mirrors are stored.
+# Supports ~ for home directory expansion.
+vault_project_root: ~/main_vault/10 Projects
+
+# =============================================================================
+# Optional: Project Defaults
+# =============================================================================
+
+# Default slug to use when creating new projects.
+# If not set, slugs are generated from project folder names.
+# default_slug: my-project
+
+# Command to open the code editor for projects.
+# Examples: "code", "nvim", "emacs", "subl"
+# editor_command: code
+
+# =============================================================================
+# Optional: Dashboard Settings
+# =============================================================================
+
+# Host for the dashboard web server.
+# Default: 127.0.0.1 (localhost only)
+# dashboard_host: 127.0.0.1
+
+# Port for the dashboard web server.
+# Default: 8080
+# dashboard_port: 8080
+
+# UI theme for the dashboard.
+# Valid values: dark, light, system
+# Default: dark
+# theme: dark
+
+# =============================================================================
+# Optional: Scanning Configuration
+# =============================================================================
+
+# List of directories to scan for projects.
+# Each path supports ~ for home directory expansion.
+# If empty, no automatic scanning is performed.
+# scan_roots:
+#   - ~/Projects
+#   - ~/work
+#   - ~/repos
+
+# List of paths to exclude from scanning.
+# Each path supports ~ for home directory expansion.
+# excluded_paths:
+#   - ~/Projects/archive
+#   - ~/Projects/experiments
+
+# =============================================================================
+# Safety Policy Settings
+# =============================================================================
+
+# WARNING: The following settings are restricted by safety policy.
+# Setting them to 'true' will cause configuration validation to fail
+# until explicit policy approval is granted.
+
+# Allow apply operations (currently disabled by policy).
+# allow_apply: false
+
+# Allow push operations (currently disabled by policy).
+# allow_push: false

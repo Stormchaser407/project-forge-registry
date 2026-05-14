@@ -30,3 +30,6 @@ tmp/
 *.bak.*
 **/*.bak.*
 artifacts/project_sync_*_report.md
+
+# Local Project Forge configuration
+config/project_forge.local.yml
