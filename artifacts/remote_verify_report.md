@@ -29,16 +29,7 @@
 
 - Inside git repo: true
 - Current branch: `main`
-- Working tree clean (if checked): `False`
-- Working tree details:
-  - `M README.md`
-  - ` M pyproject.toml`
-  - `?? artifacts/remote_plan_report.md`
-  - `?? artifacts/tmpshquwbux/`
-  - `?? src/project_forge_registry/remote_models.py`
-  - `?? src/project_forge_registry/remote_policy.py`
-  - `?? src/project_forge_registry/remote_reporting.py`
-  - `?? tests/test_remote_policy.py`
+- Working tree clean (if checked): `True`
 
 ## Remote Snapshot
 
@@ -47,7 +38,7 @@
 ## Verification Checks
 
 - `local_git_repository_detected` required=true passed=true detail=local path is a git repository
-- `working_tree_clean` required=true passed=false detail=dirty or not checked
+- `working_tree_clean` required=true passed=true detail=clean
 - `tests_pass_check` required=false passed=true detail=pending Phase 7b/8 implementation
 - `docs_reports_current_check` required=false passed=true detail=pending Phase 7b/8 implementation
 
