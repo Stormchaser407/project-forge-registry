@@ -210,6 +210,7 @@ class ObsidianSyncTests(unittest.TestCase):
             write_obsidian_sync_report(plan.report_path, plan)
 
             self.assertTrue(plan.report_path.exists())
+            self.assertEqual(plan.report_path.parent.resolve(), artifacts_dir.resolve())
             self.assertFalse((Path(vault_tmp) / "demo").exists())
 
 

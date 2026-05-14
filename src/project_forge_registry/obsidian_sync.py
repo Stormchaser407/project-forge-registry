@@ -124,6 +124,10 @@ def resolve_vault_project_root(raw_path: str | Path) -> Path:
     return root.resolve()
 
 
+def resolve_report_path(report_name: str, mirror_dir: Path) -> Path:
+    return mirror_dir.resolve().parent / normalize_report_name(report_name)
+
+
 def ensure_destination_within_vault_root(destination: Path, vault_project_root: Path) -> None:
     resolved_root = vault_project_root.expanduser().resolve()
     resolved_destination = destination.expanduser().resolve()
@@ -298,7 +302,7 @@ def build_sync_plan(
         excluded_files=excluded_files,
     )
 
-    report_path = repository_artifacts_root().resolve() / normalize_report_name(report_name)
+    report_path = resolve_report_path(report_name, mirror_dir)
     ensure_destination_within_vault_root(vault_project_root, vault_project_root)
     return ObsidianSyncPlan(
         mode=mode,
@@ -369,7 +373,7 @@ def main() -> int:
     args = parser.parse_args()
     plan = create_sync_plan_from_args(args, parser)
 
-    repository_artifacts_root().mkdir(parents=True, exist_ok=True)
+    plan.report_path.parent.mkdir(parents=True, exist_ok=True)
     if plan.mode == "apply":
         apply_sync_plan(plan)
     write_obsidian_sync_report(plan.report_path, plan)
