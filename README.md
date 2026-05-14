@@ -372,3 +372,44 @@ PYTHONPATH=src python3 -m project_forge_registry.export_sync \
 - Passport safety flags gate eligibility (`do_not_sync`, `allow_code_to_obsidian`, `allow_secrets`).
 - Cerberus-related slugs/paths are protected and skipped.
 - No GitHub/Codeberg sync actions in this lane.
+
+## Phase 7 Commands
+
+Phase 7 introduces local-only remote policy tooling:
+
+- `project-forge-remote-plan`
+- `project-forge-remote-verify`
+
+Both commands are dry-run/read-only in this phase. They do not add remotes, push, fetch, or contact remote services.
+
+Module equivalent (subcommands):
+
+- `PYTHONPATH=src python3 -m project_forge_registry.remote_policy plan ...`
+- `PYTHONPATH=src python3 -m project_forge_registry.remote_policy verify ...`
+
+### Phase 7 CLI
+
+`project-forge-remote-plan`:
+
+- `--slug <slug>` (required)
+- `--passport-dir <path>` (default `artifacts/project_passports`)
+- `--report-name <filename>` (default `remote_plan_report.md`)
+- `--dry-run`
+
+`project-forge-remote-verify`:
+
+- `--slug <slug>` (required)
+- `--passport-dir <path>` (default `artifacts/project_passports`)
+- `--require-clean-tree`
+- `--require-tests-pass` (reported as pending Phase 7b/8 in this phase)
+- `--require-doc-reports-current` (reported as pending Phase 7b/8 in this phase)
+- `--report-name <filename>` (default `remote_verify_report.md`)
+- `--dry-run`
+
+### Phase 7 Safety Rules
+
+- Read-only policy/report tooling only.
+- No remote add/modify actions.
+- No push, fetch, or external remote contact.
+- Protected projects (Cerberus-related, reconciliation/system-bound/unknown/review_required) are blocked by policy.
+- Push-ready is not granted in this phase.

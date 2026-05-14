@@ -17,6 +17,8 @@ project-forge-passport-generate = "project_forge_registry.passport_generation:ma
 project-forge-obsidian-mirror-generate = "project_forge_registry.obsidian_mirror_generation:main"
 project-forge-obsidian-sync = "project_forge_registry.obsidian_sync:main"
 project-forge-export-sync = "project_forge_registry.export_sync:main"
+project-forge-remote-plan = "project_forge_registry.remote_policy:main_plan"
+project-forge-remote-verify = "project_forge_registry.remote_policy:main_verify"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
