@@ -21,6 +21,7 @@ project-forge-remote-plan = "project_forge_registry.remote_policy:main_plan"
 project-forge-remote-verify = "project_forge_registry.remote_policy:main_verify"
 project-forge-push-ready = "project_forge_registry.remote_policy:main_push_ready"
 project-sync = "project_forge_registry.project_sync:main"
+project-forge-dashboard-inventory = "project_forge_registry.dashboard_inventory:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

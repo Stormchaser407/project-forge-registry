@@ -2,7 +2,8 @@
 
 ## Mission
 
-Preserve the Phase 10.1A config-loader checkpoint for `project-forge-registry`.
+Preserve the Phase 10.5 dashboard inventory/status API checkpoint for
+`project-forge-registry`.
 
 ## Branch
 
@@ -10,76 +11,105 @@ Preserve the Phase 10.1A config-loader checkpoint for `project-forge-registry`.
 
 ## Current State
 
-This checkpoint records a coherent config-loader change set:
+Phase 10.5 adds a read-only dashboard inventory layer that converts existing
+Project Forge artifacts into:
 
-- `docs/PROJECT_FORGE_CONFIG.md`
-- `src/project_forge_registry/config_model.py`
-- `tests/test_config_model.py`
+- `artifacts/dashboard_inventory.json`
+- `artifacts/dashboard_inventory_report.md`
 
-The change removes the hard PyYAML runtime dependency from config loading, keeps PyYAML support when available, adds a limited stdlib fallback parser for the repository's simple config format, and updates tests/docs for that behavior.
+The dashboard inventory is built from:
 
-The change set is intended to be committed together. No remotes were configured in this checkout when the checkpoint was verified.
+- `artifacts/repo_discovery_inventory.csv`
+- `artifacts/embed_plan_inventory.csv` when present
+
+The command produces one project record per discovered repo and includes
+dashboard-friendly status fields:
+
+- repo/docs/risk lights
+- overall status
+- recommended action
+- VS Code target
+- marker paths
+- report links
+
+Current generated inventory:
+
+- total projects: `74`
+- known embedded projects: `4`
+- dirty review projects: `3`
+- protected review projects: `12`
+
+The four pilot repos remain recognized as `known_embedded`:
+
+- `lifesaver-ledger`
+- `media-dedupe`
+- `neon-district`
+- `recon_housekeeping`
+
+## Files Changed
+
+- `CODEX_HANDOFF.md`
+- `artifacts/dashboard_inventory.json`
+- `artifacts/dashboard_inventory_report.md`
+- `docs/PROJECT_FORGE_DASHBOARD_INVENTORY.md`
+- `pyproject.toml`
+- `src/project_forge_registry/dashboard_inventory.py`
+- `tests/test_dashboard_inventory.py`
 
 ## Commands Run
 
 ```bash
-pwd && git status --short && git branch --show-current && git log -1 --oneline && git remote -v
-rg --files -g 'AGENTS.md' -g 'CODEX_HANDOFF.md' -g 'README.md' -g 'readme_manifest.md' -g '*runbook*' -g '*RUNBOOK*' -g 'docs/**'
-sed -n '1,220p' AGENTS.md
-sed -n '1,220p' README.md
-sed -n '1,240p' docs/PROJECT_SYNC_OPERATOR_RUNBOOK.md
-git diff -- docs/PROJECT_FORGE_CONFIG.md src/project_forge_registry/config_model.py tests/test_config_model.py
+git status --short
+git branch --show-current
+git log -1 --oneline
+git tag --points-at HEAD
+git remote -v
+PYTHONPATH=src python3 -m unittest tests.test_dashboard_inventory
+PYTHONPATH=src python3 -m project_forge_registry.dashboard_inventory
 PYTHONPATH=src python3 -m unittest discover -s tests
-git status --short && git remote -v
-git diff --stat
-git diff --check
+python3 -m json.tool artifacts/dashboard_inventory.json
+git diff --check -- src/project_forge_registry/dashboard_inventory.py tests/test_dashboard_inventory.py docs/PROJECT_FORGE_DASHBOARD_INVENTORY.md pyproject.toml artifacts/dashboard_inventory.json artifacts/dashboard_inventory_report.md
+git status --short
 ```
 
 ## Verification
 
 ```text
-Ran 118 tests in 0.175s
+Ran 165 tests in 0.201s
 
 OK
 ```
 
-`git diff --check` reported no whitespace errors.
+`python3 -m json.tool artifacts/dashboard_inventory.json` parsed successfully.
 
-## Git Status Before Commit
-
-```text
- M docs/PROJECT_FORGE_CONFIG.md
- M src/project_forge_registry/config_model.py
- M tests/test_config_model.py
-?? CODEX_HANDOFF.md
-```
-
-After committing the four-file checkpoint, `git status --short` should be clean unless new work has started.
+`git diff --check` reported no whitespace errors for the Phase 10.5 files.
 
 ## Boundaries Observed
 
 - No external project folders were modified.
-- No Obsidian mirror was modified.
 - No apply path was run.
-- No push, fetch, or remote configuration was attempted.
+- No marker files were written to external repos.
+- No push, fetch, remote inspection, or remote configuration was attempted.
+- No GitHub or Codeberg contact was attempted.
 - No package install was attempted.
+- No commit was made.
 
 ## Blockers
 
-None for the current config-loader checkpoint.
+None for Phase 10.5.
 
 ## Recommended Next Step
 
-Commit the four-file checkpoint if it still matches the intended scope.
+Review and commit the Phase 10.5 checkpoint.
 
 Suggested commit message:
 
 ```text
-Make config loading work without PyYAML
+Add dashboard inventory status feed
 ```
 
-Suggested tag after commit, if this is accepted as a stable checkpoint:
+Suggested tag after commit:
 
 ```text
-phase-10.1a-config-loader-stable
+v0.10.5-dashboard-inventory
 ```
