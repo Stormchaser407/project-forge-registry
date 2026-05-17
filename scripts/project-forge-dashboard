@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'HELP'
+Usage:
+  ./scripts/project-forge-dashboard [--no-open|--open]
+
+Purpose:
+  Refresh the Project Forge dashboard inventory, regenerate the static HTML
+  command board, and optionally open the local HTML file.
+
+Options:
+  --no-open  Regenerate artifacts and print the dashboard path. This is default.
+  --open     Regenerate artifacts and open artifacts/dashboard.html with xdg-open
+             when xdg-open is available.
+  -h, --help Show this help text.
+
+Safety:
+  - read-only against external repos
+  - writes only Project Forge dashboard artifacts
+  - no apply
+  - no marker writes
+  - no remotes
+  - no push/fetch
+  - no package installs
+  - no network calls
+  - no VS Code launching
+HELP
+}
+
+OPEN_DASHBOARD=0
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --no-open)
+      OPEN_DASHBOARD=0
+      shift
+      ;;
+    --open)
+      OPEN_DASHBOARD=1
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "ERROR: unknown argument: $1" >&2
+      echo "Usage: ./scripts/project-forge-dashboard [--no-open|--open]" >&2
+      exit 2
+      ;;
+  esac
+done
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_ROOT"
+
+DASHBOARD_HTML="$REPO_ROOT/artifacts/dashboard.html"
+
+echo "============================================================"
+echo " PROJECT FORGE DASHBOARD"
+echo "============================================================"
+echo "Repo: $REPO_ROOT"
+echo "Mode: read-only local dashboard refresh"
+echo "Open requested: $OPEN_DASHBOARD"
+echo
+echo "Refreshing dashboard inventory..."
+PYTHONPATH=src python3 -m project_forge_registry.dashboard_inventory
+echo
+echo "Rendering static dashboard HTML..."
+PYTHONPATH=src python3 -m project_forge_registry.dashboard_ui
+echo
+echo "Dashboard HTML:"
+echo "  $DASHBOARD_HTML"
+
+if [[ "$OPEN_DASHBOARD" == "1" ]]; then
+  if command -v xdg-open >/dev/null 2>&1; then
+    echo
+    echo "Opening dashboard with xdg-open..."
+    xdg-open "$DASHBOARD_HTML" >/dev/null 2>&1 &
+  else
+    echo
+    echo "xdg-open not found; dashboard was regenerated but not opened."
+    echo "Open this file manually:"
+    echo "  $DASHBOARD_HTML"
+  fi
+else
+  echo
+  echo "No-open mode. Use --open to open locally with xdg-open when available."
+fi

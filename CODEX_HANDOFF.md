@@ -2,7 +2,7 @@
 
 ## Mission
 
-Preserve the Phase 10.6A Neon District dashboard UI renderer checkpoint for
+Preserve the Phase 10.6B dashboard open/launcher wrapper checkpoint for
 `project-forge-registry`.
 
 ## Branch
@@ -11,41 +11,40 @@ Preserve the Phase 10.6A Neon District dashboard UI renderer checkpoint for
 
 ## Current State
 
-Phase 10.6A adds a static, read-only dashboard renderer that converts:
+Phase 10.6B adds a safe repo-local wrapper:
 
-- `artifacts/dashboard_inventory.json`
+- `scripts/project-forge-dashboard`
 
-into:
+The wrapper:
 
-- `artifacts/dashboard.html`
+- changes to the Project Forge repo root
+- refreshes `artifacts/dashboard_inventory.json`
+- refreshes `artifacts/dashboard_inventory_report.md`
+- regenerates `artifacts/dashboard.html`
+- prints the dashboard HTML path
+- defaults to no-open behavior
+- supports `--no-open`
+- supports `--open` using `xdg-open` when available
+- supports `--help`
 
-The generated HTML is self-contained and uses a Neon District command-board
-style with project cards, summary cards, local report links, and glowing
-repo/docs/risk status lights.
+Validation ran the wrapper only in `--no-open` mode. `--open` was not run.
 
-Current rendered summary:
+Current wrapper output summary:
 
-- total projects: `74`
+- projects: `74`
 - known embedded: `4`
 - dirty review: `3`
 - protected review: `12`
 - candidate review: `54`
-
-The four known embedded repos are rendered in the Known Embedded section:
-
-- `lifesaver-ledger`
-- `media-dedupe`
-- `neon-district`
-- `recon_housekeeping`
+- dashboard HTML: `artifacts/dashboard.html`
 
 ## Files Changed
 
 - `CODEX_HANDOFF.md`
-- `artifacts/dashboard.html`
-- `docs/PROJECT_FORGE_DASHBOARD_UI.md`
-- `pyproject.toml`
-- `src/project_forge_registry/dashboard_ui.py`
-- `tests/test_dashboard_ui.py`
+- `README.md`
+- `docs/PROJECT_FORGE_DASHBOARD_LAUNCHER.md`
+- `scripts/project-forge-dashboard`
+- `tests/test_dashboard_launcher.py`
 
 ## Commands Run
 
@@ -55,30 +54,29 @@ git branch --show-current
 git log -1 --oneline
 git tag --points-at HEAD
 git remote -v
-PYTHONPATH=src python3 -m unittest tests.test_dashboard_ui
-PYTHONPATH=src python3 -m project_forge_registry.dashboard_ui
-rg -n "Project Forge Command Board|Known Embedded Projects|Dirty Review Projects|Protected Review Projects|Candidate Review Projects|lifesaver-ledger|media-dedupe|neon-district|recon_housekeeping|Phase 10\\.6A|href=|<script|http://|https://|file://" artifacts/dashboard.html
+PYTHONPATH=src python3 -m unittest tests.test_dashboard_launcher
+./scripts/project-forge-dashboard --help
+python3 -m py_compile src/project_forge_registry/dashboard_ui.py src/project_forge_registry/dashboard_inventory.py
 PYTHONPATH=src python3 -m unittest discover -s tests
+./scripts/project-forge-dashboard --no-open
 git status --short
 ```
 
 ## Verification
 
 ```text
-Ran 174 tests in 0.184s
+Ran 179 tests in 0.178s
 
 OK
 ```
 
-`project_forge_registry.dashboard_ui` completed in static read-only mode and
-wrote `artifacts/dashboard.html`.
+`python3 -m py_compile` passed for:
 
-Inspection confirmed:
+- `src/project_forge_registry/dashboard_ui.py`
+- `src/project_forge_registry/dashboard_inventory.py`
 
-- required title and sections are present
-- the four embedded pilot repos are present
-- report links are relative sibling links
-- no `<script>`, `http://`, `https://`, or `file://` links were found
+`./scripts/project-forge-dashboard --no-open` completed successfully and
+regenerated the dashboard.
 
 ## Boundaries Observed
 
@@ -88,25 +86,28 @@ Inspection confirmed:
 - No push, fetch, remote inspection, or remote configuration was attempted.
 - No GitHub or Codeberg contact was attempted.
 - No package install was attempted.
+- No network calls were made.
+- No VS Code launch was attempted.
+- `--open` was not run.
 - No commit was made.
-- No Cerberus handling was performed beyond rendering existing inventory data.
+- No Cerberus handling was performed.
 
 ## Blockers
 
-None for Phase 10.6A.
+None for Phase 10.6B.
 
 ## Recommended Next Step
 
-Review and commit the Phase 10.6A checkpoint.
+Review and commit the Phase 10.6B checkpoint.
 
 Suggested commit message:
 
 ```text
-Add static dashboard command board
+Add dashboard launcher wrapper
 ```
 
 Suggested tag after commit:
 
 ```text
-v0.10.6a-dashboard-ui
+v0.10.6b-dashboard-launcher
 ```

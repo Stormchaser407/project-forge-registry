@@ -453,3 +453,26 @@ The wrapper runs `project-sync` in dry-run mode only. It does not pass `--apply`
 See:
 
     docs/PROJECT_SYNC_OPERATOR_RUNBOOK.md
+
+## Phase 10.6B: Dashboard launcher wrapper
+
+Refresh the dashboard inventory and static HTML without opening a browser:
+
+    ./scripts/project-forge-dashboard
+
+Explicit no-open mode:
+
+    ./scripts/project-forge-dashboard --no-open
+
+Open the local dashboard with `xdg-open` when available:
+
+    ./scripts/project-forge-dashboard --open
+
+The wrapper regenerates `artifacts/dashboard_inventory.json`,
+`artifacts/dashboard_inventory_report.md`, and `artifacts/dashboard.html`.
+It does not apply changes, write marker files, touch remotes, push/fetch,
+install packages, contact GitHub or Codeberg, or launch VS Code.
+
+See:
+
+    docs/PROJECT_FORGE_DASHBOARD_LAUNCHER.md
