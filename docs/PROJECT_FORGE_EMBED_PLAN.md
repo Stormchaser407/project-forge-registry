@@ -48,6 +48,12 @@ It does not:
 - blocked_dirty
 - blocked_unknown
 
+## Final Status Values
+
+- ready_for_operator_review: selected repos are ready for marker-write review or are already embedded and require no marker writes
+- blocked: at least one selected repo is protected, dirty, or otherwise blocked
+- incomplete: no selected repo was selected, ready, or already embedded
+
 ## Operator Rule
 
 Discovery does not mean embed.

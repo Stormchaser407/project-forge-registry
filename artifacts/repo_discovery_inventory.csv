@@ -9,7 +9,7 @@ notevil_oracle,/mnt/storage/Cole/Projects/NOTEvil-Inc/notevil_oracle,clean,true,
 oracle,/mnt/storage/Cole/Projects/NOTEvil-Inc/oracle,clean,true,true,false,false,2,clean_candidate
 sillytavern,/mnt/storage/Cole/Projects/SillyTavern,clean,true,false,false,false,2,clean_candidate
 spiderfoot_peoplesearch,/mnt/storage/Cole/Projects/SpiderFoot_PeopleSearch,clean,true,false,false,false,2,clean_candidate
-steelseries_rgb,/mnt/storage/Cole/Projects/SteelSeries_RGB,dirty,true,false,false,false,2,dirty_candidate_review_first
+steelseries_rgb,/mnt/storage/Cole/Projects/SteelSeries_RGB,clean,true,false,false,false,2,clean_candidate
 01-website-brand,/mnt/storage/Cole/Projects/Stormchaser407/01-website-brand,clean,false,false,false,false,2,clean_candidate
 argus,/mnt/storage/Cole/Projects/Stormchaser407/Argus,clean,true,false,false,false,2,clean_candidate
 cerberus,/mnt/storage/Cole/Projects/Stormchaser407/Cerberus,clean,true,false,false,false,2,protected_manual_review
@@ -62,14 +62,14 @@ foundations-of-git-exercise-repo,/mnt/storage/Cole/Projects/foundations-of-git-e
 foundations-of-git-exercise-repo,/mnt/storage/Cole/Projects/foundations-of-git-exercise-repo/foundations-of-git-exercise-repo,clean,true,false,false,false,1,clean_candidate
 gremlin,/mnt/storage/Cole/Projects/gremlin,clean,true,false,false,false,0,clean_candidate
 hermes-agent,/mnt/storage/Cole/Projects/hermes-agent,clean,true,true,false,false,1,clean_candidate
-lifesaver-ledger,/mnt/storage/Cole/Projects/lifesaver-ledger,clean,true,false,false,false,2,clean_candidate
-media-dedupe,/mnt/storage/Cole/Projects/media-dedupe,clean,true,false,false,false,2,clean_candidate
-neon-district,/mnt/storage/Cole/Projects/neon-district,clean,true,false,false,false,1,clean_candidate
+lifesaver-ledger,/mnt/storage/Cole/Projects/lifesaver-ledger,clean,true,false,false,true,2,known_embedded
+media-dedupe,/mnt/storage/Cole/Projects/media-dedupe,clean,true,false,false,true,2,known_embedded
+neon-district,/mnt/storage/Cole/Projects/neon-district,clean,true,false,false,true,1,known_embedded
 openclaw-workspace,/mnt/storage/Cole/Projects/openclaw-workspace,clean,false,true,false,false,2,clean_candidate
 primal-web-app,/mnt/storage/Cole/Projects/primal-web-app,clean,true,false,false,false,2,clean_candidate
 project-forge-registry,/mnt/storage/Cole/Projects/project-forge-registry,clean,true,true,false,false,0,control_repo
 project_katrina,/mnt/storage/Cole/Projects/project_katrina,clean,false,false,true,false,2,clean_candidate
-recon_housekeeping,/mnt/storage/Cole/Projects/recon_housekeeping,clean,true,false,false,false,0,clean_candidate
+recon_housekeeping,/mnt/storage/Cole/Projects/recon_housekeeping,clean,true,false,false,true,0,known_embedded
 this-was-avoidable,/mnt/storage/Cole/Projects/this-was-avoidable,clean,true,false,false,false,2,clean_candidate
 tidal-hifi,/mnt/storage/Cole/Projects/tidal-hifi,dirty,true,false,false,false,3,dirty_candidate_review_first
 tidal-hifi,/mnt/storage/Cole/Projects/tidal-hifi/tidal-hifi,clean,true,false,false,false,2,clean_candidate

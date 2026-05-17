@@ -4,7 +4,7 @@
 - apply_performed: `false`
 - final_status: `ready_for_operator_review`
 - selected_slugs: `4`
-- planned_marker_writes: `4`
+- planned_marker_writes: `0`
 - blocked_selected: `0`
 - csv: `artifacts/embed_plan_inventory.csv`
 
@@ -17,84 +17,53 @@
 
 ## Planned Marker Writes
 
-### lifesaver-ledger
-
-- path: `/mnt/storage/Cole/Projects/lifesaver-ledger`
-- marker_yaml: `/mnt/storage/Cole/Projects/lifesaver-ledger/.project-forge.yml`
-- marker_doc: `/mnt/storage/Cole/Projects/lifesaver-ledger/docs/PROJECT_FORGE.md`
-- decision: `plan_marker_write`
-- reason: Selected clean candidate; marker write may be approved in later apply phase.
-
-### media-dedupe
-
-- path: `/mnt/storage/Cole/Projects/media-dedupe`
-- marker_yaml: `/mnt/storage/Cole/Projects/media-dedupe/.project-forge.yml`
-- marker_doc: `/mnt/storage/Cole/Projects/media-dedupe/docs/PROJECT_FORGE.md`
-- decision: `plan_marker_write`
-- reason: Selected clean candidate; marker write may be approved in later apply phase.
-
-### neon-district
-
-- path: `/mnt/storage/Cole/Projects/neon-district`
-- marker_yaml: `/mnt/storage/Cole/Projects/neon-district/.project-forge.yml`
-- marker_doc: `/mnt/storage/Cole/Projects/neon-district/docs/PROJECT_FORGE.md`
-- decision: `plan_marker_write`
-- reason: Selected clean candidate; marker write may be approved in later apply phase.
-
-### recon_housekeeping
-
-- path: `/mnt/storage/Cole/Projects/recon_housekeeping`
-- marker_yaml: `/mnt/storage/Cole/Projects/recon_housekeeping/.project-forge.yml`
-- marker_doc: `/mnt/storage/Cole/Projects/recon_housekeeping/docs/PROJECT_FORGE.md`
-- decision: `plan_marker_write`
-- reason: Selected clean candidate; marker write may be approved in later apply phase.
-
+- none
 
 ## Selected Repo Decisions
 
 ### lifesaver-ledger
 
 - path: `/mnt/storage/Cole/Projects/lifesaver-ledger`
-- category: `clean_candidate`
+- category: `known_embedded`
 - git_status: `clean`
-- eligible: `true`
-- decision: `plan_marker_write`
-- reason: Selected clean candidate; marker write may be approved in later apply phase.
+- eligible: `false`
+- decision: `already_embedded`
+- reason: Project Forge marker already present.
 
 ### media-dedupe
 
 - path: `/mnt/storage/Cole/Projects/media-dedupe`
-- category: `clean_candidate`
+- category: `known_embedded`
 - git_status: `clean`
-- eligible: `true`
-- decision: `plan_marker_write`
-- reason: Selected clean candidate; marker write may be approved in later apply phase.
+- eligible: `false`
+- decision: `already_embedded`
+- reason: Project Forge marker already present.
 
 ### neon-district
 
 - path: `/mnt/storage/Cole/Projects/neon-district`
-- category: `clean_candidate`
+- category: `known_embedded`
 - git_status: `clean`
-- eligible: `true`
-- decision: `plan_marker_write`
-- reason: Selected clean candidate; marker write may be approved in later apply phase.
+- eligible: `false`
+- decision: `already_embedded`
+- reason: Project Forge marker already present.
 
 ### recon_housekeeping
 
 - path: `/mnt/storage/Cole/Projects/recon_housekeeping`
-- category: `clean_candidate`
+- category: `known_embedded`
 - git_status: `clean`
-- eligible: `true`
-- decision: `plan_marker_write`
-- reason: Selected clean candidate; marker write may be approved in later apply phase.
+- eligible: `false`
+- decision: `already_embedded`
+- reason: Project Forge marker already present.
 
 
 ## All Repo Decision Summary
 
-- blocked_dirty: `4`
+- already_embedded: `4`
+- blocked_dirty: `3`
 - blocked_protected: `12`
-- candidate_not_selected: `53`
-- plan_marker_write: `4`
+- candidate_not_selected: `54`
 - skip_control_repo: `1`
 
 ## Safety Statement

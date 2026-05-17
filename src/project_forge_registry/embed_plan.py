@@ -137,6 +137,9 @@ def derive_final_status(items: list[EmbedPlanItem]) -> str:
     if any(item.decision == "plan_marker_write" for item in selected):
         return "ready_for_operator_review"
 
+    if all(item.decision == "already_embedded" for item in selected):
+        return "ready_for_operator_review"
+
     return "incomplete"
 
 

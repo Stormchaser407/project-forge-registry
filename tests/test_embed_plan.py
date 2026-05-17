@@ -12,7 +12,12 @@ from project_forge_registry.embed_plan import (
 )
 
 
-def row(slug: str, category: str = "clean_candidate", git_status: str = "clean") -> RepoInventoryRow:
+def row(
+    slug: str,
+    category: str = "clean_candidate",
+    git_status: str = "clean",
+    has_project_forge_marker: bool = False,
+) -> RepoInventoryRow:
     return RepoInventoryRow(
         slug=slug,
         path=Path("/tmp") / slug,
@@ -20,7 +25,7 @@ def row(slug: str, category: str = "clean_candidate", git_status: str = "clean")
         has_readme=True,
         has_agents=False,
         has_code_workspace=False,
-        has_project_forge_marker=False,
+        has_project_forge_marker=has_project_forge_marker,
         remote_count=0,
         category=category,
     )
@@ -65,6 +70,42 @@ class EmbedPlanTests(unittest.TestCase):
     def test_final_status_ready_when_selected_clean_candidate(self) -> None:
         items = build_plan([row("demo")], {"demo"})
 
+        self.assertEqual(derive_final_status(items), "ready_for_operator_review")
+
+    def test_final_status_ready_when_selected_repo_already_embedded(self) -> None:
+        items = build_plan(
+            [
+                row(
+                    "demo",
+                    category="known_embedded",
+                    has_project_forge_marker=True,
+                )
+            ],
+            {"demo"},
+        )
+
+        self.assertEqual(items[0].decision, "already_embedded")
+        self.assertFalse(items[0].eligible)
+        self.assertEqual(derive_final_status(items), "ready_for_operator_review")
+
+    def test_final_status_ready_when_all_selected_repos_already_embedded(self) -> None:
+        items = build_plan(
+            [
+                row(
+                    "demo-one",
+                    category="known_embedded",
+                    has_project_forge_marker=True,
+                ),
+                row(
+                    "demo-two",
+                    category="known_embedded",
+                    has_project_forge_marker=True,
+                ),
+            ],
+            {"demo-one", "demo-two"},
+        )
+
+        self.assertEqual([item.decision for item in items], ["already_embedded", "already_embedded"])
         self.assertEqual(derive_final_status(items), "ready_for_operator_review")
 
     def test_run_embed_plan_writes_report_and_csv(self) -> None:

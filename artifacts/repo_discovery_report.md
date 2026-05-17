@@ -12,9 +12,10 @@
 
 ## Category Summary
 
-- clean_candidate: `57`
+- clean_candidate: `54`
 - control_repo: `1`
-- dirty_candidate_review_first: `4`
+- dirty_candidate_review_first: `3`
+- known_embedded: `4`
 - protected_manual_review: `12`
 
 ## Discovered Repos
@@ -132,13 +133,13 @@
 ### steelseries_rgb
 
 - path: `/mnt/storage/Cole/Projects/SteelSeries_RGB`
-- git_status: `dirty`
+- git_status: `clean`
 - has_readme: `true`
 - has_agents: `false`
 - has_code_workspace: `false`
 - has_project_forge_marker: `false`
 - remote_count: `2`
-- category: `dirty_candidate_review_first`
+- category: `clean_candidate`
 
 ### 01-website-brand
 
@@ -719,9 +720,9 @@
 - has_readme: `true`
 - has_agents: `false`
 - has_code_workspace: `false`
-- has_project_forge_marker: `false`
+- has_project_forge_marker: `true`
 - remote_count: `2`
-- category: `clean_candidate`
+- category: `known_embedded`
 
 ### media-dedupe
 
@@ -730,9 +731,9 @@
 - has_readme: `true`
 - has_agents: `false`
 - has_code_workspace: `false`
-- has_project_forge_marker: `false`
+- has_project_forge_marker: `true`
 - remote_count: `2`
-- category: `clean_candidate`
+- category: `known_embedded`
 
 ### neon-district
 
@@ -741,9 +742,9 @@
 - has_readme: `true`
 - has_agents: `false`
 - has_code_workspace: `false`
-- has_project_forge_marker: `false`
+- has_project_forge_marker: `true`
 - remote_count: `1`
-- category: `clean_candidate`
+- category: `known_embedded`
 
 ### openclaw-workspace
 
@@ -796,9 +797,9 @@
 - has_readme: `true`
 - has_agents: `false`
 - has_code_workspace: `false`
-- has_project_forge_marker: `false`
+- has_project_forge_marker: `true`
 - remote_count: `0`
-- category: `clean_candidate`
+- category: `known_embedded`
 
 ### this-was-avoidable
 
