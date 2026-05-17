@@ -6,6 +6,8 @@ This document describes the configuration schema for the Project Forge Registry 
 
 Project Forge uses a YAML configuration file to define project storage locations, dashboard settings, scanning behavior, and safety policies. The configuration model is machine-agnostic and designed to be portable across different environments.
 
+PyYAML is optional. If it is installed, Project Forge uses it for config parsing. If it is not installed, Project Forge falls back to a built-in stdlib parser that supports the repository's example-style config format without any package installs.
+
 ## Configuration File Locations
 
 The system looks for configuration files in the following order:
@@ -68,6 +70,21 @@ vault_project_root: ~/main_vault/10 Projects
 # allow_push: false
 ```
 
+## Parser Compatibility
+
+The built-in fallback parser is intentionally limited to the Project Forge config shape. It supports:
+
+- comments beginning with `#`
+- blank lines
+- simple `key: value` pairs
+- quoted and unquoted strings
+- integers
+- booleans `true` and `false`
+- `null`, `~`, and empty values
+- simple list blocks such as `scan_roots` and `excluded_paths`
+
+It does not aim to support full YAML features such as nested mappings, complex quoting rules, anchors, or multi-line scalars. Malformed input returns a clear config error instead of guessing.
+
 ## Validation Rules
 
 ### Required Field Validation
@@ -127,6 +144,8 @@ config = loader.load("config/project_forge.local.yml")
 # From a string (useful for testing)
 config = loader.load_string(yaml_content)
 ```
+
+No package installation is required for the example config format shown in this document.
 
 ### Accessing Configuration
 

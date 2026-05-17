@@ -13,11 +13,13 @@ Safety Policy:
 from __future__ import annotations
 
 import os
+import re
 from dataclasses import asdict, dataclass, field
+from io import StringIO
 from pathlib import Path
 from typing import Any
 
-# Try to import yaml, but provide a clear error if not available
+# Try to import yaml, but keep a stdlib fallback parser for simple configs
 try:
     import yaml
 except ImportError:
@@ -38,6 +40,12 @@ class ConfigValidationError(ConfigError):
 
 class ConfigPolicyError(ConfigError):
     """Raised when configuration violates safety policy."""
+
+    pass
+
+
+class SimpleConfigParseError(ConfigError):
+    """Raised when the limited stdlib config parser encounters invalid input."""
 
     pass
 
@@ -222,12 +230,6 @@ class ConfigLoader:
         """
         self.validate_paths = validate_paths
 
-        if yaml is None:
-            raise ImportError(
-                "PyYAML is required for config loading. "
-                "Install with: pip install pyyaml"
-            )
-
     def load(self, path: str | Path) -> ProjectForgeConfig:
         """Load configuration from a YAML file.
 
@@ -248,8 +250,8 @@ class ConfigLoader:
             raise ConfigError(f"Configuration file not found: {path}")
 
         try:
-            with open(path, "r", encoding="utf-8") as f:
-                data = self._parse_yaml(f)
+            content = path.read_text(encoding="utf-8")
+            data = self._parse_yaml(content)
         except Exception as e:
             raise ConfigError(f"Failed to read configuration file: {e}") from e
 
@@ -273,7 +275,7 @@ class ConfigLoader:
         return self._build_config(data)
 
     def _parse_yaml(self, content: str) -> dict[str, Any]:
-        """Parse YAML content.
+        """Parse YAML content with optional PyYAML support and stdlib fallback.
 
         Args:
             content: YAML content string or file-like object.
@@ -284,17 +286,122 @@ class ConfigLoader:
         Raises:
             ConfigError: If YAML parsing fails.
         """
-        try:
-            result = yaml.safe_load(content)
-            if result is None:
-                return {}
-            if not isinstance(result, dict):
-                raise ConfigError(
-                    "Configuration must be a YAML mapping (dictionary)"
+        if yaml is not None:
+            try:
+                result = yaml.safe_load(content)
+                if result is None:
+                    return {}
+                if not isinstance(result, dict):
+                    raise ConfigError(
+                        "Configuration must be a YAML mapping (dictionary)"
+                    )
+                return result
+            except yaml.YAMLError as e:
+                raise ConfigError(f"Invalid YAML: {e}") from e
+
+        return self._parse_simple_yaml(content)
+
+    def _parse_simple_yaml(self, content: str) -> dict[str, Any]:
+        """Parse the limited Project Forge config format with stdlib only."""
+        data: dict[str, Any] = {}
+        current_list_key: str | None = None
+
+        for line_number, raw_line in enumerate(StringIO(content), start=1):
+            line = self._strip_inline_comment(raw_line.rstrip("\n"))
+            if not line.strip():
+                continue
+
+            if line.startswith((" ", "\t")):
+                stripped = line.strip()
+                if not stripped.startswith("- "):
+                    raise SimpleConfigParseError(
+                        f"Invalid config at line {line_number}: unexpected indentation"
+                    )
+                if current_list_key is None:
+                    raise SimpleConfigParseError(
+                        f"Invalid config at line {line_number}: list item without a list key"
+                    )
+                if data[current_list_key] is None:
+                    data[current_list_key] = []
+                list_value = stripped[2:].strip()
+                data[current_list_key].append(self._parse_scalar(list_value))
+                continue
+
+            current_list_key = None
+            stripped = line.strip()
+            if stripped.startswith("- "):
+                raise ConfigError("Configuration must be a YAML mapping (dictionary)")
+
+            if ":" not in stripped:
+                raise SimpleConfigParseError(
+                    f"Invalid config at line {line_number}: expected 'key: value'"
                 )
-            return result
-        except yaml.YAMLError as e:
-            raise ConfigError(f"Invalid YAML: {e}") from e
+
+            key, raw_value = stripped.split(":", 1)
+            key = key.strip()
+            if not key:
+                raise SimpleConfigParseError(
+                    f"Invalid config at line {line_number}: empty key"
+                )
+
+            value = raw_value.strip()
+            if not value:
+                data[key] = None
+                current_list_key = key
+                continue
+
+            data[key] = self._parse_scalar(value)
+
+        return data
+
+    def _strip_inline_comment(self, line: str) -> str:
+        """Remove comments while respecting quoted strings."""
+        result: list[str] = []
+        quote: str | None = None
+
+        for char in line:
+            if char in {'"', "'"}:
+                if quote is None:
+                    quote = char
+                elif quote == char:
+                    quote = None
+            if char == "#" and quote is None:
+                break
+            result.append(char)
+
+        return "".join(result).rstrip()
+
+    def _parse_scalar(self, value: str) -> Any:
+        """Parse a limited scalar value from the fallback config format."""
+        if value == "":
+            return None
+
+        lowered = value.lower()
+        if lowered == "true":
+            return True
+        if lowered == "false":
+            return False
+        if lowered in {"null", "~"}:
+            return None
+        if re.fullmatch(r"[+-]?\d+", value):
+            return int(value)
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in {'"', "'"}:
+            return value[1:-1]
+        return value
+
+    def _coerce_bool(self, value: Any, key: str) -> bool:
+        """Coerce a config value to bool with clear validation."""
+        if isinstance(value, bool):
+            return value
+        if value is None:
+            return False
+        if isinstance(value, str):
+            lowered = value.strip().lower()
+            if lowered == "true":
+                return True
+            if lowered == "false":
+                return False
+        raise ConfigValidationError(f"{key} must be a boolean")
 
     def _build_config(self, data: dict[str, Any]) -> ProjectForgeConfig:
         """Build a config instance from parsed data.
@@ -335,8 +442,8 @@ class ConfigLoader:
             theme=str(merged.get("theme", "dark")),
             scan_roots=[str(s) for s in merged.get("scan_roots", [])],
             excluded_paths=[str(e) for e in merged.get("excluded_paths", [])],
-            allow_apply=bool(merged.get("allow_apply", False)),
-            allow_push=bool(merged.get("allow_push", False)),
+            allow_apply=self._coerce_bool(merged.get("allow_apply", False), "allow_apply"),
+            allow_push=self._coerce_bool(merged.get("allow_push", False), "allow_push"),
         )
 
         # Set internal validation flag

@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+import project_forge_registry.config_model as config_model
 from project_forge_registry.config_model import (
     ConfigError,
     ConfigLoader,
@@ -220,13 +221,6 @@ class ProjectForgeConfigTests(unittest.TestCase):
 class ConfigLoaderTests(unittest.TestCase):
     """Tests for ConfigLoader class."""
 
-    def setUp(self) -> None:
-        # Skip tests if yaml is not available
-        try:
-            import yaml  # noqa: F401
-        except ImportError:
-            self.skipTest("PyYAML not installed")
-
     def test_load_valid_config(self) -> None:
         yaml_content = """
 projects_root: ~/Projects
@@ -325,7 +319,10 @@ projects_root: ~/Projects
 
         with self.assertRaises(ConfigError) as ctx:
             loader.load_string(yaml_content)
-        self.assertIn("Invalid YAML", str(ctx.exception))
+        self.assertTrue(
+            "Invalid YAML" in str(ctx.exception)
+            or "Invalid config" in str(ctx.exception)
+        )
 
     def test_load_non_dict_yaml(self) -> None:
         yaml_content = """
@@ -393,15 +390,89 @@ excluded_paths: 123
         self.assertEqual(config.scan_roots, [])
         self.assertEqual(config.excluded_paths, [])
 
+    @patch.object(config_model, "yaml", None)
+    def test_load_valid_config_without_pyyaml(self) -> None:
+        yaml_content = """
+# comments and blank lines are allowed
+projects_root: ~/Projects
+vault_project_root: ~/vault/Projects
+default_slug: "my-project"
+editor_command: 'nvim'
+dashboard_port: 3000
+theme: light
+scan_roots:
+  - ~/Projects
+  - ~/work
+excluded_paths:
+  - ~/Projects/archive
+"""
+        loader = ConfigLoader()
+        config = loader.load_string(yaml_content)
+
+        self.assertEqual(config.projects_root, "~/Projects")
+        self.assertEqual(config.vault_project_root, "~/vault/Projects")
+        self.assertEqual(config.default_slug, "my-project")
+        self.assertEqual(config.editor_command, "nvim")
+        self.assertEqual(config.dashboard_port, 3000)
+        self.assertEqual(config.theme, "light")
+        self.assertEqual(config.scan_roots, ["~/Projects", "~/work"])
+        self.assertEqual(config.excluded_paths, ["~/Projects/archive"])
+
+    @patch.object(config_model, "yaml", None)
+    def test_load_null_and_empty_values_without_pyyaml(self) -> None:
+        yaml_content = """
+projects_root: ~/Projects
+vault_project_root: ~/vault/Projects
+default_slug:
+editor_command: null
+"""
+        loader = ConfigLoader()
+        config = loader.load_string(yaml_content)
+
+        self.assertIsNone(config.default_slug)
+        self.assertIsNone(config.editor_command)
+
+    @patch.object(config_model, "yaml", None)
+    def test_load_rejects_invalid_simple_config_without_pyyaml(self) -> None:
+        yaml_content = """
+projects_root: ~/Projects
+  broken: true
+vault_project_root: ~/vault/Projects
+"""
+        loader = ConfigLoader()
+
+        with self.assertRaises(ConfigError) as ctx:
+            loader.load_string(yaml_content)
+        self.assertIn("unexpected indentation", str(ctx.exception))
+
+    @patch.object(config_model, "yaml", None)
+    def test_load_rejects_top_level_list_without_pyyaml(self) -> None:
+        yaml_content = """
+- item1
+- item2
+"""
+        loader = ConfigLoader()
+
+        with self.assertRaises(ConfigError) as ctx:
+            loader.load_string(yaml_content)
+        self.assertIn("must be a YAML mapping", str(ctx.exception))
+
+    @patch.object(config_model, "yaml", None)
+    def test_load_rejects_non_boolean_policy_flag_without_pyyaml(self) -> None:
+        yaml_content = """
+projects_root: ~/Projects
+vault_project_root: ~/vault/Projects
+allow_apply: maybe
+"""
+        loader = ConfigLoader()
+
+        with self.assertRaises(ConfigValidationError) as ctx:
+            loader.load_string(yaml_content)
+        self.assertIn("allow_apply must be a boolean", str(ctx.exception))
+
 
 class LoadConfigFunctionTests(unittest.TestCase):
     """Tests for the load_config convenience function."""
-
-    def setUp(self) -> None:
-        try:
-            import yaml  # noqa: F401
-        except ImportError:
-            self.skipTest("PyYAML not installed")
 
     def test_load_config_convenience_function(self) -> None:
         import tempfile
@@ -423,6 +494,31 @@ vault_project_root: ~/vault/Projects
         finally:
             import os
 
+            os.unlink(temp_path)
+
+    @patch.object(config_model, "yaml", None)
+    def test_load_config_convenience_function_without_pyyaml(self) -> None:
+        import os
+        import tempfile
+
+        yaml_content = """
+projects_root: ~/Projects
+vault_project_root: ~/vault/Projects
+scan_roots:
+  - ~/Projects
+"""
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".yml", delete=False
+        ) as f:
+            f.write(yaml_content)
+            f.flush()
+            temp_path = f.name
+
+        try:
+            config = load_config(temp_path)
+            self.assertEqual(config.projects_root, "~/Projects")
+            self.assertEqual(config.scan_roots, ["~/Projects"])
+        finally:
             os.unlink(temp_path)
 
 
