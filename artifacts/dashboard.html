@@ -1,0 +1,1866 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project Forge Command Board</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07090d;
+      --panel: #0d1118;
+      --panel-2: #111827;
+      --text: #edf7ff;
+      --muted: #8ea4b8;
+      --cyan: #20e8ff;
+      --green: #42ff9b;
+      --amber: #ffc857;
+      --magenta: #ff4fd8;
+      --red: #ff3864;
+      --blue: #5da8ff;
+      --gray: #6b7280;
+      --line: rgba(125, 245, 255, 0.18);
+      --shadow: rgba(32, 232, 255, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(32, 232, 255, 0.08), transparent 24rem),
+        radial-gradient(circle at 18% 8%, rgba(255, 79, 216, 0.14), transparent 24rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    a {
+      color: var(--cyan);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .shell {
+      width: min(1440px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+
+    .hero {
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, rgba(13, 17, 24, 0.96), rgba(17, 24, 39, 0.9));
+      box-shadow: 0 0 44px var(--shadow), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+      padding: 28px;
+      border-radius: 8px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--cyan);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4.4rem);
+      line-height: 1;
+      letter-spacing: 0;
+      text-shadow: 0 0 22px rgba(32, 232, 255, 0.28);
+    }
+
+    .hero-copy {
+      max-width: 72ch;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .summary-card {
+      min-height: 112px;
+      padding: 18px;
+      border-radius: 8px;
+      background: rgba(13, 17, 24, 0.92);
+      border: 1px solid var(--line);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+    }
+
+    .summary-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .summary-card strong {
+      display: block;
+      margin-top: 12px;
+      font-size: 2.4rem;
+      line-height: 1;
+    }
+
+    .accent-cyan strong { color: var(--cyan); }
+    .accent-green strong { color: var(--green); }
+    .accent-amber strong { color: var(--amber); }
+    .accent-magenta strong { color: var(--magenta); }
+
+    .report-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0 28px;
+    }
+
+    .report-links a {
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(13, 17, 24, 0.72);
+      font-size: 0.9rem;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 34px 0 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-heading h2 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      color: var(--text);
+      letter-spacing: 0.08em;
+    }
+
+    .section-heading span {
+      color: var(--cyan);
+      font-weight: 800;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 14px;
+    }
+
+    .project-card {
+      min-width: 0;
+      padding: 16px;
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(17, 24, 39, 0.96), rgba(9, 13, 20, 0.96));
+      border: 1px solid rgba(125, 245, 255, 0.16);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
+    }
+
+    .card-embedded_ready {
+      border-color: rgba(66, 255, 155, 0.38);
+      box-shadow: 0 0 22px rgba(66, 255, 155, 0.08);
+    }
+
+    .card-dirty_review_first {
+      border-color: rgba(255, 200, 87, 0.42);
+    }
+
+    .card-protected_manual_review {
+      border-color: rgba(255, 79, 216, 0.46);
+      box-shadow: 0 0 24px rgba(255, 79, 216, 0.1);
+    }
+
+    .card-topline {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-topline h3 {
+      margin: 0;
+      min-width: 0;
+      overflow-wrap: anywhere;
+      font-size: 1.02rem;
+      color: var(--text);
+    }
+
+    .status-chip {
+      flex: 0 0 auto;
+      max-width: 50%;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--cyan);
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      overflow-wrap: anywhere;
+    }
+
+    .light-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-bottom: 14px;
+    }
+
+    .light-pair {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .status-light {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      background: var(--gray);
+      box-shadow: 0 0 12px var(--gray);
+    }
+
+    .light-green { background: var(--green); box-shadow: 0 0 14px var(--green); }
+    .light-amber { background: var(--amber); box-shadow: 0 0 14px var(--amber); }
+    .light-red { background: var(--red); box-shadow: 0 0 14px var(--red); }
+    .light-magenta { background: var(--magenta); box-shadow: 0 0 14px var(--magenta); }
+    .light-blue { background: var(--blue); box-shadow: 0 0 14px var(--blue); }
+    .light-gray { background: var(--gray); box-shadow: 0 0 10px var(--gray); }
+
+    .detail-grid {
+      display: grid;
+      gap: 7px;
+    }
+
+    .detail-row {
+      display: grid;
+      grid-template-columns: 116px minmax(0, 1fr);
+      gap: 10px;
+      min-width: 0;
+      font-size: 0.86rem;
+    }
+
+    .detail-label {
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      font-weight: 800;
+    }
+
+    .detail-value {
+      min-width: 0;
+      color: #dcecff;
+      overflow-wrap: anywhere;
+    }
+
+    .empty-section {
+      margin: 0;
+      padding: 18px;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      color: var(--muted);
+    }
+
+    .safety {
+      margin-top: 34px;
+      padding: 18px;
+      border: 1px solid rgba(255, 200, 87, 0.28);
+      border-radius: 8px;
+      background: rgba(255, 200, 87, 0.05);
+      color: var(--muted);
+    }
+
+    .safety strong {
+      color: var(--amber);
+    }
+
+    @media (max-width: 860px) {
+      .summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .shell {
+        width: min(100vw - 20px, 1440px);
+        padding-top: 18px;
+      }
+
+      .hero {
+        padding: 20px;
+      }
+
+      .summary-grid,
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .detail-row {
+        grid-template-columns: 1fr;
+      }
+
+      .status-chip {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <p class="eyebrow">Neon District / read-only command surface</p>
+      <h1>Project Forge Command Board</h1>
+      <p class="hero-copy">A static dashboard rendered from Project Forge artifacts. It shows the system state, exposes no file mutation actions, and keeps launch behavior display-only for Phase 10.6A.</p>
+    </header>
+
+    <section class="summary-grid" aria-label="Dashboard summary">
+      <div class="summary-card accent-cyan">
+  <span>total projects</span>
+  <strong>74</strong>
+</div>
+<div class="summary-card accent-green">
+  <span>known embedded</span>
+  <strong>4</strong>
+</div>
+<div class="summary-card accent-amber">
+  <span>dirty review</span>
+  <strong>3</strong>
+</div>
+<div class="summary-card accent-magenta">
+  <span>protected review</span>
+  <strong>12</strong>
+</div>
+<div class="summary-card accent-cyan">
+  <span>candidate review</span>
+  <strong>54</strong>
+</div>
+    </section>
+
+    <nav class="report-links" aria-label="Local reports">
+      <a href="dashboard_inventory_report.md">Dashboard inventory</a>
+<a href="repo_discovery_report.md">Repo discovery</a>
+<a href="embed_plan_report.md">Embed plan</a>
+<a href="tool_readiness_report.md">Tool readiness</a>
+<a href="project_sync_report.md">Project sync</a>
+    </nav>
+
+    <section class="project-section known-embedded">
+  <div class="section-heading">
+    <h2>Known Embedded Projects</h2>
+    <span>4</span>
+  </div>
+  <div class="project-grid">
+    <article class="project-card card-embedded_ready">
+  <div class="card-topline">
+    <h3>lifesaver-ledger</h3>
+    <span class="status-chip">embedded_ready</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>docs: green</span></span>
+<span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>risk: green</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/lifesaver-ledger</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">known_embedded</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">embedded_ready</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">embedded_ready</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/lifesaver-ledger</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/lifesaver-ledger/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/lifesaver-ledger/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-embedded_ready">
+  <div class="card-topline">
+    <h3>media-dedupe</h3>
+    <span class="status-chip">embedded_ready</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>docs: green</span></span>
+<span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>risk: green</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/media-dedupe</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">known_embedded</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">embedded_ready</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">embedded_ready</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/media-dedupe</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/media-dedupe/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/media-dedupe/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-embedded_ready">
+  <div class="card-topline">
+    <h3>neon-district</h3>
+    <span class="status-chip">embedded_ready</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>docs: green</span></span>
+<span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>risk: green</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/neon-district</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">known_embedded</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">embedded_ready</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">embedded_ready</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/neon-district</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/neon-district/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/neon-district/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-embedded_ready">
+  <div class="card-topline">
+    <h3>recon_housekeeping</h3>
+    <span class="status-chip">embedded_ready</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>docs: green</span></span>
+<span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>risk: green</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/recon_housekeeping</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">known_embedded</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">embedded_ready</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">embedded_ready</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/recon_housekeeping</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/recon_housekeeping/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/recon_housekeeping/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+  </div>
+</section>
+    <section class="project-section dirty-review">
+  <div class="section-heading">
+    <h2>Dirty Review Projects</h2>
+    <span>3</span>
+  </div>
+  <div class="project-grid">
+    <article class="project-card card-dirty_review_first">
+  <div class="card-topline">
+    <h3>djfiddlesticks-website</h3>
+    <span class="status-chip">dirty_review_first</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>repo: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/djfiddlesticks-website</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">dirty_candidate_review_first</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">dirty_review_first</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">dirty_review_first</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/djfiddlesticks-website</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/djfiddlesticks-website/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/djfiddlesticks-website/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-dirty_review_first">
+  <div class="card-topline">
+    <h3>foundations-of-git-exercise-repo</h3>
+    <span class="status-chip">dirty_review_first</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>repo: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/foundations-of-git-exercise-repo</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">dirty_candidate_review_first</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">dirty_review_first</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">dirty_review_first</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/foundations-of-git-exercise-repo</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/foundations-of-git-exercise-repo/foundations-of-git-exercise-repo/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/foundations-of-git-exercise-repo/foundations-of-git-exercise-repo/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-dirty_review_first">
+  <div class="card-topline">
+    <h3>tidal-hifi</h3>
+    <span class="status-chip">dirty_review_first</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>repo: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/tidal-hifi</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">dirty_candidate_review_first</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">dirty_review_first</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">dirty_review_first</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/tidal-hifi</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/tidal-hifi/tidal-hifi/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/tidal-hifi/tidal-hifi/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+  </div>
+</section>
+    <section class="project-section protected-review">
+  <div class="section-heading">
+    <h2>Protected Review Projects</h2>
+    <span>12</span>
+  </div>
+  <div class="project-grid">
+    <article class="project-card card-protected_manual_review">
+  <div class="card-topline">
+    <h3>cerberus</h3>
+    <span class="status-chip">protected_manual_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>repo: red</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>risk: red</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/Cerberus</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/Cerberus</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/Cerberus/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/Cerberus/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-protected_manual_review">
+  <div class="card-topline">
+    <h3>cerberus-command</h3>
+    <span class="status-chip">protected_manual_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>repo: red</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>risk: red</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/cerberus-command</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/cerberus-command</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/cerberus-command/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/cerberus-command/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-protected_manual_review">
+  <div class="card-topline">
+    <h3>cerberus-recon</h3>
+    <span class="status-chip">protected_manual_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>repo: red</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>risk: red</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/cerberus-recon</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/cerberus-recon</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-recon/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-recon/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-protected_manual_review">
+  <div class="card-topline">
+    <h3>cerberus-vault</h3>
+    <span class="status-chip">protected_manual_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>repo: red</span></span>
+<span class="light-pair"><span class="status-light light-gray" aria-hidden="true"></span><span>docs: gray</span></span>
+<span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>risk: red</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/cerberus-vault</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/cerberus-vault</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/cerberus-vault/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/cerberus-vault/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-protected_manual_review">
+  <div class="card-topline">
+    <h3>cerberus-mgm-boot</h3>
+    <span class="status-chip">protected_manual_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>repo: red</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>risk: red</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/cerberus-mgm-boot</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/cerberus-mgm-boot</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/cerberus-mgm-boot/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/cerberus-mgm-boot/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-protected_manual_review">
+  <div class="card-topline">
+    <h3>cerberus_case_workspace</h3>
+    <span class="status-chip">protected_manual_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>repo: red</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>risk: red</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/cerberus_case_workspace</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/cerberus_case_workspace</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/cerberus_case_workspace/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/cerberus_case_workspace/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-protected_manual_review">
+  <div class="card-topline">
+    <h3>cerberus-aegis</h3>
+    <span class="status-chip">protected_manual_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>repo: red</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>risk: red</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-aegis</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-aegis</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-aegis/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-aegis/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-protected_manual_review">
+  <div class="card-topline">
+    <h3>cerberus-agents</h3>
+    <span class="status-chip">protected_manual_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>repo: red</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>risk: red</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-agents</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-agents</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-agents/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-agents/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-protected_manual_review">
+  <div class="card-topline">
+    <h3>cerberus-insights</h3>
+    <span class="status-chip">protected_manual_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>repo: red</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>risk: red</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-insights</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-insights</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-insights/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-insights/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-protected_manual_review">
+  <div class="card-topline">
+    <h3>cerberus-project</h3>
+    <span class="status-chip">protected_manual_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>repo: red</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>risk: red</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-project</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-project</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-project/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-project/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-protected_manual_review">
+  <div class="card-topline">
+    <h3>cerberus-recon</h3>
+    <span class="status-chip">protected_manual_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>repo: red</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>risk: red</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-recon</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-recon</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-recon/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-recon/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-protected_manual_review">
+  <div class="card-topline">
+    <h3>cerberus-watch</h3>
+    <span class="status-chip">protected_manual_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>repo: red</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span>risk: red</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-watch</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">protected_manual_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-watch</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-watch/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/cerberus-watch/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+  </div>
+</section>
+    <section class="project-section candidate-review">
+  <div class="section-heading">
+    <h2>Candidate Review Projects</h2>
+    <span>54</span>
+  </div>
+  <div class="project-grid">
+    <article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>agentzero</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/AgentZero</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/AgentZero</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/AgentZero/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/AgentZero/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>dj_request_system</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/DJ_request_system</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/DJ_request_system</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/DJ_request_system/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/DJ_request_system/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>extension-blip</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Extension-Blip</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Extension-Blip</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Extension-Blip/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Extension-Blip/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>commandboard</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/CommandBoard</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/CommandBoard</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/CommandBoard/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/CommandBoard/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>notevil-c2-obsidian-bridge</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/notevil-c2-obsidian-bridge</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/notevil-c2-obsidian-bridge</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/notevil-c2-obsidian-bridge/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/notevil-c2-obsidian-bridge/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>notevil-total-evac</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/notevil-total-evac</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/notevil-total-evac</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/notevil-total-evac/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/notevil-total-evac/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>notevil_oracle</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/notevil_oracle</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/notevil_oracle</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/notevil_oracle/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/notevil_oracle/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>oracle</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/oracle</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/oracle</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/oracle/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/NOTEvil-Inc/oracle/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>sillytavern</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/SillyTavern</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/SillyTavern</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/SillyTavern/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/SillyTavern/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>spiderfoot_peoplesearch</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/SpiderFoot_PeopleSearch</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/SpiderFoot_PeopleSearch</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/SpiderFoot_PeopleSearch/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/SpiderFoot_PeopleSearch/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>steelseries_rgb</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/SteelSeries_RGB</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/SteelSeries_RGB</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/SteelSeries_RGB/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/SteelSeries_RGB/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>01-website-brand</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-gray" aria-hidden="true"></span><span>docs: gray</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/01-website-brand</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/01-website-brand</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/01-website-brand/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/01-website-brand/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>argus</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/Argus</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/Argus</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/Argus/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/Argus/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>corecivic-ops</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/CoreCivic-Ops</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/CoreCivic-Ops</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/CoreCivic-Ops/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/CoreCivic-Ops/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>creeperbot5000</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-gray" aria-hidden="true"></span><span>docs: gray</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/CreeperBot5000</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/CreeperBot5000</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/CreeperBot5000/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/CreeperBot5000/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>ig-detective</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/IG-Detective</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/IG-Detective</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/IG-Detective/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/IG-Detective/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>mygirlgpt</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/MyGirlGPT</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/MyGirlGPT</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/MyGirlGPT/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/MyGirlGPT/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>osint-framework</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/OSINT-Framework</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/OSINT-Framework</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/OSINT-Framework/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/OSINT-Framework/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>technical_documents</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/Technical_Documents</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/Technical_Documents</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/Technical_Documents/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/Technical_Documents/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>aegis</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/aegis</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/aegis</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/aegis/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/aegis/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>chashgram.nicegram</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/chashgram.nicegram</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/chashgram.nicegram</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/chashgram.nicegram/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/chashgram.nicegram/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>cloudfuse</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/cloudfuse</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/cloudfuse</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/cloudfuse/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/cloudfuse/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>djfiddlesticks-music-console</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/djfiddlesticks-music-console</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/djfiddlesticks-music-console</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/djfiddlesticks-music-console/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/djfiddlesticks-music-console/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>djfiddlesticks-ops</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/djfiddlesticks-ops</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/djfiddlesticks-ops</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/djfiddlesticks-ops/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/djfiddlesticks-ops/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>djfiddlesticks-radio-tracker</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/djfiddlesticks-radio-tracker</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/djfiddlesticks-radio-tracker</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/djfiddlesticks-radio-tracker/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/djfiddlesticks-radio-tracker/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>endgame</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/endgame</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/endgame</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/endgame/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/endgame/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>endgame-diagrams</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/endgame-diagrams</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/endgame-diagrams</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/endgame-diagrams/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/endgame-diagrams/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>endgame-website</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/endgame-website</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/endgame-website</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/endgame-website/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/endgame-website/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>espanso-snippets</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/espanso-snippets</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/espanso-snippets</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/espanso-snippets/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/espanso-snippets/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>fiddlesticks-stage</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/fiddlesticks-stage</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/fiddlesticks-stage</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/fiddlesticks-stage/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/fiddlesticks-stage/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>forge-os-endgame-edition</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/forge-os-endgame-edition</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/forge-os-endgame-edition</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/forge-os-endgame-edition/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/forge-os-endgame-edition/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>gradle</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/gradle</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/gradle</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/gradle/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/gradle/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>hello-world</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/hello-world</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/hello-world</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/hello-world/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/hello-world/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>mavrakis</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/mavrakis</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/mavrakis</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/mavrakis/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/mavrakis/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>my-tools</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/my-tools</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/my-tools</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/my-tools/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/my-tools/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>oren</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/oren</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/oren</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/oren/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/oren/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>pixel-9-pro-xl-twrp-experiment</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/pixel-9-pro-xl-TWRP-experiment</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/pixel-9-pro-xl-TWRP-experiment</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/pixel-9-pro-xl-TWRP-experiment/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/pixel-9-pro-xl-TWRP-experiment/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>secure-edit-flow</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/secure-edit-flow</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/secure-edit-flow</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/secure-edit-flow/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/secure-edit-flow/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>test-repo-from-agent</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/test-repo-from-agent</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/test-repo-from-agent</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/test-repo-from-agent/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/test-repo-from-agent/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>wraith</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/wraith</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/wraith</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/wraith/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/Stormchaser407/wraith/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>home-mistral-vibe</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/archive/home-mistral-vibe</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/archive/home-mistral-vibe</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/archive/home-mistral-vibe/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/archive/home-mistral-vibe/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>storage-mistral-vibe</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/archive/storage-mistral-vibe</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/archive/storage-mistral-vibe</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/archive/storage-mistral-vibe/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/archive/storage-mistral-vibe/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>endgame-consultation</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/Endgame-Consultation</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/Endgame-Consultation</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/Endgame-Consultation/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/Endgame-Consultation/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>forge-doctrine</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-gray" aria-hidden="true"></span><span>docs: gray</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/Forge-Doctrine</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/Forge-Doctrine</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/Forge-Doctrine/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/Forge-Doctrine/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>marion-county-weather-hub</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/marion-county-weather-hub</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/marion-county-weather-hub</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/marion-county-weather-hub/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/marion-county-weather-hub/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>obsidian-council</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/obsidian-council</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/obsidian-council</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/obsidian-council/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/endgame-solutions/obsidian-council/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>foundations-of-git-exercise-repo</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/foundations-of-git-exercise-repo/foundations-of-git-exercise-repo</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/foundations-of-git-exercise-repo/foundations-of-git-exercise-repo</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/foundations-of-git-exercise-repo/foundations-of-git-exercise-repo/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/foundations-of-git-exercise-repo/foundations-of-git-exercise-repo/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>gremlin</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>risk: green</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/gremlin</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/gremlin</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/gremlin/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/gremlin/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>hermes-agent</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/hermes-agent</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/hermes-agent</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/hermes-agent/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/hermes-agent/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>openclaw-workspace</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-gray" aria-hidden="true"></span><span>docs: gray</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/openclaw-workspace</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/openclaw-workspace</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/openclaw-workspace/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/openclaw-workspace/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>primal-web-app</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/primal-web-app</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/primal-web-app</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/primal-web-app/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/primal-web-app/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>project_katrina</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-gray" aria-hidden="true"></span><span>docs: gray</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/project_katrina</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/project_katrina/Projects.code-workspace</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/project_katrina/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/project_katrina/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>this-was-avoidable</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/this-was-avoidable</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/this-was-avoidable</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/this-was-avoidable/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/this-was-avoidable/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+<article class="project-card card-candidate_review">
+  <div class="card-topline">
+    <h3>tidal-hifi</h3>
+    <span class="status-chip">candidate_review</span>
+  </div>
+  <div class="light-strip">
+    <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span>repo: green</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>docs: amber</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span>risk: amber</span></span>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-row"><span class="detail-label">path</span><span class="detail-value">/mnt/storage/Cole/Projects/tidal-hifi/tidal-hifi</span></div>
+<div class="detail-row"><span class="detail-label">category</span><span class="detail-value">clean_candidate</span></div>
+<div class="detail-row"><span class="detail-label">overall</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">action</span><span class="detail-value">candidate_review</span></div>
+<div class="detail-row"><span class="detail-label">vscode target</span><span class="detail-value">/mnt/storage/Cole/Projects/tidal-hifi/tidal-hifi</span></div>
+<div class="detail-row"><span class="detail-label">marker yaml</span><span class="detail-value">/mnt/storage/Cole/Projects/tidal-hifi/tidal-hifi/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label">marker doc</span><span class="detail-value">/mnt/storage/Cole/Projects/tidal-hifi/tidal-hifi/docs/PROJECT_FORGE.md</span></div>
+  </div>
+</article>
+  </div>
+</section>
+
+    <section class="safety">
+      <strong>Safety:</strong> Phase 10.6A is static and read-only. This page does not launch VS Code, write marker files, apply changes, touch remotes, push, fetch, contact GitHub or Codeberg, install packages, or modify external repos.
+    </section>
+  </main>
+</body>
+</html>
