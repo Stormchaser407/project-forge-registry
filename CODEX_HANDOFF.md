@@ -2,8 +2,8 @@
 
 ## Mission
 
-Preserve the Phase 10.8A Project Forge Cold Start checkpoint for
-`project-forge-registry`.
+Preserve the Phase 10.8B Cold Start desktop launcher and Neon District icon
+installer checkpoint for `project-forge-registry`.
 
 ## Branch
 
@@ -11,46 +11,41 @@ Preserve the Phase 10.8A Project Forge Cold Start checkpoint for
 
 ## Current State
 
-Phase 10.8A adds a safe repo-local Cold Start wrapper:
+Phase 10.8B adds a safe user-local desktop installer:
 
-- `scripts/project-forge-cold-start`
+- `scripts/project-forge-install-cold-start-desktop`
 
-The wrapper is a status/resume/check script. It:
+The installer supports:
 
-- changes to the Project Forge repo root
-- prints `PROJECT FORGE COLD START`
-- shows `git status --short`
-- shows recent commits
-- shows recent `v0.10*` tags
-- shows recent `checkpoint-*` tags
-- runs `PYTHONPATH=src python3 -m unittest discover -s tests`
-- runs `./scripts/project-sync-safe`
-- runs `./scripts/project-forge-dashboard --no-open` by default
-- prints `artifacts/dashboard.html`
-- prints final `git status --short`
-- supports `--help`
-- supports `--open-dashboard`
+- `--help`
+- `--dry-run`
+- default write mode
 
-Validation did not run `--open-dashboard`.
+Validation only ran `--help` and `--dry-run`. The default write mode was not
+run.
 
-Current Cold Start output summary:
+In default write mode, the installer is designed to write only:
 
-- tests: `Ran 184 tests ... OK`
-- project-sync final status: `ready_for_operator_review`
-- dashboard projects: `74`
-- known embedded: `4`
-- dirty review: `3`
-- protected review: `12`
-- candidate review: `54`
-- dashboard HTML: `artifacts/dashboard.html`
+- `~/.local/share/icons/neon-district-project-forge/project-forge-cold-start.svg`
+- `~/Desktop/project-forge-cold-start.desktop`
+- `~/.local/share/applications/project-forge-cold-start.desktop`
+
+The generated desktop entry runs:
+
+```text
+bash -lc 'cd "/mnt/storage/Cole/Projects/project-forge-registry" && ./scripts/project-forge-cold-start --open-dashboard; echo; echo "Press Enter to close..."; read'
+```
+
+The generated SVG icon is self-contained with a Neon District command-board /
+forge motif and no external image references.
 
 ## Files Changed
 
 - `CODEX_HANDOFF.md`
 - `README.md`
-- `docs/PROJECT_FORGE_COLD_START.md`
-- `scripts/project-forge-cold-start`
-- `tests/test_cold_start.py`
+- `docs/PROJECT_FORGE_COLD_START_DESKTOP.md`
+- `scripts/project-forge-install-cold-start-desktop`
+- `tests/test_cold_start_desktop.py`
 
 ## Commands Run
 
@@ -60,35 +55,32 @@ git branch --show-current
 git log -1 --oneline
 git tag --points-at HEAD
 git remote -v
-bash -n scripts/project-forge-cold-start
-PYTHONPATH=src python3 -m unittest tests.test_cold_start
-./scripts/project-forge-cold-start --help
+bash -n scripts/project-forge-install-cold-start-desktop
+PYTHONPATH=src python3 -m unittest tests.test_cold_start_desktop
+./scripts/project-forge-install-cold-start-desktop --help
+./scripts/project-forge-install-cold-start-desktop --dry-run
 PYTHONPATH=src python3 -m unittest discover -s tests
-./scripts/project-forge-cold-start
 git status --short
 ```
 
 ## Verification
 
 ```text
-Ran 184 tests in 0.266s
+Ran 192 tests in 0.281s
 
 OK
 ```
 
-Cold Start itself also ran tests:
+Dry-run output confirmed these target paths:
 
-```text
-Ran 184 tests in 0.424s
-
-OK
-```
-
-`./scripts/project-forge-cold-start` completed successfully in default no-open
-mode.
+- `/home/cole/.local/share/icons/neon-district-project-forge/project-forge-cold-start.svg`
+- `/home/cole/Desktop/project-forge-cold-start.desktop`
+- `/home/cole/.local/share/applications/project-forge-cold-start.desktop`
 
 ## Boundaries Observed
 
+- Default launcher write mode was not run.
+- No user-local desktop/icon files were written during validation.
 - No external project repos were modified.
 - No apply path was run.
 - No marker files were written.
@@ -97,30 +89,28 @@ mode.
 - No package install was attempted.
 - No network calls were made.
 - No VS Code launch was attempted.
-- `--open-dashboard` was not run.
+- No Cold Start execution was attempted by the installer.
+- No dashboard open was attempted by the installer.
 - No commit was made.
 - No tags were created.
 - No Cerberus handling was performed.
 
-Note: `project-sync-safe`, which Cold Start is required to call, wrote its
-standard wrapper log under `/tmp/`.
-
 ## Blockers
 
-None for Phase 10.8A.
+None for Phase 10.8B.
 
 ## Recommended Next Step
 
-Review and commit the Phase 10.8A checkpoint.
+Review and commit the Phase 10.8B checkpoint.
 
 Suggested commit message:
 
 ```text
-Add Project Forge Cold Start wrapper
+Add Cold Start desktop launcher installer
 ```
 
 Suggested tag after commit:
 
 ```text
-v0.10.8a-cold-start
+v0.10.8b-cold-start-desktop
 ```

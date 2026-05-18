@@ -495,3 +495,23 @@ contact GitHub or Codeberg, launch VS Code, create commits, or create tags.
 See:
 
     docs/PROJECT_FORGE_COLD_START.md
+
+## Phase 10.8B: Cold Start desktop launcher
+
+Preview the user-local desktop launcher/icon install without writing files:
+
+    ./scripts/project-forge-install-cold-start-desktop --dry-run
+
+Install the user-local launcher and Neon District SVG icon only after explicit
+operator approval:
+
+    ./scripts/project-forge-install-cold-start-desktop
+
+The installer writes only the expected user-local desktop/icon files. It does
+not run Cold Start, open the dashboard, apply changes, write marker files, touch
+remotes, push/fetch, install packages, make network calls, launch VS Code,
+create commits, or create tags.
+
+See:
+
+    docs/PROJECT_FORGE_COLD_START_DESKTOP.md

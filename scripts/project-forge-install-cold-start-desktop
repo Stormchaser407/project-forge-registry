@@ -1,0 +1,161 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'HELP'
+Usage:
+  ./scripts/project-forge-install-cold-start-desktop [--dry-run]
+
+Purpose:
+  Install a user-local Project Forge Cold Start desktop entry and Neon District
+  SVG icon.
+
+Options:
+  --dry-run  Print the files that would be written without creating them.
+  -h, --help Show this help text.
+
+Safety:
+  - writes only the expected user-local desktop/icon files in default mode
+  - no apply
+  - no marker writes
+  - no remotes
+  - no push/fetch
+  - no package installs
+  - no network calls
+  - no editor launching
+  - no commits
+  - no tags
+HELP
+}
+
+DRY_RUN=0
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --dry-run)
+      DRY_RUN=1
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "ERROR: unknown argument: $1" >&2
+      echo "Usage: ./scripts/project-forge-install-cold-start-desktop [--dry-run]" >&2
+      exit 2
+      ;;
+  esac
+done
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_ROOT"
+
+ICON_DIR="$HOME/.local/share/icons/neon-district-project-forge"
+APP_DIR="$HOME/.local/share/applications"
+DESKTOP_DIR="$HOME/Desktop"
+ICON_PATH="$ICON_DIR/project-forge-cold-start.svg"
+APP_DESKTOP_PATH="$APP_DIR/project-forge-cold-start.desktop"
+USER_DESKTOP_PATH="$DESKTOP_DIR/project-forge-cold-start.desktop"
+
+EXEC_LINE='bash -lc '\''cd "/mnt/storage/Cole/Projects/project-forge-registry" && ./scripts/project-forge-cold-start --open-dashboard; echo; echo "Press Enter to close..."; read'\'''
+
+write_icon() {
+  cat > "$ICON_PATH" <<'SVG'
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Project Forge Cold Start</title>
+  <desc id="desc">Neon District command-board forge icon.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#05070d"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="256" height="256" rx="26" fill="url(#bg)"/>
+  <path d="M25 46h206v164H25z" fill="#09111d" stroke="#20e8ff" stroke-width="4"/>
+  <path d="M41 66h174" stroke="#ff4fd8" stroke-width="3" opacity=".85"/>
+  <circle cx="58" cy="83" r="7" fill="#42ff9b" filter="url(#glow)"/>
+  <circle cx="82" cy="83" r="7" fill="#ffc857" filter="url(#glow)"/>
+  <circle cx="106" cy="83" r="7" fill="#ff4fd8" filter="url(#glow)"/>
+  <path d="M72 164h112l-18 22H90z" fill="#101827" stroke="#20e8ff" stroke-width="4" filter="url(#glow)"/>
+  <path d="M88 136h80l16 28H72z" fill="#182235" stroke="#42ff9b" stroke-width="4"/>
+  <path d="M101 112h54v24h-54z" fill="#0f1724" stroke="#ffc857" stroke-width="4"/>
+  <path d="M118 94h20v18h-20z" fill="#ff4fd8" filter="url(#glow)"/>
+  <path d="M56 202h144" stroke="#20e8ff" stroke-width="3" opacity=".65"/>
+  <path d="M52 111h31M173 111h31M52 129h24M180 129h24" stroke="#5da8ff" stroke-width="4" stroke-linecap="round"/>
+  <path d="M34 224l188-192" stroke="#20e8ff" stroke-width="2" opacity=".13"/>
+  <path d="M67 224L222 66" stroke="#ff4fd8" stroke-width="2" opacity=".12"/>
+</svg>
+SVG
+}
+
+write_desktop_file() {
+  local target="$1"
+  cat > "$target" <<DESKTOP
+[Desktop Entry]
+Type=Application
+Name=Project Forge Cold Start
+Comment=Resume Project Forge with status, tests, sync, and dashboard refresh
+Exec=$EXEC_LINE
+Icon=$ICON_PATH
+Terminal=true
+Categories=Development;Utility;
+StartupNotify=true
+DESKTOP
+}
+
+echo "============================================================"
+echo " PROJECT FORGE COLD START DESKTOP INSTALLER"
+echo "============================================================"
+echo "Repo: $REPO_ROOT"
+echo "Mode: $([[ "$DRY_RUN" == "1" ]] && echo dry-run || echo write)"
+echo
+echo "Icon:"
+echo "  $ICON_PATH"
+echo "Desktop launcher:"
+echo "  $USER_DESKTOP_PATH"
+echo "Application launcher:"
+echo "  $APP_DESKTOP_PATH"
+
+if [[ "$DRY_RUN" == "1" ]]; then
+  echo
+  echo "Dry run only. No files were written."
+  exit 0
+fi
+
+mkdir -p "$ICON_DIR" "$APP_DIR" "$DESKTOP_DIR"
+write_icon
+write_desktop_file "$USER_DESKTOP_PATH"
+write_desktop_file "$APP_DESKTOP_PATH"
+chmod +x "$USER_DESKTOP_PATH" "$APP_DESKTOP_PATH"
+
+echo
+echo "Wrote:"
+echo "  $ICON_PATH"
+echo "  $USER_DESKTOP_PATH"
+echo "  $APP_DESKTOP_PATH"
+
+if command -v update-desktop-database >/dev/null 2>&1; then
+  update-desktop-database "$APP_DIR" >/dev/null 2>&1 || true
+  echo "Refreshed desktop application cache with update-desktop-database."
+else
+  echo "update-desktop-database not found; skipped desktop database refresh."
+fi
+
+if command -v kbuildsycoca6 >/dev/null 2>&1; then
+  kbuildsycoca6 >/dev/null 2>&1 || true
+  echo "Refreshed KDE service cache with kbuildsycoca6."
+else
+  echo "kbuildsycoca6 not found; skipped KDE service cache refresh."
+fi
+
+echo
+echo "Desktop installer complete."
