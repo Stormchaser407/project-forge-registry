@@ -33,3 +33,4 @@ artifacts/project_sync_*_report.md
 
 # Local Project Forge configuration
 config/project_forge.local.yml
+config/codex_profiles.local.yml

@@ -2,8 +2,8 @@
 
 ## Mission
 
-Preserve the Phase 10.8B Cold Start desktop launcher and Neon District icon
-installer checkpoint for `project-forge-registry`.
+Preserve the Phase 10.7A Codex workspace/profile selector probe checkpoint for
+`project-forge-registry`.
 
 ## Branch
 
@@ -11,41 +11,61 @@ installer checkpoint for `project-forge-registry`.
 
 ## Current State
 
-Phase 10.8B adds a safe user-local desktop installer:
+Phase 10.7A adds a safe read-only Codex profile probe:
 
-- `scripts/project-forge-install-cold-start-desktop`
+- `scripts/project-forge-codex-profile-probe`
 
-The installer supports:
+The probe supports:
 
 - `--help`
-- `--dry-run`
-- default write mode
+- `--profile personal`
+- `--profile business`
+- `--profile plain`
+- `--interactive`
 
-Validation only ran `--help` and `--dry-run`. The default write mode was not
-run.
+The phase also adds:
 
-In default write mode, the installer is designed to write only:
+- `config/codex_profiles.example.yml`
+- `docs/PROJECT_FORGE_CODEX_PROFILES.md`
+- `.gitignore` entry for `config/codex_profiles.local.yml`
 
-- `~/.local/share/icons/neon-district-project-forge/project-forge-cold-start.svg`
-- `~/Desktop/project-forge-cold-start.desktop`
-- `~/.local/share/applications/project-forge-cold-start.desktop`
+No local config file was created.
 
-The generated desktop entry runs:
+## Probe Results
 
-```text
-bash -lc 'cd "/mnt/storage/Cole/Projects/project-forge-registry" && ./scripts/project-forge-cold-start --open-dashboard; echo; echo "Press Enter to close..."; read'
-```
+`personal`:
 
-The generated SVG icon is self-contained with a Neon District command-board /
-forge motif and no external image references.
+- label: `Personal Codex workspace`
+- proposed CODEX_HOME: `/home/cole/.codex-personal`
+- CODEX_HOME exists: `no`
+- likely auth file exists: `no`
+- codex command available: `yes`
+
+`business`:
+
+- label: `Business Codex workspace`
+- proposed CODEX_HOME: `/home/cole/.codex-business`
+- CODEX_HOME exists: `no`
+- likely auth file exists: `no`
+- codex command available: `yes`
+
+`plain`:
+
+- label: `Plain editor / no Codex assumption`
+- proposed CODEX_HOME: `none`
+- CODEX_HOME exists: `not checked`
+- likely auth file exists: `not checked`
+- codex command available: `yes`
 
 ## Files Changed
 
+- `.gitignore`
 - `CODEX_HANDOFF.md`
 - `README.md`
-- `docs/PROJECT_FORGE_COLD_START_DESKTOP.md`
-- `scripts/project-forge-install-cold-start-desktop`
-- `tests/test_cold_start_desktop.py`
+- `config/codex_profiles.example.yml`
+- `docs/PROJECT_FORGE_CODEX_PROFILES.md`
+- `scripts/project-forge-codex-profile-probe`
+- `tests/test_codex_profile_probe.py`
 
 ## Commands Run
 
@@ -55,32 +75,33 @@ git branch --show-current
 git log -1 --oneline
 git tag --points-at HEAD
 git remote -v
-bash -n scripts/project-forge-install-cold-start-desktop
-PYTHONPATH=src python3 -m unittest tests.test_cold_start_desktop
-./scripts/project-forge-install-cold-start-desktop --help
-./scripts/project-forge-install-cold-start-desktop --dry-run
+bash -n scripts/project-forge-codex-profile-probe
+PYTHONPATH=src python3 -m unittest tests.test_codex_profile_probe
+./scripts/project-forge-codex-profile-probe --help
 PYTHONPATH=src python3 -m unittest discover -s tests
+./scripts/project-forge-codex-profile-probe --profile personal
+./scripts/project-forge-codex-profile-probe --profile business
+./scripts/project-forge-codex-profile-probe --profile plain
 git status --short
 ```
 
 ## Verification
 
 ```text
-Ran 192 tests in 0.281s
+Ran 202 tests in 0.291s
 
 OK
 ```
 
-Dry-run output confirmed these target paths:
-
-- `/home/cole/.local/share/icons/neon-district-project-forge/project-forge-cold-start.svg`
-- `/home/cole/Desktop/project-forge-cold-start.desktop`
-- `/home/cole/.local/share/applications/project-forge-cold-start.desktop`
-
 ## Boundaries Observed
 
-- Default launcher write mode was not run.
-- No user-local desktop/icon files were written during validation.
+- No tokens were read.
+- No auth file contents were printed.
+- No auth filenames were printed by the probe.
+- No auth files were copied or modified.
+- No Codex login was attempted.
+- No Codex command was executed except `command -v codex`.
+- No VS Code launch was attempted.
 - No external project repos were modified.
 - No apply path was run.
 - No marker files were written.
@@ -88,29 +109,26 @@ Dry-run output confirmed these target paths:
 - No GitHub or Codeberg contact was attempted.
 - No package install was attempted.
 - No network calls were made.
-- No VS Code launch was attempted.
-- No Cold Start execution was attempted by the installer.
-- No dashboard open was attempted by the installer.
 - No commit was made.
 - No tags were created.
 - No Cerberus handling was performed.
 
 ## Blockers
 
-None for Phase 10.8B.
+None for Phase 10.7A.
 
 ## Recommended Next Step
 
-Review and commit the Phase 10.8B checkpoint.
+Review and commit the Phase 10.7A checkpoint.
 
 Suggested commit message:
 
 ```text
-Add Cold Start desktop launcher installer
+Add Codex profile probe
 ```
 
 Suggested tag after commit:
 
 ```text
-v0.10.8b-cold-start-desktop
+v0.10.7a-codex-profile-probe
 ```

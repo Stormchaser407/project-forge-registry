@@ -1,0 +1,20 @@
+# Project Forge Codex profile selector example.
+#
+# This file is safe to commit. Put machine-local overrides in:
+#
+#   config/codex_profiles.local.yml
+#
+# The local override file is git-ignored. Do not store raw tokens, auth JSON,
+# session cookies, or copied credential files here.
+
+personal:
+  label: Personal Codex workspace
+  codex_home: ~/.codex-personal
+
+business:
+  label: Business Codex workspace
+  codex_home: ~/.codex-business
+
+plain:
+  label: Plain editor / no Codex assumption
+  codex_home: ""

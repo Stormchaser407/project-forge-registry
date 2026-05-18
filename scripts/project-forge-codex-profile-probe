@@ -1,0 +1,147 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'HELP'
+Usage:
+  ./scripts/project-forge-codex-profile-probe --profile personal
+  ./scripts/project-forge-codex-profile-probe --profile business
+  ./scripts/project-forge-codex-profile-probe --profile plain
+  ./scripts/project-forge-codex-profile-probe --interactive
+
+Purpose:
+  Probe a proposed local Codex workspace/profile selection without logging in,
+  launching editors, reading token contents, or running Codex.
+
+Profiles:
+  personal  Personal Codex workspace, proposed CODEX_HOME ~/.codex-personal
+  business  Business Codex workspace, proposed CODEX_HOME ~/.codex-business
+  plain     Plain editor / no Codex assumption, no CODEX_HOME proposal
+
+Safety:
+  - no token storage
+  - no token reading
+  - no auth file printing
+  - no Codex login
+  - no Codex execution except command availability check
+  - no VS Code launch
+  - no remotes
+  - no push/fetch
+  - no package installs
+  - no network calls
+HELP
+}
+
+PROFILE=""
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --profile)
+      if [[ $# -lt 2 ]]; then
+        echo "ERROR: --profile requires one of: personal, business, plain" >&2
+        exit 2
+      fi
+      PROFILE="$2"
+      shift 2
+      ;;
+    --interactive)
+      echo "Select Codex profile:"
+      echo "  1) personal"
+      echo "  2) business"
+      echo "  3) plain"
+      printf "Choice [plain]: "
+      read -r choice
+      case "${choice:-3}" in
+        1|personal) PROFILE="personal" ;;
+        2|business) PROFILE="business" ;;
+        3|plain) PROFILE="plain" ;;
+        *)
+          echo "ERROR: unknown interactive choice: $choice" >&2
+          exit 2
+          ;;
+      esac
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "ERROR: unknown argument: $1" >&2
+      echo "Usage: ./scripts/project-forge-codex-profile-probe --profile personal|business|plain" >&2
+      exit 2
+      ;;
+  esac
+done
+
+if [[ -z "$PROFILE" ]]; then
+  PROFILE="plain"
+fi
+
+case "$PROFILE" in
+  personal)
+    PROFILE_LABEL="Personal Codex workspace"
+    CODEX_HOME_PROPOSED="$HOME/.codex-personal"
+    ;;
+  business)
+    PROFILE_LABEL="Business Codex workspace"
+    CODEX_HOME_PROPOSED="$HOME/.codex-business"
+    ;;
+  plain)
+    PROFILE_LABEL="Plain editor / no Codex assumption"
+    CODEX_HOME_PROPOSED=""
+    ;;
+  *)
+    echo "ERROR: unsupported profile: $PROFILE" >&2
+    echo "Supported profiles: personal, business, plain" >&2
+    exit 2
+    ;;
+esac
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_ROOT"
+
+echo "============================================================"
+echo " PROJECT FORGE CODEX PROFILE PROBE"
+echo "============================================================"
+echo "Repo: $REPO_ROOT"
+echo "Selected profile: $PROFILE"
+echo "Profile label: $PROFILE_LABEL"
+
+if [[ -n "$CODEX_HOME_PROPOSED" ]]; then
+  echo "Proposed CODEX_HOME: $CODEX_HOME_PROPOSED"
+  if [[ -d "$CODEX_HOME_PROPOSED" ]]; then
+    echo "CODEX_HOME exists: yes"
+  else
+    echo "CODEX_HOME exists: no"
+  fi
+
+  AUTH_FOUND="no"
+  for auth_name in auth.json credentials.json session.json; do
+    if [[ -f "$CODEX_HOME_PROPOSED/$auth_name" ]]; then
+      AUTH_FOUND="yes"
+      break
+    fi
+  done
+  echo "Likely auth file exists: $AUTH_FOUND"
+else
+  echo "Proposed CODEX_HOME: none"
+  echo "CODEX_HOME exists: not checked"
+  echo "Likely auth file exists: not checked"
+fi
+
+if command -v codex >/dev/null 2>&1; then
+  echo "codex command available: yes"
+else
+  echo "codex command available: no"
+fi
+
+echo
+echo "Safety:"
+echo "- no login/auth action was performed"
+echo "- no VS Code launch was performed"
+echo "- no tokens were read or displayed"
+echo "- no auth file contents were read or displayed"
+echo "- no Codex command was executed"
+echo "- no network calls were made"

@@ -515,3 +515,25 @@ create commits, or create tags.
 See:
 
     docs/PROJECT_FORGE_COLD_START_DESKTOP.md
+
+## Phase 10.7A: Codex profile probe
+
+Probe a proposed local Codex workspace/profile selection without logging in,
+reading tokens, launching VS Code, or running Codex:
+
+    ./scripts/project-forge-codex-profile-probe --profile personal
+    ./scripts/project-forge-codex-profile-probe --profile business
+    ./scripts/project-forge-codex-profile-probe --profile plain
+
+The probe is for the one-account, multiple-workspace operator model where the
+operator may choose Personal or Business context after login. It checks proposed
+`CODEX_HOME` paths and whether `codex` is on `PATH`, but it does not read or
+print auth contents.
+
+Future local overrides belong in ignored file:
+
+    config/codex_profiles.local.yml
+
+See:
+
+    docs/PROJECT_FORGE_CODEX_PROFILES.md
