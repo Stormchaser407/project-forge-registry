@@ -537,3 +537,20 @@ Future local overrides belong in ignored file:
 See:
 
     docs/PROJECT_FORGE_CODEX_PROFILES.md
+
+## Phase 10.7B: Codex profile bootstrap
+
+Preview local Codex profile home setup:
+
+    ./scripts/project-forge-codex-profile-bootstrap --dry-run
+
+Create the local profile homes and ignored local config skeleton:
+
+    ./scripts/project-forge-codex-profile-bootstrap --write
+
+The bootstrap prepares `~/.codex-personal`, `~/.codex-business`, and `config/codex_profiles.local.yml`.
+It does not read tokens, print auth contents, copy auth files, execute Codex, launch VS Code, contact remotes, install packages, create commits, or create tags.
+
+See:
+
+    docs/PROJECT_FORGE_CODEX_PROFILE_BOOTSTRAP.md

@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+CONFIG_DIR="$REPO_ROOT/config"
+LOCAL_CONFIG="$CONFIG_DIR/codex_profiles.local.yml"
+PERSONAL_HOME="$HOME/.codex-personal"
+BUSINESS_HOME="$HOME/.codex-business"
+MODE="${1:---dry-run}"
+
+show_help() {
+  printf "%s\n" "Usage:"
+  printf "%s\n" "  ./scripts/project-forge-codex-profile-bootstrap --dry-run"
+  printf "%s\n" "  ./scripts/project-forge-codex-profile-bootstrap --write"
+  printf "%s\n" ""
+  printf "%s\n" "Purpose:"
+  printf "%s\n" "  Prepare local Codex profile homes for Personal/Business workspace selection."
+  printf "%s\n" ""
+  printf "%s\n" "Options:"
+  printf "%s\n" "  --dry-run  Show planned paths without writing files. Default."
+  printf "%s\n" "  --write    Create profile directories and ignored local config skeleton."
+  printf "%s\n" "  -h, --help Show this help text."
+  printf "%s\n" ""
+  printf "%s\n" "Safety:"
+  printf "%s\n" "  - no token storage"
+  printf "%s\n" "  - no token reading"
+  printf "%s\n" "  - no auth file printing"
+  printf "%s\n" "  - no auth file copying"
+  printf "%s\n" "  - no Codex login"
+  printf "%s\n" "  - no Codex execution"
+  printf "%s\n" "  - no VS Code launch"
+  printf "%s\n" "  - no remotes"
+  printf "%s\n" "  - no push/fetch"
+  printf "%s\n" "  - no package installs"
+  printf "%s\n" "  - no network calls"
+  printf "%s\n" "  - no commits"
+  printf "%s\n" "  - no tags"
+}
+
+if [[ "$MODE" == "--help" || "$MODE" == "-h" ]]; then
+  show_help
+  exit 0
+fi
+
+if [[ "$MODE" != "--dry-run" && "$MODE" != "--write" ]]; then
+  echo "Unknown option: $MODE" >&2
+  echo "Use --help for usage." >&2
+  exit 2
+fi
+
+echo "============================================================"
+echo " PROJECT FORGE CODEX PROFILE BOOTSTRAP"
+echo "============================================================"
+echo "Repo: $REPO_ROOT"
+echo "Mode: ${MODE#--}"
+echo
+echo "Profile homes:"
+echo "  personal: $PERSONAL_HOME"
+echo "  business: $BUSINESS_HOME"
+echo
+echo "Ignored local config:"
+echo "  $LOCAL_CONFIG"
+echo
+if [[ "$MODE" == "--dry-run" ]]; then
+  echo "Dry run only. No files or directories were written."
+  echo
+  echo "Safety:"
+  echo "- no token storage"
+  echo "- no token reading"
+  echo "- no auth file printing"
+  echo "- no auth file copying"
+  echo "- no Codex login"
+  echo "- no Codex execution"
+  echo "- no VS Code launch"
+  echo "- no remotes"
+  echo "- no push/fetch"
+  echo "- no package installs"
+  echo "- no network calls"
+  echo "- no commits"
+  echo "- no tags"
+  exit 0
+fi
+
+mkdir -p "$CONFIG_DIR"
+mkdir -p "$PERSONAL_HOME" "$BUSINESS_HOME"
+chmod 700 "$PERSONAL_HOME" "$BUSINESS_HOME"
+
+rm -f "$LOCAL_CONFIG"
+printf "%s\n" "# Local Codex profile configuration for Project Forge." >> "$LOCAL_CONFIG"
+printf "%s\n" "# This file is intentionally git-ignored." >> "$LOCAL_CONFIG"
+printf "%s\n" "# Do not store raw tokens, auth JSON, session cookies, or copied credential files here." >> "$LOCAL_CONFIG"
+printf "%s\n" "" >> "$LOCAL_CONFIG"
+printf "%s\n" "profiles:" >> "$LOCAL_CONFIG"
+printf "%s\n" "  personal:" >> "$LOCAL_CONFIG"
+printf "%s\n" "    label: Personal Codex workspace" >> "$LOCAL_CONFIG"
+printf "%s\n" "    codex_home: $PERSONAL_HOME" >> "$LOCAL_CONFIG"
+printf "%s\n" "" >> "$LOCAL_CONFIG"
+printf "%s\n" "  business:" >> "$LOCAL_CONFIG"
+printf "%s\n" "    label: Business Codex workspace" >> "$LOCAL_CONFIG"
+printf "%s\n" "    codex_home: $BUSINESS_HOME" >> "$LOCAL_CONFIG"
+printf "%s\n" "" >> "$LOCAL_CONFIG"
+printf "%s\n" "  plain:" >> "$LOCAL_CONFIG"
+printf "%s\n" "    label: Plain editor / no Codex assumption" >> "$LOCAL_CONFIG"
+printf "%s\n" "    codex_home: \"\"" >> "$LOCAL_CONFIG"
+chmod 600 "$LOCAL_CONFIG"
+
+echo "Wrote:"
+echo "  $PERSONAL_HOME"
+echo "  $BUSINESS_HOME"
+echo "  $LOCAL_CONFIG"
+echo
+echo "Manual next step:"
+echo "  Use CODEX_HOME deliberately when initializing or selecting Codex context."
+echo "  Do not copy auth files between profiles unless a separate reviewed plan approves it."
+echo
+echo "Codex profile bootstrap complete."
