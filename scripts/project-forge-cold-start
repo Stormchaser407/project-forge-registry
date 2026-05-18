@@ -1,0 +1,106 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'HELP'
+Usage:
+  ./scripts/project-forge-cold-start [--open-dashboard]
+
+Purpose:
+  Resume Project Forge work without remembering the command sequence.
+
+Options:
+  --open-dashboard  After the normal refresh, ask the dashboard wrapper to
+                    open artifacts/dashboard.html with xdg-open when available.
+  -h, --help        Show this help text.
+
+Safety:
+  - status and resume checks only
+  - default dashboard behavior is no-open
+  - no apply
+  - no marker writes
+  - no remotes
+  - no push/fetch
+  - no package installs
+  - no network calls
+  - no editor launching
+  - no commits
+  - no tags
+HELP
+}
+
+OPEN_DASHBOARD=0
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --open-dashboard)
+      OPEN_DASHBOARD=1
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "ERROR: unknown argument: $1" >&2
+      echo "Usage: ./scripts/project-forge-cold-start [--open-dashboard]" >&2
+      exit 2
+      ;;
+  esac
+done
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_ROOT"
+
+DASHBOARD_HTML="$REPO_ROOT/artifacts/dashboard.html"
+
+echo "============================================================"
+echo " PROJECT FORGE COLD START"
+echo "============================================================"
+echo "Repo: $REPO_ROOT"
+echo "Mode: status/resume/check"
+echo "Open dashboard requested: $OPEN_DASHBOARD"
+
+echo
+echo "=== 1) Current git status ==="
+git status --short
+
+echo
+echo "=== 2) Recent commits ==="
+git --no-pager log --oneline -8
+
+echo
+echo "=== 3) Recent v0.10 tags ==="
+git tag --list 'v0.10*' --sort=-creatordate | head -n 10
+
+echo
+echo "=== 4) Recent checkpoint tags ==="
+git tag --list 'checkpoint-*' --sort=-creatordate | head -n 10
+
+echo
+echo "=== 5) Tests ==="
+PYTHONPATH=src python3 -m unittest discover -s tests
+
+echo
+echo "=== 6) Safe project-sync ==="
+./scripts/project-sync-safe
+
+echo
+echo "=== 7) Dashboard refresh ==="
+if [[ "$OPEN_DASHBOARD" == "1" ]]; then
+  ./scripts/project-forge-dashboard --open
+else
+  ./scripts/project-forge-dashboard --no-open
+fi
+
+echo
+echo "=== 8) Dashboard path ==="
+echo "$DASHBOARD_HTML"
+
+echo
+echo "=== 9) Final git status ==="
+git status --short
+
+echo
+echo "Cold Start complete."

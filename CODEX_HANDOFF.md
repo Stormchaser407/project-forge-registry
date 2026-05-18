@@ -2,7 +2,7 @@
 
 ## Mission
 
-Preserve the Phase 10.6B dashboard open/launcher wrapper checkpoint for
+Preserve the Phase 10.8A Project Forge Cold Start checkpoint for
 `project-forge-registry`.
 
 ## Branch
@@ -11,27 +11,33 @@ Preserve the Phase 10.6B dashboard open/launcher wrapper checkpoint for
 
 ## Current State
 
-Phase 10.6B adds a safe repo-local wrapper:
+Phase 10.8A adds a safe repo-local Cold Start wrapper:
 
-- `scripts/project-forge-dashboard`
+- `scripts/project-forge-cold-start`
 
-The wrapper:
+The wrapper is a status/resume/check script. It:
 
 - changes to the Project Forge repo root
-- refreshes `artifacts/dashboard_inventory.json`
-- refreshes `artifacts/dashboard_inventory_report.md`
-- regenerates `artifacts/dashboard.html`
-- prints the dashboard HTML path
-- defaults to no-open behavior
-- supports `--no-open`
-- supports `--open` using `xdg-open` when available
+- prints `PROJECT FORGE COLD START`
+- shows `git status --short`
+- shows recent commits
+- shows recent `v0.10*` tags
+- shows recent `checkpoint-*` tags
+- runs `PYTHONPATH=src python3 -m unittest discover -s tests`
+- runs `./scripts/project-sync-safe`
+- runs `./scripts/project-forge-dashboard --no-open` by default
+- prints `artifacts/dashboard.html`
+- prints final `git status --short`
 - supports `--help`
+- supports `--open-dashboard`
 
-Validation ran the wrapper only in `--no-open` mode. `--open` was not run.
+Validation did not run `--open-dashboard`.
 
-Current wrapper output summary:
+Current Cold Start output summary:
 
-- projects: `74`
+- tests: `Ran 184 tests ... OK`
+- project-sync final status: `ready_for_operator_review`
+- dashboard projects: `74`
 - known embedded: `4`
 - dirty review: `3`
 - protected review: `12`
@@ -42,9 +48,9 @@ Current wrapper output summary:
 
 - `CODEX_HANDOFF.md`
 - `README.md`
-- `docs/PROJECT_FORGE_DASHBOARD_LAUNCHER.md`
-- `scripts/project-forge-dashboard`
-- `tests/test_dashboard_launcher.py`
+- `docs/PROJECT_FORGE_COLD_START.md`
+- `scripts/project-forge-cold-start`
+- `tests/test_cold_start.py`
 
 ## Commands Run
 
@@ -54,33 +60,36 @@ git branch --show-current
 git log -1 --oneline
 git tag --points-at HEAD
 git remote -v
-PYTHONPATH=src python3 -m unittest tests.test_dashboard_launcher
-./scripts/project-forge-dashboard --help
-python3 -m py_compile src/project_forge_registry/dashboard_ui.py src/project_forge_registry/dashboard_inventory.py
+bash -n scripts/project-forge-cold-start
+PYTHONPATH=src python3 -m unittest tests.test_cold_start
+./scripts/project-forge-cold-start --help
 PYTHONPATH=src python3 -m unittest discover -s tests
-./scripts/project-forge-dashboard --no-open
+./scripts/project-forge-cold-start
 git status --short
 ```
 
 ## Verification
 
 ```text
-Ran 179 tests in 0.178s
+Ran 184 tests in 0.266s
 
 OK
 ```
 
-`python3 -m py_compile` passed for:
+Cold Start itself also ran tests:
 
-- `src/project_forge_registry/dashboard_ui.py`
-- `src/project_forge_registry/dashboard_inventory.py`
+```text
+Ran 184 tests in 0.424s
 
-`./scripts/project-forge-dashboard --no-open` completed successfully and
-regenerated the dashboard.
+OK
+```
+
+`./scripts/project-forge-cold-start` completed successfully in default no-open
+mode.
 
 ## Boundaries Observed
 
-- No external project folders were modified.
+- No external project repos were modified.
 - No apply path was run.
 - No marker files were written.
 - No push, fetch, remote inspection, or remote configuration was attempted.
@@ -88,26 +97,30 @@ regenerated the dashboard.
 - No package install was attempted.
 - No network calls were made.
 - No VS Code launch was attempted.
-- `--open` was not run.
+- `--open-dashboard` was not run.
 - No commit was made.
+- No tags were created.
 - No Cerberus handling was performed.
+
+Note: `project-sync-safe`, which Cold Start is required to call, wrote its
+standard wrapper log under `/tmp/`.
 
 ## Blockers
 
-None for Phase 10.6B.
+None for Phase 10.8A.
 
 ## Recommended Next Step
 
-Review and commit the Phase 10.6B checkpoint.
+Review and commit the Phase 10.8A checkpoint.
 
 Suggested commit message:
 
 ```text
-Add dashboard launcher wrapper
+Add Project Forge Cold Start wrapper
 ```
 
 Suggested tag after commit:
 
 ```text
-v0.10.6b-dashboard-launcher
+v0.10.8a-cold-start
 ```

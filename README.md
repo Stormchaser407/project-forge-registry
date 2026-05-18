@@ -476,3 +476,22 @@ install packages, contact GitHub or Codeberg, or launch VS Code.
 See:
 
     docs/PROJECT_FORGE_DASHBOARD_LAUNCHER.md
+
+## Phase 10.8A: Cold Start wrapper
+
+Resume Project Forge with the standard local status, test, sync, and dashboard
+refresh sequence:
+
+    ./scripts/project-forge-cold-start
+
+Open the local dashboard after refresh when `xdg-open` is available:
+
+    ./scripts/project-forge-cold-start --open-dashboard
+
+The Cold Start wrapper is a status/resume/check script. It does not apply
+changes, write marker files, touch remotes, push/fetch, install packages,
+contact GitHub or Codeberg, launch VS Code, create commits, or create tags.
+
+See:
+
+    docs/PROJECT_FORGE_COLD_START.md
