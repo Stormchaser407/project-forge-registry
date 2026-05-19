@@ -1,0 +1,279 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+INVENTORY_PATH="$REPO_ROOT/artifacts/dashboard_inventory.json"
+
+SLUG=""
+PROFILE=""
+MODE="dry-run"
+EDITOR_OVERRIDE=""
+
+usage() {
+  cat <<'HELP'
+Usage:
+  ./scripts/project-forge-open-project --slug <slug> --profile personal [--dry-run]
+  ./scripts/project-forge-open-project --slug <slug> --profile business [--dry-run]
+  ./scripts/project-forge-open-project --slug <slug> --profile plain [--dry-run]
+  ./scripts/project-forge-open-project --slug <slug> --profile plain --open
+
+Purpose:
+  Resolve one dashboard inventory project and optionally open it in an editor
+  with an explicit local Codex profile context.
+
+Options:
+  --slug <slug>       Project slug from artifacts/dashboard_inventory.json.
+  --profile <name>    personal, business, or plain.
+  --dry-run           Print the launch plan only. Default.
+  --open              Launch the editor for an eligible project.
+  --editor <command>  Single executable name or path. Defaults to code, then codium.
+  -h, --help          Show this help text.
+
+Safety:
+  Default mode is dry-run. This wrapper does not run Codex, perform login,
+  inspect credential contents, mutate inventory, contact remote services, or
+  install packages.
+HELP
+}
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --slug)
+      if [[ $# -lt 2 ]]; then
+        echo "ERROR: --slug requires a value." >&2
+        exit 2
+      fi
+      SLUG="$2"
+      shift 2
+      ;;
+    --profile)
+      if [[ $# -lt 2 ]]; then
+        echo "ERROR: --profile requires one of: personal, business, plain." >&2
+        exit 2
+      fi
+      PROFILE="$2"
+      shift 2
+      ;;
+    --dry-run)
+      MODE="dry-run"
+      shift
+      ;;
+    --open)
+      MODE="open"
+      shift
+      ;;
+    --editor)
+      if [[ $# -lt 2 ]]; then
+        echo "ERROR: --editor requires a command name or path." >&2
+        exit 2
+      fi
+      EDITOR_OVERRIDE="$2"
+      shift 2
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "ERROR: unknown argument: $1" >&2
+      echo "Use --help for usage." >&2
+      exit 2
+      ;;
+  esac
+done
+
+if [[ -z "$SLUG" ]]; then
+  echo "ERROR: --slug is required." >&2
+  exit 2
+fi
+
+case "$PROFILE" in
+  personal)
+    CODEX_HOME_VALUE="$HOME/.codex-personal"
+    PROFILE_LABEL="Personal Codex workspace"
+    ;;
+  business)
+    CODEX_HOME_VALUE="$HOME/.codex-business"
+    PROFILE_LABEL="Business Codex workspace"
+    ;;
+  plain)
+    CODEX_HOME_VALUE=""
+    PROFILE_LABEL="Plain editor / no Codex profile"
+    ;;
+  "")
+    echo "ERROR: --profile is required." >&2
+    exit 2
+    ;;
+  *)
+    echo "ERROR: unsupported profile: $PROFILE" >&2
+    echo "Supported profiles: personal, business, plain." >&2
+    exit 2
+    ;;
+esac
+
+if [[ -n "$EDITOR_OVERRIDE" ]]; then
+  if [[ "$EDITOR_OVERRIDE" != /* && "$EDITOR_OVERRIDE" == *"/"* ]]; then
+    echo "ERROR: --editor must be a simple command name or absolute path." >&2
+    exit 2
+  fi
+  case "$EDITOR_OVERRIDE" in
+    *[!a-zA-Z0-9._+/@:-]*)
+      echo "ERROR: --editor contains unsupported characters." >&2
+      exit 2
+      ;;
+  esac
+  EDITOR_COMMAND="$EDITOR_OVERRIDE"
+  EDITOR_SOURCE="override"
+elif command -v code >/dev/null 2>&1; then
+  EDITOR_COMMAND="code"
+  EDITOR_SOURCE="auto"
+elif command -v codium >/dev/null 2>&1; then
+  EDITOR_COMMAND="codium"
+  EDITOR_SOURCE="auto"
+else
+  EDITOR_COMMAND=""
+  EDITOR_SOURCE="missing"
+fi
+
+PROJECT_INFO="$(
+  python3 - "$INVENTORY_PATH" "$SLUG" "$PROFILE" "$MODE" <<'PY'
+from __future__ import annotations
+
+import json
+import shlex
+import sys
+from pathlib import Path
+
+inventory_path = Path(sys.argv[1])
+slug = sys.argv[2]
+profile = sys.argv[3]
+mode = sys.argv[4]
+
+if not inventory_path.exists():
+    print(f"ERROR: inventory not found: {inventory_path}", file=sys.stderr)
+    sys.exit(2)
+
+try:
+    payload = json.loads(inventory_path.read_text(encoding="utf-8"))
+except json.JSONDecodeError as exc:
+    print(f"ERROR: inventory JSON could not be parsed: {exc}", file=sys.stderr)
+    sys.exit(2)
+
+projects = payload.get("projects")
+if not isinstance(projects, list):
+    print("ERROR: dashboard inventory is missing a projects list.", file=sys.stderr)
+    sys.exit(2)
+
+matches = [item for item in projects if item.get("slug") == slug]
+if not matches:
+    print(f"ERROR: unknown project slug: {slug}", file=sys.stderr)
+    sys.exit(3)
+
+project = matches[0]
+category = str(project.get("category") or "unknown")
+project_path = str(project.get("path") or "")
+inventory_target = str(project.get("vscode_target") or "")
+
+if inventory_target:
+    target = inventory_target
+else:
+    target = project_path
+
+if target and not target.endswith(".code-workspace") and project_path:
+    root = Path(project_path)
+    workspace_files = sorted(root.glob("*.code-workspace")) if root.exists() else []
+    if workspace_files:
+        target = str(workspace_files[0])
+
+eligible = False
+reason = ""
+
+if category in {"known_embedded", "clean_candidate"}:
+    eligible = True
+    reason = f"allowed category: {category}"
+elif category == "control_repo":
+    if profile == "plain":
+        eligible = True
+        reason = "control_repo allowed for plain profile only"
+    elif mode == "dry-run":
+        eligible = True
+        reason = "control_repo profile mode is dry-run only"
+    else:
+        reason = "control_repo profile launch is deferred; use plain profile or dry-run only"
+elif category == "dirty_candidate_review_first":
+    reason = "blocked: dirty candidate requires review first"
+elif category == "protected_manual_review":
+    reason = "blocked: protected project requires manual review"
+else:
+    reason = f"blocked: unsupported or unknown category: {category}"
+
+if eligible and not target:
+    eligible = False
+    reason = "blocked: project has no launch target"
+
+def emit(name: str, value: str) -> None:
+    print(f"{name}={shlex.quote(value)}")
+
+emit("SLUG", slug)
+emit("CATEGORY", category)
+emit("PROJECT_PATH", project_path)
+emit("TARGET", target)
+emit("ELIGIBLE", "yes" if eligible else "no")
+emit("REASON", reason)
+PY
+)"
+
+eval "$PROJECT_INFO"
+
+echo "============================================================"
+echo " PROJECT FORGE OPEN PROJECT"
+echo "============================================================"
+echo "Mode: $MODE"
+echo "Slug: $SLUG"
+echo "Category: $CATEGORY"
+echo "Project path: $PROJECT_PATH"
+echo "VS Code target: $TARGET"
+echo "Selected profile: $PROFILE"
+echo "Profile label: $PROFILE_LABEL"
+if [[ -n "$CODEX_HOME_VALUE" ]]; then
+  echo "Proposed CODEX_HOME: $CODEX_HOME_VALUE"
+else
+  echo "Proposed CODEX_HOME: none"
+fi
+if [[ -n "$EDITOR_COMMAND" ]]; then
+  echo "Editor command: $EDITOR_COMMAND ($EDITOR_SOURCE)"
+else
+  echo "Editor command: missing editor (code/codium not found)"
+fi
+echo "Eligibility decision: $ELIGIBLE"
+echo "Eligibility reason: $REASON"
+echo
+
+if [[ "$ELIGIBLE" != "yes" ]]; then
+  echo "Project open blocked by policy."
+  exit 4
+fi
+
+if [[ "$MODE" == "dry-run" ]]; then
+  echo "Dry run only. No editor was launched."
+  exit 0
+fi
+
+if [[ -z "$EDITOR_COMMAND" ]]; then
+  echo "ERROR: no editor command is available. Use --editor or install code/codium." >&2
+  exit 5
+fi
+
+if ! command -v "$EDITOR_COMMAND" >/dev/null 2>&1; then
+  echo "ERROR: editor command is not available: $EDITOR_COMMAND" >&2
+  exit 5
+fi
+
+if [[ "$PROFILE" == "plain" ]]; then
+  "$EDITOR_COMMAND" "$TARGET" >/dev/null 2>&1 &
+else
+  CODEX_HOME="$CODEX_HOME_VALUE" "$EDITOR_COMMAND" "$TARGET" >/dev/null 2>&1 &
+fi
+
+echo "Editor launch requested."

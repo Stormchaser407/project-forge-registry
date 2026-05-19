@@ -554,3 +554,29 @@ It does not read tokens, print auth contents, copy auth files, execute Codex, la
 See:
 
     docs/PROJECT_FORGE_CODEX_PROFILE_BOOTSTRAP.md
+
+## Phase 10.7C: Controlled project open wrapper
+
+Preview a project launch from the dashboard inventory with an explicit profile:
+
+    ./scripts/project-forge-open-project --slug lifesaver-ledger --profile personal --dry-run
+    ./scripts/project-forge-open-project --slug lifesaver-ledger --profile business --dry-run
+    ./scripts/project-forge-open-project --slug lifesaver-ledger --profile plain --dry-run
+
+Explicit editor launch is available only with `--open` after reviewing dry-run
+output. Personal launches set `CODEX_HOME=~/.codex-personal`, Business launches
+set `CODEX_HOME=~/.codex-business`, and Plain launches do not set `CODEX_HOME`.
+
+The wrapper reads `artifacts/dashboard_inventory.json`, resolves the selected
+slug to its `vscode_target` or workspace target, and applies the Phase 10.7C
+eligibility policy. `known_embedded` and `clean_candidate` projects are allowed.
+`dirty_candidate_review_first`, `protected_manual_review`, and unknown
+categories are blocked. The control repo remains dry-run/profile-restricted.
+
+It does not run Codex, attempt login, read or print auth contents, copy auth
+files, modify dashboard inventory, touch remotes, contact GitHub or Codeberg,
+install packages, mutate external repos, create commits, or create tags.
+
+See:
+
+    docs/PROJECT_FORGE_OPEN_PROJECT.md
