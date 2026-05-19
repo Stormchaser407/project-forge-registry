@@ -129,7 +129,7 @@ class DashboardUiTests(unittest.TestCase):
         self.assertIn("Known Embedded Projects", html)
         self.assertIn("Candidate Review Projects", html)
         self.assertIn("Control Repo", html)
-        self.assertIn("Launch Commands", html)
+        self.assertIn("Copy-Paste Launch Commands", html)
 
     def test_escapes_html_special_characters(self) -> None:
         payload = {
@@ -173,6 +173,18 @@ class DashboardUiTests(unittest.TestCase):
             html,
         )
 
+    def test_eligible_project_renders_copy_helper_labels(self) -> None:
+        html = render_dashboard_html(fixture_payload())
+
+        self.assertIn("Personal / CODEX_HOME ~/.codex-personal", html)
+        self.assertIn("Business / CODEX_HOME ~/.codex-business", html)
+        self.assertIn("Plain / no CODEX_HOME", html)
+
+    def test_eligible_project_renders_dry_run_safety_note(self) -> None:
+        html = render_dashboard_html(fixture_payload())
+
+        self.assertIn("Dry-run only. Review output before manual open.", html)
+
     def test_blocked_project_renders_policy_message(self) -> None:
         html = render_dashboard_html(fixture_payload())
 
@@ -182,6 +194,18 @@ class DashboardUiTests(unittest.TestCase):
         )
         self.assertIn(
             "Launch blocked by policy: protected project requires manual review.",
+            html,
+        )
+
+    def test_blocked_project_does_not_render_launch_command_blocks(self) -> None:
+        html = render_dashboard_html(fixture_payload())
+
+        self.assertNotIn(
+            "./scripts/project-forge-open-project --slug dirty --profile personal --dry-run",
+            html,
+        )
+        self.assertNotIn(
+            "./scripts/project-forge-open-project --slug protected --profile personal --dry-run",
             html,
         )
 
@@ -238,6 +262,8 @@ class DashboardUiTests(unittest.TestCase):
         self.assertNotIn("vscode://", html)
         self.assertNotIn("file://", html)
         self.assertNotIn("<script", html)
+        self.assertNotIn("onclick=", html)
+        self.assertNotIn("javascript:", html)
 
     def test_run_dashboard_ui_writes_html(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

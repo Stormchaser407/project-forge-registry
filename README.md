@@ -599,3 +599,20 @@ actions.
 See:
 
     docs/PROJECT_FORGE_DASHBOARD_UI.md
+
+## Phase 10.7E: Dashboard copy-helper polish
+
+The static dashboard keeps the same non-executing safety model, but the launch
+area is now easier to copy from:
+
+- `Copy-Paste Launch Commands` heading
+- explicit Personal, Business, and Plain context labels
+- a dry-run-only safety note
+- separate monospace command blocks for each eligible launch command
+
+The HTML still does not execute commands, render `--open`, or generate
+`file://`, `vscode://`, JavaScript, or executable launcher links.
+
+See:
+
+    docs/PROJECT_FORGE_DASHBOARD_UI.md

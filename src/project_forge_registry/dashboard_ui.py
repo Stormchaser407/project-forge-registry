@@ -133,23 +133,23 @@ def render_launch_panel(project: dict[str, Any]) -> str:
 
     if status == "eligible" and isinstance(commands, dict):
         rows: list[str] = []
-        for label, key in (
-            ("Personal", "personal"),
-            ("Business", "business"),
-            ("Plain", "plain"),
+        for label, detail, key in (
+            ("Personal", "CODEX_HOME ~/.codex-personal", "personal"),
+            ("Business", "CODEX_HOME ~/.codex-business", "business"),
+            ("Plain", "no CODEX_HOME", "plain"),
         ):
             command = html_escape(commands.get(key) or "")
             rows.append(
                 f'<div class="launch-row">'
-                f'<span class="launch-label">{html_escape(label)}</span>'
+                f'<span class="launch-label">{html_escape(label)} / {html_escape(detail)}</span>'
                 f'<code>{command}</code>'
                 f"</div>"
             )
         commands_html = "\n".join(rows)
         return f"""
 <section class="launch-panel">
-  <h4>Launch Commands</h4>
-  <p class="launch-note">{message}</p>
+  <h4>Copy-Paste Launch Commands</h4>
+  <p class="launch-note">Dry-run only. Review output before manual open.</p>
   <div class="launch-grid">
     {commands_html}
   </div>
@@ -158,7 +158,7 @@ def render_launch_panel(project: dict[str, Any]) -> str:
 
     return f"""
 <section class="launch-panel">
-  <h4>Launch Commands</h4>
+  <h4>Copy-Paste Launch Commands</h4>
   <p class="launch-blocked">{message}</p>
 </section>
 """.strip()
@@ -559,7 +559,7 @@ def render_dashboard_html(payload: dict[str, Any]) -> str:
 
     .launch-panel h4 {{
       margin: 0 0 10px;
-      font-size: 0.84rem;
+      font-size: 0.88rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--cyan);
@@ -585,6 +585,10 @@ def render_dashboard_html(payload: dict[str, Any]) -> str:
       display: grid;
       gap: 6px;
       min-width: 0;
+      padding: 10px 12px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(125, 245, 255, 0.12);
+      background: rgba(13, 17, 24, 0.5);
     }}
 
     .launch-label {{
@@ -598,8 +602,8 @@ def render_dashboard_html(payload: dict[str, Any]) -> str:
       display: block;
       padding: 10px 12px;
       border-radius: 6px;
-      border: 1px solid rgba(125, 245, 255, 0.14);
-      background: rgba(7, 9, 13, 0.72);
+      border: 1px solid rgba(125, 245, 255, 0.18);
+      background: rgba(7, 9, 13, 0.9);
       color: #dcecff;
       font-size: 0.8rem;
       line-height: 1.45;

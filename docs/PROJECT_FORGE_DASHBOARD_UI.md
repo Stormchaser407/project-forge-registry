@@ -69,15 +69,20 @@ images, or stylesheets.
 - `blue`: control repo or neutral state
 - `gray`: unknown or missing value
 
-## Phase 10.7D Launch Display
+## Phase 10.7E Copy Helper Display
 
-Phase 10.7D adds a display-only `Launch Commands` block to project cards.
+Phase 10.7E keeps the launch area static and non-executing, but makes it
+easier to copy the correct dry-run command from each eligible card.
 
-Eligible project categories show three copy-paste dry-run commands:
+Eligible project categories show a `Copy-Paste Launch Commands` block with:
 
-- `personal`
-- `business`
-- `plain`
+- `Personal / CODEX_HOME ~/.codex-personal`
+- `Business / CODEX_HOME ~/.codex-business`
+- `Plain / no CODEX_HOME`
+
+The block also shows a short safety note:
+
+- `Dry-run only. Review output before manual open.`
 
 The displayed commands follow this pattern:
 
@@ -94,10 +99,11 @@ Blocked project categories show a policy message instead of commands.
 - `control_repo`: restricted dry-run note only
 - unknown or unsupported categories: blocked display
 
-These commands are rendered as text only. The dashboard does not create buttons,
-launch handlers, executable anchors, `file://` links, or `vscode://` links.
+These commands are rendered as text only in distinct monospace blocks. The
+dashboard does not create buttons, launch handlers, executable anchors,
+`file://` links, or `vscode://` links.
 
-## Phase 10.7D Safety Model
+## Phase 10.7E Safety Model
 
 The dashboard UI is static and read-only.
 
@@ -118,6 +124,10 @@ It does not:
 Project paths, marker paths, and VS Code targets are shown as text only.
 Launch commands are also shown as text only.
 
+The renderer intentionally does not place the literal `--open` flag in
+dashboard HTML, even in helper text, so the display stays aligned with the
+non-executing validation boundary for this phase.
+
 Allowed links are local report files beside `dashboard.html`:
 
 - `dashboard_inventory_report.md`
@@ -131,6 +141,7 @@ The renderer intentionally does not generate `file://`, `http://`, or
 
 ## Next Phase
 
-The next phase can decide whether the dashboard should remain purely display
-or gain explicit copy helpers. Any future launch behavior should keep the same
-dry-run-first, explicit-opt-in Project Forge policy.
+The next phase can decide whether static copy helper polish is sufficient or
+whether a non-JavaScript copy affordance is worth the added complexity. Any
+future launch behavior should keep the same dry-run-first, explicit-opt-in
+Project Forge policy.
