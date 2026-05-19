@@ -125,3 +125,11 @@ The wrapper does not:
 - mutate external project repos
 
 Validation for this phase must not run `--open`.
+
+## Dashboard Display
+
+Phase 10.7D reuses this wrapper as dashboard command text only.
+
+The static dashboard may display copy-paste dry-run commands for eligible
+projects, but it does not execute them, does not generate clickable launcher
+actions, and does not expose `--open` from HTML.

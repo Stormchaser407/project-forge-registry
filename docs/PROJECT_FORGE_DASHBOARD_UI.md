@@ -69,13 +69,42 @@ images, or stylesheets.
 - `blue`: control repo or neutral state
 - `gray`: unknown or missing value
 
-## Phase 10.6A Safety Model
+## Phase 10.7D Launch Display
+
+Phase 10.7D adds a display-only `Launch Commands` block to project cards.
+
+Eligible project categories show three copy-paste dry-run commands:
+
+- `personal`
+- `business`
+- `plain`
+
+The displayed commands follow this pattern:
+
+```bash
+./scripts/project-forge-open-project --slug <slug> --profile personal --dry-run
+./scripts/project-forge-open-project --slug <slug> --profile business --dry-run
+./scripts/project-forge-open-project --slug <slug> --profile plain --dry-run
+```
+
+Blocked project categories show a policy message instead of commands.
+
+- `dirty_candidate_review_first`: blocked display
+- `protected_manual_review`: blocked display
+- `control_repo`: restricted dry-run note only
+- unknown or unsupported categories: blocked display
+
+These commands are rendered as text only. The dashboard does not create buttons,
+launch handlers, executable anchors, `file://` links, or `vscode://` links.
+
+## Phase 10.7D Safety Model
 
 The dashboard UI is static and read-only.
 
 It does not:
 
 - launch VS Code
+- execute commands
 - write files outside `artifacts/dashboard.html`
 - apply changes
 - write marker files
@@ -87,6 +116,7 @@ It does not:
 - run JavaScript actions that mutate files
 
 Project paths, marker paths, and VS Code targets are shown as text only.
+Launch commands are also shown as text only.
 
 Allowed links are local report files beside `dashboard.html`:
 
@@ -101,8 +131,6 @@ The renderer intentionally does not generate `file://`, `http://`, or
 
 ## Next Phase
 
-The next phase can add launch wrappers and dashboard actions safely.
-
-Those actions should be implemented as explicit wrapper commands with the same
-dry-run-first, report-first Project Forge policy. Phase 10.6A only proves the
-static command-board surface.
+The next phase can decide whether the dashboard should remain purely display
+or gain explicit copy helpers. Any future launch behavior should keep the same
+dry-run-first, explicit-opt-in Project Forge policy.

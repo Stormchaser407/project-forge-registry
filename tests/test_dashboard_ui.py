@@ -21,6 +21,27 @@ def fixture_project(
     docs_light: str = "amber",
     risk_light: str = "amber",
 ) -> dict[str, object]:
+    if category in {"known_embedded", "clean_candidate"}:
+        launch_policy = {
+            "status": "eligible",
+            "message": "Dry-run launch commands available for personal, business, and plain.",
+        }
+    elif category == "control_repo":
+        launch_policy = {
+            "status": "restricted",
+            "message": "Launch restricted by policy: control repo is dry-run only here, and profile-mode open is deferred.",
+        }
+    elif category == "protected_manual_review":
+        launch_policy = {
+            "status": "blocked",
+            "message": "Launch blocked by policy: protected project requires manual review.",
+        }
+    else:
+        launch_policy = {
+            "status": "blocked",
+            "message": "Launch blocked by policy: dirty candidate requires review first.",
+        }
+
     return {
         "slug": slug,
         "path": f"/tmp/{slug}",
@@ -43,6 +64,12 @@ def fixture_project(
         "marker_yaml_path": f"/tmp/{slug}/.project-forge.yml",
         "marker_doc_path": f"/tmp/{slug}/docs/PROJECT_FORGE.md",
         "report_links": [],
+        "launch_commands": {
+            "personal": f"./scripts/project-forge-open-project --slug {slug} --profile personal --dry-run",
+            "business": f"./scripts/project-forge-open-project --slug {slug} --profile business --dry-run",
+            "plain": f"./scripts/project-forge-open-project --slug {slug} --profile plain --dry-run",
+        },
+        "launch_policy": launch_policy,
     }
 
 
@@ -73,6 +100,13 @@ def fixture_payload() -> dict[str, object]:
                 risk_light="red",
             ),
             fixture_project("candidate", "candidate_review"),
+            fixture_project(
+                "control",
+                "control_repo_no_embed",
+                category="control_repo",
+                repo_light="blue",
+                risk_light="blue",
+            ),
         ],
     }
 
@@ -85,7 +119,7 @@ class DashboardUiTests(unittest.TestCase):
 
             payload = load_dashboard_inventory(path)
 
-        self.assertEqual(len(payload["projects"]), 4)
+        self.assertEqual(len(payload["projects"]), 5)
 
     def test_render_html_from_small_fixture(self) -> None:
         html = render_dashboard_html(fixture_payload())
@@ -94,6 +128,8 @@ class DashboardUiTests(unittest.TestCase):
         self.assertIn("total projects", html)
         self.assertIn("Known Embedded Projects", html)
         self.assertIn("Candidate Review Projects", html)
+        self.assertIn("Control Repo", html)
+        self.assertIn("Launch Commands", html)
 
     def test_escapes_html_special_characters(self) -> None:
         payload = {
@@ -101,7 +137,7 @@ class DashboardUiTests(unittest.TestCase):
                 fixture_project(
                     '<script>alert("x")</script>',
                     "candidate_review",
-                )
+                ),
             ]
         }
 
@@ -109,6 +145,10 @@ class DashboardUiTests(unittest.TestCase):
 
         self.assertIn("&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt;", html)
         self.assertNotIn('<script>alert("x")</script>', html)
+        self.assertIn(
+            "--slug &lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt; --profile personal --dry-run",
+            html,
+        )
 
     def test_renders_known_embedded_cards(self) -> None:
         html = render_dashboard_html(fixture_payload())
@@ -116,6 +156,42 @@ class DashboardUiTests(unittest.TestCase):
         self.assertIn("embedded", html)
         self.assertIn("embedded_ready", html)
         self.assertIn("known_embedded", html)
+
+    def test_eligible_project_renders_three_dry_run_commands(self) -> None:
+        html = render_dashboard_html(fixture_payload())
+
+        self.assertIn(
+            "./scripts/project-forge-open-project --slug embedded --profile personal --dry-run",
+            html,
+        )
+        self.assertIn(
+            "./scripts/project-forge-open-project --slug embedded --profile business --dry-run",
+            html,
+        )
+        self.assertIn(
+            "./scripts/project-forge-open-project --slug embedded --profile plain --dry-run",
+            html,
+        )
+
+    def test_blocked_project_renders_policy_message(self) -> None:
+        html = render_dashboard_html(fixture_payload())
+
+        self.assertIn(
+            "Launch blocked by policy: dirty candidate requires review first.",
+            html,
+        )
+        self.assertIn(
+            "Launch blocked by policy: protected project requires manual review.",
+            html,
+        )
+
+    def test_control_repo_renders_restricted_note(self) -> None:
+        html = render_dashboard_html(fixture_payload())
+
+        self.assertIn(
+            "Launch restricted by policy: control repo is dry-run only here, and profile-mode open is deferred.",
+            html,
+        )
 
     def test_renders_status_lights(self) -> None:
         html = render_dashboard_html(fixture_payload())
@@ -127,9 +203,10 @@ class DashboardUiTests(unittest.TestCase):
     def test_output_contains_safety_statement(self) -> None:
         html = render_dashboard_html(fixture_payload())
 
-        self.assertIn("Phase 10.6A is static and read-only", html)
+        self.assertIn("Phase 10.7D is static and read-only", html)
         self.assertIn("does not launch VS Code", html)
         self.assertIn("write marker files", html)
+        self.assertIn("execute commands", html)
 
     def test_missing_inventory_file_fails_clearly(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -154,6 +231,14 @@ class DashboardUiTests(unittest.TestCase):
         self.assertNotIn("https://", html)
         self.assertNotIn("http://", html)
 
+    def test_dashboard_html_does_not_include_open_or_executable_links(self) -> None:
+        html = render_dashboard_html(fixture_payload())
+
+        self.assertNotIn("--open", html)
+        self.assertNotIn("vscode://", html)
+        self.assertNotIn("file://", html)
+        self.assertNotIn("<script", html)
+
     def test_run_dashboard_ui_writes_html(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -164,8 +249,9 @@ class DashboardUiTests(unittest.TestCase):
             summary = run_dashboard_ui(inventory, output)
             html = output.read_text(encoding="utf-8")
 
-        self.assertEqual(summary["total_projects"], 4)
+        self.assertEqual(summary["total_projects"], 5)
         self.assertEqual(summary["known_embedded"], 1)
+        self.assertEqual(summary["control_repo"], 1)
         self.assertIn("Project Forge Command Board", html)
 
 

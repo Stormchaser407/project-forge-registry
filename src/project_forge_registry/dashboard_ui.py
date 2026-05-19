@@ -79,6 +79,8 @@ def derive_summary(payload: dict[str, Any]) -> dict[str, int]:
             projects_by_action(payload, "protected_manual_review")
         ),
         "candidate_review": len(projects_by_action(payload, "candidate_review")),
+        "control_repo": len(projects_by_action(payload, "control_repo_no_embed")),
+        "blocked_other": len(projects_by_action(payload, "unknown_review")),
     }
 
 
@@ -115,6 +117,53 @@ def render_detail(label: str, value: Any) -> str:
     )
 
 
+def render_launch_panel(project: dict[str, Any]) -> str:
+    policy = project.get("launch_policy")
+    if not isinstance(policy, dict):
+        return (
+            '<section class="launch-panel">'
+            '<h4>Launch Commands</h4>'
+            '<p class="launch-blocked">Launch blocked by policy: unavailable.</p>'
+            "</section>"
+        )
+
+    status = str(policy.get("status") or "blocked")
+    message = html_escape(policy.get("message") or "Launch blocked by policy.")
+    commands = project.get("launch_commands")
+
+    if status == "eligible" and isinstance(commands, dict):
+        rows: list[str] = []
+        for label, key in (
+            ("Personal", "personal"),
+            ("Business", "business"),
+            ("Plain", "plain"),
+        ):
+            command = html_escape(commands.get(key) or "")
+            rows.append(
+                f'<div class="launch-row">'
+                f'<span class="launch-label">{html_escape(label)}</span>'
+                f'<code>{command}</code>'
+                f"</div>"
+            )
+        commands_html = "\n".join(rows)
+        return f"""
+<section class="launch-panel">
+  <h4>Launch Commands</h4>
+  <p class="launch-note">{message}</p>
+  <div class="launch-grid">
+    {commands_html}
+  </div>
+</section>
+""".strip()
+
+    return f"""
+<section class="launch-panel">
+  <h4>Launch Commands</h4>
+  <p class="launch-blocked">{message}</p>
+</section>
+""".strip()
+
+
 def render_project_card(project: dict[str, Any]) -> str:
     slug = html_escape(project.get("slug", "unknown"))
     status = css_class_token(project.get("recommended_action", "unknown_review"))
@@ -137,6 +186,7 @@ def render_project_card(project: dict[str, Any]) -> str:
             render_detail("marker doc", project.get("marker_doc_path")),
         ]
     )
+    launch_panel = render_launch_panel(project)
 
     return f"""
 <article class="project-card card-{status}">
@@ -150,6 +200,7 @@ def render_project_card(project: dict[str, Any]) -> str:
   <div class="detail-grid">
     {details}
   </div>
+  {launch_panel}
 </article>
 """.strip()
 
@@ -184,6 +235,8 @@ def render_summary_cards(summary: dict[str, int]) -> str:
         ("dirty review", "dirty_review", "amber"),
         ("protected review", "protected_review", "magenta"),
         ("candidate review", "candidate_review", "cyan"),
+        ("control repo", "control_repo", "cyan"),
+        ("blocked other", "blocked_other", "amber"),
     ]
     cards = []
     for label, key, accent in labels:
@@ -211,6 +264,8 @@ def render_dashboard_html(payload: dict[str, Any]) -> str:
     dirty_review = projects_by_action(payload, "dirty_review_first")
     protected_review = projects_by_action(payload, "protected_manual_review")
     candidate_review = projects_by_action(payload, "candidate_review")
+    control_repo = projects_by_action(payload, "control_repo_no_embed")
+    blocked_other = projects_by_action(payload, "unknown_review")
 
     return f"""<!doctype html>
 <html lang="en">
@@ -302,7 +357,7 @@ def render_dashboard_html(payload: dict[str, Any]) -> str:
 
     .summary-grid {{
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(7, minmax(0, 1fr));
       gap: 12px;
       margin: 18px 0;
     }}
@@ -496,6 +551,62 @@ def render_dashboard_html(payload: dict[str, Any]) -> str:
       color: var(--muted);
     }}
 
+    .launch-panel {{
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(125, 245, 255, 0.14);
+    }}
+
+    .launch-panel h4 {{
+      margin: 0 0 10px;
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--cyan);
+    }}
+
+    .launch-note,
+    .launch-blocked {{
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }}
+
+    .launch-blocked {{
+      color: #ffd7de;
+    }}
+
+    .launch-grid {{
+      display: grid;
+      gap: 10px;
+    }}
+
+    .launch-row {{
+      display: grid;
+      gap: 6px;
+      min-width: 0;
+    }}
+
+    .launch-label {{
+      color: var(--muted);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 800;
+    }}
+
+    .launch-row code {{
+      display: block;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(125, 245, 255, 0.14);
+      background: rgba(7, 9, 13, 0.72);
+      color: #dcecff;
+      font-size: 0.8rem;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }}
+
     .safety {{
       margin-top: 34px;
       padding: 18px;
@@ -545,7 +656,7 @@ def render_dashboard_html(payload: dict[str, Any]) -> str:
     <header class="hero">
       <p class="eyebrow">Neon District / read-only command surface</p>
       <h1>Project Forge Command Board</h1>
-      <p class="hero-copy">A static dashboard rendered from Project Forge artifacts. It shows the system state, exposes no file mutation actions, and keeps launch behavior display-only for Phase 10.6A.</p>
+      <p class="hero-copy">A static dashboard rendered from Project Forge artifacts. It shows the system state, exposes no file mutation actions, and keeps launch behavior display-only for Phase 10.7D.</p>
     </header>
 
     <section class="summary-grid" aria-label="Dashboard summary">
@@ -560,9 +671,11 @@ def render_dashboard_html(payload: dict[str, Any]) -> str:
     {render_project_section("Dirty Review Projects", "dirty-review", dirty_review)}
     {render_project_section("Protected Review Projects", "protected-review", protected_review)}
     {render_project_section("Candidate Review Projects", "candidate-review", candidate_review)}
+    {render_project_section("Control Repo", "control-repo", control_repo)}
+    {render_project_section("Blocked Other", "blocked-other", blocked_other)}
 
     <section class="safety">
-      <strong>Safety:</strong> Phase 10.6A is static and read-only. This page does not launch VS Code, write marker files, apply changes, touch remotes, push, fetch, contact GitHub or Codeberg, install packages, or modify external repos.
+      <strong>Safety:</strong> Phase 10.7D is static and read-only. This page does not launch VS Code, execute commands, write marker files, apply changes, touch remotes, push, fetch, contact GitHub or Codeberg, install packages, or modify external repos.
     </section>
   </main>
 </body>

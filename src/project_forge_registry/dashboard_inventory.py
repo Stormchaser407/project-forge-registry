@@ -81,6 +81,8 @@ class DashboardProject:
     marker_yaml_path: Path
     marker_doc_path: Path
     report_links: list[str]
+    launch_commands: dict[str, str]
+    launch_policy: dict[str, str]
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -103,6 +105,8 @@ class DashboardProject:
             "marker_yaml_path": str(self.marker_yaml_path),
             "marker_doc_path": str(self.marker_doc_path),
             "report_links": self.report_links,
+            "launch_commands": self.launch_commands,
+            "launch_policy": self.launch_policy,
         }
 
 
@@ -216,6 +220,55 @@ def find_vscode_target(repo_path: Path) -> Path:
     return repo_path
 
 
+def build_launch_commands(slug: str) -> dict[str, str]:
+    return {
+        "personal": (
+            f"./scripts/project-forge-open-project --slug {slug} "
+            "--profile personal --dry-run"
+        ),
+        "business": (
+            f"./scripts/project-forge-open-project --slug {slug} "
+            "--profile business --dry-run"
+        ),
+        "plain": (
+            f"./scripts/project-forge-open-project --slug {slug} "
+            "--profile plain --dry-run"
+        ),
+    }
+
+
+def derive_launch_policy(row: RepoDiscoveryRow) -> dict[str, str]:
+    if row.category in {"known_embedded", "clean_candidate"}:
+        return {
+            "status": "eligible",
+            "message": "Dry-run launch commands available for personal, business, and plain.",
+        }
+    if row.category == "dirty_candidate_review_first" or row.git_status == "dirty":
+        return {
+            "status": "blocked",
+            "message": "Launch blocked by policy: dirty candidate requires review first.",
+        }
+    if row.category == "protected_manual_review":
+        return {
+            "status": "blocked",
+            "message": "Launch blocked by policy: protected project requires manual review.",
+        }
+    if row.category == "control_repo":
+        return {
+            "status": "restricted",
+            "message": (
+                "Launch restricted by policy: control repo is dry-run only here, "
+                "and profile-mode open is deferred."
+            ),
+        }
+    return {
+        "status": "blocked",
+        "message": (
+            f"Launch blocked by policy: unsupported category {row.category}."
+        ),
+    }
+
+
 def build_project_record(
     row: RepoDiscoveryRow,
     embed_rows: dict[str, EmbedPlanRow],
@@ -244,6 +297,8 @@ def build_project_record(
         marker_yaml_path=marker_yaml,
         marker_doc_path=marker_doc,
         report_links=list(REPORT_LINKS),
+        launch_commands=build_launch_commands(row.slug),
+        launch_policy=derive_launch_policy(row),
     )
 
 

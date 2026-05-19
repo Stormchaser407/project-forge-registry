@@ -197,6 +197,49 @@ class DashboardInventoryTests(unittest.TestCase):
         self.assertEqual(payload["summary"]["total_projects"], 1)
         self.assertEqual(payload["projects"][0]["slug"], "demo")
         self.assertEqual(payload["projects"][0]["repo_light"], "green")
+        self.assertEqual(
+            payload["projects"][0]["launch_policy"]["status"],
+            "eligible",
+        )
+        self.assertEqual(
+            payload["projects"][0]["launch_commands"]["personal"],
+            "./scripts/project-forge-open-project --slug demo --profile personal --dry-run",
+        )
+
+    def test_launch_policy_is_deterministic_for_categories(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            discovery_csv = root / "repo_discovery_inventory.csv"
+            write_discovery_csv(
+                discovery_csv,
+                [
+                    "embedded,/tmp/embedded,clean,true,false,false,true,1,known_embedded",
+                    "candidate,/tmp/candidate,clean,true,false,false,false,1,clean_candidate",
+                    "dirty,/tmp/dirty,dirty,true,false,false,false,1,dirty_candidate_review_first",
+                    "protected,/tmp/cerberus,clean,true,false,false,false,0,protected_manual_review",
+                    "control,/tmp/project-forge-registry,clean,true,false,false,false,0,control_repo",
+                    "unknown,/tmp/unknown,unknown,false,false,false,false,0,unknown_structure",
+                ],
+            )
+
+            projects = {
+                project.slug: project
+                for project in build_dashboard_inventory(
+                    load_repo_discovery_inventory(discovery_csv)
+                )
+            }
+
+        self.assertEqual(projects["embedded"].launch_policy["status"], "eligible")
+        self.assertEqual(projects["candidate"].launch_policy["status"], "eligible")
+        self.assertEqual(projects["dirty"].launch_policy["status"], "blocked")
+        self.assertIn("dirty candidate requires review first", projects["dirty"].launch_policy["message"])
+        self.assertEqual(projects["protected"].launch_policy["status"], "blocked")
+        self.assertEqual(projects["control"].launch_policy["status"], "restricted")
+        self.assertEqual(projects["unknown"].launch_policy["status"], "blocked")
+        self.assertEqual(
+            projects["control"].launch_commands["plain"],
+            "./scripts/project-forge-open-project --slug control --profile plain --dry-run",
+        )
 
     def test_writes_markdown_report(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

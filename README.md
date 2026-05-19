@@ -580,3 +580,22 @@ install packages, mutate external repos, create commits, or create tags.
 See:
 
     docs/PROJECT_FORGE_OPEN_PROJECT.md
+
+## Phase 10.7D: Dashboard launch command display
+
+The static dashboard now shows copy-paste dry-run launch commands for eligible
+projects and policy-blocked text for ineligible ones.
+
+Eligible cards display:
+
+    ./scripts/project-forge-open-project --slug <slug> --profile personal --dry-run
+    ./scripts/project-forge-open-project --slug <slug> --profile business --dry-run
+    ./scripts/project-forge-open-project --slug <slug> --profile plain --dry-run
+
+This phase is display-only. The HTML does not run commands, does not expose
+`--open`, and does not generate `file://`, `vscode://`, or JavaScript launcher
+actions.
+
+See:
+
+    docs/PROJECT_FORGE_DASHBOARD_UI.md
