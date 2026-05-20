@@ -616,3 +616,21 @@ The HTML still does not execute commands, render `--open`, or generate
 See:
 
     docs/PROJECT_FORGE_DASHBOARD_UI.md
+
+## Phase 10.7F: Plain open test findings
+
+The first controlled local editor open test used:
+
+```bash
+./scripts/project-forge-open-project --slug lifesaver-ledger --profile plain --open
+```
+
+The wrapper resolved the known embedded project and launched VS Code without setting `CODEX_HOME`.
+
+A normal VS Code session may already have OpenAI/Codex extension app-server processes running. This is a finding for later Personal/Business profile testing, not evidence that Project Forge itself executed Codex.
+
+See:
+
+```text
+docs/PROJECT_FORGE_PLAIN_OPEN_TEST.md
+```
