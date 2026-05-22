@@ -4,6 +4,7 @@
 
 ### Added
 
+- Phase 11A dry-run Obsidian artifact mirror command, docs, tests, report, and manifest.
 - Phase 10.9 closeout documentation for the Project Forge local command center.
 - Operator release notes for Cold Start, dashboard refresh, and dry-run project open workflows.
 - Closeout report artifact at `artifacts/phase_10_closeout_report.md`.

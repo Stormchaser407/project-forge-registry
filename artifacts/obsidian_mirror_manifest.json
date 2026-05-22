@@ -1,0 +1,47 @@
+{
+  "checksums": {
+    "artifacts/obsidian_mirror/Project Forge - Command Center.md": "2b3535291cb2bbc505454d7519f8ec5820b762751552d1b0b092f345f90f0a04",
+    "artifacts/obsidian_mirror/Project Forge - Dashboard Summary.md": "b778ff678f2c1f74f66093ffdaf901b41aa6db431127f2959aff61b5861a21f3",
+    "artifacts/obsidian_mirror/Project Forge - Deferred Items.md": "be5655913f64e1c64640049bfb11766bfee591546becdffc287a593b626ff56e",
+    "artifacts/obsidian_mirror/Project Forge - Known Embedded Repos.md": "879aecff1518dba60b25c55d7c996fb72ec7e37d8dff386216d78e492f3fe7a3",
+    "artifacts/obsidian_mirror/Project Forge - Phase 11 Planning.md": "ed75762337abecb6380e3ab3b9085f315105f7d79ca18650fc253bb90044d6e6"
+  },
+  "generated_by": "project_forge_registry.obsidian_mirror",
+  "generated_files": [
+    "artifacts/obsidian_mirror/Project Forge - Command Center.md",
+    "artifacts/obsidian_mirror/Project Forge - Dashboard Summary.md",
+    "artifacts/obsidian_mirror/Project Forge - Deferred Items.md",
+    "artifacts/obsidian_mirror/Project Forge - Known Embedded Repos.md",
+    "artifacts/obsidian_mirror/Project Forge - Phase 11 Planning.md"
+  ],
+  "mode": "dry-run artifact mirror",
+  "report_path": "artifacts/obsidian_mirror_report.md",
+  "safety": {
+    "apply": false,
+    "codex_login_or_auth_handling": false,
+    "external_repo_writes": false,
+    "network_calls": false,
+    "package_installs": false,
+    "push_fetch": false,
+    "real_vault_writes": false,
+    "remotes": false,
+    "vs_code_launch": false
+  },
+  "source_artifacts_used": [
+    "artifacts/dashboard_inventory.json",
+    "artifacts/dashboard_inventory_report.md",
+    "artifacts/repo_discovery_inventory.csv",
+    "artifacts/phase_10_closeout_report.md",
+    "docs/PROJECT_FORGE_PHASE_10_CLOSEOUT.md",
+    "docs/PROJECT_FORGE_OPERATOR_RELEASE_NOTES.md",
+    "CHANGELOG.md"
+  ],
+  "summary": {
+    "candidate_review_count": 54,
+    "dirty_review_count": 3,
+    "known_embedded_repo_count": 4,
+    "protected_review_count": 12,
+    "total_notes_generated": 5,
+    "total_projects": 74
+  }
+}

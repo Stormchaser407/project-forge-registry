@@ -676,3 +676,30 @@ docs/PROJECT_FORGE_PHASE_10_CLOSEOUT.md
 docs/PROJECT_FORGE_OPERATOR_RELEASE_NOTES.md
 artifacts/phase_10_closeout_report.md
 ```
+
+## Phase 11A: Obsidian artifact mirror
+
+Generate Obsidian-ready Markdown notes under repository artifacts only:
+
+```bash
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_mirror
+```
+
+Outputs:
+
+```text
+artifacts/obsidian_mirror/
+artifacts/obsidian_mirror_report.md
+artifacts/obsidian_mirror_manifest.json
+```
+
+This phase is a dry-run operator memory layer. It does not write to any real
+Obsidian vault, modify external repos, apply changes, touch remotes, push/fetch,
+install packages, make network calls, launch VS Code, or perform Codex
+login/auth handling.
+
+See:
+
+```text
+docs/PROJECT_FORGE_OBSIDIAN_MIRROR.md
+```
