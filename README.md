@@ -634,3 +634,15 @@ See:
 ```text
 docs/PROJECT_FORGE_PLAIN_OPEN_TEST.md
 ```
+
+## Phase 10.7G: Codex profile isolation deferred
+
+Deeper Personal/Business Codex profile isolation research is deferred until after the stable Phase 10 closeout.
+
+Project Forge currently supports safe dry-run launch planning, profile homes, dashboard launch command display, and plain editor open testing. It does not yet guarantee that VS Code or the OpenAI/Codex extension honors `CODEX_HOME` as a complete Personal/Business isolation boundary.
+
+See:
+
+```text
+docs/PROJECT_FORGE_CODEX_PROFILE_ISOLATION_DEFERRAL.md
+```

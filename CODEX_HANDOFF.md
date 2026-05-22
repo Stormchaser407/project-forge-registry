@@ -2,32 +2,30 @@
 
 ## Mission
 
-Preserve the Phase 10.7F first controlled local open test findings.
+Preserve the Phase 10.7G decision to defer deeper Codex Personal/Business profile isolation research.
 
 ## Current State
 
-Phase 10.7F tested the controlled open wrapper with:
+Project Forge has stable support for profile probing, profile home bootstrap, controlled project open planning, dashboard launch-command display, copy-helper polish, and the first plain editor open test.
 
-- slug: `lifesaver-ledger`
-- profile: `plain`
-- mode: `--open`
+Phase 10.7G intentionally defers deeper Codex profile isolation work because VS Code and the OpenAI/Codex extension may rely on process reuse, VS Code user-data, OS credential storage, or extension-specific behavior beyond `CODEX_HOME`.
 
-The wrapper resolved the project, kept `CODEX_HOME` unset, and requested a VS Code launch.
+## Product Boundary
 
-Protected and dirty project policy checks still blocked correctly before the open test.
+Do not block Phase 10 closeout on Personal/Business Codex account separation.
 
-## Important Finding
+Stable claims:
 
-VS Code may already run OpenAI/Codex extension app-server processes in the normal VS Code user-data environment.
-
-Do not assume `CODEX_HOME` controls the VS Code extension until Phase 10.7G tests it.
+- dry-run launch planning is safe
+- plain editor open works
+- dirty and protected projects remain blocked
+- Personal/Business profile homes are prepared for later research
+- Personal/Business Codex isolation is deferred and not guaranteed
 
 ## Safety
 
-- No Project Forge Codex login was requested.
-- No auth/token files were read, printed, or copied.
-- No remotes, push/fetch, package installs, apply actions, or marker writes.
+This phase does not run Codex, launch VS Code, request login, read/copy auth files, modify external repos, apply marker writes, use remotes, push/fetch, or install packages.
 
 ## Next Recommended Phase
 
-Phase 10.7G: controlled Personal/Business profile behavior test.
+Phase 10.9: Phase 10 closeout / local command center release.
