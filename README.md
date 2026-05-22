@@ -646,3 +646,33 @@ See:
 ```text
 docs/PROJECT_FORGE_CODEX_PROFILE_ISOLATION_DEFERRAL.md
 ```
+
+## Phase 10.9: Local command center closeout
+
+Phase 10.9 packages the stable local command center boundary for operator use.
+
+Quick start:
+
+```bash
+./scripts/project-forge-cold-start
+./scripts/project-forge-dashboard --no-open
+./scripts/project-forge-open-project --slug lifesaver-ledger --profile plain --dry-run
+```
+
+Dashboard:
+
+```text
+artifacts/dashboard.html
+```
+
+The closeout confirms that Cold Start, the dashboard refresh, display-only launch
+commands, known embedded pilot repos, and plain open findings are stable enough
+for a local release. Codex Personal/Business isolation remains deferred.
+
+See:
+
+```text
+docs/PROJECT_FORGE_PHASE_10_CLOSEOUT.md
+docs/PROJECT_FORGE_OPERATOR_RELEASE_NOTES.md
+artifacts/phase_10_closeout_report.md
+```

@@ -2,13 +2,25 @@
 
 ## Mission
 
-Preserve the Phase 10.7G decision to defer deeper Codex Personal/Business profile isolation research.
+Preserve the Phase 10.9 local command center closeout state.
 
 ## Current State
 
-Project Forge has stable support for profile probing, profile home bootstrap, controlled project open planning, dashboard launch-command display, copy-helper polish, and the first plain editor open test.
+Project Forge has stable support for repo discovery, tool readiness reporting,
+embed planning and the approved embedded pilot, dashboard inventory JSON, the
+static Neon District dashboard, dashboard launcher, Cold Start wrapper, Cold
+Start desktop launcher installer, profile probing, profile home bootstrap,
+controlled project open planning, dashboard launch-command display, copy-helper
+polish, and the first plain editor open test.
 
 Phase 10.7G intentionally defers deeper Codex profile isolation work because VS Code and the OpenAI/Codex extension may rely on process reuse, VS Code user-data, OS credential storage, or extension-specific behavior beyond `CODEX_HOME`.
+
+Phase 10.9 adds closeout/release documentation only:
+
+- `docs/PROJECT_FORGE_PHASE_10_CLOSEOUT.md`
+- `docs/PROJECT_FORGE_OPERATOR_RELEASE_NOTES.md`
+- `artifacts/phase_10_closeout_report.md`
+- `CHANGELOG.md`
 
 ## Product Boundary
 
@@ -21,11 +33,38 @@ Stable claims:
 - dirty and protected projects remain blocked
 - Personal/Business profile homes are prepared for later research
 - Personal/Business Codex isolation is deferred and not guaranteed
+- dashboard path is `artifacts/dashboard.html`
+- known embedded pilot repos are `lifesaver-ledger`, `media-dedupe`, `neon-district`, and `recon_housekeeping`
+
+## Operator Quick Start
+
+```bash
+./scripts/project-forge-cold-start
+./scripts/project-forge-dashboard --no-open
+./scripts/project-forge-open-project --slug lifesaver-ledger --profile plain --dry-run
+```
 
 ## Safety
 
-This phase does not run Codex, launch VS Code, request login, read/copy auth files, modify external repos, apply marker writes, use remotes, push/fetch, or install packages.
+This phase does not run Codex, launch VS Code, request login, read/copy auth
+files, modify external repos, apply marker writes, use remotes, push/fetch,
+install packages, make network calls, create commits, or create tags.
+
+## Recommended Release Markers
+
+Recommended commit message:
+
+```text
+Document Phase 10 local command center closeout
+```
+
+Recommended final tag:
+
+```text
+v0.10.9-local-command-center-closeout
+```
 
 ## Next Recommended Phase
 
-Phase 10.9: Phase 10 closeout / local command center release.
+Phase 11 options: Obsidian integration, repo action policies, remote strategy,
+or dedicated Codex/VS Code isolation research.
