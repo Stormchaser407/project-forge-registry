@@ -737,3 +737,29 @@ See:
 ```text
 docs/PROJECT_FORGE_OBSIDIAN_VAULT_PLAN.md
 ```
+
+## Phase 11C: Guarded Obsidian vault apply
+
+Review the create-only vault apply preflight without writing to the vault:
+
+```bash
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_vault_apply --dry-run
+```
+
+Outputs:
+
+```text
+artifacts/obsidian_vault_apply_dry_run_report.md
+artifacts/obsidian_vault_apply_dry_run.json
+```
+
+Real apply is implemented but guarded. It requires `--apply`,
+`--yes-write-to-vault`, and an explicit `--vault-root`. Phase 11C is
+create-only: no overwrite, no delete, and all-or-nothing preflight before any
+write.
+
+See:
+
+```text
+docs/PROJECT_FORGE_OBSIDIAN_VAULT_APPLY.md
+```

@@ -1,0 +1,64 @@
+{
+  "apply_requested": false,
+  "blocked": 0,
+  "entries": [
+    {
+      "action": "would_create",
+      "reason": "target missing and source exists",
+      "source_path": "artifacts/obsidian_mirror/Project Forge - Command Center.md",
+      "target_exists": false,
+      "target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Command Center.md"
+    },
+    {
+      "action": "would_create",
+      "reason": "target missing and source exists",
+      "source_path": "artifacts/obsidian_mirror/Project Forge - Dashboard Summary.md",
+      "target_exists": false,
+      "target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Dashboard Summary.md"
+    },
+    {
+      "action": "would_create",
+      "reason": "target missing and source exists",
+      "source_path": "artifacts/obsidian_mirror/Project Forge - Deferred Items.md",
+      "target_exists": false,
+      "target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Deferred Items.md"
+    },
+    {
+      "action": "would_create",
+      "reason": "target missing and source exists",
+      "source_path": "artifacts/obsidian_mirror/Project Forge - Known Embedded Repos.md",
+      "target_exists": false,
+      "target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Known Embedded Repos.md"
+    },
+    {
+      "action": "would_create",
+      "reason": "target missing and source exists",
+      "source_path": "artifacts/obsidian_mirror/Project Forge - Phase 11 Planning.md",
+      "target_exists": false,
+      "target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Phase 11 Planning.md"
+    }
+  ],
+  "entries_reviewed": 5,
+  "generated_by": "project_forge_registry.obsidian_vault_apply",
+  "mode": "dry-run",
+  "plan_path": "artifacts/obsidian_vault_apply_plan.json",
+  "report_path": "artifacts/obsidian_vault_apply_dry_run_report.md",
+  "safety": {
+    "all_or_nothing": true,
+    "codex_login_or_auth_handling": false,
+    "delete": false,
+    "external_repo_writes": false,
+    "network_calls": false,
+    "overwrite": false,
+    "package_installs": false,
+    "push_fetch": false,
+    "real_vault_writes_in_dry_run": false,
+    "remotes": false,
+    "requires_yes_write_to_vault": true,
+    "vs_code_launch": false
+  },
+  "source_root": "artifacts/obsidian_mirror",
+  "vault_root": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge",
+  "would_create": 5,
+  "would_skip": 0
+}

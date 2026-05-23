@@ -4,6 +4,7 @@
 
 ### Added
 
+- Phase 11C guarded create-only Obsidian vault apply command with dry-run reports.
 - Phase 11B dry-run real-vault apply planner for generated Obsidian artifact notes.
 - Phase 11A dry-run Obsidian artifact mirror command, docs, tests, report, and manifest.
 - Phase 10.9 closeout documentation for the Project Forge local command center.

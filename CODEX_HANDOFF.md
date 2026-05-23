@@ -45,6 +45,15 @@ Phase 11B.1 normalizes the JSON schema: `vault_root` is canonical,
 `vault_root_planned` is not emitted, and `entries` remains the canonical
 per-note list.
 
+Phase 11C adds guarded create-only apply code, but the real-vault apply path has
+not been run in validation:
+
+- `src/project_forge_registry/obsidian_vault_apply.py`
+- `tests/test_obsidian_vault_apply.py`
+- `docs/PROJECT_FORGE_OBSIDIAN_VAULT_APPLY.md`
+- `artifacts/obsidian_vault_apply_dry_run_report.md`
+- `artifacts/obsidian_vault_apply_dry_run.json`
+
 ## Product Boundary
 
 Do not block Phase 10 closeout on Personal/Business Codex account separation.
@@ -67,6 +76,7 @@ Stable claims:
 ./scripts/project-forge-open-project --slug lifesaver-ledger --profile plain --dry-run
 PYTHONPATH=src python3 -m project_forge_registry.obsidian_mirror
 PYTHONPATH=src python3 -m project_forge_registry.obsidian_vault_plan
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_vault_apply --dry-run
 ```
 
 ## Safety
@@ -77,18 +87,23 @@ writes, create vault directories, copy files, modify target files, use remotes,
 push/fetch, install packages, make network calls, create commits, or create
 tags.
 
+Phase 11C apply behavior is implemented for future operator use, but remains
+guarded by `--apply`, `--yes-write-to-vault`, and explicit `--vault-root`.
+Validation should use dry-run and temporary-directory tests only unless the
+operator explicitly approves real vault writes.
+
 ## Recommended Release Markers
 
 Recommended commit message:
 
 ```text
-Normalize Phase 11B vault plan schema
+Add Phase 11C guarded Obsidian vault apply command
 ```
 
 Recommended final tag:
 
 ```text
-v0.11.0b1-vault-plan-schema-normalized
+v0.11.0c-guarded-obsidian-vault-apply
 ```
 
 ## Next Recommended Phase

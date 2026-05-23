@@ -1,0 +1,48 @@
+# Project Forge Obsidian Vault Apply Dry-Run Report
+
+- mode: `dry-run`
+- apply requested: `false`
+- vault_root: `/mnt/storage/Cole/main_vault/10 Projects/Project Forge`
+- entries reviewed: `5`
+- would create: `5`
+- would skip: `0`
+- blocked: `0`
+- plan path: `artifacts/obsidian_vault_apply_plan.json`
+- source root: `artifacts/obsidian_mirror`
+- json path: `artifacts/obsidian_vault_apply_dry_run.json`
+
+## Entry Review
+
+| Source | Target | Action | Target exists | Reason |
+|---|---|---|---|---|
+| `artifacts/obsidian_mirror/Project Forge - Command Center.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Command Center.md` | `would_create` | `false` | `target missing and source exists` |
+| `artifacts/obsidian_mirror/Project Forge - Dashboard Summary.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Dashboard Summary.md` | `would_create` | `false` | `target missing and source exists` |
+| `artifacts/obsidian_mirror/Project Forge - Deferred Items.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Deferred Items.md` | `would_create` | `false` | `target missing and source exists` |
+| `artifacts/obsidian_mirror/Project Forge - Known Embedded Repos.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Known Embedded Repos.md` | `would_create` | `false` | `target missing and source exists` |
+| `artifacts/obsidian_mirror/Project Forge - Phase 11 Planning.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Phase 11 Planning.md` | `would_create` | `false` | `target missing and source exists` |
+
+## Safety Statement
+
+- no real vault writes in dry-run
+- apply requires --apply and --yes-write-to-vault
+- create-only first implementation
+- no overwrite
+- no delete
+- all-or-nothing preflight before apply writes
+- no external repo writes
+- no marker writes
+- no remotes
+- no push/fetch
+- no package installs
+- no network calls
+- no VS Code launch
+- no Codex login/auth handling
+
+## Policy
+
+- default command is dry-run
+- --apply is rejected unless --yes-write-to-vault is also present
+- apply is create-only
+- no overwrite behavior is implemented
+- no delete behavior is implemented
+- all-or-nothing preflight blocks every write if any entry is blocked
