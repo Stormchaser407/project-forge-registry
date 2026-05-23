@@ -2,7 +2,7 @@
 
 ## Mission
 
-Preserve the Phase 11A dry-run Obsidian artifact mirror state.
+Preserve the Phase 11B dry-run Obsidian vault apply plan state.
 
 ## Current State
 
@@ -32,6 +32,15 @@ repository artifacts only:
 - `artifacts/obsidian_mirror_report.md`
 - `artifacts/obsidian_mirror_manifest.json`
 
+Phase 11B adds a dry-run real-vault apply planner. It maps artifact mirror notes
+to proposed vault targets, but writes only Project Forge plan artifacts:
+
+- `src/project_forge_registry/obsidian_vault_plan.py`
+- `tests/test_obsidian_vault_plan.py`
+- `docs/PROJECT_FORGE_OBSIDIAN_VAULT_PLAN.md`
+- `artifacts/obsidian_vault_apply_plan.md`
+- `artifacts/obsidian_vault_apply_plan.json`
+
 ## Product Boundary
 
 Do not block Phase 10 closeout on Personal/Business Codex account separation.
@@ -53,27 +62,29 @@ Stable claims:
 ./scripts/project-forge-dashboard --no-open
 ./scripts/project-forge-open-project --slug lifesaver-ledger --profile plain --dry-run
 PYTHONPATH=src python3 -m project_forge_registry.obsidian_mirror
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_vault_plan
 ```
 
 ## Safety
 
 This phase does not run Codex, launch VS Code, request login, read/copy auth
 files, modify external repos, write to any real Obsidian vault, apply marker
-writes, use remotes, push/fetch, install packages, make network calls, create
-commits, or create tags.
+writes, create vault directories, copy files, modify target files, use remotes,
+push/fetch, install packages, make network calls, create commits, or create
+tags.
 
 ## Recommended Release Markers
 
 Recommended commit message:
 
 ```text
-Add Phase 11A Obsidian artifact mirror
+Add Phase 11B Obsidian vault apply planner
 ```
 
 Recommended final tag:
 
 ```text
-v0.11.0a-obsidian-artifact-mirror
+v0.11.0b-obsidian-vault-apply-plan
 ```
 
 ## Next Recommended Phase

@@ -24,6 +24,7 @@ project-sync = "project_forge_registry.project_sync:main"
 project-forge-dashboard-inventory = "project_forge_registry.dashboard_inventory:main"
 project-forge-dashboard-ui = "project_forge_registry.dashboard_ui:main"
 project-forge-obsidian-mirror = "project_forge_registry.obsidian_mirror:main"
+project-forge-obsidian-vault-plan = "project_forge_registry.obsidian_vault_plan:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

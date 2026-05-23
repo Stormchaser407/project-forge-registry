@@ -703,3 +703,34 @@ See:
 ```text
 docs/PROJECT_FORGE_OBSIDIAN_MIRROR.md
 ```
+
+## Phase 11B: Obsidian vault apply plan
+
+Plan a real-vault apply without writing to the vault:
+
+```bash
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_vault_plan
+```
+
+Outputs:
+
+```text
+artifacts/obsidian_vault_apply_plan.md
+artifacts/obsidian_vault_apply_plan.json
+```
+
+The default proposed vault folder is:
+
+```text
+/mnt/storage/Cole/main_vault/10 Projects/Project Forge/
+```
+
+This phase is dry-run planning only. It does not create directories, copy files,
+modify target files, apply changes, touch remotes, push/fetch, install packages,
+make network calls, launch VS Code, or perform Codex login/auth handling.
+
+See:
+
+```text
+docs/PROJECT_FORGE_OBSIDIAN_VAULT_PLAN.md
+```
