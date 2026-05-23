@@ -193,7 +193,7 @@ def write_report(plan: VaultPlan) -> None:
         f"- mode: `{plan.mode}`",
         f"- source note count: `{plan.source_note_count}`",
         f"- proposed target count: `{plan.proposed_target_count}`",
-        f"- vault root planned: `{plan.vault_root}`",
+        f"- vault_root: `{plan.vault_root}`",
         f"- vault root exists: `{str(plan.vault_root_exists).lower()}`",
         f"- source manifest: `{relative_to_repo(plan.source_manifest_path)}`",
         f"- json path: `{relative_to_repo(plan.json_path)}`",
@@ -235,7 +235,7 @@ def write_json_plan(plan: VaultPlan) -> None:
         "generated_by": "project_forge_registry.obsidian_vault_plan",
         "mode": plan.mode,
         "source_manifest_path": relative_to_repo(plan.source_manifest_path),
-        "vault_root_planned": str(plan.vault_root),
+        "vault_root": str(plan.vault_root),
         "vault_root_exists": plan.vault_root_exists,
         "source_note_count": plan.source_note_count,
         "proposed_target_count": plan.proposed_target_count,
@@ -322,7 +322,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"mode: {plan.mode}")
     print(f"source note count: {plan.source_note_count}")
     print(f"proposed target count: {plan.proposed_target_count}")
-    print(f"vault root planned: {plan.vault_root}")
+    print(f"vault_root: {plan.vault_root}")
     print(f"report path: {plan.report_path}")
     print(f"json path: {plan.json_path}")
     print("safety: no real vault writes; no external repo writes; no apply; no remotes; no push/fetch; no package installs; no network calls; no VS Code launch; no Codex login/auth handling")

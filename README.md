@@ -729,6 +729,9 @@ This phase is dry-run planning only. It does not create directories, copy files,
 modify target files, apply changes, touch remotes, push/fetch, install packages,
 make network calls, launch VS Code, or perform Codex login/auth handling.
 
+The JSON plan uses `vault_root` as the canonical proposed target root field and
+`entries` as the canonical per-note mapping list.
+
 See:
 
 ```text

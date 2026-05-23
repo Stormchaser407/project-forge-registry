@@ -12,6 +12,7 @@
 
 ### Notes
 
+- Phase 11B.1 normalizes the vault apply plan JSON schema to use `vault_root` as the canonical proposed target root field.
 - Current stable baseline before this closeout is `v0.10.7g-codex-profile-isolation-deferred`.
 - Recommended final Phase 10 closeout tag is `v0.10.9-local-command-center-closeout`.
 - Personal/Business Codex isolation remains deferred for a dedicated future research phase.

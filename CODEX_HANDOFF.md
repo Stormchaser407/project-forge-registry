@@ -41,6 +41,10 @@ to proposed vault targets, but writes only Project Forge plan artifacts:
 - `artifacts/obsidian_vault_apply_plan.md`
 - `artifacts/obsidian_vault_apply_plan.json`
 
+Phase 11B.1 normalizes the JSON schema: `vault_root` is canonical,
+`vault_root_planned` is not emitted, and `entries` remains the canonical
+per-note list.
+
 ## Product Boundary
 
 Do not block Phase 10 closeout on Personal/Business Codex account separation.
@@ -78,13 +82,13 @@ tags.
 Recommended commit message:
 
 ```text
-Add Phase 11B Obsidian vault apply planner
+Normalize Phase 11B vault plan schema
 ```
 
 Recommended final tag:
 
 ```text
-v0.11.0b-obsidian-vault-apply-plan
+v0.11.0b1-vault-plan-schema-normalized
 ```
 
 ## Next Recommended Phase

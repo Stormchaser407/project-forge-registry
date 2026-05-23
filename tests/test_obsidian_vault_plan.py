@@ -163,8 +163,19 @@ class ObsidianVaultPlanTests(unittest.TestCase):
 
             payload = json.loads(json_path.read_text(encoding="utf-8"))
             self.assertEqual(payload["mode"], "dry-run vault apply plan")
+            self.assertEqual(payload["vault_root"], str(vault_root))
+            self.assertIn("vault_root_exists", payload)
+            self.assertEqual(payload["source_note_count"], 5)
+            self.assertEqual(payload["proposed_target_count"], 5)
+            self.assertNotIn("vault_root_planned", payload)
             self.assertEqual(len(payload["entries"]), 5)
-            self.assertIn(str(vault_root), payload["entries"][0]["proposed_vault_target_path"])
+            for entry in payload["entries"]:
+                self.assertIn("source_artifact_path", entry)
+                self.assertIn("proposed_vault_target_path", entry)
+                self.assertIn("action", entry)
+                self.assertIn("target_exists", entry)
+                self.assertIn("reason", entry)
+                self.assertIn(str(vault_root), entry["proposed_vault_target_path"])
 
     def test_output_is_deterministic(self) -> None:
         with tempfile.TemporaryDirectory(dir=Path.cwd()) as tmp, tempfile.TemporaryDirectory() as vault_tmp:
@@ -207,6 +218,7 @@ class ObsidianVaultPlanTests(unittest.TestCase):
 
             report = report_path.read_text(encoding="utf-8")
             self.assertIn("dry-run vault apply plan", report)
+            self.assertIn("vault_root", report)
             self.assertIn(str(vault_root), report)
             self.assertIn("no real vault writes", report)
             self.assertIn("Phase 11B is planning only", report)

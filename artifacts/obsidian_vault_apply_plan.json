@@ -56,6 +56,6 @@
   },
   "source_manifest_path": "artifacts/obsidian_mirror_manifest.json",
   "source_note_count": 5,
-  "vault_root_exists": false,
-  "vault_root_planned": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge"
+  "vault_root": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge",
+  "vault_root_exists": false
 }

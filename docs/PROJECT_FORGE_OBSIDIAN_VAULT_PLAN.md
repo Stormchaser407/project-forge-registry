@@ -58,6 +58,20 @@ Each generated note receives a deterministic mapping with:
 Current Phase 11B behavior uses `would_create`, `would_update`, or `blocked`.
 `would_skip` is reserved for future policy rules.
 
+## JSON Schema
+
+The JSON plan uses these top-level fields:
+
+- `mode`
+- `vault_root`
+- `vault_root_exists`
+- `source_note_count`
+- `proposed_target_count`
+- `entries`
+- `safety`
+
+`entries` is the canonical per-note list. `vault_root_planned` is not emitted.
+
 ## Safety Model
 
 Phase 11B is planning only.

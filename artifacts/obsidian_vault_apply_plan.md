@@ -3,7 +3,7 @@
 - mode: `dry-run vault apply plan`
 - source note count: `5`
 - proposed target count: `5`
-- vault root planned: `/mnt/storage/Cole/main_vault/10 Projects/Project Forge`
+- vault_root: `/mnt/storage/Cole/main_vault/10 Projects/Project Forge`
 - vault root exists: `false`
 - source manifest: `artifacts/obsidian_mirror_manifest.json`
 - json path: `artifacts/obsidian_vault_apply_plan.json`
