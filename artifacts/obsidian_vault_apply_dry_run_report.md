@@ -7,8 +7,8 @@
 - apply requested: `false`
 - guard flag present: `false`
 - entries reviewed: `5`
-- would_create count: `5`
-- would_skip_identical count: `0`
+- would_create count: `0`
+- would_skip_identical count: `5`
 - blocked: `0`
 - plan path: `artifacts/obsidian_vault_apply_plan.json`
 - source root: `artifacts/obsidian_mirror`
@@ -20,11 +20,11 @@ Review this report before running any apply command.
 
 | Source | Target | Action | Target exists | Reason |
 |---|---|---|---|---|
-| `artifacts/obsidian_mirror/Project Forge - Command Center.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Command Center.md` | `would_create` | `false` | `target missing and source exists` |
-| `artifacts/obsidian_mirror/Project Forge - Dashboard Summary.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Dashboard Summary.md` | `would_create` | `false` | `target missing and source exists` |
-| `artifacts/obsidian_mirror/Project Forge - Deferred Items.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Deferred Items.md` | `would_create` | `false` | `target missing and source exists` |
-| `artifacts/obsidian_mirror/Project Forge - Known Embedded Repos.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Known Embedded Repos.md` | `would_create` | `false` | `target missing and source exists` |
-| `artifacts/obsidian_mirror/Project Forge - Phase 11 Planning.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Phase 11 Planning.md` | `would_create` | `false` | `target missing and source exists` |
+| `artifacts/obsidian_mirror/Project Forge - Command Center.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Command Center.md` | `would_skip_identical` | `true` | `target exists with identical content` |
+| `artifacts/obsidian_mirror/Project Forge - Dashboard Summary.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Dashboard Summary.md` | `would_skip_identical` | `true` | `target exists with identical content` |
+| `artifacts/obsidian_mirror/Project Forge - Deferred Items.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Deferred Items.md` | `would_skip_identical` | `true` | `target exists with identical content` |
+| `artifacts/obsidian_mirror/Project Forge - Known Embedded Repos.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Known Embedded Repos.md` | `would_skip_identical` | `true` | `target exists with identical content` |
+| `artifacts/obsidian_mirror/Project Forge - Phase 11 Planning.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Phase 11 Planning.md` | `would_skip_identical` | `true` | `target exists with identical content` |
 
 ## Safety Statement
 

@@ -3,38 +3,38 @@
   "blocked": 0,
   "entries": [
     {
-      "action": "would_create",
-      "reason": "target missing and source exists",
+      "action": "would_skip_identical",
+      "reason": "target exists with identical content",
       "source_path": "artifacts/obsidian_mirror/Project Forge - Command Center.md",
-      "target_exists": false,
+      "target_exists": true,
       "target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Command Center.md"
     },
     {
-      "action": "would_create",
-      "reason": "target missing and source exists",
+      "action": "would_skip_identical",
+      "reason": "target exists with identical content",
       "source_path": "artifacts/obsidian_mirror/Project Forge - Dashboard Summary.md",
-      "target_exists": false,
+      "target_exists": true,
       "target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Dashboard Summary.md"
     },
     {
-      "action": "would_create",
-      "reason": "target missing and source exists",
+      "action": "would_skip_identical",
+      "reason": "target exists with identical content",
       "source_path": "artifacts/obsidian_mirror/Project Forge - Deferred Items.md",
-      "target_exists": false,
+      "target_exists": true,
       "target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Deferred Items.md"
     },
     {
-      "action": "would_create",
-      "reason": "target missing and source exists",
+      "action": "would_skip_identical",
+      "reason": "target exists with identical content",
       "source_path": "artifacts/obsidian_mirror/Project Forge - Known Embedded Repos.md",
-      "target_exists": false,
+      "target_exists": true,
       "target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Known Embedded Repos.md"
     },
     {
-      "action": "would_create",
-      "reason": "target missing and source exists",
+      "action": "would_skip_identical",
+      "reason": "target exists with identical content",
       "source_path": "artifacts/obsidian_mirror/Project Forge - Phase 11 Planning.md",
-      "target_exists": false,
+      "target_exists": true,
       "target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Phase 11 Planning.md"
     }
   ],
@@ -61,7 +61,7 @@
   },
   "source_root": "artifacts/obsidian_mirror",
   "vault_root": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge",
-  "would_create": 5,
-  "would_skip": 0,
-  "would_skip_identical": 0
+  "would_create": 0,
+  "would_skip": 5,
+  "would_skip_identical": 5
 }
