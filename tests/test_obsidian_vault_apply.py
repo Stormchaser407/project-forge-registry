@@ -108,6 +108,47 @@ class ObsidianVaultApplyTests(unittest.TestCase):
                     json_path=root / "artifacts" / "apply.json",
                 )
 
+    def test_apply_without_confirm_vault_root_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory(dir=Path.cwd()) as tmp, tempfile.TemporaryDirectory() as vault_tmp:
+            root = Path(tmp)
+            vault_root = Path(vault_tmp) / "Project Forge"
+            plan_path, source_root = write_fixture(root, vault_root)
+
+            with self.assertRaisesRegex(ValueError, "--confirm-vault-root"):
+                run_apply_command(
+                    plan_path=plan_path,
+                    source_root=source_root,
+                    vault_root=vault_root,
+                    apply_requested=True,
+                    yes_write_to_vault=True,
+                    report_path=root / "artifacts" / "apply.md",
+                    json_path=root / "artifacts" / "apply.json",
+                )
+
+            self.assertFalse(vault_root.exists())
+
+    def test_apply_with_mismatched_confirm_vault_root_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory(dir=Path.cwd()) as tmp, tempfile.TemporaryDirectory() as vault_tmp:
+            root = Path(tmp)
+            vault_root = Path(vault_tmp) / "Project Forge"
+            wrong_root = Path(vault_tmp) / "Wrong Project"
+            plan_path, source_root = write_fixture(root, vault_root)
+
+            with self.assertRaisesRegex(ValueError, "must exactly match --vault-root"):
+                run_apply_command(
+                    plan_path=plan_path,
+                    source_root=source_root,
+                    vault_root=vault_root,
+                    apply_requested=True,
+                    yes_write_to_vault=True,
+                    report_path=root / "artifacts" / "apply.md",
+                    json_path=root / "artifacts" / "apply.json",
+                    confirm_vault_root=wrong_root,
+                )
+
+            self.assertFalse(vault_root.exists())
+            self.assertFalse(wrong_root.exists())
+
     def test_apply_with_missing_source_is_rejected_before_writes(self) -> None:
         with tempfile.TemporaryDirectory(dir=Path.cwd()) as tmp, tempfile.TemporaryDirectory() as vault_tmp:
             root = Path(tmp)
@@ -125,6 +166,7 @@ class ObsidianVaultApplyTests(unittest.TestCase):
                     yes_write_to_vault=True,
                     report_path=root / "artifacts" / "apply.md",
                     json_path=root / "artifacts" / "apply.json",
+                    confirm_vault_root=vault_root,
                 )
 
             self.assertFalse(vault_root.exists())
@@ -171,6 +213,7 @@ class ObsidianVaultApplyTests(unittest.TestCase):
                     yes_write_to_vault=True,
                     report_path=root / "artifacts" / "apply.md",
                     json_path=root / "artifacts" / "apply.json",
+                    confirm_vault_root=vault_root,
                 )
 
             self.assertEqual(existing.read_text(encoding="utf-8"), "different\n")
@@ -190,6 +233,7 @@ class ObsidianVaultApplyTests(unittest.TestCase):
                 yes_write_to_vault=True,
                 report_path=root / "artifacts" / "apply.md",
                 json_path=root / "artifacts" / "apply.json",
+                confirm_vault_root=vault_root,
             )
 
             self.assertEqual({entry.action for entry in result.entries}, {"created"})
@@ -211,6 +255,7 @@ class ObsidianVaultApplyTests(unittest.TestCase):
                     yes_write_to_vault=True,
                     report_path=root / "artifacts" / "apply.md",
                     json_path=root / "artifacts" / "apply.json",
+                    confirm_vault_root=vault_root,
                 )
 
             self.assertFalse(vault_root.exists())
@@ -257,11 +302,17 @@ class ObsidianVaultApplyTests(unittest.TestCase):
 
             report = report_path.read_text(encoding="utf-8")
             payload = json.loads(json_path.read_text(encoding="utf-8"))
+            self.assertIn("## Preflight Summary", report)
+            self.assertIn("guard flag present: `false`", report)
+            self.assertIn("Review this report before running any apply command.", report)
             self.assertIn("no real vault writes in dry-run", report)
             self.assertIn("create-only", report)
             self.assertIn("no overwrite", report)
             self.assertIn("no delete", report)
+            self.assertFalse(payload["guard_flag_present"])
+            self.assertEqual(payload["would_skip_identical"], 0)
             self.assertTrue(payload["safety"]["all_or_nothing"])
+            self.assertTrue(payload["safety"]["requires_confirm_vault_root"])
             self.assertEqual(len(payload["entries"]), 5)
 
     def test_cli_apply_without_yes_exits_cleanly(self) -> None:
@@ -284,8 +335,38 @@ class ObsidianVaultApplyTests(unittest.TestCase):
                 )
 
             self.assertEqual(raised.exception.code, 2)
-            self.assertIn("--apply requires --yes-write-to-vault", stderr.getvalue())
+            self.assertIn("Refusing real vault apply", stderr.getvalue())
+            self.assertIn("--yes-write-to-vault", stderr.getvalue())
+            self.assertIn("--confirm-vault-root", stderr.getvalue())
             self.assertFalse(vault_root.exists())
+
+    def test_cli_apply_with_mismatched_confirm_exits_cleanly(self) -> None:
+        with tempfile.TemporaryDirectory(dir=Path.cwd()) as tmp, tempfile.TemporaryDirectory() as vault_tmp:
+            root = Path(tmp)
+            vault_root = Path(vault_tmp) / "Project Forge"
+            wrong_root = Path(vault_tmp) / "Wrong Project"
+            plan_path, source_root = write_fixture(root, vault_root)
+            stderr = StringIO()
+            with redirect_stderr(stderr), self.assertRaises(SystemExit) as raised:
+                main(
+                    [
+                        "--apply",
+                        "--yes-write-to-vault",
+                        "--vault-root",
+                        str(vault_root),
+                        "--confirm-vault-root",
+                        str(wrong_root),
+                        "--plan",
+                        str(plan_path),
+                        "--source-root",
+                        str(source_root),
+                    ]
+                )
+
+            self.assertEqual(raised.exception.code, 2)
+            self.assertIn("--confirm-vault-root must exactly match --vault-root", stderr.getvalue())
+            self.assertFalse(vault_root.exists())
+            self.assertFalse(wrong_root.exists())
 
     def test_real_vault_path_is_never_used_in_tests(self) -> None:
         self.assertNotIn("/mnt/storage/Cole/main_vault", str(Path(tempfile.gettempdir())))

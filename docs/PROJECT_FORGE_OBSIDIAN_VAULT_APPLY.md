@@ -21,15 +21,17 @@ Console-script form:
 project-forge-obsidian-vault-apply --dry-run
 ```
 
-Guarded apply shape:
+Future guarded apply command:
 
 ```bash
-project-forge-obsidian-vault-apply \
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_vault_apply \
   --apply \
   --yes-write-to-vault \
-  --vault-root "<reviewed vault folder>"
+  --vault-root "/mnt/storage/Cole/main_vault/10 Projects/Project Forge" \
+  --confirm-vault-root "/mnt/storage/Cole/main_vault/10 Projects/Project Forge"
 ```
 
+NOT TO RUN until the operator explicitly approves the first real vault write.
 Do not run guarded apply until the operator has inspected the dry-run output.
 
 ## Inputs
@@ -54,12 +56,29 @@ Dry-run inspects source files and targets read-only, then reports:
 - `blocked_existing_different`
 - `blocked_missing_source`
 
+The dry-run preflight summary includes:
+
+- vault root
+- entries reviewed
+- `would_create` count
+- `would_skip_identical` count
+- blocked count
+- whether apply was requested
+- whether the `--yes-write-to-vault` guard flag was present
+
+Dry-run output ends with the next-step reminder:
+
+```text
+Review this report before running any apply command.
+```
+
 ## Apply Policy
 
 Phase 11C apply is create-only.
 
 - `--apply` is rejected unless `--yes-write-to-vault` is present.
 - `--apply` requires an explicit `--vault-root`.
+- `--apply` requires `--confirm-vault-root` to exactly match `--vault-root`.
 - no overwrite behavior is implemented
 - no delete behavior is implemented
 - all-or-nothing preflight runs before any write

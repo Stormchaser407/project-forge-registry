@@ -40,6 +40,7 @@
   ],
   "entries_reviewed": 5,
   "generated_by": "project_forge_registry.obsidian_vault_apply",
+  "guard_flag_present": false,
   "mode": "dry-run",
   "plan_path": "artifacts/obsidian_vault_apply_plan.json",
   "report_path": "artifacts/obsidian_vault_apply_dry_run_report.md",
@@ -54,11 +55,13 @@
     "push_fetch": false,
     "real_vault_writes_in_dry_run": false,
     "remotes": false,
+    "requires_confirm_vault_root": true,
     "requires_yes_write_to_vault": true,
     "vs_code_launch": false
   },
   "source_root": "artifacts/obsidian_mirror",
   "vault_root": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge",
   "would_create": 5,
-  "would_skip": 0
+  "would_skip": 0,
+  "would_skip_identical": 0
 }

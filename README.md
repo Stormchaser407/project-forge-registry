@@ -754,9 +754,20 @@ artifacts/obsidian_vault_apply_dry_run.json
 ```
 
 Real apply is implemented but guarded. It requires `--apply`,
-`--yes-write-to-vault`, and an explicit `--vault-root`. Phase 11C is
+`--yes-write-to-vault`, an explicit `--vault-root`, and
+`--confirm-vault-root` exactly matching `--vault-root`. Phase 11C is
 create-only: no overwrite, no delete, and all-or-nothing preflight before any
 write.
+
+Future real apply command, NOT TO RUN until explicit operator approval:
+
+```bash
+PYTHONPATH=src python3 -m project_forge_registry.obsidian_vault_apply \
+  --apply \
+  --yes-write-to-vault \
+  --vault-root "/mnt/storage/Cole/main_vault/10 Projects/Project Forge" \
+  --confirm-vault-root "/mnt/storage/Cole/main_vault/10 Projects/Project Forge"
+```
 
 See:
 

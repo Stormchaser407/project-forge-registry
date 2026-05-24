@@ -1,15 +1,20 @@
 # Project Forge Obsidian Vault Apply Dry-Run Report
 
+## Preflight Summary
+
 - mode: `dry-run`
+- vault root: `/mnt/storage/Cole/main_vault/10 Projects/Project Forge`
 - apply requested: `false`
-- vault_root: `/mnt/storage/Cole/main_vault/10 Projects/Project Forge`
+- guard flag present: `false`
 - entries reviewed: `5`
-- would create: `5`
-- would skip: `0`
+- would_create count: `5`
+- would_skip_identical count: `0`
 - blocked: `0`
 - plan path: `artifacts/obsidian_vault_apply_plan.json`
 - source root: `artifacts/obsidian_mirror`
 - json path: `artifacts/obsidian_vault_apply_dry_run.json`
+
+Review this report before running any apply command.
 
 ## Entry Review
 
@@ -42,6 +47,8 @@
 
 - default command is dry-run
 - --apply is rejected unless --yes-write-to-vault is also present
+- --apply requires explicit --vault-root
+- --apply requires --confirm-vault-root to exactly match --vault-root
 - apply is create-only
 - no overwrite behavior is implemented
 - no delete behavior is implemented

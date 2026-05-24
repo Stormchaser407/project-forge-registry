@@ -2,7 +2,7 @@
 
 ## Mission
 
-Preserve the Phase 11B dry-run Obsidian vault apply plan state.
+Preserve the Phase 11C.1 guarded Obsidian vault apply UX hardening state.
 
 ## Current State
 
@@ -54,6 +54,13 @@ not been run in validation:
 - `artifacts/obsidian_vault_apply_dry_run_report.md`
 - `artifacts/obsidian_vault_apply_dry_run.json`
 
+Phase 11C.1 hardens the guarded apply UX before the first real vault write:
+
+- dry-run output includes a clear preflight summary and review reminder
+- real apply refusal messaging names every required guard
+- real apply requires `--confirm-vault-root` to exactly match `--vault-root`
+- create-only, no-overwrite, no-delete, and all-or-nothing behavior remains unchanged
+
 ## Product Boundary
 
 Do not block Phase 10 closeout on Personal/Business Codex account separation.
@@ -87,8 +94,9 @@ writes, create vault directories, copy files, modify target files, use remotes,
 push/fetch, install packages, make network calls, create commits, or create
 tags.
 
-Phase 11C apply behavior is implemented for future operator use, but remains
-guarded by `--apply`, `--yes-write-to-vault`, and explicit `--vault-root`.
+Phase 11C.1 apply behavior is implemented for future operator use, but remains
+guarded by `--apply`, `--yes-write-to-vault`, explicit `--vault-root`, and
+matching `--confirm-vault-root`.
 Validation should use dry-run and temporary-directory tests only unless the
 operator explicitly approves real vault writes.
 
@@ -97,13 +105,13 @@ operator explicitly approves real vault writes.
 Recommended commit message:
 
 ```text
-Add Phase 11C guarded Obsidian vault apply command
+Harden Phase 11C Obsidian vault apply UX
 ```
 
 Recommended final tag:
 
 ```text
-v0.11.0c-guarded-obsidian-vault-apply
+v0.11.0c1-obsidian-vault-apply-ux-hardening
 ```
 
 ## Next Recommended Phase

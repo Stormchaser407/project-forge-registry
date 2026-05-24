@@ -1,7 +1,8 @@
 """Phase 11C guarded Obsidian vault apply command for Project Forge.
 
-Default mode is dry-run. Real vault writes require both --apply and
---yes-write-to-vault, and apply is create-only and all-or-nothing.
+Default mode is dry-run. Real vault writes require --apply,
+--yes-write-to-vault, an explicit --vault-root, and a matching
+--confirm-vault-root. Apply is create-only and all-or-nothing.
 """
 
 from __future__ import annotations
@@ -60,6 +61,7 @@ class ApplyEntry:
 class ApplyPlan:
     mode: str
     apply_requested: bool
+    guard_flag_present: bool
     vault_root: Path
     plan_path: Path
     source_root: Path
@@ -204,6 +206,7 @@ def build_apply_plan(
     return ApplyPlan(
         mode=mode,
         apply_requested=apply_requested,
+        guard_flag_present=False,
         vault_root=vault_root,
         plan_path=plan_path,
         source_root=source_root,
@@ -248,6 +251,7 @@ def apply_create_only(plan: ApplyPlan) -> ApplyPlan:
     return ApplyPlan(
         mode=plan.mode,
         apply_requested=plan.apply_requested,
+        guard_flag_present=plan.guard_flag_present,
         vault_root=plan.vault_root,
         plan_path=plan.plan_path,
         source_root=plan.source_root,
@@ -262,16 +266,21 @@ def write_report(plan: ApplyPlan) -> None:
     lines = [
         "# Project Forge Obsidian Vault Apply Dry-Run Report" if not plan.apply_requested else "# Project Forge Obsidian Vault Apply Report",
         "",
+        "## Preflight Summary",
+        "",
         f"- mode: `{plan.mode}`",
+        f"- vault root: `{plan.vault_root}`",
         f"- apply requested: `{str(plan.apply_requested).lower()}`",
-        f"- vault_root: `{plan.vault_root}`",
+        f"- guard flag present: `{str(plan.guard_flag_present).lower()}`",
         f"- entries reviewed: `{plan.entries_reviewed}`",
-        f"- would create: `{plan.would_create_count}`",
-        f"- would skip: `{plan.would_skip_count}`",
+        f"- would_create count: `{plan.would_create_count}`",
+        f"- would_skip_identical count: `{plan.would_skip_count}`",
         f"- blocked: `{plan.blocked_count}`",
         f"- plan path: `{relative_to_repo(plan.plan_path)}`",
         f"- source root: `{relative_to_repo(plan.source_root)}`",
         f"- json path: `{relative_to_repo(plan.json_path)}`",
+        "",
+        "Review this report before running any apply command.",
         "",
         "## Entry Review",
         "",
@@ -298,6 +307,8 @@ def write_report(plan: ApplyPlan) -> None:
             "",
             "- default command is dry-run",
             "- --apply is rejected unless --yes-write-to-vault is also present",
+            "- --apply requires explicit --vault-root",
+            "- --apply requires --confirm-vault-root to exactly match --vault-root",
             "- apply is create-only",
             "- no overwrite behavior is implemented",
             "- no delete behavior is implemented",
@@ -314,6 +325,7 @@ def write_json(plan: ApplyPlan) -> None:
         "generated_by": "project_forge_registry.obsidian_vault_apply",
         "mode": plan.mode,
         "apply_requested": plan.apply_requested,
+        "guard_flag_present": plan.guard_flag_present,
         "vault_root": str(plan.vault_root),
         "plan_path": relative_to_repo(plan.plan_path),
         "source_root": relative_to_repo(plan.source_root),
@@ -321,6 +333,7 @@ def write_json(plan: ApplyPlan) -> None:
         "entries_reviewed": plan.entries_reviewed,
         "would_create": plan.would_create_count,
         "would_skip": plan.would_skip_count,
+        "would_skip_identical": plan.would_skip_count,
         "blocked": plan.blocked_count,
         "entries": [entry.to_dict() for entry in plan.entries],
         "safety": {
@@ -330,6 +343,7 @@ def write_json(plan: ApplyPlan) -> None:
             "delete": False,
             "all_or_nothing": True,
             "requires_yes_write_to_vault": True,
+            "requires_confirm_vault_root": True,
             "remotes": False,
             "push_fetch": False,
             "package_installs": False,
@@ -350,9 +364,25 @@ def run_apply_command(
     yes_write_to_vault: bool,
     report_path: Path,
     json_path: Path,
+    confirm_vault_root: Path | None = None,
 ) -> ApplyPlan:
     if apply_requested and not yes_write_to_vault:
-        raise ValueError("--apply requires --yes-write-to-vault")
+        raise ValueError(
+            "Refusing real vault apply: --apply requires --yes-write-to-vault, "
+            "explicit --vault-root, and --confirm-vault-root exactly matching --vault-root. "
+            "Review this report before running any apply command."
+        )
+    if apply_requested and confirm_vault_root is None:
+        raise ValueError(
+            "Refusing real vault apply: --apply requires --confirm-vault-root "
+            "exactly matching --vault-root. Review this report before running any apply command."
+        )
+    if apply_requested and vault_root is not None and confirm_vault_root != vault_root:
+        raise ValueError(
+            "Refusing real vault apply: --confirm-vault-root must exactly match --vault-root. "
+            f"vault-root={vault_root}; confirm-vault-root={confirm_vault_root}. "
+            "Review this report before running any apply command."
+        )
     plan = build_apply_plan(
         plan_path=plan_path,
         source_root=source_root,
@@ -360,6 +390,17 @@ def run_apply_command(
         apply_requested=apply_requested,
         report_path=report_path,
         json_path=json_path,
+    )
+    plan = ApplyPlan(
+        mode=plan.mode,
+        apply_requested=plan.apply_requested,
+        guard_flag_present=yes_write_to_vault,
+        vault_root=plan.vault_root,
+        plan_path=plan.plan_path,
+        source_root=plan.source_root,
+        report_path=plan.report_path,
+        json_path=plan.json_path,
+        entries=plan.entries,
     )
     if apply_requested:
         if plan.blocked_entries:
@@ -385,6 +426,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--source-root", default=str(DEFAULT_SOURCE_ROOT), help="Artifact note source directory.")
     parser.add_argument("--require-clean-git", action="store_true", help="Reserved policy flag; not enforced in Phase 11C.")
     parser.add_argument("--yes-write-to-vault", action="store_true", help="Required with --apply.")
+    parser.add_argument("--confirm-vault-root", default=None, help="Required with --apply. Must exactly match --vault-root.")
     parser.add_argument("--report-path", default=str(DEFAULT_DRY_RUN_REPORT_PATH), help="Repo-local report path.")
     parser.add_argument("--json-path", default=str(DEFAULT_DRY_RUN_JSON_PATH), help="Repo-local JSON report path.")
     return parser
@@ -401,6 +443,7 @@ def main(argv: list[str] | None = None) -> int:
             vault_root=Path(args.vault_root) if args.vault_root else None,
             apply_requested=apply_requested,
             yes_write_to_vault=bool(args.yes_write_to_vault),
+            confirm_vault_root=Path(args.confirm_vault_root) if args.confirm_vault_root else None,
             report_path=Path(args.report_path),
             json_path=Path(args.json_path),
         )
@@ -409,14 +452,17 @@ def main(argv: list[str] | None = None) -> int:
 
     print("project-forge-obsidian-vault-apply completed")
     print(f"mode: {plan.mode}")
+    print(f"vault root: {plan.vault_root}")
     print(f"apply requested: {str(plan.apply_requested).lower()}")
+    print(f"guard flag present: {str(plan.guard_flag_present).lower()}")
     print(f"entries reviewed: {plan.entries_reviewed}")
-    print(f"would create: {plan.would_create_count}")
-    print(f"would skip: {plan.would_skip_count}")
+    print(f"would_create count: {plan.would_create_count}")
+    print(f"would_skip_identical count: {plan.would_skip_count}")
     print(f"blocked: {plan.blocked_count}")
     print(f"report path: {plan.report_path}")
     print(f"json path: {plan.json_path}")
     print("safety: create-only; no overwrite; no delete; all-or-nothing; no real vault writes in dry-run")
+    print("next step: Review this report before running any apply command.")
     if plan.apply_requested:
         created = [entry for entry in plan.entries if entry.action == "created"]
         for entry in created:

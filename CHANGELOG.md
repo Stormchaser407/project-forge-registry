@@ -4,6 +4,7 @@
 
 ### Added
 
+- Phase 11C.1 Obsidian vault apply UX hardening with preflight summary output, stronger apply refusal messaging, and required `--confirm-vault-root` matching.
 - Phase 11C guarded create-only Obsidian vault apply command with dry-run reports.
 - Phase 11B dry-run real-vault apply planner for generated Obsidian artifact notes.
 - Phase 11A dry-run Obsidian artifact mirror command, docs, tests, report, and manifest.
