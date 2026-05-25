@@ -4,6 +4,7 @@
 
 ### Added
 
+- Phase 11E Obsidian vault maintenance policy and no-clobber doctrine report.
 - Phase 11C.1 Obsidian vault apply UX hardening with preflight summary output, stronger apply refusal messaging, and required `--confirm-vault-root` matching.
 - Phase 11C guarded create-only Obsidian vault apply command with dry-run reports.
 - Phase 11B dry-run real-vault apply planner for generated Obsidian artifact notes.
@@ -14,6 +15,7 @@
 
 ### Notes
 
+- Phase 11E documents that human-edited vault notes win by default; maintenance remains create-only, skip identical, block existing different, no silent overwrite, and no delete.
 - Phase 11B.1 normalizes the vault apply plan JSON schema to use `vault_root` as the canonical proposed target root field.
 - Current stable baseline before this closeout is `v0.10.7g-codex-profile-isolation-deferred`.
 - Recommended final Phase 10 closeout tag is `v0.10.9-local-command-center-closeout`.

@@ -2,7 +2,7 @@
 
 ## Mission
 
-Preserve the Phase 11C.1 guarded Obsidian vault apply UX hardening state.
+Preserve the Phase 11E Obsidian vault maintenance policy / no-clobber doctrine state.
 
 ## Current State
 
@@ -61,6 +61,30 @@ Phase 11C.1 hardens the guarded apply UX before the first real vault write:
 - real apply requires `--confirm-vault-root` to exactly match `--vault-root`
 - create-only, no-overwrite, no-delete, and all-or-nothing behavior remains unchanged
 
+Phase 11D performed the first approved real-vault apply and Phase 11D.4
+verified the vault files and committed repo-local evidence:
+
+- `artifacts/obsidian_vault_real_apply_report.md`
+- current vault root: `/mnt/storage/Cole/main_vault/10 Projects/Project Forge`
+- managed vault note count: 5
+
+Phase 11E defines the maintenance policy after real vault files exist:
+
+- `docs/PROJECT_FORGE_OBSIDIAN_MAINTENANCE_POLICY.md`
+- `artifacts/obsidian_vault_maintenance_policy_report.md`
+
+The doctrine is no-clobber: human-edited vault notes win by default; generated
+artifact notes are machine output; vault notes are operator-facing memory and
+may become human-edited. The safe maintenance posture is create-only, skip
+identical, and block existing different. Silent overwrite, no delete behavior,
+unguarded update, and apply without exact vault root confirmation remain
+prohibited.
+
+Any future update mode requires explicit operator approval, backup before
+update, a diff/review report, exact vault root confirmation, and all-or-nothing
+preflight. Future update mode, if ever added, should be a separate phase and
+separate command/flag path, not implicit apply behavior.
+
 ## Product Boundary
 
 Do not block Phase 10 closeout on Personal/Business Codex account separation.
@@ -94,24 +118,25 @@ writes, create vault directories, copy files, modify target files, use remotes,
 push/fetch, install packages, make network calls, create commits, or create
 tags.
 
-Phase 11C.1 apply behavior is implemented for future operator use, but remains
-guarded by `--apply`, `--yes-write-to-vault`, explicit `--vault-root`, and
-matching `--confirm-vault-root`.
-Validation should use dry-run and temporary-directory tests only unless the
-operator explicitly approves real vault writes.
+Phase 11E is documentation/report-only. Do not run `--apply` for policy work.
+The existing apply behavior remains guarded by `--apply`, `--yes-write-to-vault`,
+explicit `--vault-root`, and matching `--confirm-vault-root`. Maintenance
+validation should use docs checks, dry-run checks, read-only vault listing, and
+temporary-directory tests only unless the operator explicitly approves real
+vault writes.
 
 ## Recommended Release Markers
 
 Recommended commit message:
 
 ```text
-Harden Phase 11C Obsidian vault apply UX
+Add Phase 11E Obsidian maintenance policy
 ```
 
 Recommended final tag:
 
 ```text
-v0.11.0c1-obsidian-vault-apply-ux-hardening
+v0.11.0e-obsidian-maintenance-policy
 ```
 
 ## Next Recommended Phase

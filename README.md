@@ -774,3 +774,32 @@ See:
 ```text
 docs/PROJECT_FORGE_OBSIDIAN_VAULT_APPLY.md
 ```
+
+## Phase 11E: Obsidian vault maintenance policy
+
+Project Forge-managed vault notes now exist under:
+
+```text
+/mnt/storage/Cole/main_vault/10 Projects/Project Forge/
+```
+
+Phase 11E defines the no-clobber maintenance doctrine. Human-edited vault notes
+win by default. Generated artifact notes are machine output; vault notes are
+operator-facing memory and may become human-edited.
+
+The safe maintenance posture is create-only, skip identical, and block existing
+different. Project Forge must not perform silent overwrite, no delete behavior
+is supported, and apply without exact vault root confirmation remains
+prohibited.
+
+Any future update behavior requires explicit operator approval, backup before
+update, a diff/review report, exact vault root confirmation, and all-or-nothing
+preflight. Future update mode, if ever added, should be a separate phase and
+separate command/flag path, not implicit apply behavior.
+
+See:
+
+```text
+docs/PROJECT_FORGE_OBSIDIAN_MAINTENANCE_POLICY.md
+artifacts/obsidian_vault_maintenance_policy_report.md
+```
