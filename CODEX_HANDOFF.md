@@ -102,6 +102,15 @@ panels. Commands are copy-paste text only; the UI does not execute commands,
 launch URLs, mutate state, write to the vault, create autostart entries, or
 replace the old Recon Command Board.
 
+Phase 11G.1 metadata hygiene:
+
+- checkpoint detection prefers checkpoint tags pointing at `HEAD`
+- if no checkpoint tag points at `HEAD`, it falls back to the latest checkpoint
+- Neon board commit metadata is the commit observed at generation time
+- committed generated artifacts may not equal the final containing commit hash
+  after amend
+- tags/checkpoints are operator checkpoint indicators, not executable actions
+
 ## Product Boundary
 
 Do not block Phase 10 closeout on Personal/Business Codex account separation.

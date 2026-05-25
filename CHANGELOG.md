@@ -16,6 +16,7 @@
 
 ### Notes
 
+- Phase 11G.1 clarifies Neon command board generation-time commit metadata and prefers checkpoint tags pointing at `HEAD`.
 - Phase 11E documents that human-edited vault notes win by default; maintenance remains create-only, skip identical, block existing different, no silent overwrite, and no delete.
 - Phase 11B.1 normalizes the vault apply plan JSON schema to use `vault_root` as the canonical proposed target root field.
 - Current stable baseline before this closeout is `v0.10.7g-codex-profile-isolation-deferred`.

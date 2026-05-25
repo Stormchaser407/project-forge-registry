@@ -4,9 +4,11 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from project_forge_registry.neon_command_board import (
     collect_board_data,
+    checkpoint_tag,
     render_html,
     run_neon_command_board,
 )
@@ -207,6 +209,36 @@ class NeonCommandBoardTests(unittest.TestCase):
             self.assertFalse(manifest["safety"]["javascript"])
             self.assertFalse(manifest["safety"]["mutates_state"])
             self.assertEqual(manifest["project_inventory"]["total_projects"], 5)
+            self.assertEqual(manifest["system_state"]["commit_semantics"], "observed at generation time")
+            self.assertIn("operator checkpoint indicator", manifest["system_state"]["checkpoint_semantics"])
+
+    def test_checkpoint_detection_prefers_head_checkpoint(self) -> None:
+        def fake_git_text(args: list[str]) -> str:
+            if args[:3] == ["tag", "--points-at", "HEAD"]:
+                return "checkpoint-20260524-222856-phase-11g-neon-command-board"
+            if args[:3] == ["tag", "--list", "checkpoint-*"]:
+                return "checkpoint-20260524-215042-phase-11e-obsidian-maintenance-policy"
+            return "none"
+
+        with patch("project_forge_registry.neon_command_board.git_text", side_effect=fake_git_text):
+            self.assertEqual(
+                checkpoint_tag(),
+                "checkpoint-20260524-222856-phase-11g-neon-command-board",
+            )
+
+    def test_checkpoint_detection_falls_back_to_latest_checkpoint(self) -> None:
+        def fake_git_text(args: list[str]) -> str:
+            if args[:3] == ["tag", "--points-at", "HEAD"]:
+                return "none"
+            if args[:3] == ["tag", "--list", "checkpoint-*"]:
+                return "checkpoint-20260524-215042-phase-11e-obsidian-maintenance-policy"
+            return "none"
+
+        with patch("project_forge_registry.neon_command_board.git_text", side_effect=fake_git_text):
+            self.assertEqual(
+                checkpoint_tag(),
+                "checkpoint-20260524-215042-phase-11e-obsidian-maintenance-policy",
+            )
 
 
 if __name__ == "__main__":

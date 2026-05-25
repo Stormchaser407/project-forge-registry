@@ -26,6 +26,11 @@ DEFAULT_MANIFEST_PATH = Path("artifacts/neon_command_board_manifest.json")
 
 PHASE_STATE = "Phase 11G: Neon command board"
 THEME_LABEL = "Neon District / Punk Union"
+METADATA_NOTE = (
+    "commit field is the commit observed at generation time; committed generated "
+    "artifacts may not equal the final containing commit hash after amend; "
+    "tags/checkpoints are operator checkpoint indicators, not executable actions"
+)
 
 COMMAND_CARDS = [
     ("Cold Start", "./scripts/project-forge-cold-start"),
@@ -130,6 +135,20 @@ def latest_matching_tag(pattern: str) -> str:
     return tag.splitlines()[0]
 
 
+def head_matching_tag(pattern: str) -> str:
+    tag = git_text(["tag", "--points-at", "HEAD", "--list", pattern, "--sort=-creatordate"])
+    if tag in {"none", "unavailable"}:
+        return tag
+    return tag.splitlines()[0]
+
+
+def checkpoint_tag() -> str:
+    head_checkpoint = head_matching_tag("checkpoint-*")
+    if head_checkpoint not in {"none", "unavailable"}:
+        return head_checkpoint
+    return latest_matching_tag("checkpoint-*")
+
+
 def projects(payload: dict[str, Any]) -> list[dict[str, Any]]:
     raw_projects = payload.get("projects", [])
     return [project for project in raw_projects if isinstance(project, dict)]
@@ -176,12 +195,12 @@ def collect_board_data(
     dry_run = read_json(dry_run_json)
     summary = inventory_summary(inventory)
     status = git_status_short()
-    checkpoint = latest_matching_tag("checkpoint-*-phase-11e-*")
+    checkpoint = checkpoint_tag()
     warnings: list[str] = []
     if status != "clean":
         warnings.append("dirty repo warning: working tree has local changes")
     if checkpoint in {"none", "unavailable"}:
-        warnings.append("missing checkpoint warning: Phase 11E checkpoint not detected")
+        warnings.append("missing checkpoint warning: checkpoint tag not detected")
     if int(dry_run.get("blocked", 0) or 0) > 0:
         warnings.append("vault conflict warning: dry-run reports blocked entries")
     if summary["dirty_review"] > 0:
@@ -457,7 +476,7 @@ def render_html(data: BoardData) -> str:
     <header class="hero">
       <p class="eyebrow">{THEME_LABEL} / local-first operator cockpit</p>
       <h1>Project Forge Neon Command Board</h1>
-      <p class="tagline">A beautiful system with teeth: readable state, copy-paste commands, sharp warnings, and no hidden actions.</p>
+        <p class="tagline">A beautiful system with teeth: readable state, copy-paste commands, sharp warnings, no command execution, and no hidden actions.</p>
     </header>
 
     <div class="grid">
@@ -469,6 +488,7 @@ def render_html(data: BoardData) -> str:
           {status_row("checkpoint", data.checkpoint)}
           {status_row("repo status", data.repo_status)}
           {status_row("phase", PHASE_STATE)}
+          {status_row("metadata note", METADATA_NOTE)}
         </div>
       </section>
 
@@ -563,6 +583,7 @@ static local command board
 - latest checkpoint: `{data.checkpoint}`
 - repo status: `{data.repo_status}`
 - phase: `{PHASE_STATE}`
+- metadata note: {METADATA_NOTE}
 
 ## Project Inventory
 
@@ -598,8 +619,8 @@ static local command board
 
 ## Safety Confirmation
 
-The generated frontend is static HTML/CSS with no JavaScript, no executable
-buttons, no shell execution, no URL launch controls, no mutation actions, no
+The generated frontend is static HTML/CSS with no JavaScript, no command
+execution, no executable buttons, no shell execution, no URL launch controls, no mutation actions, no
 real vault writes, no marker writes, no remotes, no package installs, and no
 network calls.
 """
@@ -612,6 +633,7 @@ def write_manifest(path: Path, data: BoardData) -> None:
         "mode": "static local command board",
         "theme": THEME_LABEL,
         "phase": PHASE_STATE,
+        "metadata_note": METADATA_NOTE,
         "panels_generated": PANEL_NAMES,
         "outputs": {
             "html": str(DEFAULT_OUTPUT_HTML),
@@ -620,8 +642,10 @@ def write_manifest(path: Path, data: BoardData) -> None:
         },
         "system_state": {
             "commit": data.commit,
+            "commit_semantics": "observed at generation time",
             "latest_tag": data.tag,
             "checkpoint": data.checkpoint,
+            "checkpoint_semantics": "operator checkpoint indicator, not an executable action",
             "repo_status": data.repo_status,
         },
         "project_inventory": data.inventory_summary,

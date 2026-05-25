@@ -47,6 +47,18 @@ touch the real Obsidian vault.
 The real guarded vault write command is not shown as a normal action. Operator
 approval is required for any real vault write workflow.
 
+## Metadata Semantics
+
+The `commit` field is the commit observed at generation time. Committed
+generated artifacts may not equal the final containing commit hash after amend,
+because regenerating artifacts changes the commit that would contain them.
+
+Checkpoint detection prefers checkpoint tags pointing at `HEAD` when present.
+If no checkpoint tag points at `HEAD`, the generator falls back to the latest
+checkpoint tag it can find.
+
+Tags/checkpoints are operator checkpoint indicators, not executable actions.
+
 Safety doctrine shown on the board:
 
 - dry-run first
