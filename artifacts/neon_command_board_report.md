@@ -20,9 +20,9 @@ Neon District / Punk Union
 
 ## System State
 
-- current commit: `937c83c Add Phase 11G.1 Neon command board metadata hygiene`
+- current commit: `09ed075 Add Phase 11G.1 Neon command board metadata hygiene`
 - latest meaningful tag: `v0.11.0g1-neon-command-board-metadata-hygiene`
-- latest checkpoint: `checkpoint-20260524-231148-phase-11g1-neon-command-board-metadata-hygiene`
+- latest checkpoint: `checkpoint-20260524-234802-phase-11g1-neon-command-board-metadata-hygiene`
 - repo status: `clean`
 - phase: `Phase 11G: Neon command board`
 - metadata note: commit field is the commit observed at generation time; committed generated artifacts may not equal the final containing commit hash after amend; tags/checkpoints are operator checkpoint indicators, not executable actions

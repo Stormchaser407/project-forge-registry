@@ -51,9 +51,9 @@
     "vs_code_launch": false
   },
   "system_state": {
-    "checkpoint": "checkpoint-20260524-231148-phase-11g1-neon-command-board-metadata-hygiene",
+    "checkpoint": "checkpoint-20260524-234802-phase-11g1-neon-command-board-metadata-hygiene",
     "checkpoint_semantics": "operator checkpoint indicator, not an executable action",
-    "commit": "937c83c Add Phase 11G.1 Neon command board metadata hygiene",
+    "commit": "09ed075 Add Phase 11G.1 Neon command board metadata hygiene",
     "commit_semantics": "observed at generation time",
     "latest_tag": "v0.11.0g1-neon-command-board-metadata-hygiene",
     "repo_status": "clean"
