@@ -803,3 +803,41 @@ See:
 docs/PROJECT_FORGE_OBSIDIAN_MAINTENANCE_POLICY.md
 artifacts/obsidian_vault_maintenance_policy_report.md
 ```
+
+## Phase 11G: Neon command board
+
+Generate the local static Neon District / Punk Union frontend command board:
+
+```bash
+PYTHONPATH=src python3 -m project_forge_registry.neon_command_board
+```
+
+Wrapper form:
+
+```bash
+./scripts/project-forge-neon-command-board
+```
+
+Outputs:
+
+```text
+artifacts/neon_command_board.html
+artifacts/neon_command_board_report.md
+artifacts/neon_command_board_manifest.json
+```
+
+The board is a static local command surface. It reads repo-local artifacts,
+shows System State, Project Inventory, Obsidian Memory Layer, Safety Doctrine,
+Actions / Command Copy Cards, Warnings / Blockers, and Phase Roadmap panels,
+and displays copy-paste commands only.
+
+It does not execute commands, launch VS Code, open URLs, create autostart
+entries, replace the old Recon Command Board, write to the real Obsidian vault,
+modify external repos, contact remotes, install packages, make network calls,
+or handle auth.
+
+See:
+
+```text
+docs/PROJECT_FORGE_NEON_COMMAND_BOARD.md
+```

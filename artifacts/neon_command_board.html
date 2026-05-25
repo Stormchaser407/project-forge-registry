@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project Forge Neon Command Board</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #08070d;
+      --panel: #11101a;
+      --panel-2: #171322;
+      --line: rgba(37, 247, 255, 0.22);
+      --text: #f5f0ff;
+      --muted: #a7a0ba;
+      --cyan: #25f7ff;
+      --magenta: #ff3fd7;
+      --violet: #9b5cff;
+      --amber: #ffd166;
+      --red: #ff3b5f;
+      --green: #52ff9d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(37, 247, 255, 0.12), transparent 320px),
+        linear-gradient(135deg, rgba(255, 63, 215, 0.14), transparent 42%),
+        var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+    .shell {
+      width: min(1460px, calc(100vw - 28px));
+      margin: 0 auto;
+      padding: 28px 0 54px;
+    }
+    .hero {
+      min-height: 260px;
+      display: grid;
+      align-content: end;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 30px;
+      background:
+        linear-gradient(135deg, rgba(17, 16, 26, 0.96), rgba(23, 19, 34, 0.9)),
+        repeating-linear-gradient(90deg, rgba(37, 247, 255, 0.08) 0 1px, transparent 1px 42px);
+      box-shadow: 0 0 42px rgba(37, 247, 255, 0.16), inset 0 0 0 1px rgba(255,255,255,0.03);
+    }
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--cyan);
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 6vw, 5.4rem);
+      line-height: 0.95;
+      letter-spacing: 0;
+      text-shadow: 0 0 24px rgba(255, 63, 215, 0.26);
+    }
+    .tagline {
+      max-width: 76ch;
+      margin: 18px 0 0;
+      color: var(--muted);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+    section {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(17, 16, 26, 0.9);
+      padding: 18px;
+      box-shadow: 0 18px 42px rgba(0,0,0,0.34);
+    }
+    .span-4 { grid-column: span 4; }
+    .span-6 { grid-column: span 6; }
+    .span-8 { grid-column: span 8; }
+    .span-12 { grid-column: span 12; }
+    h2 {
+      margin: 0 0 14px;
+      color: var(--cyan);
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .metric {
+      min-height: 92px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 14px;
+      background: rgba(8, 7, 13, 0.62);
+    }
+    .metric span, .command-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .metric strong {
+      display: block;
+      margin-top: 12px;
+      font-size: 2.1rem;
+      line-height: 1;
+    }
+    .accent-cyan strong { color: var(--cyan); }
+    .accent-magenta strong { color: var(--magenta); }
+    .accent-violet strong { color: var(--violet); }
+    .accent-amber strong { color: var(--amber); }
+    .accent-red strong { color: var(--red); }
+    .accent-green strong { color: var(--green); }
+    .status-list {
+      display: grid;
+      gap: 8px;
+    }
+    .status-row {
+      display: grid;
+      grid-template-columns: minmax(120px, 0.38fr) minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+    }
+    .status-row span {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    code {
+      display: block;
+      min-width: 0;
+      padding: 9px 10px;
+      border: 1px solid rgba(37, 247, 255, 0.16);
+      border-radius: 6px;
+      background: rgba(8, 7, 13, 0.9);
+      color: #ecfaff;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-size: 0.82rem;
+    }
+    ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--text);
+    }
+    li + li { margin-top: 8px; }
+    .doctrine li::marker { color: var(--amber); }
+    .warnings li::marker { color: var(--red); }
+    .command-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .command-card {
+      min-width: 0;
+      border: 1px solid rgba(255, 63, 215, 0.18);
+      border-radius: 8px;
+      padding: 14px;
+      background: rgba(23, 19, 34, 0.78);
+    }
+    .command-card code { margin-top: 8px; }
+    .roadmap {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .roadmap div {
+      border: 1px solid rgba(155, 92, 255, 0.22);
+      border-radius: 8px;
+      padding: 14px;
+      background: rgba(8, 7, 13, 0.58);
+    }
+    .roadmap strong { color: var(--violet); }
+    .safety-note {
+      color: var(--muted);
+      margin: 12px 0 0;
+    }
+    @media (max-width: 980px) {
+      .span-4, .span-6, .span-8 { grid-column: span 12; }
+      .command-grid, .roadmap { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 620px) {
+      .shell { width: min(100vw - 18px, 1460px); padding-top: 18px; }
+      .hero, section { padding: 16px; }
+      .metric-grid { grid-template-columns: 1fr; }
+      .status-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <p class="eyebrow">Neon District / Punk Union / local-first operator cockpit</p>
+      <h1>Project Forge Neon Command Board</h1>
+      <p class="tagline">A beautiful system with teeth: readable state, copy-paste commands, sharp warnings, and no hidden actions.</p>
+    </header>
+
+    <div class="grid">
+      <section class="span-6">
+        <h2>System State</h2>
+        <div class="status-list">
+          <div class="status-row">
+  <span>current commit</span>
+  <code>81c8145 Add Phase 11G Neon command board frontend</code>
+</div>
+          <div class="status-row">
+  <span>latest tag</span>
+  <code>v0.11.0g-neon-command-board</code>
+</div>
+          <div class="status-row">
+  <span>checkpoint</span>
+  <code>checkpoint-20260524-215042-phase-11e-obsidian-maintenance-policy</code>
+</div>
+          <div class="status-row">
+  <span>repo status</span>
+  <code>clean</code>
+</div>
+          <div class="status-row">
+  <span>phase</span>
+  <code>Phase 11G: Neon command board</code>
+</div>
+        </div>
+      </section>
+
+      <section class="span-6">
+        <h2>Project Inventory</h2>
+        <div class="metric-grid">
+          <div class="metric accent-cyan">
+  <span>total projects</span>
+  <strong>74</strong>
+</div>
+          <div class="metric accent-green">
+  <span>known embedded</span>
+  <strong>4</strong>
+</div>
+          <div class="metric accent-amber">
+  <span>dirty review</span>
+  <strong>3</strong>
+</div>
+          <div class="metric accent-red">
+  <span>protected review</span>
+  <strong>12</strong>
+</div>
+          <div class="metric accent-magenta">
+  <span>candidate review</span>
+  <strong>54</strong>
+</div>
+          <div class="metric accent-violet">
+  <span>source</span>
+  <strong>dashboard_inventory.json</strong>
+</div>
+        </div>
+      </section>
+
+      <section class="span-8">
+        <h2>Obsidian Memory Layer</h2>
+        <div class="status-list">
+          <div class="status-row">
+  <span>artifact mirror status</span>
+  <code>artifact mirror: present</code>
+</div>
+          <div class="status-row">
+  <span>vault plan status</span>
+  <code>vault plan: present</code>
+</div>
+          <div class="status-row">
+  <span>real vault apply status</span>
+  <code>real vault apply: present</code>
+</div>
+          <div class="status-row">
+  <span>maintenance/no-clobber policy status</span>
+  <code>maintenance/no-clobber policy: present</code>
+</div>
+          <div class="status-row">
+  <span>vault root path</span>
+  <code>/mnt/storage/Cole/main_vault/10 Projects/Project Forge</code>
+</div>
+          <div class="status-row">
+  <span>steady state</span>
+  <code>5 notes reviewed; 5 skip-identical; 0 create; 0 blocked</code>
+</div>
+        </div>
+      </section>
+
+      <section class="span-4">
+        <h2>Managed Vault Notes</h2>
+        <ul><li>Project Forge - Command Center.md</li>
+<li>Project Forge - Dashboard Summary.md</li>
+<li>Project Forge - Deferred Items.md</li>
+<li>Project Forge - Known Embedded Repos.md</li>
+<li>Project Forge - Phase 11 Planning.md</li></ul>
+      </section>
+
+      <section class="span-6 doctrine">
+        <h2>Safety Doctrine</h2>
+        <ul>
+          <li>dry-run first</li>
+          <li>create-only</li>
+          <li>skip identical</li>
+          <li>block different</li>
+          <li>human-edited vault notes win</li>
+          <li>no silent overwrite</li>
+          <li>no delete</li>
+        </ul>
+      </section>
+
+      <section class="span-6 warnings">
+        <h2>Warnings / Blockers</h2>
+        <ul><li>dirty project review count: 3</li>
+<li>protected project review count: 12</li>
+<li>candidate project review count: 54</li></ul>
+      </section>
+
+      <section class="span-12">
+        <h2>Actions / Command Copy Cards</h2>
+        <div class="command-grid"><article class="command-card">
+  <span>Cold Start</span>
+  <code>./scripts/project-forge-cold-start</code>
+</article>
+<article class="command-card">
+  <span>Classic Dashboard</span>
+  <code>./scripts/project-forge-dashboard --no-open</code>
+</article>
+<article class="command-card">
+  <span>Obsidian Artifact Mirror</span>
+  <code>PYTHONPATH=src python3 -m project_forge_registry.obsidian_mirror</code>
+</article>
+<article class="command-card">
+  <span>Vault Apply Plan</span>
+  <code>PYTHONPATH=src python3 -m project_forge_registry.obsidian_vault_plan</code>
+</article>
+<article class="command-card">
+  <span>Vault Dry-Run Review</span>
+  <code>PYTHONPATH=src python3 -m project_forge_registry.obsidian_vault_apply --dry-run</code>
+</article>
+<article class="command-card">
+  <span>Plain Project Open Dry-Run</span>
+  <code>./scripts/project-forge-open-project --slug lifesaver-ledger --profile plain --dry-run</code>
+</article></div>
+        <p class="safety-note">These are copy-paste commands only. The real guarded vault write command is not shown; operator approval is required.</p>
+      </section>
+
+      <section class="span-12">
+        <h2>Phase Roadmap</h2>
+        <div class="roadmap">
+          <div><strong>Phase 11G:</strong> Neon command board.</div>
+          <div><strong>Phase 11H:</strong> launcher/autostart replacement for old Recon Command Board.</div>
+          <div><strong>Future:</strong> backup-before-update, manual merge workflow, no-clobber update tooling.</div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

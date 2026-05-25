@@ -2,7 +2,7 @@
 
 ## Mission
 
-Preserve the Phase 11E Obsidian vault maintenance policy / no-clobber doctrine state.
+Preserve the Phase 11G Neon District / Punk Union command board state.
 
 ## Current State
 
@@ -85,6 +85,23 @@ update, a diff/review report, exact vault root confirmation, and all-or-nothing
 preflight. Future update mode, if ever added, should be a separate phase and
 separate command/flag path, not implicit apply behavior.
 
+Phase 11G adds a local static Neon District / Punk Union command board:
+
+- `src/project_forge_registry/neon_command_board.py`
+- `tests/test_neon_command_board.py`
+- `docs/PROJECT_FORGE_NEON_COMMAND_BOARD.md`
+- `artifacts/neon_command_board.html`
+- `artifacts/neon_command_board_report.md`
+- `artifacts/neon_command_board_manifest.json`
+- `scripts/project-forge-neon-command-board`
+
+The board is static HTML/CSS with no JavaScript. It reads repo-local artifacts
+and displays System State, Project Inventory, Obsidian Memory Layer, Safety
+Doctrine, Actions / Command Copy Cards, Warnings / Blockers, and Phase Roadmap
+panels. Commands are copy-paste text only; the UI does not execute commands,
+launch URLs, mutate state, write to the vault, create autostart entries, or
+replace the old Recon Command Board.
+
 ## Product Boundary
 
 Do not block Phase 10 closeout on Personal/Business Codex account separation.
@@ -104,6 +121,7 @@ Stable claims:
 ```bash
 ./scripts/project-forge-cold-start
 ./scripts/project-forge-dashboard --no-open
+./scripts/project-forge-neon-command-board
 ./scripts/project-forge-open-project --slug lifesaver-ledger --profile plain --dry-run
 PYTHONPATH=src python3 -m project_forge_registry.obsidian_mirror
 PYTHONPATH=src python3 -m project_forge_registry.obsidian_vault_plan
@@ -118,7 +136,10 @@ writes, create vault directories, copy files, modify target files, use remotes,
 push/fetch, install packages, make network calls, create commits, or create
 tags.
 
-Phase 11E is documentation/report-only. Do not run `--apply` for policy work.
+Phase 11G is local static frontend generation only. Do not create autostart
+entries or replace the old Recon Command Board in this phase. Do not run
+`--apply` for command board work.
+Phase 11E is documentation/report-only.
 The existing apply behavior remains guarded by `--apply`, `--yes-write-to-vault`,
 explicit `--vault-root`, and matching `--confirm-vault-root`. Maintenance
 validation should use docs checks, dry-run checks, read-only vault listing, and
@@ -130,13 +151,13 @@ vault writes.
 Recommended commit message:
 
 ```text
-Add Phase 11E Obsidian maintenance policy
+Add Phase 11G Neon command board frontend
 ```
 
 Recommended final tag:
 
 ```text
-v0.11.0e-obsidian-maintenance-policy
+v0.11.0g-neon-command-board
 ```
 
 ## Next Recommended Phase

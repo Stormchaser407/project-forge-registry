@@ -1,0 +1,64 @@
+{
+  "generated_by": "project_forge_registry.neon_command_board",
+  "mode": "static local command board",
+  "obsidian_memory_layer": {
+    "blocked": 0,
+    "entries_reviewed": 5,
+    "managed_notes": [
+      "Project Forge - Command Center.md",
+      "Project Forge - Dashboard Summary.md",
+      "Project Forge - Deferred Items.md",
+      "Project Forge - Known Embedded Repos.md",
+      "Project Forge - Phase 11 Planning.md"
+    ],
+    "skip_identical": 5,
+    "vault_root": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge",
+    "would_create": 0
+  },
+  "outputs": {
+    "html": "artifacts/neon_command_board.html",
+    "manifest": "artifacts/neon_command_board_manifest.json",
+    "report": "artifacts/neon_command_board_report.md"
+  },
+  "panels_generated": [
+    "System State",
+    "Project Inventory",
+    "Obsidian Memory Layer",
+    "Safety Doctrine",
+    "Actions / Command Copy Cards",
+    "Warnings / Blockers",
+    "Phase Roadmap"
+  ],
+  "phase": "Phase 11G: Neon command board",
+  "project_inventory": {
+    "candidate_review": 54,
+    "dirty_review": 3,
+    "known_embedded": 4,
+    "protected_review": 12,
+    "total_projects": 74
+  },
+  "safety": {
+    "autostart_replacement": false,
+    "display_only": true,
+    "executes_shell_commands": false,
+    "external_repo_writes": false,
+    "javascript": false,
+    "mutates_state": false,
+    "network_calls": false,
+    "real_vault_writes": false,
+    "remotes_push_fetch": false,
+    "vs_code_launch": false
+  },
+  "system_state": {
+    "checkpoint": "checkpoint-20260524-215042-phase-11e-obsidian-maintenance-policy",
+    "commit": "81c8145 Add Phase 11G Neon command board frontend",
+    "latest_tag": "v0.11.0g-neon-command-board",
+    "repo_status": "clean"
+  },
+  "theme": "Neon District / Punk Union",
+  "warnings": [
+    "dirty project review count: 3",
+    "protected project review count: 12",
+    "candidate project review count: 54"
+  ]
+}
