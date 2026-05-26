@@ -5,6 +5,7 @@
 ### Added
 
 - Phase 11G Neon District / Punk Union static local command board generator, wrapper, docs, report, manifest, and tests.
+- Phase 11H.0 documentation-first Neon command board launcher/autostart replacement plan and planning artifacts.
 - Phase 11E Obsidian vault maintenance policy and no-clobber doctrine report.
 - Phase 11C.1 Obsidian vault apply UX hardening with preflight summary output, stronger apply refusal messaging, and required `--confirm-vault-root` matching.
 - Phase 11C guarded create-only Obsidian vault apply command with dry-run reports.

@@ -1,0 +1,81 @@
+{
+  "phase": "11H.0",
+  "title": "Neon command board launcher/autostart replacement planning only",
+  "status": "planning only",
+  "generated_at": "2026-05-26",
+  "baseline": {
+    "phase": "11G.1",
+    "commit": "cf60a1f",
+    "version_tag": "v0.11.0g1-neon-command-board-metadata-hygiene",
+    "checkpoint": "checkpoint-20260524-234802-phase-11g1-neon-command-board-metadata-hygiene",
+    "safety_model": [
+      "static display-only HTML/CSS",
+      "no JavaScript",
+      "no command execution",
+      "no vault writes"
+    ]
+  },
+  "future_discovery_targets_listed_only": [
+    "~/.config/autostart",
+    "~/.config/systemd/user",
+    "~/.local/share/applications",
+    "scripts/",
+    "pyproject.toml",
+    "existing Project Forge dashboard scripts/docs inside the repo"
+  ],
+  "phase_11h0_boundaries": [
+    "no autostart replacement",
+    "no service creation",
+    "no desktop entry creation",
+    "no system writes",
+    "no vault writes",
+    "no --open",
+    "no VS Code launch",
+    "no tag deletion or movement",
+    "no push, fetch, or remote contact",
+    "no external launcher/autostart path inspection"
+  ],
+  "future_dry_run_discovery_design": {
+    "requires_operator_approval": true,
+    "outputs": [
+      "markdown artifact",
+      "JSON artifact"
+    ],
+    "must_not": [
+      "mutate files",
+      "launch anything",
+      "enable services",
+      "disable services",
+      "touch the Obsidian vault"
+    ]
+  },
+  "replacement_criteria": [
+    "exact old launcher/autostart target identified",
+    "exact new Neon command board target identified",
+    "backup path defined",
+    "rollback path defined",
+    "operator approval phrase required",
+    "all-or-nothing preflight",
+    "no silent overwrite",
+    "no delete behavior"
+  ],
+  "copy_paste_commands": [
+    "./scripts/project-forge-neon-command-board",
+    "PYTHONPATH=src python3 -m project_forge_registry.neon_command_board",
+    "./scripts/project-forge-neon-command-board-launcher-plan --dry-run"
+  ],
+  "risk_register": [
+    "Existing launcher may live outside the repo",
+    "User services can have side effects",
+    "Desktop entries can launch file handlers",
+    "--open can surprise-launch browser/file handler behavior",
+    "Old dashboard, old Recon board, and new Neon board can be confused",
+    "Rollback must be explicit before any replacement"
+  ],
+  "recommended_next_phases": [
+    "11H.1 dry-run discovery/report command",
+    "11H.2 operator-reviewed replacement plan",
+    "11H.3 guarded apply only after explicit approval"
+  ]
+}
+

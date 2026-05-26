@@ -111,6 +111,21 @@ Phase 11G.1 metadata hygiene:
   after amend
 - tags/checkpoints are operator checkpoint indicators, not executable actions
 
+Phase 11H.0 adds a documentation/report-only launcher/autostart replacement
+plan for moving from the old Recon Command Board toward the new Neon command
+board in a later phase:
+
+- `docs/PROJECT_FORGE_NEON_COMMAND_BOARD_LAUNCHER_PLAN.md`
+- `artifacts/neon_command_board_launcher_plan.md`
+- `artifacts/neon_command_board_launcher_plan.json`
+
+This phase is planning only. It lists future discovery targets such as
+`~/.config/autostart`, `~/.config/systemd/user`, and
+`~/.local/share/applications`, but does not inspect those paths. It does not
+create desktop entries, create services, replace launchers, launch local file
+handlers, write to the real Obsidian vault, contact remotes, move tags, or
+modify anything outside this repository.
+
 ## Product Boundary
 
 Do not block Phase 10 closeout on Personal/Business Codex account separation.
@@ -148,6 +163,10 @@ tags.
 Phase 11G is local static frontend generation only. Do not create autostart
 entries or replace the old Recon Command Board in this phase. Do not run
 `--apply` for command board work.
+Phase 11H.0 is documentation/report-only planning. Do not inspect live
+launcher/autostart locations, create services, create desktop entries, run
+`--open`, launch VS Code, replace the old Recon Command Board, or touch the
+real Obsidian vault in this phase.
 Phase 11E is documentation/report-only.
 The existing apply behavior remains guarded by `--apply`, `--yes-write-to-vault`,
 explicit `--vault-root`, and matching `--confirm-vault-root`. Maintenance
@@ -160,16 +179,16 @@ vault writes.
 Recommended commit message:
 
 ```text
-Add Phase 11G Neon command board frontend
+Add Phase 11H.0 Neon launcher replacement plan
 ```
 
 Recommended final tag:
 
 ```text
-v0.11.0g-neon-command-board
+v0.11.0h0-neon-launcher-plan
 ```
 
 ## Next Recommended Phase
 
-Phase 11 options: Obsidian integration, repo action policies, remote strategy,
-or dedicated Codex/VS Code isolation research.
+Phase 11H.1: add a dry-run discovery/report command only after operator
+approval for the specific launcher/autostart locations to inspect.
