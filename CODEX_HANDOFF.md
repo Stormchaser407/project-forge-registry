@@ -126,6 +126,25 @@ create desktop entries, create services, replace launchers, launch local file
 handlers, write to the real Obsidian vault, contact remotes, move tags, or
 modify anything outside this repository.
 
+Phase 11H.1 adds a dry-run/read-only launcher/autostart discovery command for
+approved local targets:
+
+- `src/project_forge_registry/neon_command_board_launcher_discovery.py`
+- `tests/test_neon_command_board_launcher_discovery.py`
+- `scripts/project-forge-neon-command-board-launcher-discovery`
+- `docs/PROJECT_FORGE_NEON_COMMAND_BOARD_LAUNCHER_DISCOVERY.md`
+- `artifacts/neon_command_board_launcher_discovery.md`
+- `artifacts/neon_command_board_launcher_discovery.json`
+
+It may read repo-local scripts, `pyproject.toml`, docs, artifacts, and the
+approved user-local launcher/autostart paths
+`~/.config/autostart`, `~/.config/systemd/user`, and
+`~/.local/share/applications`. Missing external directories are reported as
+skipped/missing, not errors. It does not mutate files, execute discovered
+commands, launch browsers/file handlers/VS Code, run `--open`, call systemd,
+write to the real Obsidian vault, contact remotes, replace launchers, or move
+tags.
+
 ## Product Boundary
 
 Do not block Phase 10 closeout on Personal/Business Codex account separation.
@@ -167,6 +186,10 @@ Phase 11H.0 is documentation/report-only planning. Do not inspect live
 launcher/autostart locations, create services, create desktop entries, run
 `--open`, launch VS Code, replace the old Recon Command Board, or touch the
 real Obsidian vault in this phase.
+Phase 11H.1 is dry-run/read-only discovery only. Do not create, edit, remove,
+enable, disable, start, stop, or reload autostart entries, desktop entries, or
+systemd user services. Do not execute discovered commands or proceed to
+replacement without a separate operator-approved phase.
 Phase 11E is documentation/report-only.
 The existing apply behavior remains guarded by `--apply`, `--yes-write-to-vault`,
 explicit `--vault-root`, and matching `--confirm-vault-root`. Maintenance
@@ -179,16 +202,17 @@ vault writes.
 Recommended commit message:
 
 ```text
-Add Phase 11H.0 Neon launcher replacement plan
+Add Phase 11H.1 Neon launcher discovery dry-run
 ```
 
 Recommended final tag:
 
 ```text
-v0.11.0h0-neon-launcher-plan
+v0.11.0h1-neon-launcher-discovery
 ```
 
 ## Next Recommended Phase
 
-Phase 11H.1: add a dry-run discovery/report command only after operator
-approval for the specific launcher/autostart locations to inspect.
+Phase 11H.2: prepare an operator-reviewed replacement plan from reviewed
+discovery output, with exact old target, exact Neon target, backup path,
+rollback path, and explicit approval phrase.

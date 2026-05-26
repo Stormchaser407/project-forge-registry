@@ -841,3 +841,37 @@ See:
 ```text
 docs/PROJECT_FORGE_NEON_COMMAND_BOARD.md
 ```
+
+## Phase 11H.1: Neon launcher discovery dry-run
+
+Generate the dry-run/read-only launcher/autostart discovery report:
+
+```bash
+PYTHONPATH=src python3 -m project_forge_registry.neon_command_board_launcher_discovery
+```
+
+Wrapper form:
+
+```bash
+./scripts/project-forge-neon-command-board-launcher-discovery
+```
+
+Outputs:
+
+```text
+artifacts/neon_command_board_launcher_discovery.md
+artifacts/neon_command_board_launcher_discovery.json
+```
+
+The discovery command may inspect approved local text surfaces only: repo
+scripts, `pyproject.toml`, repo docs/artifacts, `~/.config/autostart`,
+`~/.config/systemd/user`, and `~/.local/share/applications`. It is read-only:
+no mutation, no autostart replacement, no systemd changes, no desktop entry
+changes, no vault writes, no --open, and no command execution. Operator
+approval is required before replacement.
+
+See:
+
+```text
+docs/PROJECT_FORGE_NEON_COMMAND_BOARD_LAUNCHER_DISCOVERY.md
+```
