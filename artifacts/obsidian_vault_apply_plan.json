@@ -1,39 +1,39 @@
 {
   "entries": [
     {
-      "action": "would_create",
+      "action": "would_update",
       "proposed_vault_target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Command Center.md",
-      "reason": "vault_root_missing_plan_only",
+      "reason": "target_exists_plan_only",
       "source_artifact_path": "artifacts/obsidian_mirror/Project Forge - Command Center.md",
-      "target_exists": false
+      "target_exists": true
     },
     {
-      "action": "would_create",
+      "action": "would_update",
       "proposed_vault_target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Dashboard Summary.md",
-      "reason": "vault_root_missing_plan_only",
+      "reason": "target_exists_plan_only",
       "source_artifact_path": "artifacts/obsidian_mirror/Project Forge - Dashboard Summary.md",
-      "target_exists": false
+      "target_exists": true
     },
     {
-      "action": "would_create",
+      "action": "would_update",
       "proposed_vault_target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Deferred Items.md",
-      "reason": "vault_root_missing_plan_only",
+      "reason": "target_exists_plan_only",
       "source_artifact_path": "artifacts/obsidian_mirror/Project Forge - Deferred Items.md",
-      "target_exists": false
+      "target_exists": true
     },
     {
-      "action": "would_create",
+      "action": "would_update",
       "proposed_vault_target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Known Embedded Repos.md",
-      "reason": "vault_root_missing_plan_only",
+      "reason": "target_exists_plan_only",
       "source_artifact_path": "artifacts/obsidian_mirror/Project Forge - Known Embedded Repos.md",
-      "target_exists": false
+      "target_exists": true
     },
     {
-      "action": "would_create",
+      "action": "would_update",
       "proposed_vault_target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Phase 11 Planning.md",
-      "reason": "vault_root_missing_plan_only",
+      "reason": "target_exists_plan_only",
       "source_artifact_path": "artifacts/obsidian_mirror/Project Forge - Phase 11 Planning.md",
-      "target_exists": false
+      "target_exists": true
     }
   ],
   "generated_by": "project_forge_registry.obsidian_vault_plan",
@@ -57,5 +57,5 @@
   "source_manifest_path": "artifacts/obsidian_mirror_manifest.json",
   "source_note_count": 5,
   "vault_root": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge",
-  "vault_root_exists": false
+  "vault_root_exists": true
 }

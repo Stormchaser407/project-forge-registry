@@ -4,7 +4,7 @@
 - source note count: `5`
 - proposed target count: `5`
 - vault_root: `/mnt/storage/Cole/main_vault/10 Projects/Project Forge`
-- vault root exists: `false`
+- vault root exists: `true`
 - source manifest: `artifacts/obsidian_mirror_manifest.json`
 - json path: `artifacts/obsidian_vault_apply_plan.json`
 
@@ -12,11 +12,11 @@
 
 | Source artifact | Proposed vault target | Action | Target exists | Reason |
 |---|---|---|---|---|
-| `artifacts/obsidian_mirror/Project Forge - Command Center.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Command Center.md` | `would_create` | `false` | `vault_root_missing_plan_only` |
-| `artifacts/obsidian_mirror/Project Forge - Dashboard Summary.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Dashboard Summary.md` | `would_create` | `false` | `vault_root_missing_plan_only` |
-| `artifacts/obsidian_mirror/Project Forge - Deferred Items.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Deferred Items.md` | `would_create` | `false` | `vault_root_missing_plan_only` |
-| `artifacts/obsidian_mirror/Project Forge - Known Embedded Repos.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Known Embedded Repos.md` | `would_create` | `false` | `vault_root_missing_plan_only` |
-| `artifacts/obsidian_mirror/Project Forge - Phase 11 Planning.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Phase 11 Planning.md` | `would_create` | `false` | `vault_root_missing_plan_only` |
+| `artifacts/obsidian_mirror/Project Forge - Command Center.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Command Center.md` | `would_update` | `true` | `target_exists_plan_only` |
+| `artifacts/obsidian_mirror/Project Forge - Dashboard Summary.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Dashboard Summary.md` | `would_update` | `true` | `target_exists_plan_only` |
+| `artifacts/obsidian_mirror/Project Forge - Deferred Items.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Deferred Items.md` | `would_update` | `true` | `target_exists_plan_only` |
+| `artifacts/obsidian_mirror/Project Forge - Known Embedded Repos.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Known Embedded Repos.md` | `would_update` | `true` | `target_exists_plan_only` |
+| `artifacts/obsidian_mirror/Project Forge - Phase 11 Planning.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Phase 11 Planning.md` | `would_update` | `true` | `target_exists_plan_only` |
 
 ## Safety Statement
 

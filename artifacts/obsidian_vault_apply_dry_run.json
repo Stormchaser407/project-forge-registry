@@ -1,10 +1,10 @@
 {
   "apply_requested": false,
-  "blocked": 0,
+  "blocked": 1,
   "entries": [
     {
-      "action": "would_skip_identical",
-      "reason": "target exists with identical content",
+      "action": "blocked_existing_different",
+      "reason": "target exists and differs; create-only apply does not overwrite",
       "source_path": "artifacts/obsidian_mirror/Project Forge - Command Center.md",
       "target_exists": true,
       "target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Command Center.md"
@@ -62,6 +62,6 @@
   "source_root": "artifacts/obsidian_mirror",
   "vault_root": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge",
   "would_create": 0,
-  "would_skip": 5,
-  "would_skip_identical": 5
+  "would_skip": 4,
+  "would_skip_identical": 4
 }
