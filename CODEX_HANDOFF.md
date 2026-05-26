@@ -145,6 +145,21 @@ commands, launch browsers/file handlers/VS Code, run `--open`, call systemd,
 write to the real Obsidian vault, contact remotes, replace launchers, or move
 tags.
 
+Phase 11H.2 adds an operator-reviewed replacement plan only:
+
+- `docs/PROJECT_FORGE_NEON_COMMAND_BOARD_REPLACEMENT_REVIEW_PLAN.md`
+- `artifacts/neon_command_board_replacement_review_plan.md`
+- `artifacts/neon_command_board_replacement_review_plan.json`
+
+It uses the Phase 11H.1 discovery artifacts as evidence and identifies
+`~/.local/share/applications/project-forge-command-board.desktop` as the
+primary old launcher candidate requiring operator review. It identifies
+`./scripts/project-forge-neon-command-board` and
+`PYTHONPATH=src python3 -m project_forge_registry.neon_command_board` as Neon
+target candidates requiring operator review. It does not apply, replace,
+launch, enable, disable, reload, mutate autostart/systemd/desktop entries,
+write to the real Obsidian vault, contact remotes, or move tags.
+
 ## Product Boundary
 
 Do not block Phase 10 closeout on Personal/Business Codex account separation.
@@ -190,6 +205,9 @@ Phase 11H.1 is dry-run/read-only discovery only. Do not create, edit, remove,
 enable, disable, start, stop, or reload autostart entries, desktop entries, or
 systemd user services. Do not execute discovered commands or proceed to
 replacement without a separate operator-approved phase.
+Phase 11H.2 is planning/report-only. Do not apply, replace, launch, enable,
+disable, start, stop, reload, or mutate autostart entries, systemd user
+services, desktop entries, remotes, tags, vault files, or project folders.
 Phase 11E is documentation/report-only.
 The existing apply behavior remains guarded by `--apply`, `--yes-write-to-vault`,
 explicit `--vault-root`, and matching `--confirm-vault-root`. Maintenance
@@ -202,17 +220,16 @@ vault writes.
 Recommended commit message:
 
 ```text
-Add Phase 11H.1 Neon launcher discovery dry-run
+Add Phase 11H.2 Neon launcher replacement review plan
 ```
 
 Recommended final tag:
 
 ```text
-v0.11.0h1-neon-launcher-discovery
+v0.11.0h2-neon-launcher-review-plan
 ```
 
 ## Next Recommended Phase
 
-Phase 11H.2: prepare an operator-reviewed replacement plan from reviewed
-discovery output, with exact old target, exact Neon target, backup path,
-rollback path, and explicit approval phrase.
+Phase 11H.3: separately approved guarded apply design or implementation with
+preflight, diff report, backup path, rollback path, and exact approval phrase.

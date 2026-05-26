@@ -5,6 +5,7 @@
 ### Added
 
 - Phase 11G Neon District / Punk Union static local command board generator, wrapper, docs, report, manifest, and tests.
+- Phase 11H.2 operator-reviewed Neon launcher replacement plan artifacts with no apply or mutation path.
 - Phase 11H.1 dry-run/read-only Neon command board launcher/autostart discovery command, docs, report, JSON artifact, wrapper, and tests.
 - Phase 11H.0 documentation-first Neon command board launcher/autostart replacement plan and planning artifacts.
 - Phase 11E Obsidian vault maintenance policy and no-clobber doctrine report.
