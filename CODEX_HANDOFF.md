@@ -183,6 +183,25 @@ behavior, no vault writes, and no remotes. It reserves the future phrase
 accept that phrase or perform replacement. The next recommended phase is Phase
 11H.4 guarded apply dry-run/preflight only, not real apply.
 
+Phase 11H.4 adds guarded launcher replacement apply dry-run/preflight only:
+
+- `src/project_forge_registry/neon_command_board_launcher_apply_preflight.py`
+- `tests/test_neon_command_board_launcher_apply_preflight.py`
+- `scripts/project-forge-neon-command-board-launcher-apply-preflight`
+- `docs/PROJECT_FORGE_NEON_COMMAND_BOARD_LAUNCHER_APPLY_PREFLIGHT.md`
+- `artifacts/neon_command_board_launcher_apply_preflight.md`
+- `artifacts/neon_command_board_launcher_apply_preflight.json`
+
+It reads the Phase 11H.1 discovery JSON, Phase 11H.2 replacement review plan
+JSON, and Phase 11H.3 guarded apply design JSON, then writes repo-local
+preflight artifacts. It has no real apply mode, rejects accidental `--apply`
+usage, creates no backups, does not replace launchers, does not mutate
+autostart/systemd/desktop entries, does not call systemctl, does not run
+`--open`, does not launch UI, does not write to the real Obsidian vault, and
+does not contact remotes. The phrase
+`APPROVE 11H.4 GUARDED LAUNCHER REPLACEMENT APPLY` is recorded as inert in
+11H.4. Real apply remains future phase only.
+
 ## Product Boundary
 
 Do not block Phase 10 closeout on Personal/Business Codex account separation.
@@ -203,6 +222,7 @@ Stable claims:
 ./scripts/project-forge-cold-start
 ./scripts/project-forge-dashboard --no-open
 ./scripts/project-forge-neon-command-board
+./scripts/project-forge-neon-command-board-launcher-apply-preflight
 ./scripts/project-forge-open-project --slug lifesaver-ledger --profile plain --dry-run
 PYTHONPATH=src python3 -m project_forge_registry.obsidian_mirror
 PYTHONPATH=src python3 -m project_forge_registry.obsidian_vault_plan
@@ -235,6 +255,10 @@ Phase 11H.3 is design-only. Do not apply, replace, launch, run `--open`,
 mutate autostart entries, mutate systemd user services, mutate desktop entries,
 write to the real Obsidian vault, resolve the recorded Obsidian conflict,
 contact remotes, or move tags.
+Phase 11H.4 is dry-run/preflight only. Do not perform real apply, replacement,
+mutation, backup creation, autostart changes, systemd changes, desktop entry
+changes, `--open`, launch behavior, vault writes, remotes, or Obsidian conflict
+resolution.
 Phase 11E is documentation/report-only.
 The existing apply behavior remains guarded by `--apply`, `--yes-write-to-vault`,
 explicit `--vault-root`, and matching `--confirm-vault-root`. Maintenance
@@ -247,17 +271,17 @@ vault writes.
 Recommended commit message:
 
 ```text
-Add Phase 11H.3 guarded launcher apply design
+Add Phase 11H.4 launcher apply preflight dry-run
 ```
 
 Recommended final tag:
 
 ```text
-v0.11.0h3-guarded-launcher-apply-design
+v0.11.0h4-launcher-apply-preflight-dry-run
 ```
 
 ## Next Recommended Phase
 
-Phase 11H.4: guarded apply dry-run/preflight only, not real apply. Real apply
-should remain a later explicit approval phase after review of exact target
-paths, backup policy, diff report, and rollback instructions.
+Phase 11H.5: guarded launcher replacement apply, only after explicit operator
+approval and review of exact target paths, backup policy, diff report, rollback
+instructions, and Phase 11H.4 preflight artifacts.

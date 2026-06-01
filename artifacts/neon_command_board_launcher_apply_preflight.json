@@ -1,0 +1,445 @@
+{
+  "all_or_nothing_preflight": {
+    "passes_for_dry_run_report": true,
+    "passes_for_real_apply": false,
+    "result": "blocked_for_real_apply_review_ready_for_dry_run",
+    "summary": "all-or-nothing preflight report generated; no real apply is available in Phase 11H.4",
+    "triggered_refusal_count": 2,
+    "triggered_refusals": [
+      "missing exact approval phrase",
+      "exact target path not confirmed for real apply"
+    ]
+  },
+  "approval_phrase": "APPROVE 11H.4 GUARDED LAUNCHER REPLACEMENT APPLY",
+  "approval_phrase_status": "inert_in_11h4",
+  "approved_target_classes": [
+    {
+      "approved_directory": "~/.local/share/applications",
+      "category": "user_desktop_entry",
+      "label": "approved user-local desktop entries"
+    },
+    {
+      "approved_directory": "~/.config/autostart",
+      "category": "user_autostart",
+      "label": "approved user-local autostart entries"
+    },
+    {
+      "approved_directory": "~/.config/systemd/user",
+      "category": "user_systemd",
+      "label": "approved user-local systemd user units"
+    }
+  ],
+  "candidate_targets": [
+    {
+      "approved_target_class": false,
+      "category": "repo_launcher",
+      "matched_terms": [
+        "Project Forge",
+        "project-forge"
+      ],
+      "path": "scripts/project-forge-checkpoint",
+      "preflight_classification": "repo-local command candidate; not a file target for apply",
+      "source_status": "review_only",
+      "target": "repo_scripts"
+    },
+    {
+      "approved_target_class": false,
+      "category": "repo_launcher",
+      "matched_terms": [
+        "Project Forge",
+        "project-forge"
+      ],
+      "path": "scripts/project-forge-codex-profile-bootstrap",
+      "preflight_classification": "repo-local command candidate; not a file target for apply",
+      "source_status": "review_only",
+      "target": "repo_scripts"
+    },
+    {
+      "approved_target_class": false,
+      "category": "repo_launcher",
+      "matched_terms": [
+        "Project Forge",
+        "project-forge"
+      ],
+      "path": "scripts/project-forge-codex-profile-probe",
+      "preflight_classification": "repo-local command candidate; not a file target for apply",
+      "source_status": "review_only",
+      "target": "repo_scripts"
+    },
+    {
+      "approved_target_class": false,
+      "category": "repo_launcher",
+      "matched_terms": [
+        "Project Forge",
+        "project-forge",
+        "project-forge-dashboard"
+      ],
+      "path": "scripts/project-forge-cold-start",
+      "preflight_classification": "repo-local command candidate; not a file target for apply",
+      "source_status": "review_only",
+      "target": "repo_scripts"
+    },
+    {
+      "approved_target_class": false,
+      "category": "repo_launcher",
+      "matched_terms": [
+        "Project Forge",
+        "project-forge",
+        "project-forge-dashboard"
+      ],
+      "path": "scripts/project-forge-dashboard",
+      "preflight_classification": "repo-local command candidate; not a file target for apply",
+      "source_status": "review_only",
+      "target": "repo_scripts"
+    },
+    {
+      "approved_target_class": false,
+      "category": "repo_launcher",
+      "matched_terms": [
+        "Project Forge",
+        "project-forge"
+      ],
+      "path": "scripts/project-forge-install-cold-start-desktop",
+      "preflight_classification": "repo-local command candidate; not a file target for apply",
+      "source_status": "review_only",
+      "target": "repo_scripts"
+    },
+    {
+      "approved_target_class": false,
+      "category": "repo_launcher",
+      "matched_terms": [
+        "Project Forge",
+        "project-forge"
+      ],
+      "path": "scripts/project-forge-open-project",
+      "preflight_classification": "repo-local command candidate; not a file target for apply",
+      "source_status": "review_only",
+      "target": "repo_scripts"
+    },
+    {
+      "approved_target_class": false,
+      "category": "repo_launcher",
+      "matched_terms": [
+        "Project Forge"
+      ],
+      "path": "scripts/project-sync-safe",
+      "preflight_classification": "repo-local command candidate; not a file target for apply",
+      "source_status": "review_only",
+      "target": "repo_scripts"
+    },
+    {
+      "approved_target_class": false,
+      "category": "repo_launcher",
+      "matched_terms": [
+        "project-forge",
+        "project-forge-dashboard",
+        "project-forge-neon-command-board"
+      ],
+      "path": "pyproject.toml",
+      "preflight_classification": "repo-local command candidate; not a file target for apply",
+      "source_status": "review_neon_candidate",
+      "target": "pyproject_entrypoints"
+    },
+    {
+      "approved_target_class": true,
+      "category": "user_desktop_entry",
+      "matched_terms": [
+        "Project Forge",
+        "project-forge"
+      ],
+      "path": "~/.local/share/applications/project-forge-cold-start.desktop",
+      "preflight_classification": "related desktop entry candidate; review only",
+      "source_status": "review_only",
+      "target": "user_applications"
+    },
+    {
+      "approved_target_class": true,
+      "category": "user_desktop_entry",
+      "matched_terms": [
+        "Project Forge",
+        "project-forge"
+      ],
+      "path": "~/.local/share/applications/project-forge-command-board.desktop",
+      "preflight_classification": "primary operator-reviewed old launcher candidate",
+      "source_status": "review_only",
+      "target": "user_applications"
+    },
+    {
+      "approved_target_class": true,
+      "category": "user_desktop_entry",
+      "matched_terms": [
+        "Project Forge",
+        "project-forge"
+      ],
+      "path": "~/.local/share/applications/project-forge-operator-runbook.desktop",
+      "preflight_classification": "related desktop entry candidate; review only",
+      "source_status": "review_only",
+      "target": "user_applications"
+    },
+    {
+      "approved_target_class": true,
+      "category": "user_desktop_entry",
+      "matched_terms": [
+        "Project Forge",
+        "project-forge"
+      ],
+      "path": "~/.local/share/applications/project-forge-safe-sync.desktop",
+      "preflight_classification": "related desktop entry candidate; review only",
+      "source_status": "review_only",
+      "target": "user_applications"
+    },
+    {
+      "approved_target_class": true,
+      "category": "user_desktop_entry",
+      "matched_terms": [
+        "Recon"
+      ],
+      "path": "~/.local/share/applications/recon-container-restart.desktop",
+      "preflight_classification": "related desktop entry candidate; review only",
+      "source_status": "review_only",
+      "target": "user_applications"
+    },
+    {
+      "approved_target_class": true,
+      "category": "user_desktop_entry",
+      "matched_terms": [
+        "Recon"
+      ],
+      "path": "~/.local/share/applications/recon-container-status.desktop",
+      "preflight_classification": "related desktop entry candidate; review only",
+      "source_status": "review_only",
+      "target": "user_applications"
+    },
+    {
+      "approved_target_class": true,
+      "category": "user_desktop_entry",
+      "matched_terms": [
+        "Recon"
+      ],
+      "path": "~/.local/share/applications/recon-flake-build.desktop",
+      "preflight_classification": "related desktop entry candidate; review only",
+      "source_status": "review_only",
+      "target": "user_applications"
+    },
+    {
+      "approved_target_class": true,
+      "category": "user_desktop_entry",
+      "matched_terms": [
+        "Recon"
+      ],
+      "path": "~/.local/share/applications/recon-flake-switch.desktop",
+      "preflight_classification": "related desktop entry candidate; review only",
+      "source_status": "review_only",
+      "target": "user_applications"
+    },
+    {
+      "approved_target_class": true,
+      "category": "user_desktop_entry",
+      "matched_terms": [
+        "Recon"
+      ],
+      "path": "~/.local/share/applications/recon-flake-test.desktop",
+      "preflight_classification": "related desktop entry candidate; review only",
+      "source_status": "review_only",
+      "target": "user_applications"
+    },
+    {
+      "approved_target_class": true,
+      "category": "user_desktop_entry",
+      "matched_terms": [
+        "Recon"
+      ],
+      "path": "~/.local/share/applications/recon-ops-dashboard.desktop",
+      "preflight_classification": "related desktop entry candidate; review only",
+      "source_status": "review_only",
+      "target": "user_applications"
+    },
+    {
+      "approved_target_class": true,
+      "category": "user_desktop_entry",
+      "matched_terms": [
+        "Recon"
+      ],
+      "path": "~/.local/share/applications/recon-span-screensaver.desktop",
+      "preflight_classification": "related desktop entry candidate; review only",
+      "source_status": "review_only",
+      "target": "user_applications"
+    },
+    {
+      "approved_target_class": true,
+      "category": "user_desktop_entry",
+      "matched_terms": [
+        "Recon"
+      ],
+      "path": "~/.local/share/applications/recon-update-all.desktop",
+      "preflight_classification": "related desktop entry candidate; review only",
+      "source_status": "review_only",
+      "target": "user_applications"
+    }
+  ],
+  "dry_run": true,
+  "mode": "dry-run/preflight only",
+  "mutates_state": false,
+  "phase": "Phase 11H.4",
+  "preflight_only": true,
+  "prior_artifacts_checked": [
+    {
+      "error": null,
+      "label": "Phase 11H.1 discovery",
+      "path": "artifacts/neon_command_board_launcher_discovery.json",
+      "phase": "Phase 11H.1",
+      "present": true,
+      "status": "checked"
+    },
+    {
+      "error": null,
+      "label": "Phase 11H.2 replacement review plan",
+      "path": "artifacts/neon_command_board_replacement_review_plan.json",
+      "phase": "Phase 11H.2",
+      "present": true,
+      "status": "checked"
+    },
+    {
+      "error": null,
+      "label": "Phase 11H.3 guarded apply design",
+      "path": "artifacts/neon_command_board_guarded_launcher_apply_design.json",
+      "phase": "Phase 11H.3",
+      "present": true,
+      "status": "checked"
+    }
+  ],
+  "proposed_targets": [
+    {
+      "category": "user_desktop_entry",
+      "exact_target_path_confirmed": false,
+      "operator_review_required": true,
+      "path": "~/.local/share/applications/project-forge-command-board.desktop",
+      "preflight_status": "review_required_no_apply",
+      "proposed_action": "future guarded replacement candidate only"
+    }
+  ],
+  "real_apply_available": false,
+  "recommended_next_phase": "Phase 11H.5 - guarded launcher replacement apply, only after explicit operator approval.",
+  "refusal_conditions": [
+    {
+      "condition": "dirty repo",
+      "note": "operator still must run git status before any future phase",
+      "triggered": false
+    },
+    {
+      "condition": "missing prior artifact",
+      "details": [],
+      "triggered": false
+    },
+    {
+      "condition": "missing approved target",
+      "details": [],
+      "triggered": false
+    },
+    {
+      "condition": "target path outside approved user-local directories",
+      "details": [],
+      "triggered": false
+    },
+    {
+      "condition": "symlink ambiguity",
+      "note": "not inspected in Phase 11H.4 dry-run/preflight only",
+      "triggered": false
+    },
+    {
+      "condition": "unreadable target",
+      "note": "not inspected in Phase 11H.4 dry-run/preflight only",
+      "triggered": false
+    },
+    {
+      "condition": "missing backup path",
+      "note": "simulated backup manifest defines proposed backup paths only",
+      "triggered": false
+    },
+    {
+      "condition": "missing rollback plan",
+      "note": "simulated rollback plan generated",
+      "triggered": false
+    },
+    {
+      "condition": "missing exact approval phrase",
+      "note": "approval phrase inert in 11H.4; real apply remains future phase only",
+      "triggered": true
+    },
+    {
+      "condition": "generated plan older than latest discovery",
+      "note": "mtime comparison intentionally not used; artifacts are checked by presence and phase",
+      "triggered": false
+    },
+    {
+      "condition": "Obsidian conflict confused with launcher work",
+      "note": "recorded conflict remains out of scope and unresolved",
+      "triggered": false
+    },
+    {
+      "condition": "request to run --open or launch UI as part of apply",
+      "note": "no --open and no launch behavior",
+      "triggered": false
+    },
+    {
+      "condition": "exact target path not confirmed for real apply",
+      "details": [
+        "~/.local/share/applications/project-forge-command-board.desktop"
+      ],
+      "triggered": true
+    }
+  ],
+  "safety": {
+    "all-or-nothing preflight": true,
+    "approval phrase inert in 11H.4": true,
+    "dry-run/preflight only": true,
+    "no --open": true,
+    "no autostart changes": true,
+    "no backups created": true,
+    "no desktop entry changes": true,
+    "no launch behavior": true,
+    "no mutation": true,
+    "no real apply": true,
+    "no replacement": true,
+    "no systemd changes": true,
+    "no vault writes": true,
+    "real apply remains future phase only": true,
+    "simulated backup manifest": true,
+    "simulated rollback plan": true
+  },
+  "simulated_backup_manifest": [
+    {
+      "backup_created": false,
+      "backup_path": "~/.local/share/applications/project-forge-command-board.desktop.bak.<timestamp>",
+      "original_hash_recorded": false,
+      "status": "simulated only; no backups created",
+      "target_path": "~/.local/share/applications/project-forge-command-board.desktop"
+    }
+  ],
+  "simulated_diff_review": {
+    "changed_files": [
+      "~/.local/share/applications/project-forge-command-board.desktop"
+    ],
+    "diff_generated": false,
+    "neon_target_candidates": [
+      {
+        "module_command": "PYTHONPATH=src python3 -m project_forge_registry.neon_command_board",
+        "operator_review_required": true,
+        "output_artifact": "artifacts/neon_command_board.html",
+        "wrapper_command": "./scripts/project-forge-neon-command-board"
+      }
+    ],
+    "new_content_summary": "future Neon launcher behavior must be operator-reviewed before real apply",
+    "old_content_summary": "existing launcher content would be summarized in a future real apply phase",
+    "status": "simulated review only; no replacement content generated"
+  },
+  "simulated_rollback_plan": [
+    {
+      "hash_verification": "future phase required",
+      "restore_source": "~/.local/share/applications/project-forge-command-board.desktop.bak.<timestamp>",
+      "rollback_executed": false,
+      "status": "simulated rollback plan only",
+      "target_path": "~/.local/share/applications/project-forge-command-board.desktop"
+    }
+  ]
+}

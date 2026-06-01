@@ -59,6 +59,26 @@ Limit output while iterating on heuristics:
 - `artifacts/projects_proposed.yml`
 - `artifacts/PROJECT_COMMAND_BOARD_DRAFT.md`
 
+## Neon Launcher Apply Preflight
+
+Phase 11H.4 provides a guarded launcher replacement apply dry-run/preflight
+command only:
+
+```bash
+PYTHONPATH=src python3 -m project_forge_registry.neon_command_board_launcher_apply_preflight
+```
+
+It writes only repo-local artifacts:
+
+- `artifacts/neon_command_board_launcher_apply_preflight.md`
+- `artifacts/neon_command_board_launcher_apply_preflight.json`
+
+There is no real apply mode. The command performs no real apply, no
+replacement, no mutation, no backups created, no autostart changes, no systemd
+changes, no desktop entry changes, no `--open`, no launch behavior, and no
+vault writes. The approval phrase is inert in 11H.4, and real apply remains
+future phase only.
+
 ## Detection Model
 
 For each first-level folder in each scan root, the scanner records:
