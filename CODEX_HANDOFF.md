@@ -160,6 +160,29 @@ target candidates requiring operator review. It does not apply, replace,
 launch, enable, disable, reload, mutate autostart/systemd/desktop entries,
 write to the real Obsidian vault, contact remotes, or move tags.
 
+Phase 11H.2A records an Obsidian no-clobber conflict after Phase 11H.2:
+
+- HEAD: `5516b89 Record Obsidian no-clobber conflict after Phase 11H.2`
+- tag: `v0.11.0h2a-obsidian-no-clobber-conflict`
+- checkpoint: `checkpoint-20260526-175044-phase-11h2a-obsidian-no-clobber-conflict`
+
+`Project Forge - Command Center.md` differs in the real vault. The conflict is
+recorded only and should not be resolved or treated as launcher replacement
+work in Phase 11H.3.
+
+Phase 11H.3 adds a design-only guarded launcher replacement apply contract:
+
+- `docs/PROJECT_FORGE_NEON_COMMAND_BOARD_GUARDED_LAUNCHER_APPLY_DESIGN.md`
+- `artifacts/neon_command_board_guarded_launcher_apply_design.md`
+- `artifacts/neon_command_board_guarded_launcher_apply_design.json`
+
+This phase performs no apply, no replacement, no mutation, no autostart
+changes, no systemd changes, no desktop entry changes, no `--open`, no launch
+behavior, no vault writes, and no remotes. It reserves the future phrase
+`APPROVE 11H.4 GUARDED LAUNCHER REPLACEMENT APPLY`, but Phase 11H.3 must not
+accept that phrase or perform replacement. The next recommended phase is Phase
+11H.4 guarded apply dry-run/preflight only, not real apply.
+
 ## Product Boundary
 
 Do not block Phase 10 closeout on Personal/Business Codex account separation.
@@ -208,6 +231,10 @@ replacement without a separate operator-approved phase.
 Phase 11H.2 is planning/report-only. Do not apply, replace, launch, enable,
 disable, start, stop, reload, or mutate autostart entries, systemd user
 services, desktop entries, remotes, tags, vault files, or project folders.
+Phase 11H.3 is design-only. Do not apply, replace, launch, run `--open`,
+mutate autostart entries, mutate systemd user services, mutate desktop entries,
+write to the real Obsidian vault, resolve the recorded Obsidian conflict,
+contact remotes, or move tags.
 Phase 11E is documentation/report-only.
 The existing apply behavior remains guarded by `--apply`, `--yes-write-to-vault`,
 explicit `--vault-root`, and matching `--confirm-vault-root`. Maintenance
@@ -220,16 +247,17 @@ vault writes.
 Recommended commit message:
 
 ```text
-Add Phase 11H.2 Neon launcher replacement review plan
+Add Phase 11H.3 guarded launcher apply design
 ```
 
 Recommended final tag:
 
 ```text
-v0.11.0h2-neon-launcher-review-plan
+v0.11.0h3-guarded-launcher-apply-design
 ```
 
 ## Next Recommended Phase
 
-Phase 11H.3: separately approved guarded apply design or implementation with
-preflight, diff report, backup path, rollback path, and exact approval phrase.
+Phase 11H.4: guarded apply dry-run/preflight only, not real apply. Real apply
+should remain a later explicit approval phase after review of exact target
+paths, backup policy, diff report, and rollback instructions.

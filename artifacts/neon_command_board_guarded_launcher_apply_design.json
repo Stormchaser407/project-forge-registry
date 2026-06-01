@@ -1,0 +1,65 @@
+{
+  "phase": "Phase 11H.3",
+  "mode": "design_only",
+  "design_only": true,
+  "mutates_state": false,
+  "future_approval_phrase": "APPROVE 11H.4 GUARDED LAUNCHER REPLACEMENT APPLY",
+  "future_preflight_requirements": [
+    "clean git status",
+    "expected HEAD, tag, and checkpoint confirmed",
+    "discovery artifact present",
+    "replacement review plan present",
+    "exact target paths confirmed",
+    "backup paths defined",
+    "rollback instructions generated",
+    "all-or-nothing preflight",
+    "no blocked or ambiguous targets",
+    "operator approval required through exact future approval phrase"
+  ],
+  "future_backup_policy": [
+    "backup before overwrite or edit",
+    "backup before update",
+    "timestamped backups",
+    "backup manifest",
+    "checksum or hash of original content",
+    "no deletion behavior",
+    "rollback command text generated but not executed"
+  ],
+  "future_refusal_conditions": [
+    "dirty repo",
+    "missing approved target",
+    "target path outside approved user-local directories",
+    "symlink ambiguity",
+    "unreadable target",
+    "missing backup path",
+    "missing rollback plan",
+    "missing exact approval phrase",
+    "generated plan older than latest discovery",
+    "Obsidian conflict confused with launcher work",
+    "any request to run --open or launch UI as part of apply"
+  ],
+  "future_artifacts": [
+    "launcher replacement apply preflight report",
+    "backup manifest",
+    "diff/review report",
+    "apply result report",
+    "rollback instructions"
+  ],
+  "recommended_next_phase": "Phase 11H.4 should implement guarded apply dry-run/preflight only, not real apply. Real apply should remain a later explicit approval phase.",
+  "safety": {
+    "design-only": true,
+    "no apply": true,
+    "no replacement": true,
+    "no mutation": true,
+    "no autostart changes": true,
+    "no systemd changes": true,
+    "no desktop entry changes": true,
+    "no --open": true,
+    "no launch behavior": true,
+    "no vault writes": true,
+    "operator approval required": true,
+    "all-or-nothing preflight": true,
+    "backup before update": true,
+    "rollback required": true
+  }
+}
