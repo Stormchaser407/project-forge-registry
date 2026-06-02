@@ -1,0 +1,210 @@
+{
+  "apply_requested": false,
+  "approval_phrase_required": "APPROVE 11H.5 GUARDED LAUNCHER REPLACEMENT APPLY",
+  "approval_phrase_status": "missing_or_incomplete",
+  "backup_plan": {
+    "backup_before_overwrite": true,
+    "backup_created": false,
+    "backup_path": "~/.local/share/applications/project-forge-command-board.desktop.bak.<timestamp>",
+    "status": "planned in dry-run; required before real apply",
+    "target_path": "~/.local/share/applications/project-forge-command-board.desktop"
+  },
+  "confirm_target_path": null,
+  "dry_run": true,
+  "guard_status": [
+    {
+      "guard": "--apply",
+      "note": "real apply flag",
+      "passed": false
+    },
+    {
+      "guard": "--yes-replace-launcher",
+      "note": "explicit replacement approval flag",
+      "passed": false
+    },
+    {
+      "guard": "exact approval phrase required",
+      "note": "approval phrase must match exactly",
+      "passed": false
+    },
+    {
+      "guard": "target path is approved target",
+      "note": "target path must match proposed approved target",
+      "passed": false
+    },
+    {
+      "guard": "exact target path confirmation required",
+      "note": "confirm-target-path must exactly match target-path",
+      "passed": false
+    },
+    {
+      "guard": "clean git tree required",
+      "note": "operator must verify clean git tree first",
+      "passed": false
+    },
+    {
+      "guard": "expected HEAD or expected tag confirmation",
+      "note": "operator must provide expected HEAD or tag guard",
+      "passed": false
+    },
+    {
+      "guard": "prior 11H.4 preflight artifact present",
+      "note": "checked",
+      "passed": true
+    },
+    {
+      "guard": "proposed target included in preflight artifact",
+      "note": "target must be present in Phase 11H.4 proposed_targets",
+      "passed": false
+    },
+    {
+      "guard": "backup path defined",
+      "note": "backup before overwrite",
+      "passed": true
+    },
+    {
+      "guard": "rollback plan defined",
+      "note": "rollback required",
+      "passed": true
+    },
+    {
+      "guard": "no ambiguous target class",
+      "note": "only the approved desktop entry target is supported",
+      "passed": false
+    },
+    {
+      "guard": "no launch/open/enable/disable/reload request",
+      "note": "no launch behavior, no --open, no systemd changes",
+      "passed": true
+    }
+  ],
+  "mode": "default dry-run",
+  "mutates_state": false,
+  "phase": "Phase 11H.5",
+  "prior_artifacts_checked": [
+    {
+      "error": null,
+      "path": "artifacts/neon_command_board_launcher_apply_preflight.json",
+      "phase": "Phase 11H.4",
+      "present": true,
+      "status": "checked"
+    }
+  ],
+  "proposed_file_content_summary": {
+    "exec_summary": "Exec=sh -lc 'cd /mnt/storage/Cole/Projects/project-forge-registry && PYTHONPATH=src python3 -m project_forge_registry.neon_command_board'",
+    "launches_now": false,
+    "line_count": 7,
+    "name": "Project Forge Neon Command Board",
+    "notes": "Proposed desktop entry content only; no launch behavior is performed by this command."
+  },
+  "real_apply_available": false,
+  "recommended_next_step": "Review this dry-run report. Run real apply only in a later operator-controlled terminal with every guard satisfied; do not launch or open anything as part of apply.",
+  "refusal_conditions": [
+    {
+      "condition": "--apply",
+      "note": "real apply flag",
+      "triggered": true
+    },
+    {
+      "condition": "--yes-replace-launcher",
+      "note": "explicit replacement approval flag",
+      "triggered": true
+    },
+    {
+      "condition": "exact approval phrase required",
+      "note": "approval phrase must match exactly",
+      "triggered": true
+    },
+    {
+      "condition": "target path is approved target",
+      "note": "target path must match proposed approved target",
+      "triggered": true
+    },
+    {
+      "condition": "exact target path confirmation required",
+      "note": "confirm-target-path must exactly match target-path",
+      "triggered": true
+    },
+    {
+      "condition": "clean git tree required",
+      "note": "operator must verify clean git tree first",
+      "triggered": true
+    },
+    {
+      "condition": "expected HEAD or expected tag confirmation",
+      "note": "operator must provide expected HEAD or tag guard",
+      "triggered": true
+    },
+    {
+      "condition": "prior 11H.4 preflight artifact present",
+      "note": "checked",
+      "triggered": false
+    },
+    {
+      "condition": "proposed target included in preflight artifact",
+      "note": "target must be present in Phase 11H.4 proposed_targets",
+      "triggered": true
+    },
+    {
+      "condition": "backup path defined",
+      "note": "backup before overwrite",
+      "triggered": false
+    },
+    {
+      "condition": "rollback plan defined",
+      "note": "rollback required",
+      "triggered": false
+    },
+    {
+      "condition": "no ambiguous target class",
+      "note": "only the approved desktop entry target is supported",
+      "triggered": true
+    },
+    {
+      "condition": "no launch/open/enable/disable/reload request",
+      "note": "no launch behavior, no --open, no systemd changes",
+      "triggered": false
+    }
+  ],
+  "required_guards": [
+    "--apply",
+    "--yes-replace-launcher",
+    "--approval-phrase \"APPROVE 11H.5 GUARDED LAUNCHER REPLACEMENT APPLY\"",
+    "--target-path ~/.local/share/applications/project-forge-command-board.desktop",
+    "--confirm-target-path exactly matching --target-path",
+    "--clean-git-tree-confirmed after operator verifies clean git working tree",
+    "--expected-head or --expected-tag",
+    "Phase 11H.4 preflight artifact present",
+    "proposed target included in preflight artifact",
+    "backup path defined",
+    "rollback plan defined",
+    "no ambiguous target class",
+    "no request to launch, open, enable, disable, or reload anything"
+  ],
+  "rollback_plan": {
+    "restore_from": "~/.local/share/applications/project-forge-command-board.desktop.bak.<timestamp>",
+    "rollback_executed": false,
+    "rollback_required": true,
+    "status": "planned in dry-run; operator must review before real apply",
+    "target_path": "~/.local/share/applications/project-forge-command-board.desktop"
+  },
+  "safety": {
+    "backup before overwrite": true,
+    "clean git tree required": true,
+    "default dry-run": true,
+    "exact approval phrase required": true,
+    "exact target path confirmation required": true,
+    "guarded launcher replacement apply": true,
+    "no --open": true,
+    "no autostart changes unless explicitly approved": true,
+    "no delete": true,
+    "no desktop entry changes unless explicitly approved": true,
+    "no launch behavior": true,
+    "no mutation during dry-run": true,
+    "no real apply unless all guards pass": true,
+    "no systemd changes": true,
+    "no vault writes": true,
+    "rollback required": true
+  },
+  "target_path": "~/.local/share/applications/project-forge-command-board.desktop"
+}

@@ -202,6 +202,26 @@ does not contact remotes. The phrase
 `APPROVE 11H.4 GUARDED LAUNCHER REPLACEMENT APPLY` is recorded as inert in
 11H.4. Real apply remains future phase only.
 
+Phase 11H.5 adds guarded launcher replacement apply command capability:
+
+- `src/project_forge_registry/neon_command_board_launcher_apply.py`
+- `tests/test_neon_command_board_launcher_apply.py`
+- `scripts/project-forge-neon-command-board-launcher-apply`
+- `docs/PROJECT_FORGE_NEON_COMMAND_BOARD_LAUNCHER_APPLY.md`
+- `artifacts/neon_command_board_launcher_apply_dry_run.md`
+- `artifacts/neon_command_board_launcher_apply_dry_run.json`
+
+The command defaults to dry-run and writes repo-local reports. Real apply is
+available only when every strict guard is present: `--apply`,
+`--yes-replace-launcher`, exact approval phrase
+`APPROVE 11H.5 GUARDED LAUNCHER REPLACEMENT APPLY`, exact target path
+`~/.local/share/applications/project-forge-command-board.desktop`, matching
+`--confirm-target-path`, clean git tree confirmation, expected HEAD or tag,
+Phase 11H.4 preflight artifact, proposed target inclusion, backup plan,
+rollback plan, unambiguous target class, and no launch/open/enable/disable/
+reload request. Codex validation must not run live apply; tests may cover the
+write path only with temporary fixture files.
+
 ## Product Boundary
 
 Do not block Phase 10 closeout on Personal/Business Codex account separation.
@@ -223,6 +243,7 @@ Stable claims:
 ./scripts/project-forge-dashboard --no-open
 ./scripts/project-forge-neon-command-board
 ./scripts/project-forge-neon-command-board-launcher-apply-preflight
+./scripts/project-forge-neon-command-board-launcher-apply
 ./scripts/project-forge-open-project --slug lifesaver-ledger --profile plain --dry-run
 PYTHONPATH=src python3 -m project_forge_registry.obsidian_mirror
 PYTHONPATH=src python3 -m project_forge_registry.obsidian_vault_plan
@@ -259,6 +280,10 @@ Phase 11H.4 is dry-run/preflight only. Do not perform real apply, replacement,
 mutation, backup creation, autostart changes, systemd changes, desktop entry
 changes, `--open`, launch behavior, vault writes, remotes, or Obsidian conflict
 resolution.
+Phase 11H.5 implements guarded apply capability, but Codex must not run live
+apply. Do not mutate real launcher/autostart/systemd/desktop files, create live
+backups, run `--open`, launch UI, call systemctl, write to the real Obsidian
+vault, contact remotes, or resolve the recorded Obsidian conflict.
 Phase 11E is documentation/report-only.
 The existing apply behavior remains guarded by `--apply`, `--yes-write-to-vault`,
 explicit `--vault-root`, and matching `--confirm-vault-root`. Maintenance
@@ -271,17 +296,17 @@ vault writes.
 Recommended commit message:
 
 ```text
-Add Phase 11H.4 launcher apply preflight dry-run
+Add Phase 11H.5 guarded launcher apply command
 ```
 
 Recommended final tag:
 
 ```text
-v0.11.0h4-launcher-apply-preflight-dry-run
+v0.11.0h5-guarded-launcher-apply
 ```
 
 ## Next Recommended Phase
 
-Phase 11H.5: guarded launcher replacement apply, only after explicit operator
-approval and review of exact target paths, backup policy, diff report, rollback
-instructions, and Phase 11H.4 preflight artifacts.
+Operator review: inspect the Phase 11H.5 dry-run report and refusal probes
+before any separate terminal-run real apply. Do not combine commit/tag/push with
+live replacement.

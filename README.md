@@ -79,6 +79,26 @@ changes, no desktop entry changes, no `--open`, no launch behavior, and no
 vault writes. The approval phrase is inert in 11H.4, and real apply remains
 future phase only.
 
+## Neon Launcher Apply
+
+Phase 11H.5 provides guarded launcher replacement apply command capability with
+default dry-run reports:
+
+```bash
+PYTHONPATH=src python3 -m project_forge_registry.neon_command_board_launcher_apply
+```
+
+It writes dry-run artifacts by default:
+
+- `artifacts/neon_command_board_launcher_apply_dry_run.md`
+- `artifacts/neon_command_board_launcher_apply_dry_run.json`
+
+The command has no real apply unless all guards pass. Real apply requires exact
+approval phrase, exact target path confirmation, clean git tree required,
+backup before overwrite, rollback required, no delete, no vault writes, no
+launch behavior, no --open, no systemd changes, no desktop entry changes unless
+explicitly approved, and no autostart changes unless explicitly approved.
+
 ## Detection Model
 
 For each first-level folder in each scan root, the scanner records:

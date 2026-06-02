@@ -5,6 +5,7 @@
 ### Added
 
 - Phase 11G Neon District / Punk Union static local command board generator, wrapper, docs, report, manifest, and tests.
+- Phase 11H.5 guarded launcher replacement apply command capability with default dry-run reports, strict real-apply guards, wrapper, docs, entrypoint, and tempdir-only apply tests.
 - Phase 11H.4 guarded launcher replacement apply dry-run/preflight command, docs, artifacts, wrapper, entrypoint, and tests with no real apply mode.
 - Phase 11H.3 design-only guarded launcher replacement apply contract docs and artifacts with no apply, replacement, or mutation path.
 - Phase 11H.2 operator-reviewed Neon launcher replacement plan artifacts with no apply or mutation path.

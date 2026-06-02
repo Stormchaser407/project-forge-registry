@@ -29,6 +29,7 @@ project-forge-obsidian-vault-apply = "project_forge_registry.obsidian_vault_appl
 project-forge-neon-command-board = "project_forge_registry.neon_command_board:main"
 project-forge-neon-command-board-launcher-discovery = "project_forge_registry.neon_command_board_launcher_discovery:main"
 project-forge-neon-command-board-launcher-apply-preflight = "project_forge_registry.neon_command_board_launcher_apply_preflight:main"
+project-forge-neon-command-board-launcher-apply = "project_forge_registry.neon_command_board_launcher_apply:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
