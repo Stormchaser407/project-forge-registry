@@ -26,6 +26,10 @@ def first_slug_for_category(category: str) -> str | None:
     return None
 
 
+def first_eligible_slug() -> str | None:
+    return first_slug_for_category("known_embedded") or first_slug_for_category("clean_candidate")
+
+
 class OpenProjectTests(unittest.TestCase):
     def run_open_project(self, *args: str) -> subprocess.CompletedProcess[str]:
         with tempfile.TemporaryDirectory() as tmp:
@@ -102,27 +106,35 @@ class OpenProjectTests(unittest.TestCase):
         self.assertIn("unknown project slug", proc.stderr)
 
     def test_personal_profile_dry_run_mentions_codex_home(self) -> None:
-        proc = self.run_open_project("--slug", "lifesaver-ledger", "--profile", "personal")
+        slug = first_eligible_slug()
+        self.assertIsNotNone(slug)
+        proc = self.run_open_project("--slug", slug or "", "--profile", "personal")
 
         self.assertEqual(proc.returncode, 0)
         self.assertIn("Selected profile: personal", proc.stdout)
         self.assertIn(".codex-personal", proc.stdout)
 
     def test_business_profile_dry_run_mentions_codex_home(self) -> None:
-        proc = self.run_open_project("--slug", "lifesaver-ledger", "--profile", "business")
+        slug = first_eligible_slug()
+        self.assertIsNotNone(slug)
+        proc = self.run_open_project("--slug", slug or "", "--profile", "business")
 
         self.assertEqual(proc.returncode, 0)
         self.assertIn("Selected profile: business", proc.stdout)
         self.assertIn(".codex-business", proc.stdout)
 
     def test_plain_profile_dry_run_mentions_no_codex_home(self) -> None:
-        proc = self.run_open_project("--slug", "lifesaver-ledger", "--profile", "plain")
+        slug = first_eligible_slug()
+        self.assertIsNotNone(slug)
+        proc = self.run_open_project("--slug", slug or "", "--profile", "plain")
 
         self.assertEqual(proc.returncode, 0)
         self.assertIn("Selected profile: plain", proc.stdout)
         self.assertIn("Proposed CODEX_HOME: none", proc.stdout)
 
     def test_dry_run_does_not_launch_editor(self) -> None:
+        slug = first_eligible_slug()
+        self.assertIsNotNone(slug)
         with tempfile.TemporaryDirectory() as tmp:
             marker = Path(tmp) / "launched"
             editor = Path(tmp) / "editor-probe"
@@ -135,7 +147,7 @@ class OpenProjectTests(unittest.TestCase):
 
             proc = self.run_open_project(
                 "--slug",
-                "lifesaver-ledger",
+                slug or "",
                 "--profile",
                 "plain",
                 "--dry-run",

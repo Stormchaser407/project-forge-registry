@@ -1,0 +1,167 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'HELP'
+Usage:
+  ./scripts/project-forge-scan-dashboard [--no-open|--open]
+  ./scripts/project-forge-scan-dashboard --full-scan [--scan-root PATH] [--exclude PATH]
+
+Purpose:
+  Refresh known repo status, rebuild dashboard inventory, regenerate the static
+  dashboard HTML, and optionally reopen it.
+
+Options:
+  --full-scan       Perform full repo discovery instead of refreshing known
+                    inventory rows. This can be slow on huge source trees.
+  --scan-root PATH  Full-scan root. May be provided multiple times. Defaults to
+                    the parent directory that contains this Project Forge repo.
+  --exclude PATH    Full-scan subtree to skip. May be provided multiple times.
+  --no-open         Regenerate artifacts and print the dashboard path. Default.
+  --open            Regenerate artifacts and open artifacts/dashboard.html with
+                    xdg-open when available.
+  -h, --help        Show this help text.
+
+Safety:
+  - read-only against discovered repos
+  - writes only Project Forge discovery/dashboard artifacts
+  - no apply
+  - no marker writes
+  - no remotes
+  - no push/fetch
+  - no package installs
+  - no network calls
+  - no VS Code launching
+  - no commits
+  - no tags
+HELP
+}
+
+OPEN_DASHBOARD=0
+FULL_SCAN=0
+SCAN_ROOTS=()
+EXCLUDED_PATHS=()
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --full-scan)
+      FULL_SCAN=1
+      shift
+      ;;
+    --scan-root)
+      if [[ $# -lt 2 ]]; then
+        echo "ERROR: --scan-root requires a path" >&2
+        exit 2
+      fi
+      FULL_SCAN=1
+      SCAN_ROOTS+=("$2")
+      shift 2
+      ;;
+    --exclude)
+      if [[ $# -lt 2 ]]; then
+        echo "ERROR: --exclude requires a path" >&2
+        exit 2
+      fi
+      FULL_SCAN=1
+      EXCLUDED_PATHS+=("$2")
+      shift 2
+      ;;
+    --no-open)
+      OPEN_DASHBOARD=0
+      shift
+      ;;
+    --open)
+      OPEN_DASHBOARD=1
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "ERROR: unknown argument: $1" >&2
+      echo "Usage: ./scripts/project-forge-scan-dashboard [--no-open|--open] [--full-scan --scan-root PATH --exclude PATH]" >&2
+      exit 2
+      ;;
+  esac
+done
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+DEFAULT_SCAN_ROOT="$(cd -- "$REPO_ROOT/.." && pwd)"
+cd "$REPO_ROOT"
+
+if [[ "${#SCAN_ROOTS[@]}" -eq 0 ]]; then
+  SCAN_ROOTS=("$DEFAULT_SCAN_ROOT")
+fi
+
+DASHBOARD_HTML="$REPO_ROOT/artifacts/dashboard.html"
+
+echo "============================================================"
+echo " PROJECT FORGE SCAN + DASHBOARD"
+echo "============================================================"
+echo "Repo: $REPO_ROOT"
+if [[ "$FULL_SCAN" == "1" ]]; then
+  echo "Mode: read-only full discovery scan + local dashboard rebuild"
+else
+  echo "Mode: read-only known repo status refresh + local dashboard rebuild"
+fi
+echo "Open requested: $OPEN_DASHBOARD"
+
+if [[ "$FULL_SCAN" == "1" ]]; then
+  echo
+  echo "Scan roots:"
+  for scan_root in "${SCAN_ROOTS[@]}"; do
+    echo "  $scan_root"
+  done
+  if [[ "${#EXCLUDED_PATHS[@]}" -gt 0 ]]; then
+    echo "Excluded paths:"
+    for excluded_path in "${EXCLUDED_PATHS[@]}"; do
+      echo "  $excluded_path"
+    done
+  fi
+
+  DISCOVERY_ARGS=()
+  for scan_root in "${SCAN_ROOTS[@]}"; do
+    DISCOVERY_ARGS+=(--scan-root "$scan_root")
+  done
+  for excluded_path in "${EXCLUDED_PATHS[@]}"; do
+    DISCOVERY_ARGS+=(--exclude "$excluded_path")
+  done
+
+  echo
+  echo "Refreshing repo discovery inventory..."
+  PYTHONPATH=src python3 -m project_forge_registry.repo_discovery "${DISCOVERY_ARGS[@]}"
+else
+  echo
+  echo "Refreshing known repo status inventory..."
+  PYTHONPATH=src python3 -m project_forge_registry.repo_status_refresh
+fi
+
+echo
+echo "Refreshing dashboard inventory..."
+PYTHONPATH=src python3 -m project_forge_registry.dashboard_inventory
+
+echo
+echo "Rendering static dashboard HTML..."
+PYTHONPATH=src python3 -m project_forge_registry.dashboard_ui
+
+echo
+echo "Dashboard HTML:"
+echo "  $DASHBOARD_HTML"
+
+if [[ "$OPEN_DASHBOARD" == "1" ]]; then
+  if command -v xdg-open >/dev/null 2>&1; then
+    echo
+    echo "Opening dashboard with xdg-open..."
+    xdg-open "$DASHBOARD_HTML" >/dev/null 2>&1 &
+  else
+    echo
+    echo "xdg-open not found; dashboard was regenerated but not opened."
+    echo "Open this file manually:"
+    echo "  $DASHBOARD_HTML"
+  fi
+else
+  echo
+  echo "No-open mode. Use --open to open locally with xdg-open when available."
+fi

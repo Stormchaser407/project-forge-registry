@@ -22,9 +22,18 @@ Open locally when `xdg-open` is available:
 
     ./scripts/project-forge-dashboard --open
 
+Preview the one-click desktop launcher install:
+
+    ./scripts/project-forge-install-dashboard-desktop --dry-run
+
+Install the one-click desktop launcher after reviewing the dry-run output:
+
+    ./scripts/project-forge-install-dashboard-desktop --install
+
 Help:
 
     ./scripts/project-forge-dashboard --help
+    ./scripts/project-forge-install-dashboard-desktop --help
 
 ## What It Runs
 
@@ -47,6 +56,20 @@ and exits cleanly.
 
 No VS Code launching occurs in this phase. Project paths and VS Code targets
 remain display-only inside the dashboard.
+
+## Desktop Installer
+
+`scripts/project-forge-install-dashboard-desktop` creates a user-local desktop
+entry for the dashboard wrapper. It defaults to dry-run.
+
+Install mode writes only these expected user-local paths:
+
+- `~/.local/share/icons/neon-district-project-forge/project-forge-dashboard.svg`
+- `~/Desktop/project-forge-dashboard.desktop`
+- `~/.local/share/applications/project-forge-dashboard.desktop`
+
+Existing different files are backed up with a timestamped `.bak.<timestamp>`
+suffix before overwrite. Identical files are left unchanged.
 
 ## Safety Model
 
@@ -74,6 +97,5 @@ It does not:
 
 ## Next Phase
 
-Future phases can add launch wrappers and explicit dashboard actions. Those
-actions should remain opt-in, wrapper-backed, and dry-run-first until separately
-approved.
+Future phases can add deeper local dashboard actions. Those actions should
+remain opt-in, wrapper-backed, and dry-run-first until separately approved.

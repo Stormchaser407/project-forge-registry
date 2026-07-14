@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import shlex
 from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
@@ -28,6 +29,9 @@ DEFAULT_REPO_DISCOVERY_CSV = Path("artifacts/repo_discovery_inventory.csv")
 DEFAULT_EMBED_PLAN_CSV = Path("artifacts/embed_plan_inventory.csv")
 DEFAULT_JSON_PATH = Path("artifacts/dashboard_inventory.json")
 DEFAULT_REPORT_PATH = Path("artifacts/dashboard_inventory_report.md")
+REPO_ROOT = Path(__file__).resolve().parents[2]
+LEGACY_PROJECT_ROOT = Path("/mnt/storage/Cole/Projects")
+CURRENT_PROJECT_ROOT = Path("/run/media/cash/WD_BLACK_4TB/Cole/Projects")
 
 REPORT_LINKS = [
     "artifacts/repo_discovery_report.md",
@@ -83,6 +87,8 @@ class DashboardProject:
     report_links: list[str]
     launch_commands: dict[str, str]
     launch_policy: dict[str, str]
+    review_commands: dict[str, str]
+    review_policy: dict[str, str]
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -107,6 +113,8 @@ class DashboardProject:
             "report_links": self.report_links,
             "launch_commands": self.launch_commands,
             "launch_policy": self.launch_policy,
+            "review_commands": self.review_commands,
+            "review_policy": self.review_policy,
         }
 
 
@@ -162,12 +170,12 @@ def load_embed_plan_inventory(csv_path: Path) -> dict[str, EmbedPlanRow]:
 
 
 def derive_repo_light(row: RepoDiscoveryRow) -> str:
+    if row.category == "control_repo":
+        return "blue"
     if row.category in {"known_embedded", "clean_candidate"} and row.git_status == "clean":
         return "green"
     if row.category == "dirty_candidate_review_first" or row.git_status == "dirty":
         return "amber"
-    if row.category == "control_repo":
-        return "blue"
     return "red"
 
 
@@ -194,16 +202,16 @@ def derive_risk_light(row: RepoDiscoveryRow) -> str:
 
 
 def derive_recommended_action(row: RepoDiscoveryRow) -> str:
+    if row.category == "control_repo":
+        return "control_repo_no_embed"
+    if row.category == "protected_manual_review":
+        return "protected_manual_review"
+    if row.category == "dirty_candidate_review_first" or row.git_status == "dirty":
+        return "dirty_review_first"
     if row.category == "known_embedded":
         return "embedded_ready"
     if row.category == "clean_candidate":
         return "candidate_review"
-    if row.category == "dirty_candidate_review_first" or row.git_status == "dirty":
-        return "dirty_review_first"
-    if row.category == "protected_manual_review":
-        return "protected_manual_review"
-    if row.category == "control_repo":
-        return "control_repo_no_embed"
     return "unknown_review"
 
 
@@ -221,38 +229,24 @@ def find_vscode_target(repo_path: Path) -> Path:
 
 
 def build_launch_commands(slug: str) -> dict[str, str]:
+    script = shlex.quote(str(REPO_ROOT / "scripts" / "project-forge-open-project"))
     return {
         "personal": (
-            f"./scripts/project-forge-open-project --slug {slug} "
+            f"{script} --slug {slug} "
             "--profile personal --dry-run"
         ),
         "business": (
-            f"./scripts/project-forge-open-project --slug {slug} "
+            f"{script} --slug {slug} "
             "--profile business --dry-run"
         ),
         "plain": (
-            f"./scripts/project-forge-open-project --slug {slug} "
+            f"{script} --slug {slug} "
             "--profile plain --dry-run"
         ),
     }
 
 
 def derive_launch_policy(row: RepoDiscoveryRow) -> dict[str, str]:
-    if row.category in {"known_embedded", "clean_candidate"}:
-        return {
-            "status": "eligible",
-            "message": "Dry-run launch commands available for personal, business, and plain.",
-        }
-    if row.category == "dirty_candidate_review_first" or row.git_status == "dirty":
-        return {
-            "status": "blocked",
-            "message": "Launch blocked by policy: dirty candidate requires review first.",
-        }
-    if row.category == "protected_manual_review":
-        return {
-            "status": "blocked",
-            "message": "Launch blocked by policy: protected project requires manual review.",
-        }
     if row.category == "control_repo":
         return {
             "status": "restricted",
@@ -260,6 +254,21 @@ def derive_launch_policy(row: RepoDiscoveryRow) -> dict[str, str]:
                 "Launch restricted by policy: control repo is dry-run only here, "
                 "and profile-mode open is deferred."
             ),
+        }
+    if row.category == "protected_manual_review":
+        return {
+            "status": "blocked",
+            "message": "Launch blocked by policy: protected project requires manual review.",
+        }
+    if row.category == "dirty_candidate_review_first" or row.git_status == "dirty":
+        return {
+            "status": "blocked",
+            "message": "Launch blocked by policy: dirty candidate requires review first.",
+        }
+    if row.category in {"known_embedded", "clean_candidate"}:
+        return {
+            "status": "eligible",
+            "message": "Dry-run launch commands available for personal, business, and plain.",
         }
     return {
         "status": "blocked",
@@ -269,13 +278,59 @@ def derive_launch_policy(row: RepoDiscoveryRow) -> dict[str, str]:
     }
 
 
+def build_review_commands(row: RepoDiscoveryRow) -> dict[str, str]:
+    if derive_recommended_action(row) != "dirty_review_first":
+        return {}
+    script = shlex.quote(str(REPO_ROOT / "scripts" / "project-forge-review-project"))
+    base = f"{script} --slug {row.slug}"
+    return {
+        "status": f"{base} --status",
+        "diff": f"{base} --diff",
+        "log": f"{base} --log",
+        "commit_preflight": f"{base} --commit-dry-run",
+        "commit_template": (
+            f"{base} --commit --confirm-slug {row.slug} "
+            '--yes-commit-reviewed --message "describe reviewed changes"'
+        ),
+    }
+
+
+def derive_review_policy(row: RepoDiscoveryRow) -> dict[str, str]:
+    action = derive_recommended_action(row)
+    if action == "dirty_review_first":
+        return {
+            "status": "review_available",
+            "message": "Review commands available. Commit requires explicit terminal confirmation.",
+        }
+    if action == "protected_manual_review":
+        return {
+            "status": "manual_only",
+            "message": "Protected project remains manual review only.",
+        }
+    return {
+        "status": "not_required",
+        "message": "No dirty-review command shortcuts required for this project.",
+    }
+
+
+def rebase_legacy_marker_path(path: Path) -> Path:
+    try:
+        relative = path.relative_to(LEGACY_PROJECT_ROOT)
+    except ValueError:
+        return path
+    return CURRENT_PROJECT_ROOT / relative
+
+
 def build_project_record(
     row: RepoDiscoveryRow,
     embed_rows: dict[str, EmbedPlanRow],
 ) -> DashboardProject:
     embed = embed_rows.get(row.slug)
-    marker_yaml = embed.marker_yaml if embed else row.path / ".project-forge.yml"
-    marker_doc = embed.marker_doc if embed else row.path / "docs" / "PROJECT_FORGE.md"
+    marker_yaml = row.path / ".project-forge.yml"
+    marker_doc = row.path / "docs" / "PROJECT_FORGE.md"
+    embed_decision = None
+    if embed and rebase_legacy_marker_path(embed.marker_yaml).parent == row.path:
+        embed_decision = embed.decision
 
     return DashboardProject(
         slug=row.slug,
@@ -287,7 +342,7 @@ def build_project_record(
         has_code_workspace=row.has_code_workspace,
         has_project_forge_marker=row.has_project_forge_marker,
         remote_count=row.remote_count,
-        embed_decision=embed.decision if embed else None,
+        embed_decision=embed_decision,
         repo_light=derive_repo_light(row),
         docs_light=derive_docs_light(row),
         risk_light=derive_risk_light(row),
@@ -299,6 +354,8 @@ def build_project_record(
         report_links=list(REPORT_LINKS),
         launch_commands=build_launch_commands(row.slug),
         launch_policy=derive_launch_policy(row),
+        review_commands=build_review_commands(row),
+        review_policy=derive_review_policy(row),
     )
 
 

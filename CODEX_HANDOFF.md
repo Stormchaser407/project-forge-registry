@@ -22,6 +22,42 @@ Phase 10.9 adds closeout/release documentation only:
 - `artifacts/phase_10_closeout_report.md`
 - `CHANGELOG.md`
 
+Dashboard GUI polish after Phase 11H.5 adds local-only search, lane filters,
+clickable summaries, sorting, collapsible sections/cards, embedded term
+explanations, clipboard copy controls for dry-run commands, and a dry-run-first
+dashboard desktop installer:
+
+- `scripts/project-forge-install-dashboard-desktop`
+- `docs/PROJECT_FORGE_DASHBOARD_UI.md`
+- `docs/PROJECT_FORGE_DASHBOARD_LAUNCHER.md`
+
+The dashboard HTML may contain local JavaScript for filtering, sorting,
+collapsing, term explanations, and clipboard copy only. It must not execute
+project commands, launch VS Code, generate `file://` or `vscode://` links,
+write marker files, apply changes, touch remotes, or mutate external repos.
+
+Dirty-review dashboard command shortcuts add:
+
+- `src/project_forge_registry/project_review.py`
+- `scripts/project-forge-review-project`
+- `docs/PROJECT_FORGE_PROJECT_REVIEW.md`
+- `scripts/project-forge-scan-dashboard`
+- `docs/PROJECT_FORGE_DASHBOARD_SCAN.md`
+
+The dashboard copies review commands for amber dirty repos only. Status, diff,
+log, and commit preflight are read-only. Real commit requires terminal execution
+with `--commit`, exact `--confirm-slug`, `--yes-commit-reviewed`, and a non-empty
+message; untracked and sensitive-looking paths require additional explicit
+flags. The workflow does not push, fetch, change remotes, launch VS Code, or
+create tags.
+
+The dashboard also renders a top-level scan-and-rebuild copy button. It copies
+`project-forge-scan-dashboard --no-open`, which refreshes known repository
+status before rebuilding dashboard inventory and HTML. Full discovery remains
+explicit through `--full-scan` or `--scan-root PATH`. This is required after
+commits because `project-forge-dashboard` alone rebuilds from the existing
+discovery CSV and does not rescan live git status.
+
 Phase 11A adds a dry-run/report-only Obsidian-ready operator memory layer under
 repository artifacts only:
 

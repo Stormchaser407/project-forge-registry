@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from project_forge_registry.dashboard_inventory import (
+    REPO_ROOT,
     build_dashboard_inventory,
     derive_docs_light,
     derive_recommended_action,
@@ -18,6 +19,10 @@ from project_forge_registry.dashboard_inventory import (
     write_json,
     write_report,
 )
+
+
+OPEN_SCRIPT = str(REPO_ROOT / "scripts" / "project-forge-open-project")
+REVIEW_SCRIPT = str(REPO_ROOT / "scripts" / "project-forge-review-project")
 
 
 def write_discovery_csv(path: Path, rows: list[str]) -> None:
@@ -108,6 +113,35 @@ class DashboardInventoryTests(unittest.TestCase):
         self.assertEqual(projects[0].embed_decision, "already_embedded")
         self.assertEqual(projects[0].marker_doc_path.name, "PROJECT_FORGE.md")
 
+    def test_stale_embed_paths_do_not_override_live_discovery(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            live_repo = root / "demo"
+            discovery_csv = root / "repo_discovery_inventory.csv"
+            embed_csv = root / "embed_plan_inventory.csv"
+            write_discovery_csv(
+                discovery_csv,
+                [f"demo,{live_repo},clean,true,false,false,false,0,clean_candidate"],
+            )
+            write_embed_csv(
+                embed_csv,
+                [
+                    "demo,/mnt/storage/Cole/Projects/old-demo,true,false,selected,done,"
+                    "/mnt/storage/Cole/Projects/old-demo/.project-forge.yml,"
+                    "/mnt/storage/Cole/Projects/old-demo/docs/PROJECT_FORGE.md,"
+                    "clean_candidate,clean",
+                ],
+            )
+
+            project = build_dashboard_inventory(
+                load_repo_discovery_inventory(discovery_csv),
+                load_embed_plan_inventory(embed_csv),
+            )[0]
+
+        self.assertIsNone(project.embed_decision)
+        self.assertEqual(project.marker_yaml_path, live_repo / ".project-forge.yml")
+        self.assertEqual(project.marker_doc_path, live_repo / "docs" / "PROJECT_FORGE.md")
+
     def test_derives_lights(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -116,11 +150,13 @@ class DashboardInventoryTests(unittest.TestCase):
                 discovery_csv,
                 [
                     "embedded,/tmp/embedded,clean,true,false,false,true,1,known_embedded",
+                    "embedded-dirty,/tmp/embedded-dirty,dirty,true,false,false,true,1,known_embedded",
                     "candidate,/tmp/candidate,clean,true,false,false,false,1,clean_candidate",
                     "dirty,/tmp/dirty,dirty,true,false,false,false,1,dirty_candidate_review_first",
                     "protected,/tmp/cerberus,clean,true,false,false,false,0,protected_manual_review",
                     "unknown,/tmp/unknown,unknown,false,false,false,false,0,unknown_structure",
                     "control,/tmp/project-forge-registry,clean,true,false,false,false,0,control_repo",
+                    "control-dirty,/tmp/project-forge-registry-dirty,dirty,true,false,false,false,0,control_repo",
                 ],
             )
 
@@ -145,10 +181,12 @@ class DashboardInventoryTests(unittest.TestCase):
                 discovery_csv,
                 [
                     "embedded,/tmp/embedded,clean,true,false,false,true,1,known_embedded",
+                    "embedded-dirty,/tmp/embedded-dirty,dirty,true,false,false,true,1,known_embedded",
                     "candidate,/tmp/candidate,clean,true,false,false,false,1,clean_candidate",
                     "dirty,/tmp/dirty,dirty,true,false,false,false,1,dirty_candidate_review_first",
                     "protected,/tmp/cerberus,clean,true,false,false,false,0,protected_manual_review",
                     "control,/tmp/project-forge-registry,clean,true,false,false,false,0,control_repo",
+                    "control-dirty,/tmp/project-forge-registry-dirty,dirty,true,false,false,false,0,control_repo",
                     "unknown,/tmp/unknown,unknown,false,false,false,false,0,unknown_structure",
                 ],
             )
@@ -156,6 +194,7 @@ class DashboardInventoryTests(unittest.TestCase):
             rows = {row.slug: row for row in load_repo_discovery_inventory(discovery_csv)}
 
         self.assertEqual(derive_recommended_action(rows["embedded"]), "embedded_ready")
+        self.assertEqual(derive_recommended_action(rows["embedded-dirty"]), "dirty_review_first")
         self.assertEqual(derive_recommended_action(rows["candidate"]), "candidate_review")
         self.assertEqual(derive_recommended_action(rows["dirty"]), "dirty_review_first")
         self.assertEqual(
@@ -166,6 +205,11 @@ class DashboardInventoryTests(unittest.TestCase):
             derive_recommended_action(rows["control"]),
             "control_repo_no_embed",
         )
+        self.assertEqual(
+            derive_recommended_action(rows["control-dirty"]),
+            "control_repo_no_embed",
+        )
+        self.assertEqual(derive_repo_light(rows["control-dirty"]), "blue")
         self.assertEqual(derive_recommended_action(rows["unknown"]), "unknown_review")
 
     def test_detects_code_workspace_preference(self) -> None:
@@ -203,7 +247,7 @@ class DashboardInventoryTests(unittest.TestCase):
         )
         self.assertEqual(
             payload["projects"][0]["launch_commands"]["personal"],
-            "./scripts/project-forge-open-project --slug demo --profile personal --dry-run",
+            f"{OPEN_SCRIPT} --slug demo --profile personal --dry-run",
         )
 
     def test_launch_policy_is_deterministic_for_categories(self) -> None:
@@ -214,10 +258,12 @@ class DashboardInventoryTests(unittest.TestCase):
                 discovery_csv,
                 [
                     "embedded,/tmp/embedded,clean,true,false,false,true,1,known_embedded",
+                    "embedded-dirty,/tmp/embedded-dirty,dirty,true,false,false,true,1,known_embedded",
                     "candidate,/tmp/candidate,clean,true,false,false,false,1,clean_candidate",
                     "dirty,/tmp/dirty,dirty,true,false,false,false,1,dirty_candidate_review_first",
                     "protected,/tmp/cerberus,clean,true,false,false,false,0,protected_manual_review",
                     "control,/tmp/project-forge-registry,clean,true,false,false,false,0,control_repo",
+                    "control-dirty,/tmp/project-forge-registry-dirty,dirty,true,false,false,false,0,control_repo",
                     "unknown,/tmp/unknown,unknown,false,false,false,false,0,unknown_structure",
                 ],
             )
@@ -230,15 +276,30 @@ class DashboardInventoryTests(unittest.TestCase):
             }
 
         self.assertEqual(projects["embedded"].launch_policy["status"], "eligible")
+        self.assertEqual(projects["embedded-dirty"].launch_policy["status"], "blocked")
+        self.assertEqual(projects["embedded-dirty"].review_policy["status"], "review_available")
         self.assertEqual(projects["candidate"].launch_policy["status"], "eligible")
         self.assertEqual(projects["dirty"].launch_policy["status"], "blocked")
         self.assertIn("dirty candidate requires review first", projects["dirty"].launch_policy["message"])
+        self.assertEqual(projects["dirty"].review_policy["status"], "review_available")
+        self.assertEqual(
+            projects["dirty"].review_commands["status"],
+            f"{REVIEW_SCRIPT} --slug dirty --status",
+        )
+        self.assertIn("--commit-dry-run", projects["dirty"].review_commands["commit_preflight"])
+        self.assertIn("--yes-commit-reviewed", projects["dirty"].review_commands["commit_template"])
         self.assertEqual(projects["protected"].launch_policy["status"], "blocked")
+        self.assertEqual(projects["protected"].review_policy["status"], "manual_only")
+        self.assertEqual(projects["protected"].review_commands, {})
         self.assertEqual(projects["control"].launch_policy["status"], "restricted")
+        self.assertEqual(projects["control"].review_policy["status"], "not_required")
+        self.assertEqual(projects["control-dirty"].launch_policy["status"], "restricted")
+        self.assertEqual(projects["control-dirty"].review_policy["status"], "not_required")
+        self.assertEqual(projects["control-dirty"].review_commands, {})
         self.assertEqual(projects["unknown"].launch_policy["status"], "blocked")
         self.assertEqual(
             projects["control"].launch_commands["plain"],
-            "./scripts/project-forge-open-project --slug control --profile plain --dry-run",
+            f"{OPEN_SCRIPT} --slug control --profile plain --dry-run",
         )
 
     def test_writes_markdown_report(self) -> None:

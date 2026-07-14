@@ -25,6 +25,7 @@ from pathlib import Path
 
 DEFAULT_REPORT_NAME = "repo_discovery_report.md"
 DEFAULT_CSV_NAME = "repo_discovery_inventory.csv"
+GIT_COMMAND_TIMEOUT_SECONDS = 3
 
 DEFAULT_EXCLUDED_PARTS = {
     ".cache",
@@ -41,6 +42,9 @@ DEFAULT_EXCLUDED_ABSOLUTE_PREFIXES = (
     "/dev",
     "/run",
     "/nix/store",
+)
+ALLOWED_ABSOLUTE_PREFIXES = (
+    "/run/media",
 )
 
 
@@ -74,12 +78,16 @@ def should_exclude(path: Path, excluded_paths: list[Path] | None = None) -> bool
     resolved = path.resolve()
     text = str(resolved)
 
-    for prefix in DEFAULT_EXCLUDED_ABSOLUTE_PREFIXES:
-        if text == prefix or text.startswith(prefix + os.sep):
-            return True
-
     if any(part in DEFAULT_EXCLUDED_PARTS for part in resolved.parts):
         return True
+
+    if not any(
+        text == prefix or text.startswith(prefix + os.sep)
+        for prefix in ALLOWED_ABSOLUTE_PREFIXES
+    ):
+        for prefix in DEFAULT_EXCLUDED_ABSOLUTE_PREFIXES:
+            if text == prefix or text.startswith(prefix + os.sep):
+                return True
 
     for excluded in excluded_paths or []:
         excluded_resolved = excluded.resolve()
@@ -91,24 +99,32 @@ def should_exclude(path: Path, excluded_paths: list[Path] | None = None) -> bool
 
 
 def git_status(repo: Path) -> str:
-    proc = subprocess.run(
-        ["git", "-C", str(repo), "status", "--short"],
-        capture_output=True,
-        text=True,
-        check=False,
-    )
+    try:
+        proc = subprocess.run(
+            ["git", "-C", str(repo), "status", "--short"],
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=GIT_COMMAND_TIMEOUT_SECONDS,
+        )
+    except subprocess.TimeoutExpired:
+        return "unknown"
     if proc.returncode != 0:
         return "unknown"
     return "dirty" if proc.stdout.strip() else "clean"
 
 
 def remote_count(repo: Path) -> int:
-    proc = subprocess.run(
-        ["git", "-C", str(repo), "remote"],
-        capture_output=True,
-        text=True,
-        check=False,
-    )
+    try:
+        proc = subprocess.run(
+            ["git", "-C", str(repo), "remote"],
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=GIT_COMMAND_TIMEOUT_SECONDS,
+        )
+    except subprocess.TimeoutExpired:
+        return 0
     if proc.returncode != 0:
         return 0
     return len([line for line in proc.stdout.splitlines() if line.strip()])
@@ -210,7 +226,7 @@ def derive_final_status(repos: list[DiscoveredRepo]) -> str:
 def write_csv(csv_path: Path, repos: list[DiscoveredRepo]) -> None:
     csv_path.parent.mkdir(parents=True, exist_ok=True)
     with csv_path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.writer(handle)
+        writer = csv.writer(handle, lineterminator="\n")
         writer.writerow([
             "slug",
             "path",

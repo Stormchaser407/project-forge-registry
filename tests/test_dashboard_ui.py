@@ -5,12 +5,19 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from project_forge_registry.dashboard_inventory import REPO_ROOT
 from project_forge_registry.dashboard_ui import (
     LOCAL_REPORT_LINKS,
+    REPO_ROOT as DASHBOARD_REPO_ROOT,
     load_dashboard_inventory,
     render_dashboard_html,
     run_dashboard_ui,
 )
+
+
+OPEN_SCRIPT = str(REPO_ROOT / "scripts" / "project-forge-open-project")
+REVIEW_SCRIPT = str(REPO_ROOT / "scripts" / "project-forge-review-project")
+SCAN_SCRIPT = str(DASHBOARD_REPO_ROOT / "scripts" / "project-forge-scan-dashboard")
 
 
 def fixture_project(
@@ -41,6 +48,32 @@ def fixture_project(
             "status": "blocked",
             "message": "Launch blocked by policy: dirty candidate requires review first.",
         }
+    review_commands = {}
+    review_policy = {
+        "status": "not_required",
+        "message": "No dirty-review command shortcuts required for this project.",
+    }
+    if category == "dirty_candidate_review_first":
+        review_commands = {
+            "status": f"{REVIEW_SCRIPT} --slug {slug} --status",
+            "diff": f"{REVIEW_SCRIPT} --slug {slug} --diff",
+            "log": f"{REVIEW_SCRIPT} --slug {slug} --log",
+            "commit_preflight": f"{REVIEW_SCRIPT} --slug {slug} --commit-dry-run",
+            "commit_template": (
+                f"{REVIEW_SCRIPT} --slug {slug} --commit "
+                f"--confirm-slug {slug} --yes-commit-reviewed "
+                '--message "describe reviewed changes"'
+            ),
+        }
+        review_policy = {
+            "status": "review_available",
+            "message": "Review commands available. Commit requires explicit terminal confirmation.",
+        }
+    elif category == "protected_manual_review":
+        review_policy = {
+            "status": "manual_only",
+            "message": "Protected project remains manual review only.",
+        }
 
     return {
         "slug": slug,
@@ -65,11 +98,13 @@ def fixture_project(
         "marker_doc_path": f"/tmp/{slug}/docs/PROJECT_FORGE.md",
         "report_links": [],
         "launch_commands": {
-            "personal": f"./scripts/project-forge-open-project --slug {slug} --profile personal --dry-run",
-            "business": f"./scripts/project-forge-open-project --slug {slug} --profile business --dry-run",
-            "plain": f"./scripts/project-forge-open-project --slug {slug} --profile plain --dry-run",
+            "personal": f"{OPEN_SCRIPT} --slug {slug} --profile personal --dry-run",
+            "business": f"{OPEN_SCRIPT} --slug {slug} --profile business --dry-run",
+            "plain": f"{OPEN_SCRIPT} --slug {slug} --profile plain --dry-run",
         },
         "launch_policy": launch_policy,
+        "review_commands": review_commands,
+        "review_policy": review_policy,
     }
 
 
@@ -130,6 +165,19 @@ class DashboardUiTests(unittest.TestCase):
         self.assertIn("Candidate Review Projects", html)
         self.assertIn("Control Repo", html)
         self.assertIn("Copy-Paste Launch Commands", html)
+        self.assertIn("dashboard-controls", html)
+        self.assertIn('data-dashboard-search', html)
+        self.assertIn('data-dashboard-sort', html)
+        self.assertIn('data-clear-dashboard', html)
+        self.assertIn("glossary-panel", html)
+        self.assertIn("Scan Button", html)
+
+    def test_renders_scan_rebuild_operator_command(self) -> None:
+        html = render_dashboard_html(fixture_payload())
+
+        self.assertIn(f"{SCAN_SCRIPT} --no-open", html)
+        self.assertIn("Static HTML cannot execute shell commands directly", html)
+        self.assertIn('data-explain="scan_rebuild"', html)
 
     def test_escapes_html_special_characters(self) -> None:
         payload = {
@@ -161,29 +209,34 @@ class DashboardUiTests(unittest.TestCase):
         html = render_dashboard_html(fixture_payload())
 
         self.assertIn(
-            "./scripts/project-forge-open-project --slug embedded --profile personal --dry-run",
+            f"{OPEN_SCRIPT} --slug embedded --profile personal --dry-run",
             html,
         )
         self.assertIn(
-            "./scripts/project-forge-open-project --slug embedded --profile business --dry-run",
+            f"{OPEN_SCRIPT} --slug embedded --profile business --dry-run",
             html,
         )
         self.assertIn(
-            "./scripts/project-forge-open-project --slug embedded --profile plain --dry-run",
+            f"{OPEN_SCRIPT} --slug embedded --profile plain --dry-run",
             html,
         )
 
     def test_eligible_project_renders_copy_helper_labels(self) -> None:
         html = render_dashboard_html(fixture_payload())
 
-        self.assertIn("Personal / CODEX_HOME ~/.codex-personal", html)
-        self.assertIn("Business / CODEX_HOME ~/.codex-business", html)
-        self.assertIn("Plain / no CODEX_HOME", html)
+        self.assertIn("Personal /", html)
+        self.assertIn("~/.codex-personal", html)
+        self.assertIn("Business /", html)
+        self.assertIn("~/.codex-business", html)
+        self.assertIn("Plain / no", html)
+        self.assertIn('class="copy-button"', html)
+        self.assertIn('data-explain="codex_home"', html)
 
     def test_eligible_project_renders_dry_run_safety_note(self) -> None:
         html = render_dashboard_html(fixture_payload())
 
-        self.assertIn("Dry-run only. Review output before manual open.", html)
+        self.assertIn("Review output before manual open.", html)
+        self.assertIn('data-explain="dry_run"', html)
 
     def test_blocked_project_renders_policy_message(self) -> None:
         html = render_dashboard_html(fixture_payload())
@@ -197,15 +250,27 @@ class DashboardUiTests(unittest.TestCase):
             html,
         )
 
+    def test_dirty_project_renders_review_command_buttons(self) -> None:
+        html = render_dashboard_html(fixture_payload())
+
+        self.assertIn("Review commands available.", html)
+        self.assertIn(f"{REVIEW_SCRIPT} --slug dirty --status", html)
+        self.assertIn(f"{REVIEW_SCRIPT} --slug dirty --diff", html)
+        self.assertIn(f"{REVIEW_SCRIPT} --slug dirty --log", html)
+        self.assertIn(f"{REVIEW_SCRIPT} --slug dirty --commit-dry-run", html)
+        self.assertIn("--yes-commit-reviewed", html)
+        self.assertIn('data-explain="review_commands"', html)
+        self.assertIn('data-explain="commit_preflight"', html)
+
     def test_blocked_project_does_not_render_launch_command_blocks(self) -> None:
         html = render_dashboard_html(fixture_payload())
 
         self.assertNotIn(
-            "./scripts/project-forge-open-project --slug dirty --profile personal --dry-run",
+            f"{OPEN_SCRIPT} --slug dirty --profile personal --dry-run",
             html,
         )
         self.assertNotIn(
-            "./scripts/project-forge-open-project --slug protected --profile personal --dry-run",
+            f"{OPEN_SCRIPT} --slug protected --profile personal --dry-run",
             html,
         )
 
@@ -223,14 +288,34 @@ class DashboardUiTests(unittest.TestCase):
         self.assertIn("status-light light-green", html)
         self.assertIn("status-light light-amber", html)
         self.assertIn("status-light light-red", html)
+        self.assertIn('data-explain="repo_light"', html)
+        self.assertIn('data-explain="docs_light"', html)
+        self.assertIn('data-explain="risk_light"', html)
+
+    def test_renders_embedded_term_explanations(self) -> None:
+        html = render_dashboard_html(fixture_payload())
+
+        self.assertIn("Term guide", html)
+        self.assertIn("All dashboard terms", html)
+        self.assertIn("Dry-run means report and preview only.", html)
+        self.assertIn("Repo light summarizes git/project state.", html)
+        self.assertIn('data-glossary-item="recommended_action"', html)
+
+    def test_renders_clickable_summary_filters_and_collapses(self) -> None:
+        html = render_dashboard_html(fixture_payload())
+
+        self.assertIn('data-summary-filter="embedded_ready"', html)
+        self.assertIn('data-summary-filter="protected_manual_review"', html)
+        self.assertIn('data-section-toggle', html)
+        self.assertIn('data-card-toggle', html)
 
     def test_output_contains_safety_statement(self) -> None:
         html = render_dashboard_html(fixture_payload())
 
-        self.assertIn("Phase 10.7D is static and read-only", html)
+        self.assertIn("Phase 11 dashboard interaction is local-only", html)
         self.assertIn("does not launch VS Code", html)
         self.assertIn("write marker files", html)
-        self.assertIn("execute commands", html)
+        self.assertIn("execute project commands", html)
 
     def test_missing_inventory_file_fails_clearly(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -255,15 +340,20 @@ class DashboardUiTests(unittest.TestCase):
         self.assertNotIn("https://", html)
         self.assertNotIn("http://", html)
 
-    def test_dashboard_html_does_not_include_open_or_executable_links(self) -> None:
+    def test_dashboard_html_keeps_interaction_local_only(self) -> None:
         html = render_dashboard_html(fixture_payload())
 
         self.assertNotIn("--open", html)
         self.assertNotIn("vscode://", html)
         self.assertNotIn("file://", html)
-        self.assertNotIn("<script", html)
         self.assertNotIn("onclick=", html)
         self.assertNotIn("javascript:", html)
+        self.assertIn("<script>", html)
+        self.assertIn("navigator.clipboard.writeText", html)
+        self.assertIn("data-filter", html)
+        self.assertIn("setFilter", html)
+        self.assertIn("sortCards", html)
+        self.assertIn("explainTerm", html)
 
     def test_run_dashboard_ui_writes_html(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

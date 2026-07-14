@@ -513,9 +513,19 @@ The wrapper regenerates `artifacts/dashboard_inventory.json`,
 It does not apply changes, write marker files, touch remotes, push/fetch,
 install packages, contact GitHub or Codeberg, or launch VS Code.
 
+After committing project changes, rescan repo status and rebuild the dashboard:
+
+    ./scripts/project-forge-scan-dashboard --open
+
+This wrapper refreshes the known-repository status inventory first, then
+regenerates the dashboard inventory and HTML so stale dirty-review counts can
+clear. Use `--full-scan` or `--scan-root PATH` only when broad discovery is
+actually needed.
+
 See:
 
     docs/PROJECT_FORGE_DASHBOARD_LAUNCHER.md
+    docs/PROJECT_FORGE_DASHBOARD_SCAN.md
 
 ## Phase 10.8A: Cold Start wrapper
 
@@ -633,7 +643,7 @@ Eligible cards display:
     ./scripts/project-forge-open-project --slug <slug> --profile plain --dry-run
 
 This phase is display-only. The HTML does not run commands, does not expose
-`--open`, and does not generate `file://`, `vscode://`, or JavaScript launcher
+`--open`, and does not generate `file://`, `vscode://`, or executable launcher
 actions.
 
 See:
@@ -642,20 +652,59 @@ See:
 
 ## Phase 10.7E: Dashboard copy-helper polish
 
-The static dashboard keeps the same non-executing safety model, but the launch
-area is now easier to copy from:
+The dashboard keeps the same non-executing safety model, but the launch area is
+now easier to copy from:
 
 - `Copy-Paste Launch Commands` heading
 - explicit Personal, Business, and Plain context labels
 - a dry-run-only safety note
 - separate monospace command blocks for each eligible launch command
+- local clipboard copy buttons
 
 The HTML still does not execute commands, render `--open`, or generate
-`file://`, `vscode://`, JavaScript, or executable launcher links.
+`file://`, `vscode://`, or executable launcher links.
+
+## Dashboard local interaction and desktop launcher
+
+The dashboard now includes local-only search, lane filters, clickable summary
+counters, sort controls, collapsible sections/cards, embedded explanations for
+Project Forge terms, a scan-and-rebuild command button, dirty-repo review
+command shortcuts, and dry-run command copy controls inside
+`artifacts/dashboard.html`.
+
+Dirty amber repos show copy buttons for:
+
+- status
+- diff
+- recent commits
+- commit preflight
+- guarded commit command template
+
+The dashboard copies commands only. The guarded commit command must be reviewed
+and run in a terminal. The scan button also copies a terminal command because
+static local HTML cannot execute shell commands directly.
+
+Preview the one-click dashboard launcher install:
+
+```bash
+./scripts/project-forge-install-dashboard-desktop --dry-run
+```
+
+Install after reviewing the dry-run output:
+
+```bash
+./scripts/project-forge-install-dashboard-desktop --install
+```
+
+The installer writes only the expected user-local dashboard desktop/icon files
+in install mode and backs up existing different files before overwrite.
 
 See:
 
     docs/PROJECT_FORGE_DASHBOARD_UI.md
+    docs/PROJECT_FORGE_DASHBOARD_LAUNCHER.md
+    docs/PROJECT_FORGE_DASHBOARD_SCAN.md
+    docs/PROJECT_FORGE_PROJECT_REVIEW.md
 
 ## Phase 10.7F: Plain open test findings
 

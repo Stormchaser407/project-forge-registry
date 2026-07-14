@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -9,21 +10,40 @@ from project_forge_registry.repo_discovery import (
     classify_repo,
     derive_final_status,
     discover_repos,
+    git_status,
     has_project_forge_marker,
     normalize_slug,
+    remote_count,
     run_discovery,
     should_exclude,
 )
 
 
 class RepoDiscoveryTests(unittest.TestCase):
+    @patch(
+        "project_forge_registry.repo_discovery.subprocess.run",
+        side_effect=subprocess.TimeoutExpired("git", 10),
+    )
+    def test_git_status_timeout_is_unknown(self, _run) -> None:
+        self.assertEqual(git_status(Path("/tmp/demo")), "unknown")
+
+    @patch(
+        "project_forge_registry.repo_discovery.subprocess.run",
+        side_effect=subprocess.TimeoutExpired("git", 10),
+    )
+    def test_remote_count_timeout_is_zero(self, _run) -> None:
+        self.assertEqual(remote_count(Path("/tmp/demo")), 0)
+
     def test_normalize_slug(self) -> None:
         self.assertEqual(normalize_slug(Path("My Project")), "my_project")
 
     def test_should_exclude_default_system_paths(self) -> None:
         self.assertTrue(should_exclude(Path("/proc/test")))
+        self.assertTrue(should_exclude(Path("/run/systemd")))
         self.assertTrue(should_exclude(Path("/nix/store/test")))
         self.assertTrue(should_exclude(Path("/tmp/example/node_modules/pkg")))
+        self.assertTrue(should_exclude(Path("/run/media/cash/project/node_modules/pkg")))
+        self.assertFalse(should_exclude(Path("/run/media/cash/WD_BLACK_4TB/Cole/Projects")))
 
     def test_should_exclude_operator_paths(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -109,6 +129,7 @@ class RepoDiscoveryTests(unittest.TestCase):
         self.assertIn("# Project Forge Repo Discovery Report", report)
         self.assertIn("- Discovery was dry-run/report-only.", report)
         self.assertIn("slug,path,git_status", csv_text)
+        self.assertNotIn("\r", csv_text)
 
 
 if __name__ == "__main__":
