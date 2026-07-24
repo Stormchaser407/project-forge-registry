@@ -25,17 +25,31 @@ jobs:
       - name: Apply one-shot migration
         run: python scripts/cerberus-policy-migration.py
 
-      - name: Normalize generated test newline
+      - name: Normalize generated test expectations
         run: |
           python - <<'PY'
           from pathlib import Path
+
           path = Path("tests/test_project_sync.py")
           text = path.read_text(encoding="utf-8")
           broken = '                "\n".join(\n'
           fixed = '                chr(10).join(\n'
           if broken not in text:
-              raise SystemExit("expected generated newline pattern not found")
+              raise SystemExit("expected generated project-sync newline pattern not found")
           path.write_text(text.replace(broken, fixed, 1), encoding="utf-8")
+
+          path = Path("tests/test_workspace_generation.py")
+          text = path.read_text(encoding="utf-8")
+          text = text.replace(
+              "def test_do_not_sync_and_cerberus_warning_are_explicit_skip_reasons",
+              "def test_explicit_policy_skips_without_cerberus_name_warning",
+              1,
+          )
+          old = '        self.assertIn("safety_warning=cerberus_special_case_candidate", reasons)'
+          new = '        self.assertNotIn("safety_warning=cerberus_special_case_candidate", reasons)'
+          if old not in text:
+              raise SystemExit("expected legacy workspace assertion not found")
+          path.write_text(text.replace(old, new, 1), encoding="utf-8")
           PY
 
       - name: Verify no active source uses Cerberus name vetoes
