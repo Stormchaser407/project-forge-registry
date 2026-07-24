@@ -1,17 +1,28 @@
 ---
 title: "Project Forge - Command Center"
 project: "Project Forge"
-status: "dry-run artifact"
+status: "historical dry-run artifact"
 tags:
   - project-forge
   - phase-11
   - command-center
   - dry-run
+  - superseded-scope-qualified
 ---
 
 # Project Forge - Command Center
 
-Project Forge is a dry-run-first local command center. This Phase 11A mirror is generated under repository artifacts only.
+> **Governance note:** This is a preserved Phase 11A dry-run artifact. The
+> canonical current mission and authority boundary are defined by repository
+> `PROJECT_CHARTER.md` and `PROJECT_STATUS.md`.
+
+Project Forge is a dry-run-first local **technical** command center. It inventories
+and reports technical project, repository, mirror, launcher, workspace, and
+readiness state. It does not own personal planning, weekly prioritization,
+calendars, or the complete roadmaps of other projects.
+
+The older universal-planner interpretation of “command center” is superseded.
+The term here refers only to a technical operator surface.
 
 ## Navigation
 
