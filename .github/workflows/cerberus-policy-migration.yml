@@ -25,6 +25,19 @@ jobs:
       - name: Apply one-shot migration
         run: python scripts/cerberus-policy-migration.py
 
+      - name: Normalize generated test newline
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path("tests/test_project_sync.py")
+          text = path.read_text(encoding="utf-8")
+          broken = '                "\n".join(\n'
+          fixed = '                chr(10).join(\n'
+          if broken not in text:
+              raise SystemExit("expected generated newline pattern not found")
+          path.write_text(text.replace(broken, fixed, 1), encoding="utf-8")
+          PY
+
       - name: Verify no active source uses Cerberus name vetoes
         run: |
           hits="$(rg -l 'cerberus_protected|cerberus_special_case_candidate' src/project_forge_registry | grep -v 'category_policy.py' || true)"
