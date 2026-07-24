@@ -201,12 +201,13 @@ class ObsidianMirrorGenerationTests(unittest.TestCase):
         self.assertIn("sync.allow_secrets=true", reasons["secrets"])
         self.assertIn("safety.do_not_sync=true", reasons["nosync"])
 
-    def test_cerberus_related_records_are_protected(self) -> None:
+    def test_cerberus_related_records_are_eligible(self) -> None:
         plan = self.make_plan([self.make_record("cerberus_helper")])
 
-        self.assertEqual(len(plan.eligible_entries), 0)
-        self.assertIn("cerberus_protected", plan.skipped_entries[0].reasons)
-
+        self.assertEqual(
+            {entry.record.slug for entry in plan.eligible_entries},
+            {"cerberus_helper"},
+        )
     def test_project_home_contains_required_links_and_sections(self) -> None:
         text = render_project_home(self.make_record("demo", name="Demo Project"))
 

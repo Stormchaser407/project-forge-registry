@@ -209,17 +209,12 @@ def load_passport_record(passport_dir: Path, slug: str) -> ExportSyncPassportRec
 
 def determine_skip_reasons(record: ExportSyncPassportRecord) -> list[str]:
     reasons: list[str] = []
-    slug_lower = record.slug.lower()
-    local_path_lower = record.local_path.lower()
-
     if record.do_not_sync:
         reasons.append("safety.do_not_sync=true")
     if record.allow_code_to_obsidian:
         reasons.append("sync.allow_code_to_obsidian=true")
     if record.allow_secrets:
         reasons.append("sync.allow_secrets=true")
-    if slug_lower == "cerberus" or "cerberus" in slug_lower or "cerberus" in local_path_lower:
-        reasons.append("cerberus_protected")
     if record.category not in DEFAULT_ELIGIBLE_CATEGORIES:
         reasons.append(f"classification={record.category}")
     if record.registry_action in FORCED_SKIP_REGISTRY_ACTIONS:

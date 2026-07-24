@@ -625,8 +625,6 @@ def determine_reasons(
         reasons.append("sync.allow_code_to_obsidian=true")
     if record.allow_secrets:
         reasons.append("sync.allow_secrets=true")
-    if record.slug == "cerberus" or "cerberus" in record.slug or "cerberus" in record.local_path.lower():
-        reasons.append("cerberus_protected")
     if record.category in DEFAULT_SKIPPED_CATEGORIES and not explicitly_included:
         reasons.append(f"classification={record.category}")
 

@@ -4,6 +4,11 @@
 
 ### Added
 
+- Canonical `PROJECT_CHARTER.md`, `PROJECT_STATUS.md`, and repository lifecycle/compliance standard.
+- Explicit cross-system authority map separating Project Forge, repositories, Todoist, Calendar, C2, Obsidian, and conversation history.
+- Architecture decision retiring Project Forge's former universal-planner mission.
+- Architecture decision retiring project-name-based Cerberus secrecy and protected status.
+- Legacy category normalization for stale `protected_manual_review` discovery artifacts.
 - Phase 11G Neon District / Punk Union static local command board generator, wrapper, docs, report, manifest, and tests.
 - Phase 11H.5 guarded launcher replacement apply command capability with default dry-run reports, strict real-apply guards, wrapper, docs, entrypoint, and tempdir-only apply tests.
 - Dashboard GUI polish with local search, lane filters, clickable summaries, sorting, collapsible sections/cards, embedded term explanations, clipboard copy controls, and a dry-run-first desktop launcher installer.
@@ -22,6 +27,21 @@
 - Phase 10.9 closeout documentation for the Project Forge local command center.
 - Operator release notes for Cold Start, dashboard refresh, and dry-run project open workflows.
 - Closeout report artifact at `artifacts/phase_10_closeout_report.md`.
+
+### Changed
+
+- Project Forge is now explicitly a technical project/fleet registry and guarded operator surface, not a personal planner or universal roadmap owner.
+- Every materially reviewed repository must leave reconciliation compliant with an explicit lifecycle state or archived/superseded with preservation evidence.
+- Cerberus-labeled repositories are scanned, displayed, launched, mirrored, synchronized, and evaluated under the same evidence-based rules as other personal repositories.
+- Scanner, discovery, workspace, passport, mirror, export, remote-policy, and project-sync gates no longer infer protection from the word `Cerberus`.
+- Real credentials, env files, databases, case data, raw evidence, exports, and logs remain protected by ordinary content-based safeguards.
+- The root README is now a current operator front door; detailed phase archaeology remains in docs, handoff files, artifacts, and Git history.
+
+### Verification
+
+- Full GitHub unit-test suite passed after the Cerberus policy migration.
+- Active source was checked to ensure the retired `cerberus_protected` and `cerberus_special_case_candidate` vetoes no longer remain outside the explicit legacy-normalization helper.
+- Temporary migration workflow and script were removed after verification.
 
 ### Notes
 

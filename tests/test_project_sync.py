@@ -201,13 +201,13 @@ class ProjectSyncTests(unittest.TestCase):
 
         self.assertEqual(derive_final_status(False, results), "incomplete")
 
-    def test_detect_protected_project_from_slug_and_passport(self) -> None:
+    def test_detect_protected_project_uses_explicit_policy_only(self) -> None:
         with tempfile.TemporaryDirectory(dir=repository_root() / "artifacts") as artifacts_tmp:
             passport_dir = Path(artifacts_tmp) / "project_passports"
             passport_dir.mkdir(parents=True)
             passport_path = passport_dir / "cerberus.project.yml"
             passport_path.write_text(
-                "\n".join(
+                chr(10).join(
                     [
                         "project:",
                         "  slug: cerberus",
@@ -225,8 +225,7 @@ class ProjectSyncTests(unittest.TestCase):
                 encoding="utf-8",
             )
             reasons = detect_protected_project(passport_path, "cerberus")
-            self.assertIn("cerberus_protected", reasons)
-
+            self.assertEqual(reasons, [])
     def test_report_writer_outputs_status(self) -> None:
         with tempfile.TemporaryDirectory(dir=repository_root() / "artifacts") as artifacts_tmp:
             report_path = Path(artifacts_tmp) / "project_sync_report.md"

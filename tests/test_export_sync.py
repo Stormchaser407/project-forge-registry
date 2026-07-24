@@ -230,7 +230,7 @@ class ExportSyncTests(unittest.TestCase):
             self.assertIn("classification=unknown", plan.entry.reasons)
             self.assertEqual(plan.files_planned, 0)
 
-    def test_cerberus_slug_is_protected(self) -> None:
+    def test_cerberus_slug_is_eligible(self) -> None:
         artifacts_root = repository_artifacts_root()
         with tempfile.TemporaryDirectory(dir=artifacts_root) as artifacts_tmp, tempfile.TemporaryDirectory() as vault_tmp, tempfile.TemporaryDirectory() as project_tmp:
             artifacts_dir = Path(artifacts_tmp)
@@ -239,14 +239,12 @@ class ExportSyncTests(unittest.TestCase):
             export_docs_dir = vault_root / "cerberus" / "_export" / "docs"
             passport_dir.mkdir(parents=True)
             export_docs_dir.mkdir(parents=True)
-            (export_docs_dir / "guide.md").write_text("# Guide\n", encoding="utf-8")
-
+            (export_docs_dir / "guide.md").write_text("# Guide" + chr(10), encoding="utf-8")
             write_passport(
                 passport_dir / "cerberus.project.yml",
                 slug="cerberus",
                 local_path=project_tmp,
             )
-
             plan = build_sync_plan(
                 mode="dry-run",
                 slug="cerberus",
@@ -258,10 +256,9 @@ class ExportSyncTests(unittest.TestCase):
                 report_name="export_sync_report.md",
                 backup_suffix="stamp",
             )
-
-            self.assertFalse(plan.entry.eligible)
-            self.assertIn("cerberus_protected", plan.entry.reasons)
-
+            self.assertTrue(plan.entry.eligible)
+            self.assertEqual(plan.entry.reasons, [])
+            self.assertEqual(plan.files_planned, 1)
     def test_apply_copies_and_creates_backups(self) -> None:
         artifacts_root = repository_artifacts_root()
         with tempfile.TemporaryDirectory(dir=artifacts_root) as artifacts_tmp, tempfile.TemporaryDirectory() as vault_tmp, tempfile.TemporaryDirectory() as project_tmp:

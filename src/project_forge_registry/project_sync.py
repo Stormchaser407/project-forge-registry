@@ -103,10 +103,6 @@ def passport_path_for_slug(passport_dir: Path, slug: str) -> Path:
 
 def detect_protected_project(passport_path: Path, slug: str) -> list[str]:
     reasons: list[str] = []
-    slug_lower = slug.lower()
-    if slug_lower == "cerberus" or "cerberus" in slug_lower:
-        reasons.append("cerberus_protected")
-
     if not passport_path.exists():
         reasons.append("passport_missing")
         return reasons
@@ -119,13 +115,10 @@ def detect_protected_project(passport_path: Path, slug: str) -> list[str]:
     if isinstance(project, dict):
         category = str(project.get("category", "")).strip()
         registry_action = str(project.get("registry_action", "")).strip()
-        local_path = str(project.get("local_path", "")).lower()
         if category in PROTECTED_CATEGORIES:
             reasons.append(f"classification={category}")
         if registry_action in PROTECTED_REGISTRY_ACTIONS:
             reasons.append(f"registry_action={registry_action}")
-        if "cerberus" in local_path:
-            reasons.append("cerberus_protected")
     return reasons
 
 

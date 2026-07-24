@@ -138,17 +138,12 @@ def load_passport_record(passport_dir: Path, slug: str) -> RemotePassportRecord:
 
 def determine_policy_status(record: RemotePassportRecord) -> tuple[bool, str, list[str]]:
     reasons: list[str] = []
-    slug_lower = record.slug.lower()
-    local_lower = str(record.local_path).lower()
-
     if record.do_not_sync:
         reasons.append("safety.do_not_sync=true")
     if record.allow_code_to_obsidian:
         reasons.append("sync.allow_code_to_obsidian=true")
     if record.allow_secrets:
         reasons.append("sync.allow_secrets=true")
-    if slug_lower == "cerberus" or "cerberus" in slug_lower or "cerberus" in local_lower:
-        reasons.append("cerberus_protected")
     if record.category in PROTECTED_CATEGORIES:
         reasons.append(f"classification={record.category}")
     if record.registry_action in PROTECTED_REGISTRY_ACTIONS:
@@ -161,7 +156,6 @@ def determine_policy_status(record: RemotePassportRecord) -> tuple[bool, str, li
         for item in reasons
         if item.startswith("safety.")
         or item.startswith("sync.")
-        or item == "cerberus_protected"
         or item.startswith("classification=")
         or item.startswith("registry_action=")
     ]

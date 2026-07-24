@@ -137,7 +137,7 @@ class RemotePolicyTests(unittest.TestCase):
             self.assertEqual(plan.policy_status, "blocked")
             self.assertIn("classification=unknown", plan.reasons)
 
-    def test_plan_blocks_cerberus(self) -> None:
+    def test_plan_treats_cerberus_normally(self) -> None:
         with self.temp_in_repo() as tmp:
             artifacts = Path(tmp)
             passport_dir = artifacts / "project_passports"
@@ -147,14 +147,14 @@ class RemotePolicyTests(unittest.TestCase):
                 slug="cerberus",
                 local_path=str(artifacts),
             )
-
             parser = build_parser()
-            args = parser.parse_args(["plan", "--slug", "cerberus", "--passport-dir", str(passport_dir)])
+            args = parser.parse_args(
+                ["plan", "--slug", "cerberus", "--passport-dir", str(passport_dir)]
+            )
             plan = build_plan(args)
-
-            self.assertFalse(plan.eligible)
-            self.assertIn("cerberus_protected", plan.reasons)
-
+            self.assertTrue(plan.eligible)
+            self.assertEqual(plan.policy_status, "needs_approval")
+            self.assertNotIn("cerberus_protected", plan.reasons)
     def test_verify_reads_local_git_state(self) -> None:
         with self.temp_in_repo() as tmp:
             root = Path(tmp)
