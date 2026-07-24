@@ -11,6 +11,7 @@ from project_forge_registry.passport_generation import (
     build_parser,
     create_generation_plan_from_args,
     ensure_allowed_target,
+    load_project_records,
     normalize_report_name,
     render_passport_yaml,
     repository_artifacts_root,
@@ -77,9 +78,21 @@ class PassportGenerationTests(unittest.TestCase):
     def test_default_eligible_categories(self) -> None:
         records = [
             self.make_record("active", category="active_project"),
-            self.make_record("tool", category="operated_tool", registry_action="workspace_only"),
-            self.make_record("vendor", category="vendor_clone", registry_action="workspace_only"),
-            self.make_record("lab", category="lab", registry_action="workspace_only"),
+            self.make_record(
+                "tool",
+                category="operated_tool",
+                registry_action="workspace_only",
+            ),
+            self.make_record(
+                "vendor",
+                category="vendor_clone",
+                registry_action="workspace_only",
+            ),
+            self.make_record(
+                "lab",
+                category="lab",
+                registry_action="workspace_only",
+            ),
         ]
         plan = self.make_plan(records)
 
@@ -93,34 +106,99 @@ class PassportGenerationTests(unittest.TestCase):
     def test_forced_skip_categories_always_skip(self) -> None:
         records = [
             self.make_record("bound", category="system_bound_project"),
-            self.make_record("reconcile", category="reconciliation_required", registry_action="workspace_only"),
+            self.make_record(
+                "reconcile",
+                category="reconciliation_required",
+                registry_action="workspace_only",
+            ),
         ]
-        plan = self.make_plan(records, include_categories={"system_bound_project", "reconciliation_required"})
+        plan = self.make_plan(
+            records,
+            include_categories={"system_bound_project", "reconciliation_required"},
+        )
 
         skipped = {entry.record.slug: entry.reasons for entry in plan.skipped_entries}
         self.assertIn("classification=system_bound_project", skipped["bound"])
         self.assertIn("classification=reconciliation_required", skipped["reconcile"])
 
-    def test_do_not_sync_and_cerberus_are_explicit_skip_reasons(self) -> None:
+    def test_explicit_do_not_sync_remains_a_skip_reason(self) -> None:
         record = self.make_record(
-            "cerberus_helper",
-            category="active_project",
-            local_path="/projects/cerberus-helper",
+            "ordinary_project",
             do_not_sync=True,
-            safety_warnings=("cerberus_special_case_candidate",),
         )
         plan = self.make_plan([record])
 
         reasons = plan.skipped_entries[0].reasons
-        self.assertIn("do_not_sync=true", reasons)
-        self.assertIn("safety_warning=cerberus_special_case_candidate", reasons)
-        self.assertIn("cerberus_protected", reasons)
+        self.assertEqual(reasons, ["do_not_sync=true"])
+
+    def test_cerberus_name_is_not_a_skip_reason(self) -> None:
+        record = self.make_record(
+            "cerberus_helper",
+            category="active_project",
+            local_path="/projects/cerberus-helper",
+        )
+        plan = self.make_plan([record])
+
+        self.assertEqual(
+            {entry.record.slug for entry in plan.eligible_entries},
+            {"cerberus_helper"},
+        )
+
+    def test_load_project_records_migrates_legacy_cerberus_protection(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            input_json = Path(tmp) / "scan.json"
+            input_json.write_text(
+                json.dumps(
+                    {
+                        "projects": [
+                            {
+                                "safe_slug": "cerberus_case_workspace",
+                                "folder_name": "cerberus_case_workspace",
+                                "path": "/projects/cerberus_case_workspace",
+                                "recommended_category": "system_bound_project",
+                                "recommended_status": "active_special_case",
+                                "recommended_action": "document_only_for_now",
+                                "has_git": True,
+                                "canonical_path": "/projects/cerberus_case_workspace",
+                                "do_not_move": True,
+                                "do_not_delete": False,
+                                "do_not_sync": True,
+                                "exclude_from_bulk_sync": True,
+                                "obsidian_note_policy": "high_level_notes_only",
+                                "safety_warnings": [
+                                    "cerberus_special_case_candidate",
+                                    "do_not_sync",
+                                ],
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            record = load_project_records(input_json)[0]
+
+        self.assertEqual(record.category, "active_project")
+        self.assertEqual(record.status, "review")
+        self.assertEqual(record.registry_action, "register_full")
+        self.assertIsNone(record.canonical_path)
+        self.assertFalse(record.do_not_move)
+        self.assertFalse(record.do_not_delete)
+        self.assertFalse(record.do_not_sync)
+        self.assertFalse(record.exclude_from_bulk_sync)
+        self.assertEqual(record.obsidian_note_policy, "docs_only")
+        self.assertNotIn("cerberus_special_case_candidate", record.safety_warnings)
+        self.assertIn("do_not_sync", record.safety_warnings)
 
     def test_path_guard_rejects_nested_targets(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)
             with self.assertRaises(ValueError):
-                ensure_allowed_target(base / "nested" / "demo.project.yml", base, "demo.project.yml")
+                ensure_allowed_target(
+                    base / "nested" / "demo.project.yml",
+                    base,
+                    "demo.project.yml",
+                )
 
     def test_artifacts_dir_must_stay_inside_repo_artifacts(self) -> None:
         with self.assertRaises(ValueError):
@@ -149,7 +227,10 @@ class PassportGenerationTests(unittest.TestCase):
             artifacts_dir = Path(artifacts_tmp)
             passports_dir = artifacts_dir / "project_passports"
             passports_dir.mkdir()
-            (passports_dir / "demo.project.yml").write_text("old", encoding="utf-8")
+            (passports_dir / "demo.project.yml").write_text(
+                "old",
+                encoding="utf-8",
+            )
 
             plan = build_generation_plan(
                 records=[self.make_record("demo")],
@@ -167,11 +248,16 @@ class PassportGenerationTests(unittest.TestCase):
             entry = plan.eligible_entries[0]
             self.assertEqual(entry.planned_backup_count, 1)
             assert entry.file_action is not None
-            self.assertEqual(entry.file_action.backup_path.name, "demo.project.yml.bak.stamp")
+            self.assertEqual(
+                entry.file_action.backup_path.name,
+                "demo.project.yml.bak.stamp",
+            )
 
     def test_dry_run_only_writes_report(self) -> None:
         artifacts_root = repository_artifacts_root()
-        with tempfile.TemporaryDirectory(dir=artifacts_root) as artifacts_tmp, tempfile.TemporaryDirectory() as tmp:
+        with tempfile.TemporaryDirectory(
+            dir=artifacts_root
+        ) as artifacts_tmp, tempfile.TemporaryDirectory() as tmp:
             tmp_path = Path(tmp)
             input_json = tmp_path / "input.json"
             input_json.write_text(
@@ -245,7 +331,9 @@ class PassportGenerationTests(unittest.TestCase):
 
             self.assertIn("slug: demo", proposal_text)
             self.assertIn("created_by: project-forge-registry", proposal_text)
-            self.assertTrue((passports_dir / "demo.project.yml.bak.stamp").exists())
+            self.assertTrue(
+                (passports_dir / "demo.project.yml.bak.stamp").exists()
+            )
             self.assertTrue(plan.report_path.exists())
             self.assertEqual(plan.written_count, 1)
             self.assertEqual(plan.backup_count, 1)
