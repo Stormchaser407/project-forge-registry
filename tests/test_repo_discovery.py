@@ -43,7 +43,9 @@ class RepoDiscoveryTests(unittest.TestCase):
         self.assertTrue(should_exclude(Path("/nix/store/test")))
         self.assertTrue(should_exclude(Path("/tmp/example/node_modules/pkg")))
         self.assertTrue(should_exclude(Path("/run/media/cash/project/node_modules/pkg")))
-        self.assertFalse(should_exclude(Path("/run/media/cash/WD_BLACK_4TB/Cole/Projects")))
+        self.assertFalse(
+            should_exclude(Path("/run/media/cash/WD_BLACK_4TB/Cole/Projects"))
+        )
 
     def test_should_exclude_operator_paths(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -55,19 +57,32 @@ class RepoDiscoveryTests(unittest.TestCase):
     def test_has_project_forge_marker_yaml(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             repo = Path(tmp)
-            (repo / ".project-forge.yml").write_text("slug: demo\n", encoding="utf-8")
+            (repo / ".project-forge.yml").write_text(
+                "slug: demo\n",
+                encoding="utf-8",
+            )
             self.assertTrue(has_project_forge_marker(repo))
 
     def test_has_project_forge_marker_doc(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             repo = Path(tmp)
             (repo / "docs").mkdir()
-            (repo / "docs" / "PROJECT_FORGE.md").write_text("# Project Forge\n", encoding="utf-8")
+            (repo / "docs" / "PROJECT_FORGE.md").write_text(
+                "# Project Forge\n",
+                encoding="utf-8",
+            )
             self.assertTrue(has_project_forge_marker(repo))
 
-    def test_classify_protected_cerberus(self) -> None:
+    def test_classify_cerberus_clean_candidate_normally(self) -> None:
         repo = Path("/tmp/CerberusThing")
-        self.assertEqual(classify_repo(repo, "clean", False), "protected_manual_review")
+        self.assertEqual(classify_repo(repo, "clean", False), "clean_candidate")
+
+    def test_classify_cerberus_dirty_candidate_normally(self) -> None:
+        repo = Path("/tmp/cerberus_case_workspace")
+        self.assertEqual(
+            classify_repo(repo, "dirty", False),
+            "dirty_candidate_review_first",
+        )
 
     def test_classify_control_repo(self) -> None:
         repo = Path("/tmp/project-forge-registry")
@@ -79,7 +94,10 @@ class RepoDiscoveryTests(unittest.TestCase):
 
     def test_classify_dirty_candidate(self) -> None:
         repo = Path("/tmp/demo")
-        self.assertEqual(classify_repo(repo, "dirty", False), "dirty_candidate_review_first")
+        self.assertEqual(
+            classify_repo(repo, "dirty", False),
+            "dirty_candidate_review_first",
+        )
 
     def test_classify_clean_candidate(self) -> None:
         repo = Path("/tmp/demo")
@@ -111,10 +129,14 @@ class RepoDiscoveryTests(unittest.TestCase):
 
     @patch("project_forge_registry.repo_discovery.git_status", return_value="clean")
     @patch("project_forge_registry.repo_discovery.remote_count", return_value=0)
-    def test_run_discovery_writes_report_and_csv(self, _remote_count, _git_status) -> None:
+    def test_run_discovery_writes_report_and_csv(
+        self,
+        _remote_count,
+        _git_status,
+    ) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            repo = root / "demo"
+            repo = root / "cerberus-recon"
             repo.mkdir()
             (repo / ".git").mkdir()
             report_path = root / "report.md"
@@ -128,7 +150,13 @@ class RepoDiscoveryTests(unittest.TestCase):
         self.assertEqual(summary.final_status, "ready_for_operator_review")
         self.assertIn("# Project Forge Repo Discovery Report", report)
         self.assertIn("- Discovery was dry-run/report-only.", report)
-        self.assertIn("slug,path,git_status", csv_text)
+        self.assertIn(
+            "No repository is hidden or blocked because its name contains Cerberus",
+            report,
+        )
+        self.assertIn("cerberus-recon", csv_text)
+        self.assertIn("clean_candidate", csv_text)
+        self.assertNotIn("protected_manual_review", csv_text)
         self.assertNotIn("\r", csv_text)
 
 
