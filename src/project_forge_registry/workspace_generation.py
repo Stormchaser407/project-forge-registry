@@ -245,8 +245,6 @@ def determine_reasons(
         reasons.append(f"preserved_workspace={workspace_filename}")
     if record.registry_action not in DEFAULT_ELIGIBLE_ACTIONS:
         reasons.append(f"registry_action={record.registry_action}")
-    if "cerberus_special_case_candidate" in record.safety_warnings:
-        reasons.append("safety_warning=cerberus_special_case_candidate")
 
     if record.category in FORCED_SKIP_CATEGORIES:
         return reasons

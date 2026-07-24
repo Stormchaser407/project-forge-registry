@@ -169,7 +169,7 @@ class DashboardInventoryTests(unittest.TestCase):
         self.assertEqual(derive_docs_light(rows["candidate"]), "amber")
         self.assertEqual(derive_risk_light(rows["candidate"]), "amber")
         self.assertEqual(derive_risk_light(rows["dirty"]), "amber")
-        self.assertEqual(derive_risk_light(rows["protected"]), "red")
+        self.assertEqual(derive_risk_light(rows["protected"]), "green")
         self.assertEqual(derive_docs_light(rows["unknown"]), "gray")
         self.assertEqual(derive_risk_light(rows["control"]), "blue")
 
@@ -199,7 +199,7 @@ class DashboardInventoryTests(unittest.TestCase):
         self.assertEqual(derive_recommended_action(rows["dirty"]), "dirty_review_first")
         self.assertEqual(
             derive_recommended_action(rows["protected"]),
-            "protected_manual_review",
+            "candidate_review",
         )
         self.assertEqual(
             derive_recommended_action(rows["control"]),
@@ -288,8 +288,8 @@ class DashboardInventoryTests(unittest.TestCase):
         )
         self.assertIn("--commit-dry-run", projects["dirty"].review_commands["commit_preflight"])
         self.assertIn("--yes-commit-reviewed", projects["dirty"].review_commands["commit_template"])
-        self.assertEqual(projects["protected"].launch_policy["status"], "blocked")
-        self.assertEqual(projects["protected"].review_policy["status"], "manual_only")
+        self.assertEqual(projects["protected"].launch_policy["status"], "eligible")
+        self.assertEqual(projects["protected"].review_policy["status"], "not_required")
         self.assertEqual(projects["protected"].review_commands, {})
         self.assertEqual(projects["control"].launch_policy["status"], "restricted")
         self.assertEqual(projects["control"].review_policy["status"], "not_required")

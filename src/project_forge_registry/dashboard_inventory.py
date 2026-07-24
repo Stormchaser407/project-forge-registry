@@ -24,6 +24,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from .category_policy import normalize_repo_category
+
 
 DEFAULT_REPO_DISCOVERY_CSV = Path("artifacts/repo_discovery_inventory.csv")
 DEFAULT_EMBED_PLAN_CSV = Path("artifacts/embed_plan_inventory.csv")
@@ -133,19 +135,20 @@ def load_repo_discovery_inventory(csv_path: Path) -> list[RepoDiscoveryRow]:
     with csv_path.open("r", encoding="utf-8", newline="") as handle:
         reader = csv.DictReader(handle)
         for row in reader:
+            git_status = row["git_status"]
+            marker = parse_bool(row["has_project_forge_marker"])
+            category = normalize_repo_category(row["category"], git_status, marker)
             rows.append(
                 RepoDiscoveryRow(
                     slug=row["slug"],
                     path=Path(row["path"]),
-                    git_status=row["git_status"],
+                    git_status=git_status,
                     has_readme=parse_bool(row["has_readme"]),
                     has_agents=parse_bool(row["has_agents"]),
                     has_code_workspace=parse_bool(row["has_code_workspace"]),
-                    has_project_forge_marker=parse_bool(
-                        row["has_project_forge_marker"]
-                    ),
+                    has_project_forge_marker=marker,
                     remote_count=int(row["remote_count"]),
-                    category=row["category"],
+                    category=category,
                 )
             )
     return sorted(rows, key=lambda item: (str(item.path), item.slug))

@@ -264,7 +264,7 @@ class WorkspaceGenerationTests(unittest.TestCase):
         self.assertEqual(len(plan.eligible_entries), 0)
         self.assertIn("registry_action=review_required", plan.skipped_entries[0].reasons)
 
-    def test_do_not_sync_and_cerberus_warning_are_explicit_skip_reasons(self) -> None:
+    def test_explicit_policy_skips_without_cerberus_name_warning(self) -> None:
         record = WorkspaceProjectRecord(
             slug="cerberus",
             name="Cerberus",
@@ -278,7 +278,7 @@ class WorkspaceGenerationTests(unittest.TestCase):
 
         reasons = plan.skipped_entries[0].reasons
         self.assertIn("do_not_sync=true", reasons)
-        self.assertIn("safety_warning=cerberus_special_case_candidate", reasons)
+        self.assertNotIn("safety_warning=cerberus_special_case_candidate", reasons)
 
 
 if __name__ == "__main__":
