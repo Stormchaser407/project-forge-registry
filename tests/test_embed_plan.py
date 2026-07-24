@@ -51,14 +51,18 @@ class EmbedPlanTests(unittest.TestCase):
         self.assertEqual(items[0].decision, "blocked_dirty")
         self.assertEqual(derive_final_status(items), "blocked")
 
-    def test_protected_selected_repo_blocks(self) -> None:
-        items = build_plan([row("cerberus", category="protected_manual_review")], {"cerberus"})
+    def test_cerberus_clean_candidate_plans_normally(self) -> None:
+        items = build_plan([row("cerberus")], {"cerberus"})
 
-        self.assertEqual(items[0].decision, "blocked_protected")
-        self.assertEqual(derive_final_status(items), "blocked")
+        self.assertEqual(items[0].decision, "plan_marker_write")
+        self.assertTrue(items[0].eligible)
+        self.assertEqual(derive_final_status(items), "ready_for_operator_review")
 
     def test_control_repo_is_skipped(self) -> None:
-        items = build_plan([row("project-forge-registry", category="control_repo")], {"project-forge-registry"})
+        items = build_plan(
+            [row("project-forge-registry", category="control_repo")],
+            {"project-forge-registry"},
+        )
 
         self.assertEqual(items[0].decision, "skip_control_repo")
 
@@ -105,7 +109,10 @@ class EmbedPlanTests(unittest.TestCase):
             {"demo-one", "demo-two"},
         )
 
-        self.assertEqual([item.decision for item in items], ["already_embedded", "already_embedded"])
+        self.assertEqual(
+            [item.decision for item in items],
+            ["already_embedded", "already_embedded"],
+        )
         self.assertEqual(derive_final_status(items), "ready_for_operator_review")
 
     def test_run_embed_plan_writes_report_and_csv(self) -> None:
@@ -116,12 +123,18 @@ class EmbedPlanTests(unittest.TestCase):
             output_csv = root / "plan.csv"
 
             input_csv.write_text(
-                "slug,path,git_status,has_readme,has_agents,has_code_workspace,has_project_forge_marker,remote_count,category\n"
+                "slug,path,git_status,has_readme,has_agents,has_code_workspace,"
+                "has_project_forge_marker,remote_count,category\n"
                 "demo,/tmp/demo,clean,true,false,false,false,0,clean_candidate\n",
                 encoding="utf-8",
             )
 
-            final_status = run_embed_plan(input_csv, {"demo"}, report, output_csv)
+            final_status = run_embed_plan(
+                input_csv,
+                {"demo"},
+                report,
+                output_csv,
+            )
             report_text = report.read_text(encoding="utf-8")
             csv_text = output_csv.read_text(encoding="utf-8")
 
@@ -129,6 +142,34 @@ class EmbedPlanTests(unittest.TestCase):
         self.assertIn("# Project Forge Embed Plan Report", report_text)
         self.assertIn("- No marker files were written.", report_text)
         self.assertIn("demo,/tmp/demo,true,true,plan_marker_write", csv_text)
+
+    def test_run_embed_plan_normalizes_legacy_protected_category(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            input_csv = root / "inventory.csv"
+            report = root / "report.md"
+            output_csv = root / "plan.csv"
+
+            input_csv.write_text(
+                "slug,path,git_status,has_readme,has_agents,has_code_workspace,"
+                "has_project_forge_marker,remote_count,category\n"
+                "cerberus,/tmp/cerberus,clean,true,false,false,false,0,"
+                "protected_manual_review\n",
+                encoding="utf-8",
+            )
+
+            final_status = run_embed_plan(
+                input_csv,
+                {"cerberus"},
+                report,
+                output_csv,
+            )
+            csv_text = output_csv.read_text(encoding="utf-8")
+
+        self.assertEqual(final_status, "ready_for_operator_review")
+        self.assertIn("plan_marker_write", csv_text)
+        self.assertIn("clean_candidate", csv_text)
+        self.assertNotIn("protected_manual_review", csv_text)
 
 
 if __name__ == "__main__":
