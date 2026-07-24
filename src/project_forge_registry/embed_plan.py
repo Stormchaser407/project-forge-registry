@@ -19,6 +19,8 @@ import csv
 from dataclasses import dataclass
 from pathlib import Path
 
+from .category_policy import normalize_repo_category
+
 
 DEFAULT_INPUT_CSV = Path("artifacts/repo_discovery_inventory.csv")
 DEFAULT_REPORT_NAME = "embed_plan_report.md"
@@ -64,17 +66,24 @@ def load_inventory(csv_path: Path) -> list[RepoInventoryRow]:
     with csv_path.open("r", encoding="utf-8", newline="") as handle:
         reader = csv.DictReader(handle)
         for row in reader:
+            git_status = row["git_status"]
+            marker = parse_bool(row["has_project_forge_marker"])
+            category = normalize_repo_category(
+                row["category"],
+                git_status,
+                marker,
+            )
             rows.append(
                 RepoInventoryRow(
                     slug=row["slug"],
                     path=Path(row["path"]),
-                    git_status=row["git_status"],
+                    git_status=git_status,
                     has_readme=parse_bool(row["has_readme"]),
                     has_agents=parse_bool(row["has_agents"]),
                     has_code_workspace=parse_bool(row["has_code_workspace"]),
-                    has_project_forge_marker=parse_bool(row["has_project_forge_marker"]),
+                    has_project_forge_marker=marker,
                     remote_count=int(row["remote_count"]),
-                    category=row["category"],
+                    category=category,
                 )
             )
     return rows
@@ -91,9 +100,6 @@ def build_plan_item(row: RepoInventoryRow, selected_slugs: set[str]) -> EmbedPla
     elif row.category == "control_repo":
         decision = "skip_control_repo"
         reason = "Project Forge control repo should not embed into itself automatically."
-    elif row.category == "protected_manual_review":
-        decision = "blocked_protected"
-        reason = "Protected/Cerberus-related repo requires manual review."
     elif row.git_status != "clean":
         decision = "blocked_dirty"
         reason = "Repo is dirty; clean or review before embedding."
@@ -147,38 +153,49 @@ def write_csv(csv_path: Path, items: list[EmbedPlanItem]) -> None:
     csv_path.parent.mkdir(parents=True, exist_ok=True)
     with csv_path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.writer(handle)
-        writer.writerow([
-            "slug",
-            "path",
-            "selected",
-            "eligible",
-            "decision",
-            "reason",
-            "marker_yaml",
-            "marker_doc",
-            "category",
-            "git_status",
-        ])
+        writer.writerow(
+            [
+                "slug",
+                "path",
+                "selected",
+                "eligible",
+                "decision",
+                "reason",
+                "marker_yaml",
+                "marker_doc",
+                "category",
+                "git_status",
+            ]
+        )
         for item in items:
-            writer.writerow([
-                item.slug,
-                str(item.path),
-                str(item.selected).lower(),
-                str(item.eligible).lower(),
-                item.decision,
-                item.reason,
-                str(item.marker_yaml),
-                str(item.marker_doc),
-                item.category,
-                item.git_status,
-            ])
+            writer.writerow(
+                [
+                    item.slug,
+                    str(item.path),
+                    str(item.selected).lower(),
+                    str(item.eligible).lower(),
+                    item.decision,
+                    item.reason,
+                    str(item.marker_yaml),
+                    str(item.marker_doc),
+                    item.category,
+                    item.git_status,
+                ]
+            )
 
 
-def write_report(report_path: Path, csv_path: Path, items: list[EmbedPlanItem], selected_slugs: set[str]) -> str:
+def write_report(
+    report_path: Path,
+    csv_path: Path,
+    items: list[EmbedPlanItem],
+    selected_slugs: set[str],
+) -> str:
     final_status = derive_final_status(items)
     selected_items = [item for item in items if item.selected]
     plan_items = [item for item in items if item.decision == "plan_marker_write"]
-    blocked_selected = [item for item in selected_items if item.decision.startswith("blocked")]
+    blocked_selected = [
+        item for item in selected_items if item.decision.startswith("blocked")
+    ]
 
     lines: list[str] = [
         "# Project Forge Embed Plan Report",
@@ -190,6 +207,7 @@ def write_report(report_path: Path, csv_path: Path, items: list[EmbedPlanItem], 
         f"- planned_marker_writes: `{len(plan_items)}`",
         f"- blocked_selected: `{len(blocked_selected)}`",
         f"- csv: `{csv_path}`",
+        "- legacy_policy: `protected_manual_review is normalized to ordinary repo state`",
         "",
         "## Selected Slugs",
         "",
@@ -205,16 +223,18 @@ def write_report(report_path: Path, csv_path: Path, items: list[EmbedPlanItem], 
 
     if plan_items:
         for item in plan_items:
-            lines.extend([
-                f"### {item.slug}",
-                "",
-                f"- path: `{item.path}`",
-                f"- marker_yaml: `{item.marker_yaml}`",
-                f"- marker_doc: `{item.marker_doc}`",
-                f"- decision: `{item.decision}`",
-                f"- reason: {item.reason}",
-                "",
-            ])
+            lines.extend(
+                [
+                    f"### {item.slug}",
+                    "",
+                    f"- path: `{item.path}`",
+                    f"- marker_yaml: `{item.marker_yaml}`",
+                    f"- marker_doc: `{item.marker_doc}`",
+                    f"- decision: `{item.decision}`",
+                    f"- reason: {item.reason}",
+                    "",
+                ]
+            )
     else:
         lines.append("- none")
 
@@ -222,17 +242,19 @@ def write_report(report_path: Path, csv_path: Path, items: list[EmbedPlanItem], 
 
     if selected_items:
         for item in selected_items:
-            lines.extend([
-                f"### {item.slug}",
-                "",
-                f"- path: `{item.path}`",
-                f"- category: `{item.category}`",
-                f"- git_status: `{item.git_status}`",
-                f"- eligible: `{str(item.eligible).lower()}`",
-                f"- decision: `{item.decision}`",
-                f"- reason: {item.reason}",
-                "",
-            ])
+            lines.extend(
+                [
+                    f"### {item.slug}",
+                    "",
+                    f"- path: `{item.path}`",
+                    f"- category: `{item.category}`",
+                    f"- git_status: `{item.git_status}`",
+                    f"- eligible: `{str(item.eligible).lower()}`",
+                    f"- decision: `{item.decision}`",
+                    f"- reason: {item.reason}",
+                    "",
+                ]
+            )
     else:
         lines.append("- none")
 
@@ -245,19 +267,22 @@ def write_report(report_path: Path, csv_path: Path, items: list[EmbedPlanItem], 
     for decision in sorted(decision_counts):
         lines.append(f"- {decision}: `{decision_counts[decision]}`")
 
-    lines.extend([
-        "",
-        "## Safety Statement",
-        "",
-        "- This is a dry-run embed plan only.",
-        "- No marker files were written.",
-        "- No external repos were modified.",
-        "- No apply operation was performed.",
-        "- No remotes were added or modified.",
-        "- No push/fetch occurred.",
-        "- Embedding requires a separate approved apply phase.",
-        "",
-    ])
+    lines.extend(
+        [
+            "",
+            "## Safety Statement",
+            "",
+            "- This is a dry-run embed plan only.",
+            "- No marker files were written.",
+            "- No external repos were modified.",
+            "- No apply operation was performed.",
+            "- No remotes were added or modified.",
+            "- No push/fetch occurred.",
+            "- Project names do not create hidden or protected categories.",
+            "- Embedding requires a separate approved apply phase.",
+            "",
+        ]
+    )
 
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text("\n".join(lines), encoding="utf-8")
