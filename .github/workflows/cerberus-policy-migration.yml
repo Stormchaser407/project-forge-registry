@@ -100,7 +100,6 @@ jobs:
               '',
           )
 
-          # Normalize stale discovery CSV categories at the dashboard boundary.
           replace_once(
               "src/project_forge_registry/dashboard_inventory.py",
               'from typing import Any\n\n',
@@ -136,8 +135,6 @@ jobs:
               '''    def test_detect_protected_project_uses_explicit_policy_only(self) -> None:\n        with tempfile.TemporaryDirectory(dir=repository_root() / "artifacts") as artifacts_tmp:\n            passport_dir = Path(artifacts_tmp) / "project_passports"\n            passport_dir.mkdir(parents=True)\n            passport_path = passport_dir / "cerberus.project.yml"\n            passport_path.write_text(\n                "\\n".join(\n                    [\n                        "project:",\n                        "  slug: cerberus",\n                        '  name: "Cerberus"',\n                        "  category: active_project",\n                        "  status: review",\n                        "  registry_action: register_full",\n                        '  local_path: "/home/cole/cerberus"',\n                        "safety:",\n                        "  warnings: []",\n                        "  do_not_sync: false",\n                        "",\n                    ]\n                ),\n                encoding="utf-8",\n            )\n            reasons = detect_protected_project(passport_path, "cerberus")\n            self.assertEqual(reasons, [])''',
           )
 
-          # Dashboard tests intentionally feed a stale protected category and now
-          # assert that the loader normalizes it to a clean candidate.
           p = Path("tests/test_dashboard_inventory.py")
           text = p.read_text(encoding="utf-8")
           text = text.replace(
@@ -169,7 +166,15 @@ jobs:
           fi
 
       - name: Run full unit test suite
-        run: PYTHONPATH=src python -m unittest discover -s tests
+        run: |
+          set +e
+          PYTHONPATH=src python -m unittest discover -s tests -f > test-output.log 2>&1
+          status=$?
+          if [ "$status" -ne 0 ]; then
+            tail -n 120 test-output.log
+            exit "$status"
+          fi
+          cat test-output.log
 
       - name: Commit verified migration
         run: |
