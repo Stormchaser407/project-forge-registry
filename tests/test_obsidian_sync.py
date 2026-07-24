@@ -74,7 +74,9 @@ class ObsidianSyncTests(unittest.TestCase):
 
     def test_dry_run_plans_markdown_only_and_records_exclusions(self) -> None:
         artifacts_root = repository_artifacts_root()
-        with tempfile.TemporaryDirectory(dir=artifacts_root) as artifacts_tmp, tempfile.TemporaryDirectory() as vault_tmp:
+        with tempfile.TemporaryDirectory(
+            dir=artifacts_root
+        ) as artifacts_tmp, tempfile.TemporaryDirectory() as vault_tmp:
             artifacts_dir = Path(artifacts_tmp)
             passport_dir = artifacts_dir / "project_passports"
             mirror_dir = artifacts_dir / "obsidian_mirrors"
@@ -83,14 +85,29 @@ class ObsidianSyncTests(unittest.TestCase):
             source_dir.mkdir(parents=True)
 
             write_passport(passport_dir / "demo.project.yml")
-            (source_dir / "Project Home.md").write_text("# Home\n", encoding="utf-8")
-            (source_dir / "notes.py").write_text("print('x')\n", encoding="utf-8")
-            (source_dir / "Runbook.md.bak.20260513").write_text("old\n", encoding="utf-8")
+            (source_dir / "Project Home.md").write_text(
+                "# Home\n",
+                encoding="utf-8",
+            )
+            (source_dir / "notes.py").write_text(
+                "print('x')\n",
+                encoding="utf-8",
+            )
+            (source_dir / "Runbook.md.bak.20260513").write_text(
+                "old\n",
+                encoding="utf-8",
+            )
             (source_dir / ".env").write_text("SECRET=x\n", encoding="utf-8")
             (source_dir / "_export").mkdir(parents=True)
-            (source_dir / "_export" / "README.md").write_text("# export\n", encoding="utf-8")
+            (source_dir / "_export" / "README.md").write_text(
+                "# export\n",
+                encoding="utf-8",
+            )
             (source_dir / "node_modules").mkdir(parents=True)
-            (source_dir / "node_modules" / "keep.md").write_text("# blocked\n", encoding="utf-8")
+            (source_dir / "node_modules" / "keep.md").write_text(
+                "# blocked\n",
+                encoding="utf-8",
+            )
 
             plan = build_sync_plan(
                 mode="dry-run",
@@ -113,7 +130,9 @@ class ObsidianSyncTests(unittest.TestCase):
 
     def test_apply_copies_markdown_and_creates_backup_on_overwrite(self) -> None:
         artifacts_root = repository_artifacts_root()
-        with tempfile.TemporaryDirectory(dir=artifacts_root) as artifacts_tmp, tempfile.TemporaryDirectory() as vault_tmp:
+        with tempfile.TemporaryDirectory(
+            dir=artifacts_root
+        ) as artifacts_tmp, tempfile.TemporaryDirectory() as vault_tmp:
             artifacts_dir = Path(artifacts_tmp)
             passport_dir = artifacts_dir / "project_passports"
             mirror_dir = artifacts_dir / "obsidian_mirrors"
@@ -126,8 +145,14 @@ class ObsidianSyncTests(unittest.TestCase):
             destination_dir.mkdir(parents=True)
 
             write_passport(passport_dir / "demo.project.yml")
-            (source_dir / "Project Home.md").write_text("# New Home\n", encoding="utf-8")
-            (destination_dir / "Project Home.md").write_text("# Old Home\n", encoding="utf-8")
+            (source_dir / "Project Home.md").write_text(
+                "# New Home\n",
+                encoding="utf-8",
+            )
+            (destination_dir / "Project Home.md").write_text(
+                "# Old Home\n",
+                encoding="utf-8",
+            )
 
             plan = build_sync_plan(
                 mode="apply",
@@ -144,12 +169,21 @@ class ObsidianSyncTests(unittest.TestCase):
             self.assertEqual(plan.files_planned, 1)
             self.assertEqual(plan.files_copied, 1)
             self.assertEqual(plan.backups_created, 1)
-            self.assertTrue((destination_dir / "Project Home.md.bak.stamp").exists())
-            self.assertEqual((destination_dir / "Project Home.md").read_text(encoding="utf-8"), "# New Home\n")
+            self.assertTrue(
+                (destination_dir / "Project Home.md.bak.stamp").exists()
+            )
+            self.assertEqual(
+                (destination_dir / "Project Home.md").read_text(
+                    encoding="utf-8"
+                ),
+                "# New Home\n",
+            )
 
-    def test_cerberus_slug_is_protected_and_not_applied(self) -> None:
+    def test_cerberus_slug_is_eligible_under_normal_rules(self) -> None:
         artifacts_root = repository_artifacts_root()
-        with tempfile.TemporaryDirectory(dir=artifacts_root) as artifacts_tmp, tempfile.TemporaryDirectory() as vault_tmp:
+        with tempfile.TemporaryDirectory(
+            dir=artifacts_root
+        ) as artifacts_tmp, tempfile.TemporaryDirectory() as vault_tmp:
             artifacts_dir = Path(artifacts_tmp)
             passport_dir = artifacts_dir / "project_passports"
             mirror_dir = artifacts_dir / "obsidian_mirrors"
@@ -161,8 +195,12 @@ class ObsidianSyncTests(unittest.TestCase):
                 passport_dir / "cerberus.project.yml",
                 slug="cerberus",
                 local_path="/home/cole/cerberus",
+                obsidian_path="/home/cole/main_vault/10 Projects/cerberus",
             )
-            (source_dir / "Project Home.md").write_text("# Do Not Sync\n", encoding="utf-8")
+            (source_dir / "Project Home.md").write_text(
+                "# Sync This Documentation\n",
+                encoding="utf-8",
+            )
 
             plan = build_sync_plan(
                 mode="apply",
@@ -175,13 +213,59 @@ class ObsidianSyncTests(unittest.TestCase):
             )
 
             apply_sync_plan(plan)
+            self.assertTrue(plan.entry.eligible)
+            self.assertEqual(plan.entry.reasons, [])
+            self.assertEqual(plan.files_copied, 1)
+            self.assertTrue(
+                (Path(vault_tmp) / "cerberus" / "Project Home.md").exists()
+            )
+
+    def test_explicit_do_not_sync_still_blocks_cerberus(self) -> None:
+        artifacts_root = repository_artifacts_root()
+        with tempfile.TemporaryDirectory(
+            dir=artifacts_root
+        ) as artifacts_tmp, tempfile.TemporaryDirectory() as vault_tmp:
+            artifacts_dir = Path(artifacts_tmp)
+            passport_dir = artifacts_dir / "project_passports"
+            mirror_dir = artifacts_dir / "obsidian_mirrors"
+            source_dir = mirror_dir / "cerberus_case_workspace"
+            passport_dir.mkdir(parents=True)
+            source_dir.mkdir(parents=True)
+
+            write_passport(
+                passport_dir / "cerberus_case_workspace.project.yml",
+                slug="cerberus_case_workspace",
+                local_path="/projects/cerberus_case_workspace",
+                obsidian_path=(
+                    "/home/cole/main_vault/10 Projects/cerberus_case_workspace"
+                ),
+                do_not_sync=True,
+            )
+            (source_dir / "Project Home.md").write_text(
+                "# Blocked By Explicit Flag\n",
+                encoding="utf-8",
+            )
+
+            plan = build_sync_plan(
+                mode="apply",
+                slug="cerberus_case_workspace",
+                passport_dir=passport_dir,
+                mirror_dir=mirror_dir,
+                vault_project_root=Path(vault_tmp),
+                report_name="obsidian_sync_report.md",
+                backup_suffix="stamp",
+            )
+
+            apply_sync_plan(plan)
             self.assertFalse(plan.entry.eligible)
-            self.assertIn("cerberus_protected", plan.entry.reasons)
+            self.assertEqual(plan.entry.reasons, ["safety.do_not_sync=true"])
             self.assertEqual(plan.files_copied, 0)
 
     def test_cli_dry_run_writes_report_without_writing_vault(self) -> None:
         artifacts_root = repository_artifacts_root()
-        with tempfile.TemporaryDirectory(dir=artifacts_root) as artifacts_tmp, tempfile.TemporaryDirectory() as vault_tmp:
+        with tempfile.TemporaryDirectory(
+            dir=artifacts_root
+        ) as artifacts_tmp, tempfile.TemporaryDirectory() as vault_tmp:
             artifacts_dir = Path(artifacts_tmp)
             passport_dir = artifacts_dir / "project_passports"
             mirror_dir = artifacts_dir / "obsidian_mirrors"
@@ -190,7 +274,10 @@ class ObsidianSyncTests(unittest.TestCase):
             source_dir.mkdir(parents=True)
 
             write_passport(passport_dir / "demo.project.yml")
-            (source_dir / "Project Home.md").write_text("# Home\n", encoding="utf-8")
+            (source_dir / "Project Home.md").write_text(
+                "# Home\n",
+                encoding="utf-8",
+            )
 
             parser = build_parser()
             args = parser.parse_args(
@@ -210,7 +297,10 @@ class ObsidianSyncTests(unittest.TestCase):
             write_obsidian_sync_report(plan.report_path, plan)
 
             self.assertTrue(plan.report_path.exists())
-            self.assertEqual(plan.report_path.parent.resolve(), artifacts_dir.resolve())
+            self.assertEqual(
+                plan.report_path.parent.resolve(),
+                artifacts_dir.resolve(),
+            )
             self.assertFalse((Path(vault_tmp) / "demo").exists())
 
 
