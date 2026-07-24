@@ -50,7 +50,6 @@ jobs:
               '    if record.slug == "cerberus" or "cerberus" in record.slug or "cerberus" in record.local_path.lower():\n        reasons.append("cerberus_protected")\n',
               '',
           )
-
           replace_once(
               "src/project_forge_registry/export_sync.py",
               '    slug_lower = record.slug.lower()\n    local_path_lower = record.local_path.lower()\n\n',
@@ -61,7 +60,6 @@ jobs:
               '    if slug_lower == "cerberus" or "cerberus" in slug_lower or "cerberus" in local_path_lower:\n        reasons.append("cerberus_protected")\n',
               '',
           )
-
           replace_once(
               "src/project_forge_registry/remote_policy.py",
               '    slug_lower = record.slug.lower()\n    local_lower = str(record.local_path).lower()\n\n',
@@ -77,7 +75,6 @@ jobs:
               '        or item == "cerberus_protected"\n',
               '',
           )
-
           replace_once(
               "src/project_forge_registry/project_sync.py",
               '    slug_lower = slug.lower()\n    if slug_lower == "cerberus" or "cerberus" in slug_lower:\n        reasons.append("cerberus_protected")\n\n',
@@ -93,13 +90,11 @@ jobs:
               '        if "cerberus" in local_path:\n            reasons.append("cerberus_protected")\n',
               '',
           )
-
           replace_once(
               "src/project_forge_registry/workspace_generation.py",
               '    if "cerberus_special_case_candidate" in record.safety_warnings:\n        reasons.append("safety_warning=cerberus_special_case_candidate")\n',
               '',
           )
-
           replace_once(
               "src/project_forge_registry/dashboard_inventory.py",
               'from typing import Any\n\n',
@@ -116,23 +111,20 @@ jobs:
               "test_cerberus_related_records_are_protected",
               '''    def test_cerberus_related_records_are_eligible(self) -> None:\n        plan = self.make_plan([self.make_record("cerberus_helper")])\n\n        self.assertEqual(\n            {entry.record.slug for entry in plan.eligible_entries},\n            {"cerberus_helper"},\n        )''',
           )
-
           replace_method(
               "tests/test_export_sync.py",
               "test_cerberus_slug_is_protected",
-              '''    def test_cerberus_slug_is_eligible(self) -> None:\n        artifacts_root = repository_artifacts_root()\n        with tempfile.TemporaryDirectory(dir=artifacts_root) as artifacts_tmp, tempfile.TemporaryDirectory() as vault_tmp, tempfile.TemporaryDirectory() as project_tmp:\n            artifacts_dir = Path(artifacts_tmp)\n            passport_dir = artifacts_dir / "project_passports"\n            vault_root = Path(vault_tmp)\n            export_docs_dir = vault_root / "cerberus" / "_export" / "docs"\n            passport_dir.mkdir(parents=True)\n            export_docs_dir.mkdir(parents=True)\n            (export_docs_dir / "guide.md").write_text("# Guide\\n", encoding="utf-8")\n\n            write_passport(\n                passport_dir / "cerberus.project.yml",\n                slug="cerberus",\n                local_path=project_tmp,\n            )\n\n            plan = build_sync_plan(\n                mode="dry-run",\n                slug="cerberus",\n                passport_dir=passport_dir,\n                vault_project_root=vault_root,\n                repo_root_override=None,\n                include_files=set(),\n                exclude_files=set(),\n                report_name="export_sync_report.md",\n                backup_suffix="stamp",\n            )\n\n            self.assertTrue(plan.entry.eligible)\n            self.assertEqual(plan.entry.reasons, [])\n            self.assertEqual(plan.files_planned, 1)''',
+              '''    def test_cerberus_slug_is_eligible(self) -> None:\n        artifacts_root = repository_artifacts_root()\n        with tempfile.TemporaryDirectory(dir=artifacts_root) as artifacts_tmp, tempfile.TemporaryDirectory() as vault_tmp, tempfile.TemporaryDirectory() as project_tmp:\n            artifacts_dir = Path(artifacts_tmp)\n            passport_dir = artifacts_dir / "project_passports"\n            vault_root = Path(vault_tmp)\n            export_docs_dir = vault_root / "cerberus" / "_export" / "docs"\n            passport_dir.mkdir(parents=True)\n            export_docs_dir.mkdir(parents=True)\n            (export_docs_dir / "guide.md").write_text("# Guide\\n", encoding="utf-8")\n            write_passport(passport_dir / "cerberus.project.yml", slug="cerberus", local_path=project_tmp)\n            plan = build_sync_plan(\n                mode="dry-run", slug="cerberus", passport_dir=passport_dir,\n                vault_project_root=vault_root, repo_root_override=None,\n                include_files=set(), exclude_files=set(),\n                report_name="export_sync_report.md", backup_suffix="stamp",\n            )\n            self.assertTrue(plan.entry.eligible)\n            self.assertEqual(plan.entry.reasons, [])\n            self.assertEqual(plan.files_planned, 1)''',
           )
-
           replace_method(
               "tests/test_remote_policy.py",
               "test_plan_blocks_cerberus",
-              '''    def test_plan_treats_cerberus_normally(self) -> None:\n        with self.temp_in_repo() as tmp:\n            artifacts = Path(tmp)\n            passport_dir = artifacts / "project_passports"\n            passport_dir.mkdir()\n            write_passport(\n                passport_dir / "cerberus.project.yml",\n                slug="cerberus",\n                local_path=str(artifacts),\n            )\n\n            parser = build_parser()\n            args = parser.parse_args(["plan", "--slug", "cerberus", "--passport-dir", str(passport_dir)])\n            plan = build_plan(args)\n\n            self.assertTrue(plan.eligible)\n            self.assertEqual(plan.policy_status, "needs_approval")\n            self.assertNotIn("cerberus_protected", plan.reasons)''',
+              '''    def test_plan_treats_cerberus_normally(self) -> None:\n        with self.temp_in_repo() as tmp:\n            artifacts = Path(tmp)\n            passport_dir = artifacts / "project_passports"\n            passport_dir.mkdir()\n            write_passport(passport_dir / "cerberus.project.yml", slug="cerberus", local_path=str(artifacts))\n            parser = build_parser()\n            args = parser.parse_args(["plan", "--slug", "cerberus", "--passport-dir", str(passport_dir)])\n            plan = build_plan(args)\n            self.assertTrue(plan.eligible)\n            self.assertEqual(plan.policy_status, "needs_approval")\n            self.assertNotIn("cerberus_protected", plan.reasons)''',
           )
-
           replace_method(
               "tests/test_project_sync.py",
               "test_detect_protected_project_from_slug_and_passport",
-              '''    def test_detect_protected_project_uses_explicit_policy_only(self) -> None:\n        with tempfile.TemporaryDirectory(dir=repository_root() / "artifacts") as artifacts_tmp:\n            passport_dir = Path(artifacts_tmp) / "project_passports"\n            passport_dir.mkdir(parents=True)\n            passport_path = passport_dir / "cerberus.project.yml"\n            passport_path.write_text(\n                "\\n".join(\n                    [\n                        "project:",\n                        "  slug: cerberus",\n                        '  name: "Cerberus"',\n                        "  category: active_project",\n                        "  status: review",\n                        "  registry_action: register_full",\n                        '  local_path: "/home/cole/cerberus"',\n                        "safety:",\n                        "  warnings: []",\n                        "  do_not_sync: false",\n                        "",\n                    ]\n                ),\n                encoding="utf-8",\n            )\n            reasons = detect_protected_project(passport_path, "cerberus")\n            self.assertEqual(reasons, [])''',
+              '''    def test_detect_protected_project_uses_explicit_policy_only(self) -> None:\n        with tempfile.TemporaryDirectory(dir=repository_root() / "artifacts") as artifacts_tmp:\n            passport_dir = Path(artifacts_tmp) / "project_passports"\n            passport_dir.mkdir(parents=True)\n            passport_path = passport_dir / "cerberus.project.yml"\n            passport_path.write_text(\n                "\\n".join([\n                    "project:", "  slug: cerberus", '  name: "Cerberus"',\n                    "  category: active_project", "  status: review",\n                    "  registry_action: register_full", '  local_path: "/home/cole/cerberus"',\n                    "safety:", "  warnings: []", "  do_not_sync: false", "",\n                ]),\n                encoding="utf-8",\n            )\n            reasons = detect_protected_project(passport_path, "cerberus")\n            self.assertEqual(reasons, [])''',
           )
 
           p = Path("tests/test_dashboard_inventory.py")
@@ -175,6 +167,13 @@ jobs:
             exit "$status"
           fi
           cat test-output.log
+
+      - name: Upload test failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cerberus-migration-test-output
+          path: test-output.log
 
       - name: Commit verified migration
         run: |
