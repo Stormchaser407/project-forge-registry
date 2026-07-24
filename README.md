@@ -14,6 +14,7 @@ readiness.
 - [Project Status](PROJECT_STATUS.md) — lifecycle, current phase, and compliance state
 - [Agent Instructions](AGENTS.md) — required behavior for agents working in this repository
 - [Repository Lifecycle Standard](docs/REPOSITORY_LIFECYCLE_STANDARD.md) — retrofit-or-archive gate for reviewed repositories
+- [Cerberus Protection Reversal](docs/decisions/2026-07-23-retire-cerberus-blanket-protection.md) — project names are not security boundaries
 - [Current Codex Handoff](CODEX_HANDOFF.md) — detailed implementation and phase context
 - [Changelog](CHANGELOG.md) — historical implementation record
 
@@ -52,7 +53,7 @@ Project Forge currently supports or preserves mature work for:
 - project-root scanning and candidate discovery;
 - technical lifecycle and safety classification;
 - repository, dirty-tree, mirror, launcher, and workspace reporting;
-- protected handling for system-bound and reconciliation-required projects;
+- evidence-based handling for system-bound and reconciliation-required projects;
 - VS Code workspace and launcher generation;
 - project passport generation;
 - controlled Obsidian technical mirrors;
@@ -111,25 +112,31 @@ PYTHONPATH=src python3 -m unittest discover -s tests
 - Review reports before apply.
 - Do not mutate scanned project directories during discovery.
 - Do not initialize Git in existing folders during discovery.
-- Do not copy source code, secrets, databases, logs, or operational evidence into Obsidian.
+- Do not copy source code, credentials, databases, logs, raw evidence, exports, or case material into Obsidian.
 - Do not push, mirror, create remotes, or change remote policy without explicit approval.
 - Back up existing files before approved overwrite paths.
 - Keep generated artifacts lower in authority than the charter, status, and verified repository/runtime evidence.
-- Preserve exact overrides for protected projects rather than guessing.
+- Preserve exact overrides only when current evidence justifies them.
 
-### Protected Categories
+### Evidence-Based Safeguards
 
-`system_bound_project` means a project may intentionally live outside normal
-project roots or be tied to NixOS, Home Manager, systemd, launchers, services, or
-scripts. It must not be moved or bulk-synchronized automatically.
+`system_bound_project` means a project is actually tied to NixOS, Home Manager,
+systemd, launchers, services, mounted storage, or another live dependency. The
+classification must be supported by current evidence rather than inferred from a
+project name.
 
-`reconciliation_required` means a duplicate, old copy, or partially overlapping
-folder may contain unique operational material. It remains compare-only until a
-specific reconciliation is approved.
+`reconciliation_required` means duplicate or overlapping project material has
+actually been identified and needs comparison before mutation. It must not become
+a permanent holding pen for projects nobody has looked at lately.
 
-Cerberus remains a special-case project family. Do not move, delete, or bulk-sync
-protected Cerberus paths, and do not copy raw cases, exports, logs, databases, or
-operational evidence into Obsidian.
+Cerberus is **not** a special hidden or protected class. Repositories containing
+`Cerberus` in their name, slug, or path are scanned, displayed, classified, and
+reconciled normally. `cerberus_case_workspace` is the current canonical
+implementation candidate; older Cerberus repositories are expected to be
+retrofitted, marked superseded/reference/dormant, or archived based on evidence.
+
+Real credentials, databases, logs, exports, raw evidence, and case material still
+receive the same ordinary content-based protection applied to every project.
 
 ## Repository Compliance Gate
 
@@ -161,6 +168,10 @@ Common generated surfaces include:
 Generated artifacts are evidence and operator aids. They do not override
 `PROJECT_CHARTER.md`, `PROJECT_STATUS.md`, or verified live state.
 
+Older generated artifacts may still contain retired Cerberus protection labels
+until Legion performs a fresh scan and artifact rebuild. Current code and policy
+must normalize or replace those labels rather than treating them as authority.
+
 ## Obsidian Boundary
 
 Canonical technical mirrors use:
@@ -176,10 +187,10 @@ and all-or-nothing preflight.
 
 ## Local Synchronization Note
 
-The GitHub repository contains the approved 2026-07-23 governance retrofit.
-Legion's local checkout and the real Obsidian Project Forge hub still require a
-normal pull and local verification before those surfaces can be considered
-synchronized.
+The GitHub repository contains the approved 2026-07-23 governance retrofit and
+Cerberus protection reversal. Legion's local checkout and the real Obsidian
+Project Forge hub still require a normal pull, fresh scan, test run, and artifact
+rebuild before those local surfaces can be considered synchronized.
 
 Do not treat that local sync requirement as unresolved architecture; the
 canonical GitHub policy is already established.
@@ -194,6 +205,10 @@ history remains available through:
 - `CHANGELOG.md`
 - generated `artifacts/`
 - Git history before the 2026-07-23 README retrofit
+
+Historical SITREPs and archaeology reports may describe the retired Cerberus
+blanket-protection model. They are evidence of project evolution, not current
+operator doctrine.
 
 Use the current README as the operator front door and the historical documents
 for deep implementation archaeology.
