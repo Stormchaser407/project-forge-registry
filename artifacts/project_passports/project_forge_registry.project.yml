@@ -2,7 +2,7 @@ project:
   slug: project_forge_registry
   name: project-forge-registry
   category: active_project
-  status: review
+  status: active
   registry_action: register_full
   local_path: /mnt/storage/Cole/Projects/project-forge-registry
   created_by: project-forge-registry
@@ -15,7 +15,7 @@ launch:
   command: code-project_forge_registry
 git:
   default_branch: main
-  github: null
+  github: https://github.com/Stormchaser407/project-forge-registry
   codeberg: null
   mirror_mode: disabled_for_now
 sync:
@@ -24,9 +24,9 @@ sync:
   allow_code_to_obsidian: false
   allow_secrets: false
 visibility:
-  github: private
+  github: public
   codeberg: private
-  public_ready: false
+  public_ready: true
 automation:
   auto_doc_sync: false
   auto_git_sync: false
@@ -40,3 +40,7 @@ safety:
     - generated_from_registry_category=active_project
     - generated_from_registry_action=register_full
     - obsidian_note_policy=docs_only
+    - canonical_charter=PROJECT_CHARTER.md
+    - lifecycle_status=active
+    - universal_planner_mission=superseded
+    - command_center_means_technical_operator_surface_only
