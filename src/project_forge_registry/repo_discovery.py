@@ -131,23 +131,36 @@ def remote_count(repo: Path) -> int:
 
 
 def has_readme(repo: Path) -> bool:
-    return any(item.name.lower().startswith("readme") for item in repo.iterdir() if item.is_file())
+    return any(
+        item.name.lower().startswith("readme")
+        for item in repo.iterdir()
+        if item.is_file()
+    )
 
 
 def has_code_workspace(repo: Path) -> bool:
-    return any(item.suffix == ".code-workspace" for item in repo.iterdir() if item.is_file())
+    return any(
+        item.suffix == ".code-workspace"
+        for item in repo.iterdir()
+        if item.is_file()
+    )
 
 
 def has_project_forge_marker(repo: Path) -> bool:
-    return (repo / ".project-forge.yml").exists() or (repo / "docs" / "PROJECT_FORGE.md").exists()
+    return (repo / ".project-forge.yml").exists() or (
+        repo / "docs" / "PROJECT_FORGE.md"
+    ).exists()
 
 
 def classify_repo(repo: Path, status: str, marker: bool) -> str:
-    slug = normalize_slug(repo)
-    lowered = str(repo).lower()
+    """Classify repositories by observable technical state, not project name.
 
-    if "cerberus" in lowered:
-        return "protected_manual_review"
+    Cerberus-labeled repositories are ordinary personal repositories for
+    discovery and lifecycle reconciliation. Real sensitive paths remain subject
+    to the same downstream filename/content safeguards as every other project.
+    """
+
+    slug = normalize_slug(repo)
 
     if repo.name == "project-forge-registry" or slug == "project-forge-registry":
         return "control_repo"
@@ -181,7 +194,10 @@ def inspect_repo(repo: Path) -> DiscoveredRepo:
     )
 
 
-def discover_repos(scan_roots: list[Path], excluded_paths: list[Path] | None = None) -> list[DiscoveredRepo]:
+def discover_repos(
+    scan_roots: list[Path],
+    excluded_paths: list[Path] | None = None,
+) -> list[DiscoveredRepo]:
     repos: list[DiscoveredRepo] = []
     seen: set[Path] = set()
 
@@ -202,13 +218,13 @@ def discover_repos(scan_roots: list[Path], excluded_paths: list[Path] | None = N
                 if repo not in seen:
                     repos.append(inspect_repo(repo))
                     seen.add(repo)
-
                 # Do not walk inside discovered repo internals.
                 dirnames[:] = [name for name in dirnames if name != ".git"]
                 continue
 
             dirnames[:] = [
-                name for name in dirnames
+                name
+                for name in dirnames
                 if not should_exclude(current_path / name, excluded_paths)
             ]
 
@@ -216,8 +232,6 @@ def discover_repos(scan_roots: list[Path], excluded_paths: list[Path] | None = N
 
 
 def derive_final_status(repos: list[DiscoveredRepo]) -> str:
-    if any(repo.category == "protected_manual_review" for repo in repos):
-        return "ready_with_protected_reviews"
     if repos:
         return "ready_for_operator_review"
     return "no_repos_found"
@@ -227,32 +241,41 @@ def write_csv(csv_path: Path, repos: list[DiscoveredRepo]) -> None:
     csv_path.parent.mkdir(parents=True, exist_ok=True)
     with csv_path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.writer(handle, lineterminator="\n")
-        writer.writerow([
-            "slug",
-            "path",
-            "git_status",
-            "has_readme",
-            "has_agents",
-            "has_code_workspace",
-            "has_project_forge_marker",
-            "remote_count",
-            "category",
-        ])
+        writer.writerow(
+            [
+                "slug",
+                "path",
+                "git_status",
+                "has_readme",
+                "has_agents",
+                "has_code_workspace",
+                "has_project_forge_marker",
+                "remote_count",
+                "category",
+            ]
+        )
         for repo in repos:
-            writer.writerow([
-                repo.slug,
-                str(repo.path),
-                repo.git_status,
-                str(repo.has_readme).lower(),
-                str(repo.has_agents).lower(),
-                str(repo.has_code_workspace).lower(),
-                str(repo.has_project_forge_marker).lower(),
-                repo.remote_count,
-                repo.category,
-            ])
+            writer.writerow(
+                [
+                    repo.slug,
+                    str(repo.path),
+                    repo.git_status,
+                    str(repo.has_readme).lower(),
+                    str(repo.has_agents).lower(),
+                    str(repo.has_code_workspace).lower(),
+                    str(repo.has_project_forge_marker).lower(),
+                    repo.remote_count,
+                    repo.category,
+                ]
+            )
 
 
-def write_report(report_path: Path, csv_path: Path, scan_roots: list[Path], repos: list[DiscoveredRepo]) -> str:
+def write_report(
+    report_path: Path,
+    csv_path: Path,
+    scan_roots: list[Path],
+    repos: list[DiscoveredRepo],
+) -> str:
     final_status = derive_final_status(repos)
     categories = sorted(set(repo.category for repo in repos))
 
@@ -264,6 +287,7 @@ def write_report(report_path: Path, csv_path: Path, scan_roots: list[Path], repo
         f"- final_status: `{final_status}`",
         f"- repos_found: `{len(repos)}`",
         f"- csv: `{csv_path}`",
+        "- classification_policy: `observable technical state; no project-name protection`",
         "",
         "## Scan Roots",
         "",
@@ -287,32 +311,37 @@ def write_report(report_path: Path, csv_path: Path, scan_roots: list[Path], repo
         lines.append("- none")
     else:
         for repo in repos:
-            lines.extend([
-                f"### {repo.slug}",
-                "",
-                f"- path: `{repo.path}`",
-                f"- git_status: `{repo.git_status}`",
-                f"- has_readme: `{str(repo.has_readme).lower()}`",
-                f"- has_agents: `{str(repo.has_agents).lower()}`",
-                f"- has_code_workspace: `{str(repo.has_code_workspace).lower()}`",
-                f"- has_project_forge_marker: `{str(repo.has_project_forge_marker).lower()}`",
-                f"- remote_count: `{repo.remote_count}`",
-                f"- category: `{repo.category}`",
-                "",
-            ])
+            lines.extend(
+                [
+                    f"### {repo.slug}",
+                    "",
+                    f"- path: `{repo.path}`",
+                    f"- git_status: `{repo.git_status}`",
+                    f"- has_readme: `{str(repo.has_readme).lower()}`",
+                    f"- has_agents: `{str(repo.has_agents).lower()}`",
+                    f"- has_code_workspace: `{str(repo.has_code_workspace).lower()}`",
+                    f"- has_project_forge_marker: `{str(repo.has_project_forge_marker).lower()}`",
+                    f"- remote_count: `{repo.remote_count}`",
+                    f"- category: `{repo.category}`",
+                    "",
+                ]
+            )
 
-    lines.extend([
-        "## Safety Statement",
-        "",
-        "- Discovery was dry-run/report-only.",
-        "- No files were written to discovered repos.",
-        "- No file content indexing was performed.",
-        "- No secret scanning was performed.",
-        "- No remotes were added or modified.",
-        "- No push/fetch occurred.",
-        "- No package installs were performed.",
-        "",
-    ])
+    lines.extend(
+        [
+            "## Safety Statement",
+            "",
+            "- Discovery was dry-run/report-only.",
+            "- No files were written to discovered repos.",
+            "- No file content indexing was performed.",
+            "- No secret scanning was performed.",
+            "- No repository is hidden or blocked because its name contains Cerberus.",
+            "- No remotes were added or modified.",
+            "- No push/fetch occurred.",
+            "- No package installs were performed.",
+            "",
+        ]
+    )
 
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text("\n".join(lines), encoding="utf-8")
