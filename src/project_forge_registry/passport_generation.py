@@ -6,6 +6,10 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 
+from .category_policy import (
+    LEGACY_CERBERUS_WARNINGS,
+    remove_legacy_cerberus_warnings,
+)
 from .passport_models import (
     PassportFileAction,
     PassportGenerationPlan,
@@ -105,7 +109,9 @@ def parse_mode(args: argparse.Namespace, parser: argparse.ArgumentParser) -> str
 def normalize_report_name(report_name: str) -> str:
     candidate = Path(report_name)
     if candidate.name != report_name or report_name in {"", ".", ".."}:
-        raise ValueError("report name must be a simple filename inside the artifacts directory")
+        raise ValueError(
+            "report name must be a simple filename inside the artifacts directory"
+        )
     return report_name
 
 
@@ -116,11 +122,17 @@ def resolve_artifacts_dir(artifacts_dir: str | Path) -> Path:
     candidate = candidate.resolve()
     artifacts_root = repository_artifacts_root().resolve()
     if candidate != artifacts_root and artifacts_root not in candidate.parents:
-        raise ValueError("artifacts directory must stay inside this repository's artifacts directory")
+        raise ValueError(
+            "artifacts directory must stay inside this repository's artifacts directory"
+        )
     return candidate
 
 
-def ensure_allowed_target(target_path: Path, passports_dir: Path, expected_name: str) -> None:
+def ensure_allowed_target(
+    target_path: Path,
+    passports_dir: Path,
+    expected_name: str,
+) -> None:
     resolved_base = passports_dir.expanduser().resolve()
     resolved_target = target_path.expanduser().resolve()
     if resolved_target.name != expected_name:
@@ -131,6 +143,22 @@ def ensure_allowed_target(target_path: Path, passports_dir: Path, expected_name:
 
 def build_backup_path(target_path: Path, backup_suffix: str) -> Path:
     return target_path.with_name(f"{target_path.name}.bak.{backup_suffix}")
+
+
+def _is_legacy_cerberus_protection(
+    *,
+    slug: str,
+    name: str,
+    local_path: str,
+    category: str,
+    warnings: tuple[str, ...],
+) -> bool:
+    identity = f"{slug} {name} {local_path}".lower()
+    has_cerberus_identity = "cerberus" in identity
+    has_legacy_warning = any(item in LEGACY_CERBERUS_WARNINGS for item in warnings)
+    return has_legacy_warning or (
+        has_cerberus_identity and category in FORCED_SKIP_CATEGORIES
+    )
 
 
 def load_project_records(input_json_path: Path) -> list[PassportProjectRecord]:
@@ -156,29 +184,70 @@ def load_project_records(input_json_path: Path) -> list[PassportProjectRecord]:
         for source_key, label in required.items():
             raw_value = str(project.get(source_key, "")).strip()
             if not raw_value:
-                raise ValueError(f"each project entry must include {source_key} for {label}")
+                raise ValueError(
+                    f"each project entry must include {source_key} for {label}"
+                )
             values[source_key] = raw_value
 
         safety_warnings_raw = project.get("safety_warnings", [])
         if not isinstance(safety_warnings_raw, list):
             raise ValueError("project safety_warnings must be a list when present")
 
+        warnings = tuple(str(item) for item in safety_warnings_raw)
+        has_git = bool(project.get("has_git", False))
+        category = values["recommended_category"]
+        status = values["recommended_status"]
+        registry_action = values["recommended_action"]
+        canonical_path = (
+            str(project.get("canonical_path")).strip()
+            if project.get("canonical_path")
+            else None
+        )
+        do_not_move = bool(project.get("do_not_move", False))
+        do_not_delete = bool(project.get("do_not_delete", False))
+        do_not_sync = bool(project.get("do_not_sync", False))
+        exclude_from_bulk_sync = bool(
+            project.get("exclude_from_bulk_sync", False)
+        )
+        obsidian_note_policy = (
+            str(project.get("obsidian_note_policy", "docs_only")).strip()
+            or "docs_only"
+        )
+
+        if _is_legacy_cerberus_protection(
+            slug=values["safe_slug"],
+            name=values["folder_name"],
+            local_path=values["path"],
+            category=category,
+            warnings=warnings,
+        ):
+            warnings = remove_legacy_cerberus_warnings(warnings)
+            category = "active_project" if has_git else "unknown"
+            status = "review"
+            registry_action = "register_full" if has_git else "review_required"
+            canonical_path = None
+            do_not_move = False
+            do_not_delete = False
+            do_not_sync = False
+            exclude_from_bulk_sync = False
+            obsidian_note_policy = "docs_only"
+
         records.append(
             PassportProjectRecord(
                 slug=values["safe_slug"],
                 name=values["folder_name"],
                 local_path=values["path"],
-                category=values["recommended_category"],
-                status=values["recommended_status"],
-                registry_action=values["recommended_action"],
-                canonical_path=str(project.get("canonical_path")).strip() if project.get("canonical_path") else None,
-                has_git=bool(project.get("has_git", False)),
-                do_not_move=bool(project.get("do_not_move", False)),
-                do_not_delete=bool(project.get("do_not_delete", False)),
-                do_not_sync=bool(project.get("do_not_sync", False)),
-                exclude_from_bulk_sync=bool(project.get("exclude_from_bulk_sync", False)),
-                obsidian_note_policy=str(project.get("obsidian_note_policy", "docs_only")).strip() or "docs_only",
-                safety_warnings=tuple(str(item) for item in safety_warnings_raw),
+                category=category,
+                status=status,
+                registry_action=registry_action,
+                canonical_path=canonical_path,
+                has_git=has_git,
+                do_not_move=do_not_move,
+                do_not_delete=do_not_delete,
+                do_not_sync=do_not_sync,
+                exclude_from_bulk_sync=exclude_from_bulk_sync,
+                obsidian_note_policy=obsidian_note_policy,
+                safety_warnings=warnings,
             )
         )
     return records
@@ -215,7 +284,9 @@ def build_passport_payload(record: PassportProjectRecord) -> dict[str, object]:
         },
         "paths": {
             "local": local_path,
-            "workspace": f"/home/cole/.config/Code/User/workspaces/{record.slug}.code-workspace",
+            "workspace": (
+                f"/home/cole/.config/Code/User/workspaces/{record.slug}.code-workspace"
+            ),
             "obsidian": f"{OBSIDIAN_PROJECT_ROOT}/{record.slug}",
         },
         "launch": {
@@ -281,10 +352,6 @@ def determine_reasons(
         reasons.append(f"excluded_category={record.category}")
     if record.registry_action not in DEFAULT_ELIGIBLE_ACTIONS:
         reasons.append(f"registry_action={record.registry_action}")
-    if "cerberus_special_case_candidate" in record.safety_warnings:
-        reasons.append("safety_warning=cerberus_special_case_candidate")
-    if record.slug == "cerberus" or "cerberus" in record.local_path.lower():
-        reasons.append("cerberus_protected")
 
     if record.category in FORCED_SKIP_CATEGORIES:
         return reasons
@@ -295,8 +362,13 @@ def determine_reasons(
     if record.category in DEFAULT_SKIPPED_CATEGORIES and not explicitly_included:
         reasons.append(f"classification={record.category}")
         return reasons
-    if record.category not in DEFAULT_ELIGIBLE_CATEGORIES and not explicitly_included:
-        reasons.append(f"classification={record.category}_not_eligible_by_default")
+    if (
+        record.category not in DEFAULT_ELIGIBLE_CATEGORIES
+        and not explicitly_included
+    ):
+        reasons.append(
+            f"classification={record.category}_not_eligible_by_default"
+        )
     return reasons
 
 
@@ -337,11 +409,19 @@ def build_generation_plan(
             reasons=reasons,
         )
         if eligible:
-            ensure_allowed_target(proposal_path, passports_dir, f"{record.slug}.project.yml")
+            ensure_allowed_target(
+                proposal_path,
+                passports_dir,
+                f"{record.slug}.project.yml",
+            )
             existed_before = proposal_path.exists()
             entry.file_action = PassportFileAction(
                 target_path=proposal_path,
-                backup_path=build_backup_path(proposal_path, backup_suffix) if existed_before else None,
+                backup_path=(
+                    build_backup_path(proposal_path, backup_suffix)
+                    if existed_before
+                    else None
+                ),
                 existed_before=existed_before,
             )
         entries.append(entry)
@@ -364,8 +444,14 @@ def apply_generation_plan(plan: PassportGenerationPlan) -> None:
         if entry.file_action is None:
             continue
         if entry.file_action.backup_path is not None:
-            entry.file_action.backup_path.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(entry.file_action.target_path, entry.file_action.backup_path)
+            entry.file_action.backup_path.parent.mkdir(
+                parents=True,
+                exist_ok=True,
+            )
+            shutil.copy2(
+                entry.file_action.target_path,
+                entry.file_action.backup_path,
+            )
             entry.file_action.created_backup = True
 
         entry.file_action.target_path.write_text(
@@ -375,7 +461,10 @@ def apply_generation_plan(plan: PassportGenerationPlan) -> None:
         entry.file_action.wrote_file = True
 
 
-def create_generation_plan_from_args(args: argparse.Namespace, parser: argparse.ArgumentParser) -> PassportGenerationPlan:
+def create_generation_plan_from_args(
+    args: argparse.Namespace,
+    parser: argparse.ArgumentParser,
+) -> PassportGenerationPlan:
     mode = parse_mode(args, parser)
     backup_suffix = args.backup_suffix or datetime.now().strftime("%Y%m%d-%H%M%S")
     artifacts_dir = resolve_artifacts_dir(args.artifacts_dir)
