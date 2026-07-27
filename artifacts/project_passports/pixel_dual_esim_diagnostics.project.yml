@@ -1,0 +1,45 @@
+project:
+  slug: pixel_dual_esim_diagnostics
+  name: pixel-dual-esim-diagnostics
+  category: active_project
+  status: active
+  registry_action: register_full
+  local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/pixel-dual-esim-diagnostics
+  created_by: project-forge-registry
+  schema_version: 0.1
+paths:
+  local: /run/media/cash/WD_BLACK_4TB/Cole/Projects/pixel-dual-esim-diagnostics
+  workspace: /home/cole/.config/Code/User/workspaces/pixel_dual_esim_diagnostics.code-workspace
+  obsidian: /home/cole/main_vault/10 Projects/pixel_dual_esim_diagnostics
+launch:
+  command: code-pixel_dual_esim_diagnostics
+git:
+  default_branch: main
+  github: https://github.com/Stormchaser407/pixel-dual-esim-diagnostics
+  codeberg: null
+  mirror_mode: disabled_for_now
+sync:
+  obsidian_to_repo: export_only
+  repo_to_obsidian: docs_only
+  allow_code_to_obsidian: false
+  allow_secrets: false
+visibility:
+  github: private
+  codeberg: private
+  public_ready: false
+automation:
+  auto_doc_sync: false
+  auto_git_sync: false
+  require_safety_check_before_push: true
+safety:
+  warnings: []
+  do_not_move: false
+  do_not_delete: false
+  do_not_sync: false
+  notes:
+    - generated_from_registry_category=active_project
+    - generated_from_registry_action=register_full
+    - obsidian_note_policy=docs_only
+    - canonical_charter=PROJECT.md
+    - lifecycle_status=active
+    - raw_device_evidence=restricted_outside_git
