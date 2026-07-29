@@ -1,5 +1,9 @@
 # Codex Handoff
 
+> Historical implementation handoff. This phase-oriented record is retained for
+> archaeology and is superseded by `PROJECT_CHARTER.md`, `PROJECT_STATUS.md`, and
+> the 2026-07-29 operational closeout report.
+
 ## Mission
 
 Preserve the Phase 11G Neon District / Punk Union command board state.

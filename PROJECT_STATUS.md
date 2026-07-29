@@ -4,8 +4,8 @@
 **Operating mode:** Technical registry and guarded operator surface  
 **Canonical repository:** `Stormchaser407/project-forge-registry`  
 **Default branch:** `main`  
-**Last governance verification:** 2026-07-23 (America/New_York)  
-**GitHub compliance state:** Compliant — local synchronization pending  
+**Last operational verification:** 2026-07-29 (America/New_York)
+**Compliance state:** Operational closeout validated on Legion
 **Canonical charter:** [`PROJECT_CHARTER.md`](PROJECT_CHARTER.md)  
 **Lifecycle standard:** [`docs/REPOSITORY_LIFECYCLE_STANDARD.md`](docs/REPOSITORY_LIFECYCLE_STANDARD.md)  
 **Cerberus policy decision:** [`docs/decisions/2026-07-23-retire-cerberus-blanket-protection.md`](docs/decisions/2026-07-23-retire-cerberus-blanket-protection.md)
@@ -17,7 +17,9 @@ repositories, mirrors, deployment nodes, workspaces, launchers, and fleet
 readiness. It supports dry-run-first and guarded technical workflows.
 
 It does not own personal planning, weekly prioritization, calendars, or the full
-roadmaps of other projects.
+roadmaps of other projects. It may report technical follow-up signals, but
+Master Scheduler or the operator decides whether they become actionable and
+Todoist owns any resulting commitment.
 
 ## Current Phase
 
@@ -62,16 +64,33 @@ Real credentials, keys, env files, databases, case data, raw evidence, exports,
 and logs remain subject to ordinary content-based safeguards. Explicit passport
 safety flags remain authoritative when set for a concrete reason.
 
-## Verification
+The exact paths `/home/cole/cerberus` and `/mnt/storage/Cole/cerberus`,
+including descendants, are excluded before scanning or downstream processing.
+That exact-path boundary does not apply to any other Cerberus-branded
+repository.
 
-A temporary pull-request workflow applied the remaining large-module migration,
-confirmed that active source files no longer contained the retired Cerberus name
-vetoes, and ran the complete repository unit-test suite successfully. The
-workflow and one-shot migration script were then removed from the branch; only
-the verified product and test changes remain.
+## 2026-07-29 Operational Closeout
 
-This verifies repository behavior on GitHub. It does not substitute for pulling
-the commits and rebuilding Legion's local generated artifacts.
+Legion fast-forwarded to current GitHub `main`, regenerated current artifacts,
+and reconciled passports against live local and remote evidence.
+
+- `78` top-level project folders were classified conservatively.
+- `82` owned repository roots were discovered after excluding Android `.repo`
+  checkout farms and nested repositories.
+- `12` Cerberus-branded repositories remain visible under ordinary categories;
+  no name-derived protected row remains.
+- Pixel dual-eSIM diagnostics and Proton Pass Vault Janitor were accepted as
+  legitimate active projects.
+- `agent_zero` is registered as a reference vendor clone.
+- stale `extension_blip` and `recon_housekeeping` derived entries were retired.
+- seven current customized passports use live Legion paths.
+- the complete suite passes `339` tests with one fixture-dependent legacy
+  category test skipped.
+
+The canonical Obsidian root is absent or inaccessible from the Legion user.
+Dry-run tools now report that guarded condition without traceback or writes.
+The condition and all other external estate discrepancies are bounded in
+`artifacts/technical_followup_signals.json`.
 
 ## Authoritative Surfaces
 
@@ -128,14 +147,15 @@ evolution. They are not current operational authority.
 
 ### Local synchronization and verification
 
-- [ ] Local Legion checkout has pulled the governance and policy commits.
-- [ ] Local full scan has regenerated discovery, passport, dashboard, and mirror artifacts.
-- [ ] Real Obsidian Project Forge hub has been reviewed against the current charter and policy.
-- [ ] Local tests and runtime commands have been rerun from Legion after synchronization.
+- [x] Local Legion checkout fast-forwarded to the GitHub governance and policy commits.
+- [x] Local full scan regenerated bounded discovery and dashboard artifacts.
+- [x] Current passports and docs-only mirror artifacts were reconciled.
+- [x] Local tests, validators, launch dry-runs, and sync dry-runs were rerun.
+- [x] Exact protected-path behavior is covered across discovery and downstream tools.
+- [ ] Real Obsidian Project Forge hub review is blocked until the canonical root is available.
 
-The GitHub repository is compliant with the approved structure. The unchecked
-items require access to Legion and are synchronization or runtime-verification
-work, not unresolved architecture.
+The remaining unchecked item is a bounded operator-access condition, not
+unresolved architecture or permission to use another vault path.
 
 ## Archive Gate
 

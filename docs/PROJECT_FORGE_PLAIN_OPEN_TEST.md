@@ -1,5 +1,9 @@
 # Project Forge Phase 10.7F Plain Open Test Findings
 
+> Historical test record. Its Cerberus example reflects the discovery category
+> present at that time, not current name-based policy. Current behavior is
+> governed by the 2026-07-23 Cerberus protection reversal.
+
 ## Summary
 
 Phase 10.7F performed the first controlled local editor open test through Project Forge.

@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from .path_policy import is_protected_filesystem_path
 
 DEFAULT_INVENTORY_JSON = Path("artifacts/dashboard_inventory.json")
 SENSITIVE_FRAGMENTS = (
@@ -42,6 +43,8 @@ class ReviewProject:
 
 
 def resolve_project_path(path: Path, slug: str) -> Path:
+    if is_protected_filesystem_path(path):
+        raise ValueError("Review is blocked for an exact protected filesystem path")
     if path.exists():
         return path
 

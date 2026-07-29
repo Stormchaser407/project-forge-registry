@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
-INVENTORY_PATH="$REPO_ROOT/artifacts/dashboard_inventory.json"
+INVENTORY_PATH="${PROJECT_FORGE_INVENTORY_PATH:-$REPO_ROOT/artifacts/dashboard_inventory.json}"
 
 SLUG=""
 PROFILE=""
@@ -174,13 +174,34 @@ project = matches[0]
 category = str(project.get("category") or "unknown")
 project_path = str(project.get("path") or "")
 inventory_target = str(project.get("vscode_target") or "")
+protected_roots = (
+    Path("/home/cole/cerberus"),
+    Path("/mnt/storage/Cole/cerberus"),
+)
+
+
+def is_protected_path(raw_path: str) -> bool:
+    if not raw_path:
+        return False
+    candidate = Path(raw_path).expanduser().absolute()
+    return any(
+        candidate == protected or protected in candidate.parents
+        for protected in protected_roots
+    )
 
 if inventory_target:
     target = inventory_target
 else:
     target = project_path
 
-if target and not target.endswith(".code-workspace") and project_path:
+protected_path = is_protected_path(project_path)
+
+if (
+    not protected_path
+    and target
+    and not target.endswith(".code-workspace")
+    and project_path
+):
     root = Path(project_path)
     workspace_files = sorted(root.glob("*.code-workspace")) if root.exists() else []
     if workspace_files:
@@ -189,7 +210,9 @@ if target and not target.endswith(".code-workspace") and project_path:
 eligible = False
 reason = ""
 
-if category in {"known_embedded", "clean_candidate"}:
+if protected_path:
+    reason = "blocked: exact protected filesystem path"
+elif category in {"known_embedded", "clean_candidate"}:
     eligible = True
     reason = f"allowed category: {category}"
 elif category == "control_repo":

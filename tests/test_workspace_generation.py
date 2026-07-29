@@ -109,6 +109,16 @@ class WorkspaceGenerationTests(unittest.TestCase):
         self.assertIn("classification=system_bound_project", skipped["bound"])
         self.assertIn("classification=reconciliation_required", skipped["reconcile"])
 
+    def test_exact_protected_path_always_skips_generation(self) -> None:
+        plan = self.make_plan(
+            [self.make_record("cerberus", local_path="/home/cole/cerberus")]
+        )
+
+        self.assertEqual(
+            plan.skipped_entries[0].reasons,
+            ["protected_filesystem_path"],
+        )
+
     def test_preserved_workspace_name_skips_generation(self) -> None:
         record = self.make_record(
             "project-forge-command-center",

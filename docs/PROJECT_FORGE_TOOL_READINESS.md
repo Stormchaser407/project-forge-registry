@@ -34,7 +34,8 @@ It does not:
 - push or fetch
 - write to external project folders
 - contact GitHub or Codeberg
-- touch Cerberus
+- inspect or touch either exact protected path: `/home/cole/cerberus` or
+  `/mnt/storage/Cole/cerberus`
 
 ## Required Tools
 

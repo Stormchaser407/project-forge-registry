@@ -10,6 +10,10 @@ It is designed for the operator model where one ChatGPT account can choose a
 Personal or Business workspace/context after login. This wrapper does not handle
 login and does not run Codex.
 
+The exact paths `/home/cole/cerberus` and `/mnt/storage/Cole/cerberus`,
+including descendants, are blocked before filesystem probing. Other
+Cerberus-branded repositories use ordinary category and readiness rules.
+
 ## Commands
 
 Dry-run with Personal context:

@@ -1,0 +1,46 @@
+project:
+  slug: agent_zero
+  name: agent-zero
+  category: vendor_clone
+  status: reference
+  registry_action: register_full
+  local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/agent-zero
+  created_by: project-forge-registry
+  schema_version: 0.1
+paths:
+  local: /run/media/cash/WD_BLACK_4TB/Cole/Projects/agent-zero
+  workspace: /home/cash/.config/Code/User/workspaces/agent_zero.code-workspace
+  obsidian: /home/cole/main_vault/10 Projects/agent_zero
+launch:
+  command: code-agent_zero
+git:
+  default_branch: main
+  github: https://github.com/Stormchaser407/agent-zero
+  codeberg: null
+  mirror_mode: disabled_for_now
+sync:
+  obsidian_to_repo: export_only
+  repo_to_obsidian: docs_only
+  allow_code_to_obsidian: false
+  allow_secrets: false
+visibility:
+  github: public
+  codeberg: private
+  public_ready: false
+automation:
+  auto_doc_sync: false
+  auto_git_sync: false
+  require_safety_check_before_push: true
+safety:
+  warnings: []
+  do_not_move: false
+  do_not_delete: false
+  do_not_sync: false
+  notes:
+    - generated_from_registry_category=project_candidate
+    - generated_from_registry_action=register_full
+    - obsidian_note_policy=docs_only
+    - operator_verified_category=vendor_clone
+    - lifecycle_status=reference
+    - upstream_project=agent0ai/agent-zero
+    - automation_default=skip_vendor_clone

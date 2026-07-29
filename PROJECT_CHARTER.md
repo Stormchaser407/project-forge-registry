@@ -14,6 +14,10 @@ provide guarded operator commands and technical dashboards, but it does not own
 personal planning, weekly prioritization, calendars, or the complete roadmap for
 all projects.
 
+Project Forge may emit evidence-backed technical follow-up signals. The operator
+or Master Scheduler decides whether a signal becomes work; Todoist owns any
+resulting actionable commitment.
+
 ## What Project Forge Owns
 
 - Technical project and repository discovery.
@@ -40,11 +44,20 @@ all projects.
 |---|---|
 | Project Forge | Technical project, repository, mirror, deployment-node, and fleet condition |
 | Individual repositories and verified runtime state | Technical roadmap, implementation, and operational truth |
-| Todoist | Immediate actionable commitments and execution horizon |
+| Todoist | Actionable-work truth and execution commitments |
 | Google Calendar | Fixed time commitments, travel, wake requirements, and protected sleep |
-| Sunday Outlook / C2 Review | Cross-system prioritization, reconciliation, and realistic planning |
+| Master Scheduler (including Sunday Outlook / C2 review) | Cross-system governance, planning, prioritization, and reconciliation |
 | Obsidian | Durable context, decisions, learning, doctrine, and human-readable project knowledge |
 | ChatGPT conversations | Intelligence, analysis, and event history; not permanent project authority |
+
+## Follow-Up Signal Boundary
+
+Project Forge detects and reports a technical follow-up signal. Master Scheduler
+or the operator decides whether it becomes actionable. Todoist owns the
+resulting actionable commitment.
+
+Signals are evidence records, not tasks. Project Forge does not assign personal
+priority, due dates, or commitments and does not silently export to Todoist.
 
 ## Superseded Mission
 

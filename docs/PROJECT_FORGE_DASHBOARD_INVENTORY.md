@@ -118,4 +118,7 @@ It does not:
 - push or fetch
 - contact GitHub or Codeberg
 - install packages
-- handle Cerberus beyond reporting existing discovery categories
+- apply name-based policy to Cerberus-branded repositories
+
+The two exact protected Cerberus filesystem paths are excluded before dashboard
+inventory is built.

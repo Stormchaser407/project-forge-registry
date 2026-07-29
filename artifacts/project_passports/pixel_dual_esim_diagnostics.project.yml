@@ -1,22 +1,22 @@
 project:
-  slug: spiderfoot_peoplesearch
-  name: SpiderFoot_PeopleSearch
+  slug: pixel_dual_esim_diagnostics
+  name: pixel-dual-esim-diagnostics
   category: active_project
   status: active
   registry_action: register_full
-  local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/SpiderFoot_PeopleSearch
+  local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/pixel-dual-esim-diagnostics
   created_by: project-forge-registry
   schema_version: 0.1
 paths:
-  local: /run/media/cash/WD_BLACK_4TB/Cole/Projects/SpiderFoot_PeopleSearch
-  workspace: /home/cash/.config/Code/User/workspaces/spiderfoot_peoplesearch.code-workspace
-  obsidian: /home/cole/main_vault/10 Projects/spiderfoot_peoplesearch
+  local: /run/media/cash/WD_BLACK_4TB/Cole/Projects/pixel-dual-esim-diagnostics
+  workspace: /home/cash/.config/Code/User/workspaces/pixel_dual_esim_diagnostics.code-workspace
+  obsidian: /home/cole/main_vault/10 Projects/pixel_dual_esim_diagnostics
 launch:
-  command: code-spiderfoot_peoplesearch
+  command: code-pixel_dual_esim_diagnostics
 git:
   default_branch: main
-  github: https://github.com/Stormchaser407/SpiderFoot_PeopleSearch
-  codeberg: https://codeberg.org/stormchaser/SpiderFoot_PeopleSearch
+  github: https://github.com/Stormchaser407/pixel-dual-esim-diagnostics
+  codeberg: null
   mirror_mode: disabled_for_now
 sync:
   obsidian_to_repo: export_only
@@ -37,10 +37,10 @@ safety:
   do_not_delete: false
   do_not_sync: false
   notes:
-    - generated_from_registry_category=active_project
+    - generated_from_registry_category=project_candidate
     - generated_from_registry_action=register_full
     - obsidian_note_policy=docs_only
     - operator_verified_category=active_project
+    - canonical_charter=PROJECT.md
     - lifecycle_status=active
-    - raw_scan_evidence=restricted_outside_git
-    - remote_state_reconciled=2026-07-29
+    - raw_device_evidence=restricted_outside_git

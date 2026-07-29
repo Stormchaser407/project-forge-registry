@@ -22,6 +22,8 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
+from .path_policy import is_protected_filesystem_path
+
 
 DEFAULT_INPUT_CSV = Path("artifacts/embed_plan_inventory.csv")
 DEFAULT_REPORT_NAME = "embed_apply_report.md"
@@ -152,8 +154,8 @@ def is_safe_apply_row(row: EmbedApplyRow) -> tuple[bool, str]:
         return False, f"category is {row.category}"
     if row.git_status != "clean":
         return False, f"planned git_status is {row.git_status}"
-    if "cerberus" in str(row.path).lower():
-        return False, "protected cerberus-like path"
+    if is_protected_filesystem_path(row.path):
+        return False, "exact protected filesystem path"
     if row.path.name == "project-forge-registry":
         return False, "control repo"
     return True, "ok"

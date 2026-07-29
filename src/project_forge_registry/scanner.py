@@ -4,6 +4,7 @@ import re
 from pathlib import Path
 
 from .models import ProjectScanResult
+from .path_policy import is_protected_filesystem_path
 
 README_NAMES = {"README", "README.md", "README.txt", "readme.md"}
 ENV_FILE_PREFIXES = (".env",)
@@ -22,9 +23,15 @@ def slugify(name: str) -> str:
 
 
 def first_level_directories(root: Path) -> list[Path]:
+    if is_protected_filesystem_path(root):
+        return []
     if not root.exists() or not root.is_dir():
         return []
-    return sorted(path for path in root.iterdir() if path.is_dir())
+    return sorted(
+        path
+        for path in root.iterdir()
+        if not is_protected_filesystem_path(path) and path.is_dir()
+    )
 
 
 def detect_stack(project_dir: Path) -> list[str]:
@@ -68,7 +75,7 @@ def detect_category(
     ):
         return "lab"
     if has_git and (has_readme or (project_dir / ".project").exists()):
-        return "active_project"
+        return "project_candidate"
     if has_node_modules and not has_git:
         return "operated_tool"
     return "unknown"
@@ -146,6 +153,9 @@ def detect_status(category: str, warnings: list[str]) -> str:
 
 
 def scan_project_dir(project_dir: Path) -> ProjectScanResult:
+    if is_protected_filesystem_path(project_dir):
+        raise ValueError(f"protected filesystem path is excluded: {project_dir}")
+
     entries = list(project_dir.iterdir())
     names = {entry.name for entry in entries}
 
@@ -230,7 +240,11 @@ def scan_roots(roots: list[Path]) -> list[ProjectScanResult]:
     results: list[ProjectScanResult] = []
     seen_paths: set[str] = set()
     for root in roots:
+        if is_protected_filesystem_path(root):
+            continue
         for project_dir in first_level_directories(root):
+            if is_protected_filesystem_path(project_dir):
+                continue
             try:
                 identity = str(project_dir.resolve())
             except OSError:

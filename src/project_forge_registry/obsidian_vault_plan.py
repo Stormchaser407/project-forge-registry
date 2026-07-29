@@ -29,7 +29,9 @@ from typing import Any
 DEFAULT_MANIFEST_PATH = Path("artifacts/obsidian_mirror_manifest.json")
 DEFAULT_REPORT_PATH = Path("artifacts/obsidian_vault_apply_plan.md")
 DEFAULT_JSON_PATH = Path("artifacts/obsidian_vault_apply_plan.json")
-DEFAULT_VAULT_ROOT = Path("/mnt/storage/Cole/main_vault/10 Projects/Project Forge")
+DEFAULT_VAULT_ROOT = Path(
+    "/home/cole/main_vault/10 Projects/project_forge_registry"
+)
 
 SAFETY_STATEMENTS = [
     "no real vault writes",
@@ -126,9 +128,22 @@ def validate_generated_files(generated_files: list[Any]) -> tuple[Path, ...]:
     return tuple(sorted(source_paths, key=lambda item: item.name))
 
 
-def build_entry(source_path: Path, vault_root: Path, vault_root_exists: bool) -> VaultPlanEntry:
+def build_entry(
+    source_path: Path,
+    vault_root: Path,
+    vault_root_exists: bool,
+    vault_root_accessible: bool = True,
+) -> VaultPlanEntry:
     target_path = vault_root / source_path.name
     source_exists = source_path.exists()
+    if not vault_root_accessible:
+        return VaultPlanEntry(
+            source_artifact_path=source_path,
+            proposed_vault_target_path=target_path,
+            action="blocked",
+            target_exists=False,
+            reason="vault_root_unavailable_plan_only",
+        )
     target_exists = target_path.exists()
     if not source_exists:
         return VaultPlanEntry(
@@ -169,9 +184,19 @@ def build_vault_plan(
     manifest = load_manifest(manifest_path)
     source_paths = validate_generated_files(manifest["generated_files"])
     planned_vault_root = Path(vault_root).expanduser()
-    vault_root_exists = planned_vault_root.exists()
+    try:
+        vault_root_exists = planned_vault_root.exists()
+        vault_root_accessible = True
+    except OSError:
+        vault_root_exists = False
+        vault_root_accessible = False
     entries = tuple(
-        build_entry(source_path, planned_vault_root, vault_root_exists)
+        build_entry(
+            source_path,
+            planned_vault_root,
+            vault_root_exists,
+            vault_root_accessible,
+        )
         for source_path in source_paths
     )
     return VaultPlan(
@@ -315,7 +340,7 @@ def main(argv: list[str] | None = None) -> int:
             report_path=Path(args.report_path),
             json_path=Path(args.json_path),
         )
-    except (FileNotFoundError, ValueError, json.JSONDecodeError) as error:
+    except (OSError, ValueError, json.JSONDecodeError) as error:
         parser.exit(2, f"project-forge-obsidian-vault-plan failed: {error}\n")
 
     print("project-forge-obsidian-vault-plan completed")

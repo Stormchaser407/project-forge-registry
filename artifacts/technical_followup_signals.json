@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-07-29T05:03:41-04:00",
+  "authority_contract": {
+    "detection": "Project Forge",
+    "action_decision": "Master Scheduler or operator",
+    "actionable_commitment": "Todoist"
+  },
+  "signals": [
+    {
+      "signal_id": "PF-20260729-001",
+      "project_slug": "project_forge_registry",
+      "technical_condition": "Codeberg main is 26 commits behind the synchronized local and GitHub main.",
+      "severity": "medium",
+      "evidence": [
+        "local/origin main: 0fc0defbd65e18923b38534c854d314112bf8b85",
+        "codeberg/main: f9a2a6a592aacc306d8eb4f3ccc39a82c4535ffe",
+        "git rev-list --left-right --count codeberg/main...HEAD: 0 26"
+      ],
+      "suggested_next_action": "After closeout validation and the GitHub push, fast-forward Codeberg main and verify both remote heads.",
+      "authority_destination": "Project Forge operator",
+      "detected_at": "2026-07-29T05:03:41-04:00",
+      "status": "acknowledged"
+    },
+    {
+      "signal_id": "PF-20260729-002",
+      "project_slug": "cerberus_case_workspace",
+      "technical_condition": "The local main checkout is behind GitHub main and has 37 worktree changes.",
+      "severity": "high",
+      "evidence": [
+        "local HEAD: dac8d7c",
+        "GitHub main: 2c8d719",
+        "local inventory dirty count: 37"
+      ],
+      "suggested_next_action": "Preserve the dirty worktree, review its diff, and reconcile it with current GitHub main in that repository.",
+      "authority_destination": "Repository operator via Master Scheduler",
+      "detected_at": "2026-07-29T05:03:41-04:00",
+      "status": "open"
+    },
+    {
+      "signal_id": "PF-20260729-003",
+      "project_slug": "endgame_arcade",
+      "technical_condition": "The local main checkout is behind GitHub main.",
+      "severity": "medium",
+      "evidence": [
+        "local HEAD: 64f8d6e",
+        "GitHub main: 0de90c1"
+      ],
+      "suggested_next_action": "Verify the local worktree is preservable, then perform that repository's normal synchronization workflow.",
+      "authority_destination": "Repository operator via Master Scheduler",
+      "detected_at": "2026-07-29T05:03:41-04:00",
+      "status": "open"
+    },
+    {
+      "signal_id": "PF-20260729-004",
+      "project_slug": "djfiddlesticks_website",
+      "technical_condition": "The local master branch has one commit not present on GitHub, and its Codeberg mirror differs.",
+      "severity": "medium",
+      "evidence": [
+        "local master: 9513c29",
+        "GitHub master: 7be7b84",
+        "git rev-list local...GitHub: 1 0",
+        "Codeberg head differs in the 2026-07-29 mirror sweep"
+      ],
+      "suggested_next_action": "Review the local-only commit, choose the canonical branch result, then synchronize mirrors without rewriting history.",
+      "authority_destination": "Repository operator via Master Scheduler",
+      "detected_at": "2026-07-29T05:03:41-04:00",
+      "status": "open"
+    },
+    {
+      "signal_id": "PF-20260729-005",
+      "project_slug": "homelab_nixos_config",
+      "technical_condition": "A local feature branch is unpublished while GitHub main has advanced.",
+      "severity": "medium",
+      "evidence": [
+        "local branch: phase1-homelab-status-json at 2c1053f",
+        "GitHub main: 6439df7",
+        "the local feature branch is absent from the GitHub branch list"
+      ],
+      "suggested_next_action": "Review the feature branch against current main and decide whether to publish, rework, or supersede it.",
+      "authority_destination": "Repository operator via Master Scheduler",
+      "detected_at": "2026-07-29T05:03:41-04:00",
+      "status": "open"
+    },
+    {
+      "signal_id": "PF-20260729-006",
+      "project_slug": "proton_pass_vault_janitor",
+      "technical_condition": "The active local project has no configured Git remote.",
+      "severity": "medium",
+      "evidence": [
+        "local HEAD: 592cb0e",
+        "worktree: clean",
+        "git remote list: empty",
+        "STATUS.md says remote publication was not performed"
+      ],
+      "suggested_next_action": "Decide whether the project should remain local-only or receive an approved private remote; do not create one implicitly.",
+      "authority_destination": "Operator via Master Scheduler",
+      "detected_at": "2026-07-29T05:03:41-04:00",
+      "status": "open"
+    },
+    {
+      "signal_id": "PF-20260729-007",
+      "project_slug": null,
+      "technical_condition": "The GitHub/local presence map contains stale origins and repositories present on only one side.",
+      "severity": "medium",
+      "evidence": [
+        "local origins absent from the current owner: argus, recon-nixos-config",
+        "GitHub repositories without matching local origin: argus-reference, desktop-tutorial, google-drive-reconcile, gremlin, openclaw_librarian, profession-repo, recon, redditbeacon, test-repo-from-agent, white-monster-was-here-"
+      ],
+      "suggested_next_action": "Classify each mismatch as renamed, intentionally remote-only, intentionally local-only, archived, or requiring a corrected origin.",
+      "authority_destination": "Fleet operator via Master Scheduler",
+      "detected_at": "2026-07-29T05:03:41-04:00",
+      "status": "open"
+    },
+    {
+      "signal_id": "PF-20260729-008",
+      "project_slug": null,
+      "technical_condition": "Twelve local repositories differ from their configured Codeberg mirror head.",
+      "severity": "medium",
+      "evidence": [
+        "51 Codeberg remotes were reachable in the 2026-07-29 sweep",
+        "divergent names: argus, cerberus-recon, cerberus_case_workspace, chaos-control-bridge, DJ_request_system, djfiddlesticks-radio-tracker, djfiddlesticks-website, media-dedupe, project-forge-registry, recon-nixos-config, SpiderFoot_PeopleSearch",
+        "project-forge-registry appeared twice because its second worktree shares the same remote"
+      ],
+      "suggested_next_action": "Reconcile each repository independently after reviewing its local/GitHub relationship; do not bulk-push mirror state.",
+      "authority_destination": "Fleet operator via Master Scheduler",
+      "detected_at": "2026-07-29T05:03:41-04:00",
+      "status": "open"
+    },
+    {
+      "signal_id": "PF-20260729-009",
+      "project_slug": "project_forge_registry",
+      "technical_condition": "The canonical Obsidian root is absent or inaccessible from the Legion user.",
+      "severity": "medium",
+      "evidence": [
+        "canonical root: /home/cole/main_vault/10 Projects",
+        "/home/cole is mode 0700 and owned by uid 1001",
+        "Obsidian sync dry-run cannot read the canonical root"
+      ],
+      "suggested_next_action": "The operator should restore or expose the canonical vault root, then rerun Project Forge's no-clobber sync dry-run before any apply.",
+      "authority_destination": "Obsidian operator via Master Scheduler",
+      "detected_at": "2026-07-29T05:03:41-04:00",
+      "status": "open"
+    },
+    {
+      "signal_id": "PF-20260729-010",
+      "project_slug": "project_forge_registry",
+      "technical_condition": "A separate dirty Project Forge worktree contains an unmerged read-only homelab fleet-panel feature.",
+      "severity": "low",
+      "evidence": [
+        "worktree branch: phase1-homelab-fleet-panel",
+        "commit: 02cf31c1cf5d4e57e6c60c9a048428d3777ef171",
+        "dirty file: artifacts/dashboard.html",
+        "feature diff: 7 files, 817 insertions, 7 deletions"
+      ],
+      "suggested_next_action": "Review the existing feature separately against current main; preserve the worktree and avoid folding it into operational closeout without focused validation.",
+      "authority_destination": "Project Forge operator via Master Scheduler",
+      "detected_at": "2026-07-29T05:03:41-04:00",
+      "status": "open"
+    },
+    {
+      "signal_id": "PF-20260729-011",
+      "project_slug": "project_forge_registry",
+      "technical_condition": "Current main has no authoritative live host/deployment-node source; fleet status would otherwise rely on an unmerged feature snapshot.",
+      "severity": "medium",
+      "evidence": [
+        "current main inventory covers projects and repositories",
+        "the only identified homelab fleet source is commit 02cf31c on a separate local worktree"
+      ],
+      "suggested_next_action": "Identify the canonical runtime source and validate the existing read-only panel branch as a focused follow-up.",
+      "authority_destination": "Project Forge operator via Master Scheduler",
+      "detected_at": "2026-07-29T05:03:41-04:00",
+      "status": "open"
+    }
+  ]
+}

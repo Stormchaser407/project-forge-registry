@@ -259,6 +259,38 @@ class ExportSyncTests(unittest.TestCase):
             self.assertTrue(plan.entry.eligible)
             self.assertEqual(plan.entry.reasons, [])
             self.assertEqual(plan.files_planned, 1)
+
+    def test_exact_protected_path_is_blocked_without_access(self) -> None:
+        artifacts_root = repository_artifacts_root()
+        with tempfile.TemporaryDirectory(
+            dir=artifacts_root
+        ) as artifacts_tmp, tempfile.TemporaryDirectory() as vault_tmp:
+            passport_dir = Path(artifacts_tmp) / "project_passports"
+            export_docs_dir = Path(vault_tmp) / "cerberus" / "_export" / "docs"
+            passport_dir.mkdir(parents=True)
+            export_docs_dir.mkdir(parents=True)
+            (export_docs_dir / "guide.md").write_text("# Guide\n", encoding="utf-8")
+            write_passport(
+                passport_dir / "cerberus.project.yml",
+                slug="cerberus",
+                local_path="/home/cole/cerberus",
+            )
+
+            plan = build_sync_plan(
+                mode="dry-run",
+                slug="cerberus",
+                passport_dir=passport_dir,
+                vault_project_root=Path(vault_tmp),
+                repo_root_override=None,
+                include_files=set(),
+                exclude_files=set(),
+                report_name="export_sync_report.md",
+                backup_suffix="stamp",
+            )
+
+            self.assertFalse(plan.entry.eligible)
+            self.assertIn("protected_filesystem_path", plan.entry.reasons)
+            self.assertEqual(plan.files_planned, 0)
     def test_apply_copies_and_creates_backups(self) -> None:
         artifacts_root = repository_artifacts_root()
         with tempfile.TemporaryDirectory(dir=artifacts_root) as artifacts_tmp, tempfile.TemporaryDirectory() as vault_tmp, tempfile.TemporaryDirectory() as project_tmp:

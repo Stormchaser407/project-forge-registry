@@ -5,8 +5,8 @@
 Phase 11A adds a dry-run artifact mirror that turns Project Forge state into
 Obsidian-ready Markdown without writing to any real vault.
 
-The generated notes are intended as an operator memory layer for the local
-command center.
+The generated notes are an operator memory layer for the technical registry.
+They do not confer planning or task authority.
 
 ## Command
 
@@ -31,6 +31,8 @@ The mirror reads existing local Project Forge artifacts:
 - `docs/PROJECT_FORGE_PHASE_10_CLOSEOUT.md`
 - `docs/PROJECT_FORGE_OPERATOR_RELEASE_NOTES.md`
 - `CHANGELOG.md`
+- `artifacts/technical_followup_signals.json`
+- `artifacts/PROJECT_FORGE_OPERATIONAL_CLOSEOUT_REPORT.md` when present
 
 The dashboard inventory JSON is required. Other source artifacts are recorded
 when present.
@@ -87,14 +89,17 @@ It does not:
 - run Codex
 - perform Codex login or auth handling
 
-## Deferred Items
+## Bounded Follow-Up
 
-Phase 11A keeps these items deferred:
+The generated mirror points to bounded technical follow-up:
 
-- Codex Personal/Business isolation
-- real vault write/apply
-- remote strategy
-- repo action policy layer
+- canonical Obsidian root availability and no-clobber verification
+- repository and Codeberg discrepancies recorded in the signal artifact
+- the canonical live host/deployment-node source
+- real vault apply only after an accessible-root dry-run
+
+Project Forge reports those signals. Master Scheduler or the operator decides
+whether they become actionable, and Todoist owns any resulting commitment.
 
 ## Validation
 

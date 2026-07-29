@@ -54,6 +54,19 @@ class RepoDiscoveryTests(unittest.TestCase):
             candidate = excluded / "repo"
             self.assertTrue(should_exclude(candidate, [excluded]))
 
+    def test_should_exclude_exact_protected_paths_and_descendants(self) -> None:
+        self.assertTrue(should_exclude(Path("/home/cole/cerberus")))
+        self.assertTrue(should_exclude(Path("/home/cole/cerberus/recon/raw")))
+        self.assertTrue(should_exclude(Path("/mnt/storage/Cole/cerberus")))
+        self.assertTrue(should_exclude(Path("/mnt/storage/Cole/cerberus/logs")))
+        self.assertFalse(should_exclude(Path("/tmp/Cerberus")))
+
+    def test_should_exclude_repo_managed_checkout_farm(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo_farm = Path(tmp)
+            (repo_farm / ".repo").mkdir()
+            self.assertTrue(should_exclude(repo_farm))
+
     def test_has_project_forge_marker_yaml(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             repo = Path(tmp)
@@ -126,6 +139,25 @@ class RepoDiscoveryTests(unittest.TestCase):
         self.assertTrue(repos[0].has_agents)
         self.assertTrue(repos[0].has_code_workspace)
         self.assertEqual(repos[0].category, "clean_candidate")
+
+    @patch("project_forge_registry.repo_discovery.git_status", return_value="clean")
+    @patch("project_forge_registry.repo_discovery.remote_count", return_value=0)
+    def test_discovery_does_not_manufacture_projects_from_nested_repos(
+        self,
+        _remote_count,
+        _git_status,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            outer = root / "outer"
+            nested = outer / "vendor" / "nested"
+            nested.mkdir(parents=True)
+            (outer / ".git").mkdir()
+            (nested / ".git").mkdir()
+
+            repos = discover_repos([root])
+
+        self.assertEqual([item.slug for item in repos], ["outer"])
 
     @patch("project_forge_registry.repo_discovery.git_status", return_value="clean")
     @patch("project_forge_registry.repo_discovery.remote_count", return_value=0)

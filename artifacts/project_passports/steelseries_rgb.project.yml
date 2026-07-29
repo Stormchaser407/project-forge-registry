@@ -2,21 +2,21 @@ project:
   slug: steelseries_rgb
   name: SteelSeries_RGB
   category: active_project
-  status: review
+  status: active
   registry_action: register_full
-  local_path: /mnt/storage/Cole/Projects/SteelSeries_RGB
+  local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/SteelSeries_RGB
   created_by: project-forge-registry
   schema_version: 0.1
 paths:
-  local: /mnt/storage/Cole/Projects/SteelSeries_RGB
-  workspace: /home/cole/.config/Code/User/workspaces/steelseries_rgb.code-workspace
+  local: /run/media/cash/WD_BLACK_4TB/Cole/Projects/SteelSeries_RGB
+  workspace: /home/cash/.config/Code/User/workspaces/steelseries_rgb.code-workspace
   obsidian: /home/cole/main_vault/10 Projects/steelseries_rgb
 launch:
   command: code-steelseries_rgb
 git:
   default_branch: main
-  github: null
-  codeberg: null
+  github: https://github.com/Stormchaser407/SteelSeries_RGB
+  codeberg: https://codeberg.org/stormchaser/SteelSeries_RGB
   mirror_mode: disabled_for_now
 sync:
   obsidian_to_repo: export_only
@@ -40,3 +40,6 @@ safety:
     - generated_from_registry_category=active_project
     - generated_from_registry_action=register_full
     - obsidian_note_policy=docs_only
+    - operator_verified_category=active_project
+    - lifecycle_status=active
+    - remote_state_reconciled=2026-07-29

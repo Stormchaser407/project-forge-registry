@@ -31,6 +31,7 @@ in current-facing documentation and operator surfaces.
 - Never push, mirror, or configure remotes without explicit user approval.
 - Never copy source code, credentials, databases, logs, raw evidence, or case material into Obsidian.
 - Treat `/home/cole/main_vault/10 Projects/<project-slug>` as the only canonical Obsidian project mirror path.
+- Never inspect, scan internally, synchronize, migrate, launch, generate into, or modify `/home/cole/cerberus` or `/mnt/storage/Cole/cerberus`; this exact-path rule includes descendants and does not apply to other Cerberus-branded repositories.
 - Never overwrite files without backups.
 - Prefer additive changes over in-place mutation.
 - Produce reports before applying changes.
@@ -45,11 +46,12 @@ in current-facing documentation and operator surfaces.
 
 - Project Forge owns technical discovery, classification, readiness, repository compliance reporting, and guarded technical operator workflows.
 - Individual repositories and verified runtime state own technical roadmaps and implementation truth.
-- Todoist owns immediate actionable commitments.
+- Todoist owns actionable-work truth and execution commitments.
 - Google Calendar owns fixed time commitments.
-- The Sunday Outlook/C2 process owns cross-system prioritization and reconciliation.
+- Master Scheduler, including the Sunday Outlook/C2 process, owns cross-system governance, planning, prioritization, and reconciliation.
 - Obsidian owns durable context, decisions, learning, and doctrine.
 - ChatGPT conversations provide intelligence and history, not permanent project authority.
+- Project Forge may emit technical follow-up signals, but the operator or Master Scheduler decides whether they become work and Todoist owns any resulting commitment.
 
 ## Expected Agent Behavior
 

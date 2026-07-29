@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 
 from .obsidian_mirror_generation import parse_simple_yaml
+from .path_policy import is_protected_filesystem_path
 from .remote_models import (
     PushReadyReportEvidence,
     RemotePassportRecord,
@@ -140,6 +141,8 @@ def determine_policy_status(record: RemotePassportRecord) -> tuple[bool, str, li
     reasons: list[str] = []
     if record.do_not_sync:
         reasons.append("safety.do_not_sync=true")
+    if is_protected_filesystem_path(record.local_path):
+        reasons.append("protected_filesystem_path")
     if record.allow_code_to_obsidian:
         reasons.append("sync.allow_code_to_obsidian=true")
     if record.allow_secrets:
@@ -156,6 +159,7 @@ def determine_policy_status(record: RemotePassportRecord) -> tuple[bool, str, li
         for item in reasons
         if item.startswith("safety.")
         or item.startswith("sync.")
+        or item == "protected_filesystem_path"
         or item.startswith("classification=")
         or item.startswith("registry_action=")
     ]
@@ -180,6 +184,8 @@ def run_git(repo_path: Path, args: list[str]) -> tuple[int, str, str]:
 
 
 def read_remote_state(record: RemotePassportRecord, require_clean_tree: bool) -> RemoteState:
+    if is_protected_filesystem_path(record.local_path):
+        return unavailable_remote_state()
     if not record.local_path.exists():
         return RemoteState(
             inside_git_repo=False,
@@ -227,6 +233,18 @@ def read_remote_state(record: RemotePassportRecord, require_clean_tree: bool) ->
     )
 
 
+def unavailable_remote_state() -> RemoteState:
+    """Return an inert state without reading a project path."""
+
+    return RemoteState(
+        inside_git_repo=False,
+        current_branch=None,
+        remotes=[],
+        clean_working_tree=None,
+        clean_working_tree_lines=[],
+    )
+
+
 def build_plan(args: argparse.Namespace) -> RemotePlan:
     passport_dir = resolve_repo_scoped_dir(args.passport_dir, "passport dir")
     record = load_passport_record(passport_dir, args.slug)
@@ -258,7 +276,11 @@ def build_verify(args: argparse.Namespace) -> RemoteVerify:
     record = load_passport_record(passport_dir, args.slug)
     eligible, policy_status, reasons = determine_policy_status(record)
     defaults = RemotePolicyDefaults()
-    remote_state = read_remote_state(record, args.require_clean_tree)
+    remote_state = (
+        unavailable_remote_state()
+        if "protected_filesystem_path" in reasons
+        else read_remote_state(record, args.require_clean_tree)
+    )
 
     checks: list[VerificationCheck] = []
     checks.append(
@@ -413,7 +435,12 @@ def build_push_ready(args: argparse.Namespace) -> RemotePushReady:
     record = load_passport_record(passport_dir, args.slug)
     eligible, policy_status, reasons = determine_policy_status(record)
     defaults = RemotePolicyDefaults()
-    remote_state = read_remote_state(record, args.require_clean_tree)
+    protected_path = "protected_filesystem_path" in reasons
+    remote_state = (
+        unavailable_remote_state()
+        if protected_path
+        else read_remote_state(record, args.require_clean_tree)
+    )
     artifacts_dir = passport_dir.resolve().parent
 
     checks: list[VerificationCheck] = []
@@ -434,7 +461,10 @@ def build_push_ready(args: argparse.Namespace) -> RemotePushReady:
         )
     )
 
-    tests_ok, tests_detail = collect_tests_pass_evidence(record)
+    if protected_path:
+        tests_ok, tests_detail = False, "not inspected: protected_filesystem_path"
+    else:
+        tests_ok, tests_detail = collect_tests_pass_evidence(record)
     checks.append(
         VerificationCheck(
             name="tests_pass_evidence",

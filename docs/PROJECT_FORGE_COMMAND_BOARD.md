@@ -1,6 +1,9 @@
 # Project Forge Command Board
 
 > Local-first. Dry-run-first. Review before action.
+>
+> Historical 2026-05-14 board record. Its Cerberus automation language predates
+> the name-policy reversal and does not govern current behavior.
 
 Updated: 2026-05-14 03:07:24
 

@@ -10,6 +10,7 @@ from .category_policy import (
     LEGACY_CERBERUS_WARNINGS,
     remove_legacy_cerberus_warnings,
 )
+from .path_policy import is_protected_filesystem_path
 from .passport_models import (
     PassportFileAction,
     PassportGenerationPlan,
@@ -17,7 +18,11 @@ from .passport_models import (
     PassportProjectRecord,
 )
 from .passport_reporting import write_passport_generation_report
-from .reporting import OBSIDIAN_PROJECT_ROOT, _write_yaml_lines
+from .reporting import (
+    OBSIDIAN_PROJECT_ROOT,
+    WORKSPACE_PROJECT_ROOT,
+    _write_yaml_lines,
+)
 
 DEFAULT_INPUT_JSON = "artifacts/project_scan_report.json"
 DEFAULT_REPORT_NAME = "project_passport_generation_report.md"
@@ -147,18 +152,9 @@ def build_backup_path(target_path: Path, backup_suffix: str) -> Path:
 
 def _is_legacy_cerberus_protection(
     *,
-    slug: str,
-    name: str,
-    local_path: str,
-    category: str,
     warnings: tuple[str, ...],
 ) -> bool:
-    identity = f"{slug} {name} {local_path}".lower()
-    has_cerberus_identity = "cerberus" in identity
-    has_legacy_warning = any(item in LEGACY_CERBERUS_WARNINGS for item in warnings)
-    return has_legacy_warning or (
-        has_cerberus_identity and category in FORCED_SKIP_CATEGORIES
-    )
+    return any(item in LEGACY_CERBERUS_WARNINGS for item in warnings)
 
 
 def load_project_records(input_json_path: Path) -> list[PassportProjectRecord]:
@@ -215,10 +211,6 @@ def load_project_records(input_json_path: Path) -> list[PassportProjectRecord]:
         )
 
         if _is_legacy_cerberus_protection(
-            slug=values["safe_slug"],
-            name=values["folder_name"],
-            local_path=values["path"],
-            category=category,
             warnings=warnings,
         ):
             warnings = remove_legacy_cerberus_warnings(warnings)
@@ -284,8 +276,8 @@ def build_passport_payload(record: PassportProjectRecord) -> dict[str, object]:
         },
         "paths": {
             "local": local_path,
-            "workspace": (
-                f"/home/cole/.config/Code/User/workspaces/{record.slug}.code-workspace"
+            "workspace": str(
+                WORKSPACE_PROJECT_ROOT / f"{record.slug}.code-workspace"
             ),
             "obsidian": f"{OBSIDIAN_PROJECT_ROOT}/{record.slug}",
         },
@@ -346,6 +338,10 @@ def determine_reasons(
         reasons.append("duplicate_slug_collision")
     if record.do_not_sync:
         reasons.append("do_not_sync=true")
+    if is_protected_filesystem_path(
+        Path(record.canonical_path or record.local_path)
+    ):
+        reasons.append("protected_filesystem_path")
     if record.category in FORCED_SKIP_CATEGORIES:
         reasons.append(f"classification={record.category}")
     if record.category in exclude_categories:

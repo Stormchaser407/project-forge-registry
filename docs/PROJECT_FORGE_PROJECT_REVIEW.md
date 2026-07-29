@@ -53,8 +53,10 @@ Real commit requires:
 - `--yes-commit-reviewed`
 
 Commit automation is limited to projects whose inventory action is exactly
-`dirty_review_first`. Protected projects, Cerberus projects, and the Project
-Forge control repository are blocked even when invoked directly from the CLI.
+`dirty_review_first`. Projects with an explicit evidence-based protected
+category and the Project Forge control repository are blocked even when invoked
+directly from the CLI. A Cerberus name alone does not block review or commit
+preflight.
 Duplicate slugs are rejected as ambiguous.
 
 By default, commit stages tracked changes only with `git add -u`.

@@ -15,7 +15,8 @@ readiness.
 - [Agent Instructions](AGENTS.md) — required behavior for agents working in this repository
 - [Repository Lifecycle Standard](docs/REPOSITORY_LIFECYCLE_STANDARD.md) — retrofit-or-archive gate for reviewed repositories
 - [Cerberus Protection Reversal](docs/decisions/2026-07-23-retire-cerberus-blanket-protection.md) — project names are not security boundaries
-- [Current Codex Handoff](CODEX_HANDOFF.md) — detailed implementation and phase context
+- [Historical Codex Handoff](CODEX_HANDOFF.md) — superseded implementation and phase context
+- [Follow-Up Signal Contract](docs/PROJECT_FORGE_FOLLOWUP_SIGNALS.md) — technical evidence without task-authority drift
 - [Changelog](CHANGELOG.md) — historical implementation record
 
 ## Canonical Mission
@@ -40,9 +41,9 @@ technical operator surfaces.
 |---|---|
 | Project Forge | Technical project, repository, mirror, deployment-node, and fleet condition |
 | Individual repositories and verified runtime state | Technical roadmap, implementation, and operational truth |
-| Todoist | Immediate actionable commitments |
+| Todoist | Actionable-work truth and execution commitments |
 | Google Calendar | Fixed time commitments, travel, wake requirements, and protected sleep |
-| Sunday Outlook / C2 Review | Cross-system prioritization and reconciliation |
+| Master Scheduler (including Sunday Outlook / C2 Review) | Cross-system governance, planning, prioritization, and reconciliation |
 | Obsidian | Durable context, decisions, learning, doctrine, and project knowledge |
 | ChatGPT conversations | Intelligence and event history; not permanent project authority |
 
@@ -95,7 +96,7 @@ Preview opening an eligible project:
 
 ```bash
 ./scripts/project-forge-open-project \
-  --slug project_forge_registry \
+  --slug project-forge-registry \
   --profile plain \
   --dry-run
 ```
@@ -117,6 +118,7 @@ PYTHONPATH=src python3 -m unittest discover -s tests
 - Back up existing files before approved overwrite paths.
 - Keep generated artifacts lower in authority than the charter, status, and verified repository/runtime evidence.
 - Preserve exact overrides only when current evidence justifies them.
+- Never inspect, scan internally, synchronize, migrate, launch, generate into, or modify `/home/cole/cerberus` or `/mnt/storage/Cole/cerberus`.
 
 ### Evidence-Based Safeguards
 
@@ -137,6 +139,21 @@ retrofitted, marked superseded/reference/dormant, or archived based on evidence.
 
 Real credentials, databases, logs, exports, raw evidence, and case material still
 receive the same ordinary content-based protection applied to every project.
+
+The only Cerberus-specific filesystem boundary is exact and path-based:
+`/home/cole/cerberus` and `/mnt/storage/Cole/cerberus`, including descendants,
+are excluded before processing. That rule does not suppress any other repository
+whose name contains Cerberus.
+
+## Follow-Up Signals
+
+Project Forge detects and reports technical follow-up signals. Master Scheduler
+or the operator decides whether a signal becomes actionable, and Todoist owns
+the resulting commitment. Project Forge does not assign personal priority or
+due dates and does not silently export signals to Todoist.
+
+The inspectable schema and state model are documented in
+[Project Forge Follow-Up Signals](docs/PROJECT_FORGE_FOLLOWUP_SIGNALS.md).
 
 ## Repository Compliance Gate
 
@@ -168,16 +185,15 @@ Common generated surfaces include:
 Generated artifacts are evidence and operator aids. They do not override
 `PROJECT_CHARTER.md`, `PROJECT_STATUS.md`, or verified live state.
 
-Older generated artifacts may still contain retired Cerberus protection labels
-until Legion performs a fresh scan and artifact rebuild. Current code and policy
-must normalize or replace those labels rather than treating them as authority.
+Generated artifacts are reproducible derived surfaces. Current code normalizes
+legacy protection labels instead of treating them as authority.
 
 ## Obsidian Boundary
 
 Canonical technical mirrors use:
 
 ```text
-/mnt/storage/Cole/main_vault/10 Projects/<project-folder>/
+/home/cole/main_vault/10 Projects/<project-slug>/
 ```
 
 The safe default is markdown-only, docs-only, dry-run-first, no-delete, and
@@ -185,15 +201,12 @@ no-clobber. Human-edited vault notes win by default. Any future update mode must
 require explicit approval, backup, diff review, exact vault-root confirmation,
 and all-or-nothing preflight.
 
-## Local Synchronization Note
+## Operational Closeout
 
-The GitHub repository contains the approved 2026-07-23 governance retrofit and
-Cerberus protection reversal. Legion's local checkout and the real Obsidian
-Project Forge hub still require a normal pull, fresh scan, test run, and artifact
-rebuild before those local surfaces can be considered synchronized.
-
-Do not treat that local sync requirement as unresolved architecture; the
-canonical GitHub policy is already established.
+The 2026-07-29 Legion closeout synchronized current GitHub governance, rebuilt
+the bounded registry surfaces, and recorded remaining technical discrepancies as
+follow-up signals. The canonical Obsidian root was unavailable on Legion, so no
+vault content was read or changed.
 
 ## Historical Documentation
 

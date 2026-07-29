@@ -53,8 +53,16 @@ For each discovered `.git` repository:
 - known_embedded
 - clean_candidate
 - dirty_candidate_review_first
-- protected_manual_review
 - unknown_structure
+
+Legacy `protected_manual_review` rows are normalized at downstream boundaries;
+new discovery does not emit that category.
+
+Repositories nested inside an already discovered Git repository are owned by
+the outer repository and are not manufactured into separate projects.
+Android-style `.repo` checkout farms are likewise excluded from per-repository
+inventory. The exact protected paths `/home/cole/cerberus` and
+`/mnt/storage/Cole/cerberus`, including descendants, are always excluded.
 
 ## Operator Rule
 

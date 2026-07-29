@@ -144,6 +144,24 @@ class PassportGenerationTests(unittest.TestCase):
             {"cerberus_helper"},
         )
 
+    def test_workspace_path_uses_current_runtime_home(self) -> None:
+        payload = render_passport_yaml(self.make_record("demo"))
+
+        self.assertIn(
+            f"workspace: {Path.home() / '.config/Code/User/workspaces/demo.code-workspace'}",
+            payload,
+        )
+
+    def test_exact_protected_path_is_a_skip_reason(self) -> None:
+        plan = self.make_plan(
+            [self.make_record("cerberus", local_path="/home/cole/cerberus")]
+        )
+
+        self.assertEqual(
+            plan.skipped_entries[0].reasons,
+            ["protected_filesystem_path"],
+        )
+
     def test_load_project_records_migrates_legacy_cerberus_protection(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             input_json = Path(tmp) / "scan.json"

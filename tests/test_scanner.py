@@ -3,9 +3,10 @@ from __future__ import annotations
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from project_forge_registry.reporting import build_registry_record
-from project_forge_registry.scanner import scan_project_dir, slugify
+from project_forge_registry.scanner import scan_project_dir, scan_roots, slugify
 
 
 class ScannerTests(unittest.TestCase):
@@ -58,7 +59,7 @@ class ScannerTests(unittest.TestCase):
 
             result = scan_project_dir(project_dir)
 
-        self.assertEqual(result.recommended_category, "active_project")
+        self.assertEqual(result.recommended_category, "project_candidate")
         self.assertEqual(result.recommended_action, "register_full")
         self.assertFalse(result.do_not_move)
         self.assertFalse(result.do_not_delete)
@@ -76,7 +77,7 @@ class ScannerTests(unittest.TestCase):
 
             result = scan_project_dir(project_dir)
 
-        self.assertEqual(result.recommended_category, "active_project")
+        self.assertEqual(result.recommended_category, "project_candidate")
         self.assertEqual(result.recommended_action, "register_full")
         self.assertFalse(result.do_not_sync)
         self.assertEqual(result.safety_warnings, [])
@@ -92,7 +93,7 @@ class ScannerTests(unittest.TestCase):
 
             result = scan_project_dir(project_dir)
 
-        self.assertEqual(result.recommended_category, "active_project")
+        self.assertEqual(result.recommended_category, "project_candidate")
         self.assertEqual(result.recommended_action, "review_required")
         self.assertIn("contains_env_files", result.safety_warnings)
         self.assertIn("contains_database_files", result.safety_warnings)
@@ -111,6 +112,26 @@ class ScannerTests(unittest.TestCase):
         self.assertEqual(result.recommended_action, "review_required")
         self.assertTrue(result.has_git)
         self.assertTrue(result.has_code_workspace)
+
+    def test_exact_protected_paths_are_never_scanned(self) -> None:
+        protected_paths = [
+            Path("/home/cole/cerberus"),
+            Path("/mnt/storage/Cole/cerberus"),
+        ]
+        with patch(
+            "project_forge_registry.scanner.first_level_directories",
+            return_value=protected_paths,
+        ), patch(
+            "project_forge_registry.scanner.scan_project_dir",
+        ) as scan_project:
+            results = scan_roots([Path("/home/cole"), Path("/mnt/storage/Cole")])
+
+        self.assertEqual(results, [])
+        scan_project.assert_not_called()
+
+    def test_direct_protected_path_scan_is_refused(self) -> None:
+        with self.assertRaisesRegex(ValueError, "protected filesystem path"):
+            scan_project_dir(Path("/home/cole/cerberus"))
 
 
 if __name__ == "__main__":

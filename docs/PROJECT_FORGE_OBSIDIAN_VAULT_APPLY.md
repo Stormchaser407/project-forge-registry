@@ -27,8 +27,8 @@ Future guarded apply command:
 PYTHONPATH=src python3 -m project_forge_registry.obsidian_vault_apply \
   --apply \
   --yes-write-to-vault \
-  --vault-root "/mnt/storage/Cole/main_vault/10 Projects/Project Forge" \
-  --confirm-vault-root "/mnt/storage/Cole/main_vault/10 Projects/Project Forge"
+  --vault-root "/home/cole/main_vault/10 Projects/project_forge_registry" \
+  --confirm-vault-root "/home/cole/main_vault/10 Projects/project_forge_registry"
 ```
 
 NOT TO RUN until the operator explicitly approves the first real vault write.

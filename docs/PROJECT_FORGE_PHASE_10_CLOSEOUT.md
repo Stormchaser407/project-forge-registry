@@ -1,5 +1,9 @@
 # Project Forge Phase 10 Closeout
 
+> Historical phase closeout. The Cerberus blanket-protection statement below is
+> superseded by
+> `docs/decisions/2026-07-23-retire-cerberus-blanket-protection.md`.
+
 ## Status
 
 Phase 10 is ready to close as a stable local command center milestone.

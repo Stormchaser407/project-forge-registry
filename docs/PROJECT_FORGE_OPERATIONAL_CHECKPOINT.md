@@ -1,5 +1,8 @@
 # Project Forge Registry Operational Checkpoint
 
+> Historical 2026-05-14 checkpoint. Its Cerberus automation language predates
+> the name-policy reversal and does not govern current behavior.
+
 Date: 2026-05-14 03:02:28
 
 ## Status

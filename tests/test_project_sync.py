@@ -201,7 +201,7 @@ class ProjectSyncTests(unittest.TestCase):
 
         self.assertEqual(derive_final_status(False, results), "incomplete")
 
-    def test_detect_protected_project_uses_explicit_policy_only(self) -> None:
+    def test_detect_protected_project_blocks_exact_path(self) -> None:
         with tempfile.TemporaryDirectory(dir=repository_root() / "artifacts") as artifacts_tmp:
             passport_dir = Path(artifacts_tmp) / "project_passports"
             passport_dir.mkdir(parents=True)
@@ -225,7 +225,28 @@ class ProjectSyncTests(unittest.TestCase):
                 encoding="utf-8",
             )
             reasons = detect_protected_project(passport_path, "cerberus")
-            self.assertEqual(reasons, [])
+            self.assertEqual(reasons, ["protected_filesystem_path"])
+
+    def test_detect_protected_project_allows_ordinary_cerberus_name(self) -> None:
+        with tempfile.TemporaryDirectory(dir=repository_root() / "artifacts") as artifacts_tmp:
+            passport_path = Path(artifacts_tmp) / "cerberus.project.yml"
+            passport_path.write_text(
+                "\n".join(
+                    [
+                        "project:",
+                        "  slug: cerberus",
+                        "  category: active_project",
+                        "  registry_action: register_full",
+                        '  local_path: "/projects/cerberus"',
+                        "safety:",
+                        "  do_not_sync: false",
+                        "",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+
+            self.assertEqual(detect_protected_project(passport_path, "cerberus"), [])
     def test_report_writer_outputs_status(self) -> None:
         with tempfile.TemporaryDirectory(dir=repository_root() / "artifacts") as artifacts_tmp:
             report_path = Path(artifacts_tmp) / "project_sync_report.md"

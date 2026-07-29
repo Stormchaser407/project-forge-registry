@@ -54,6 +54,34 @@ class EmbedApplyTests(unittest.TestCase):
         self.assertFalse(safe)
         self.assertIn("category", reason)
 
+    def test_safe_apply_row_accepts_ordinary_cerberus_name(self) -> None:
+        item = row("Cerberus-Tool")
+        safe, reason = is_safe_apply_row(item)
+        self.assertTrue(safe)
+        self.assertEqual(reason, "ok")
+
+    def test_safe_apply_row_rejects_exact_protected_paths(self) -> None:
+        for protected_path in (
+            Path("/home/cole/cerberus"),
+            Path("/mnt/storage/Cole/cerberus"),
+        ):
+            item = row("protected-path")
+            item = EmbedApplyRow(
+                item.slug,
+                protected_path,
+                item.selected,
+                item.eligible,
+                item.decision,
+                item.reason,
+                item.marker_yaml,
+                item.marker_doc,
+                item.category,
+                item.git_status,
+            )
+            safe, reason = is_safe_apply_row(item)
+            self.assertFalse(safe)
+            self.assertEqual(reason, "exact protected filesystem path")
+
     def test_apply_marker_writes_files_for_clean_repo(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             repo = Path(tmp) / "demo"

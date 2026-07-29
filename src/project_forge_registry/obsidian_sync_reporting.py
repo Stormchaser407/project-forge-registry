@@ -66,7 +66,7 @@ def write_obsidian_sync_report(path: Path, plan: ObsidianSyncPlan) -> None:
             "- Non-markdown files copied: no",
             "- Destination deletes performed: no",
             "- External project folders modified: no",
-            "- Cerberus system/storage paths touched: no",
+            "- Exact protected paths touched: no",
         ]
     )
 

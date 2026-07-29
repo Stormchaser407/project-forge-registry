@@ -6,6 +6,7 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 
+from .path_policy import is_protected_filesystem_path
 from .workspace_models import (
     PlannedFileAction,
     WorkspaceGenerationPlan,
@@ -237,6 +238,8 @@ def determine_reasons(
         reasons.append("duplicate_slug_collision")
     if record.do_not_sync:
         reasons.append("do_not_sync=true")
+    if is_protected_filesystem_path(Path(record.local_path)):
+        reasons.append("protected_filesystem_path")
     if record.category in FORCED_SKIP_CATEGORIES:
         reasons.append(f"classification={record.category}")
     if record.category in exclude_categories:

@@ -2,21 +2,21 @@ project:
   slug: media_dedupe
   name: media-dedupe
   category: active_project
-  status: review
+  status: active
   registry_action: register_full
-  local_path: /mnt/storage/Cole/Projects/media-dedupe
+  local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/media-dedupe
   created_by: project-forge-registry
   schema_version: 0.1
 paths:
-  local: /mnt/storage/Cole/Projects/media-dedupe
-  workspace: /home/cole/.config/Code/User/workspaces/media_dedupe.code-workspace
+  local: /run/media/cash/WD_BLACK_4TB/Cole/Projects/media-dedupe
+  workspace: /home/cash/.config/Code/User/workspaces/media_dedupe.code-workspace
   obsidian: /home/cole/main_vault/10 Projects/media_dedupe
 launch:
   command: code-media_dedupe
 git:
   default_branch: main
-  github: null
-  codeberg: null
+  github: https://github.com/Stormchaser407/media-dedupe
+  codeberg: https://codeberg.org/stormchaser/media-dedupe
   mirror_mode: disabled_for_now
 sync:
   obsidian_to_repo: export_only
@@ -40,3 +40,6 @@ safety:
     - generated_from_registry_category=active_project
     - generated_from_registry_action=register_full
     - obsidian_note_policy=docs_only
+    - operator_verified_category=active_project
+    - lifecycle_status=active
+    - remote_state_reconciled=2026-07-29

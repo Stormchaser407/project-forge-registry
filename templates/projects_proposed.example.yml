@@ -36,19 +36,19 @@ projects:
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
     safety_warnings: []
-  - slug: cerberus
-    name: cerberus
+  - slug: system_service_config
+    name: system-service-config
     status: active_special_case
     classification: system_bound_project
     category: system_bound_project
-    local_path: /home/cole/cerberus
-    canonical_path: /home/cole/cerberus
+    local_path: /etc/example-service
+    canonical_path: /etc/example-service
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/cerberus.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/cerberus
+      workspace: /home/cole/.config/Code/User/workspaces/system_service_config.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/system_service_config
     registry_action: document_only_for_now
     launch:
-      command: code-cerberus
+      command: code-system_service_config
     git:
       default_branch: main
       github: null
@@ -71,24 +71,23 @@ projects:
       do_not_move: true
       do_not_delete: false
       exclude_from_bulk_sync: true
-      obsidian_note_policy: high_level_notes_only
+      obsidian_note_policy: docs_only
     safety_warnings:
       - system_bound_path
       - no_bulk_sync_automation
-      - obsidian_high_level_notes_only
-  - slug: cerberus_storage_copy
-    name: cerberus
+  - slug: duplicate_project_copy
+    name: duplicate-project-copy
     status: old_copy_with_possible_operational_material
     classification: reconciliation_required
     category: reconciliation_required
-    local_path: /mnt/storage/Cole/cerberus
-    canonical_path: /home/cole/cerberus
+    local_path: /mnt/storage/Cole/Projects/duplicate-project-copy
+    canonical_path: /mnt/storage/Cole/Projects/example_project
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/cerberus_storage_copy.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/cerberus_storage_copy
+      workspace: /home/cole/.config/Code/User/workspaces/duplicate_project_copy.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/duplicate_project_copy
     registry_action: compare_only
     launch:
-      command: code-cerberus_storage_copy
+      command: code-duplicate_project_copy
     git:
       default_branch: null
       github: null

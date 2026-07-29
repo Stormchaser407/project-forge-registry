@@ -194,7 +194,7 @@ class ObsidianSyncTests(unittest.TestCase):
             write_passport(
                 passport_dir / "cerberus.project.yml",
                 slug="cerberus",
-                local_path="/home/cole/cerberus",
+                local_path="/projects/cerberus",
                 obsidian_path="/home/cole/main_vault/10 Projects/cerberus",
             )
             (source_dir / "Project Home.md").write_text(
@@ -219,6 +219,38 @@ class ObsidianSyncTests(unittest.TestCase):
             self.assertTrue(
                 (Path(vault_tmp) / "cerberus" / "Project Home.md").exists()
             )
+
+    def test_exact_protected_path_is_ineligible(self) -> None:
+        artifacts_root = repository_artifacts_root()
+        with tempfile.TemporaryDirectory(
+            dir=artifacts_root
+        ) as artifacts_tmp, tempfile.TemporaryDirectory() as vault_tmp:
+            artifacts_dir = Path(artifacts_tmp)
+            passport_dir = artifacts_dir / "project_passports"
+            mirror_dir = artifacts_dir / "obsidian_mirrors"
+            source_dir = mirror_dir / "cerberus"
+            passport_dir.mkdir(parents=True)
+            source_dir.mkdir(parents=True)
+            write_passport(
+                passport_dir / "cerberus.project.yml",
+                slug="cerberus",
+                local_path="/home/cole/cerberus",
+                obsidian_path="/home/cole/main_vault/10 Projects/cerberus",
+            )
+            (source_dir / "Project Home.md").write_text("# Safe\n", encoding="utf-8")
+
+            plan = build_sync_plan(
+                mode="dry-run",
+                slug="cerberus",
+                passport_dir=passport_dir,
+                mirror_dir=mirror_dir,
+                vault_project_root=Path(vault_tmp),
+                report_name="obsidian_sync_report.md",
+                backup_suffix="stamp",
+            )
+
+            self.assertFalse(plan.entry.eligible)
+            self.assertEqual(plan.entry.reasons, ["protected_filesystem_path"])
 
     def test_explicit_do_not_sync_still_blocks_cerberus(self) -> None:
         artifacts_root = repository_artifacts_root()

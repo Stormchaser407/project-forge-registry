@@ -150,11 +150,22 @@ def preflight_entry(raw_entry: dict[str, Any], source_root: Path, vault_root: Pa
             source_path=source_path,
             target_path=target_path,
             action="blocked_missing_source",
-            target_exists=target_path.exists(),
+            target_exists=False,
             reason="source file is missing",
         )
 
-    if target_path.exists():
+    try:
+        target_exists = target_path.exists()
+    except OSError as error:
+        return ApplyEntry(
+            source_path=source_path,
+            target_path=target_path,
+            action="blocked_target_unavailable",
+            target_exists=False,
+            reason=f"target path unavailable: {error}",
+        )
+
+    if target_exists:
         if target_path.is_file() and compare_files(source_path, target_path):
             return ApplyEntry(
                 source_path=source_path,
@@ -447,7 +458,7 @@ def main(argv: list[str] | None = None) -> int:
             report_path=Path(args.report_path),
             json_path=Path(args.json_path),
         )
-    except (FileNotFoundError, ValueError, json.JSONDecodeError) as error:
+    except (OSError, ValueError, json.JSONDecodeError) as error:
         parser.exit(2, f"project-forge-obsidian-vault-apply failed: {error}\n")
 
     print("project-forge-obsidian-vault-apply completed")

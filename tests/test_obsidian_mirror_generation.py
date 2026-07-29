@@ -188,6 +188,16 @@ class ObsidianMirrorGenerationTests(unittest.TestCase):
         self.assertEqual({entry.record.slug for entry in plan.eligible_entries}, {"active", "tool"})
         self.assertIn("classification=vendor_clone", plan.skipped_entries[0].reasons)
 
+    def test_exact_protected_path_skips_generation(self) -> None:
+        record = self.make_record("cerberus")
+        record.local_path = "/mnt/storage/Cole/cerberus"
+        plan = self.make_plan([record])
+
+        self.assertEqual(
+            plan.skipped_entries[0].reasons,
+            ["protected_filesystem_path"],
+        )
+
     def test_sync_protection_flags_skip_generation(self) -> None:
         records = [
             self.make_record("codecopy", allow_code_to_obsidian=True),

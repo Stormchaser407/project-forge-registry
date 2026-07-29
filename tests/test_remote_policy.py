@@ -155,6 +155,31 @@ class RemotePolicyTests(unittest.TestCase):
             self.assertTrue(plan.eligible)
             self.assertEqual(plan.policy_status, "needs_approval")
             self.assertNotIn("cerberus_protected", plan.reasons)
+
+    def test_exact_protected_path_blocks_all_remote_lanes_without_access(self) -> None:
+        with self.temp_in_repo() as tmp:
+            passport_dir = Path(tmp) / "project_passports"
+            passport_dir.mkdir()
+            write_passport(
+                passport_dir / "cerberus.project.yml",
+                slug="cerberus",
+                local_path="/home/cole/cerberus",
+            )
+            parser = build_parser()
+            common = ["--slug", "cerberus", "--passport-dir", str(passport_dir)]
+
+            plan = build_plan(parser.parse_args(["plan", *common]))
+            verify = build_verify(parser.parse_args(["verify", *common]))
+            push_ready = build_push_ready(
+                parser.parse_args(["push-ready", *common])
+            )
+
+            self.assertFalse(plan.eligible)
+            self.assertFalse(verify.eligible)
+            self.assertFalse(push_ready.eligible)
+            self.assertIn("protected_filesystem_path", plan.reasons)
+            self.assertFalse(verify.remote_state.inside_git_repo)
+            self.assertFalse(push_ready.remote_state.inside_git_repo)
     def test_verify_reads_local_git_state(self) -> None:
         with self.temp_in_repo() as tmp:
             root = Path(tmp)

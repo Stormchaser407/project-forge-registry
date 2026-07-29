@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from .obsidian_mirror_generation import parse_simple_yaml
+from .path_policy import is_protected_filesystem_path
 
 DEFAULT_PASSPORT_DIR = "artifacts/project_passports"
 DEFAULT_REPORT_NAME = "project_sync_report.md"
@@ -115,6 +116,9 @@ def detect_protected_project(passport_path: Path, slug: str) -> list[str]:
     if isinstance(project, dict):
         category = str(project.get("category", "")).strip()
         registry_action = str(project.get("registry_action", "")).strip()
+        local_path = str(project.get("local_path", "")).strip()
+        if local_path and is_protected_filesystem_path(Path(local_path)):
+            reasons.append("protected_filesystem_path")
         if category in PROTECTED_CATEGORIES:
             reasons.append(f"classification={category}")
         if registry_action in PROTECTED_REGISTRY_ACTIONS:

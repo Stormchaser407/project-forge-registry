@@ -31,6 +31,8 @@ DEFAULT_PHASE_10_REPORT = Path("artifacts/phase_10_closeout_report.md")
 DEFAULT_PHASE_10_DOC = Path("docs/PROJECT_FORGE_PHASE_10_CLOSEOUT.md")
 DEFAULT_OPERATOR_RELEASE_NOTES = Path("docs/PROJECT_FORGE_OPERATOR_RELEASE_NOTES.md")
 DEFAULT_CHANGELOG = Path("CHANGELOG.md")
+DEFAULT_FOLLOWUP_SIGNALS = Path("artifacts/technical_followup_signals.json")
+DEFAULT_CLOSEOUT_REPORT = Path("artifacts/PROJECT_FORGE_OPERATIONAL_CLOSEOUT_REPORT.md")
 DEFAULT_OUTPUT_DIR = Path("artifacts/obsidian_mirror")
 DEFAULT_REPORT_PATH = Path("artifacts/obsidian_mirror_report.md")
 DEFAULT_MANIFEST_PATH = Path("artifacts/obsidian_mirror_manifest.json")
@@ -45,10 +47,10 @@ NOTE_FILENAMES = {
 
 COMMON_TAGS = ["project-forge", "phase-11", "command-center", "dry-run"]
 DEFERRED_ITEMS = [
-    "Codex Personal/Business isolation",
-    "real vault write/apply",
-    "remote strategy",
-    "repo action policy layer",
+    "canonical Obsidian root availability and no-clobber sync verification",
+    "repository and Codeberg discrepancies recorded in the technical follow-up signal artifact",
+    "canonical live host/deployment-node source and the separate fleet-panel branch",
+    "real vault apply remains blocked until the canonical root is available and a dry-run is reviewed",
 ]
 SAFETY_STATEMENTS = [
     "no real Obsidian vault writes",
@@ -69,6 +71,8 @@ SOURCE_ARTIFACTS = [
     DEFAULT_PHASE_10_DOC,
     DEFAULT_OPERATOR_RELEASE_NOTES,
     DEFAULT_CHANGELOG,
+    DEFAULT_FOLLOWUP_SIGNALS,
+    DEFAULT_CLOSEOUT_REPORT,
 ]
 
 
@@ -204,7 +208,9 @@ def render_command_center(state: MirrorState) -> str:
             "",
             "# Project Forge - Command Center",
             "",
-            "Project Forge is a dry-run-first local command center. This Phase 11A mirror is generated under repository artifacts only.",
+            "Project Forge is the technical project and fleet operational registry. This technical operator mirror is generated under repository artifacts only.",
+            "",
+            "Repositories and verified runtime state own technical truth. Obsidian owns durable context. Master Scheduler or the operator decides whether a Project Forge follow-up signal becomes actionable, and Todoist owns the resulting commitment.",
             "",
             "## Navigation",
             "",
@@ -316,10 +322,10 @@ def render_deferred_items(_: MirrorState) -> str:
             "",
             "## Notes",
             "",
-            "- Codex Personal/Business isolation needs dedicated VS Code and extension behavior research.",
-            "- Real vault writes remain deferred until an explicit apply/sync phase.",
-            "- Remote strategy remains policy work until explicitly approved.",
-            "- Repo action policy should be designed before any executable dashboard actions.",
+            "- The machine-readable evidence queue is `artifacts/technical_followup_signals.json`.",
+            "- These are technical signals, not tasks or personal-priority assignments.",
+            "- Real vault writes remain blocked until the canonical root is available and an explicit no-clobber dry-run is reviewed.",
+            "- External repository and mirror discrepancies require repository-by-repository decisions.",
             "",
             "Related: [[Project Forge - Phase 11 Planning]]",
             "",
@@ -336,14 +342,17 @@ def render_phase_11_planning(_: MirrorState) -> str:
             "",
             "Back to [[Project Forge - Command Center]]. Review [[Project Forge - Deferred Items]] before expanding scope.",
             "",
-            "## Candidate Lanes",
+            "## Bounded Follow-Up",
             "",
-            "- Obsidian integration: keep artifact mirror deterministic before real vault sync.",
-            "- Repo action policies: define allowed, blocked, and review-only actions per category.",
-            "- Remote strategy: map local, GitHub, Codeberg, and mirror policy without contacting remotes by default.",
-            "- Codex/VS Code isolation research: test user-data, extension-dir, profile, and environment boundaries.",
+            *[f"- {item}" for item in DEFERRED_ITEMS],
             "",
-            "## Phase 11A Boundary",
+            "## Authority Boundary",
+            "",
+            "- Project Forge detects and reports technical evidence.",
+            "- Master Scheduler or the operator decides whether it becomes actionable.",
+            "- Todoist owns any resulting actionable commitment.",
+            "",
+            "## Generated Mirror Boundary",
             "",
             "- Generate Markdown notes under `artifacts/obsidian_mirror/` only.",
             "- Generate `artifacts/obsidian_mirror_report.md`.",

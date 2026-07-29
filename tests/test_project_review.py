@@ -51,6 +51,17 @@ def write_inventory(
 
 
 class ProjectReviewTests(unittest.TestCase):
+    def test_exact_protected_path_is_rejected_before_review(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            inventory = Path(tmp) / "dashboard_inventory.json"
+            write_inventory(inventory, Path("/home/cole/cerberus"))
+
+            with self.assertRaisesRegex(
+                ValueError,
+                "exact protected filesystem path",
+            ):
+                load_project(inventory, "dirty")
+
     def test_duplicate_slug_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

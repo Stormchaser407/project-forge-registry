@@ -1,18 +1,18 @@
 project:
-  slug: recon_housekeeping
-  name: recon_housekeeping
+  slug: proton_pass_vault_janitor
+  name: proton-pass-vault-janitor
   category: active_project
-  status: review
+  status: active
   registry_action: register_full
-  local_path: /mnt/storage/Cole/Projects/recon_housekeeping
+  local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/proton-pass-vault-janitor
   created_by: project-forge-registry
   schema_version: 0.1
 paths:
-  local: /mnt/storage/Cole/Projects/recon_housekeeping
-  workspace: /home/cole/.config/Code/User/workspaces/recon_housekeeping.code-workspace
-  obsidian: /home/cole/main_vault/10 Projects/recon_housekeeping
+  local: /run/media/cash/WD_BLACK_4TB/Cole/Projects/proton-pass-vault-janitor
+  workspace: /home/cash/.config/Code/User/workspaces/proton_pass_vault_janitor.code-workspace
+  obsidian: /home/cole/main_vault/10 Projects/proton_pass_vault_janitor
 launch:
-  command: code-recon_housekeeping
+  command: code-proton_pass_vault_janitor
 git:
   default_branch: main
   github: null
@@ -37,6 +37,11 @@ safety:
   do_not_delete: false
   do_not_sync: false
   notes:
-    - generated_from_registry_category=active_project
+    - generated_from_registry_category=project_candidate
     - generated_from_registry_action=register_full
     - obsidian_note_policy=docs_only
+    - operator_verified_category=active_project
+    - canonical_charter=PROJECT.md
+    - lifecycle_status=active
+    - remote_status=not_configured
+    - raw_vault_material=restricted_outside_git

@@ -22,6 +22,8 @@ import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 
+from .path_policy import is_protected_filesystem_path
+
 
 DEFAULT_REPORT_NAME = "repo_discovery_report.md"
 DEFAULT_CSV_NAME = "repo_discovery_inventory.csv"
@@ -35,6 +37,7 @@ DEFAULT_EXCLUDED_PARTS = {
     ".Trash",
     "Trash",
 }
+REPO_FARM_MARKER_DIRS = {".repo"}
 
 DEFAULT_EXCLUDED_ABSOLUTE_PREFIXES = (
     "/proc",
@@ -75,10 +78,19 @@ def normalize_slug(path: Path) -> str:
 
 
 def should_exclude(path: Path, excluded_paths: list[Path] | None = None) -> bool:
+    if is_protected_filesystem_path(path):
+        return True
+
     resolved = path.resolve()
     text = str(resolved)
 
+    if is_protected_filesystem_path(resolved):
+        return True
+
     if any(part in DEFAULT_EXCLUDED_PARTS for part in resolved.parts):
+        return True
+
+    if any((resolved / marker).is_dir() for marker in REPO_FARM_MARKER_DIRS):
         return True
 
     if not any(
@@ -218,8 +230,10 @@ def discover_repos(
                 if repo not in seen:
                     repos.append(inspect_repo(repo))
                     seen.add(repo)
-                # Do not walk inside discovered repo internals.
-                dirnames[:] = [name for name in dirnames if name != ".git"]
+                # The repository owns any nested checkout or generated tree.
+                # Represent the outer repository once instead of manufacturing
+                # independent projects from its internals.
+                dirnames[:] = []
                 continue
 
             dirnames[:] = [

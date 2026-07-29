@@ -68,7 +68,7 @@ def write_export_sync_report(path: Path, plan: ExportSyncPlan) -> None:
             "- Markdown-only filter enforced: yes",
             "- Repo-root `README.md` overwrite allowed: no",
             "- Destination delete operations performed: no",
-            "- Cerberus paths touched: no",
+            "- Exact protected paths touched: no",
             "- Source code or secrets moved: no",
             "- Logs/databases/binaries moved: no",
         ]

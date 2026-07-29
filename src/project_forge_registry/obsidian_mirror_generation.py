@@ -5,6 +5,7 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 
+from .path_policy import is_protected_filesystem_path
 from .obsidian_mirror_models import (
     ObsidianMirrorFileAction,
     ObsidianMirrorGenerationPlan,
@@ -621,6 +622,8 @@ def determine_reasons(
         reasons.append(f"excluded_category={record.category}")
     if record.do_not_sync:
         reasons.append("safety.do_not_sync=true")
+    if is_protected_filesystem_path(Path(record.local_path)):
+        reasons.append("protected_filesystem_path")
     if record.allow_code_to_obsidian:
         reasons.append("sync.allow_code_to_obsidian=true")
     if record.allow_secrets:

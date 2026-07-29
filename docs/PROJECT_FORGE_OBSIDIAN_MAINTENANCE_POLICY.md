@@ -14,7 +14,7 @@ not overwrite changed vault notes silently.
 ## Current Vault Root
 
 ```text
-/mnt/storage/Cole/main_vault/10 Projects/Project Forge
+/home/cole/main_vault/10 Projects/project_forge_registry
 ```
 
 ## Managed Notes

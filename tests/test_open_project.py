@@ -31,7 +31,11 @@ def first_eligible_slug() -> str | None:
 
 
 class OpenProjectTests(unittest.TestCase):
-    def run_open_project(self, *args: str) -> subprocess.CompletedProcess[str]:
+    def run_open_project(
+        self,
+        *args: str,
+        inventory_path: Path | None = None,
+    ) -> subprocess.CompletedProcess[str]:
         with tempfile.TemporaryDirectory() as tmp:
             return subprocess.run(
                 [str(SCRIPT), *args],
@@ -39,7 +43,15 @@ class OpenProjectTests(unittest.TestCase):
                 capture_output=True,
                 text=True,
                 check=False,
-                env={**os.environ, "HOME": tmp},
+                env={
+                    **os.environ,
+                    "HOME": tmp,
+                    **(
+                        {"PROJECT_FORGE_INVENTORY_PATH": str(inventory_path)}
+                        if inventory_path
+                        else {}
+                    ),
+                },
             )
 
     def test_script_exists_and_is_executable(self) -> None:
@@ -91,13 +103,44 @@ class OpenProjectTests(unittest.TestCase):
 
     def test_protected_repo_blocked(self) -> None:
         slug = first_slug_for_category("protected_manual_review")
-        self.assertIsNotNone(slug)
+        if slug is None:
+            self.skipTest("dashboard inventory has no legacy protected fixture")
 
         proc = self.run_open_project("--slug", slug or "", "--profile", "plain", "--dry-run")
 
         self.assertNotEqual(proc.returncode, 0)
         self.assertIn("Eligibility decision: no", proc.stdout)
         self.assertIn("protected project requires manual review", proc.stdout)
+
+    def test_exact_protected_path_is_blocked_even_with_ordinary_category(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            inventory = Path(tmp) / "inventory.json"
+            inventory.write_text(
+                json.dumps(
+                    {
+                        "projects": [
+                            {
+                                "slug": "cerberus",
+                                "category": "clean_candidate",
+                                "path": "/home/cole/cerberus",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            proc = self.run_open_project(
+                "--slug",
+                "cerberus",
+                "--profile",
+                "plain",
+                "--dry-run",
+                inventory_path=inventory,
+            )
+
+        self.assertNotEqual(proc.returncode, 0)
+        self.assertIn("exact protected filesystem path", proc.stdout)
 
     def test_unknown_slug_fails_clearly(self) -> None:
         proc = self.run_open_project("--slug", "definitely-not-a-real-project", "--profile", "plain")

@@ -32,6 +32,26 @@ def row(
 
 
 class EmbedPlanTests(unittest.TestCase):
+    def test_generated_csv_uses_lf_line_endings(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            input_csv = root / "input.csv"
+            input_csv.write_text(
+                "slug,path,git_status,has_readme,has_agents,has_code_workspace,"
+                "has_project_forge_marker,remote_count,category\n"
+                "demo,/tmp/demo,clean,true,false,false,false,0,clean_candidate\n",
+                encoding="utf-8",
+            )
+            output_csv = root / "output.csv"
+            run_embed_plan(
+                input_csv,
+                {"demo"},
+                root / "report.md",
+                output_csv,
+            )
+
+            self.assertNotIn(b"\r\n", output_csv.read_bytes())
+
     def test_selected_clean_candidate_plans_marker_write(self) -> None:
         items = build_plan([row("demo")], {"demo"})
 

@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import argparse
 import shutil
+import sys
 from datetime import datetime
 from pathlib import Path
 
 from .obsidian_mirror_generation import parse_simple_yaml
+from .path_policy import is_protected_filesystem_path
 from .obsidian_sync_models import (
     ObsidianSyncExcludedFile,
     ObsidianSyncFileAction,
@@ -287,6 +289,8 @@ def determine_skip_reasons(record: ObsidianSyncPassportRecord) -> list[str]:
 
     if record.do_not_sync:
         reasons.append("safety.do_not_sync=true")
+    if is_protected_filesystem_path(Path(record.local_path)):
+        reasons.append("protected_filesystem_path")
     if record.allow_code_to_obsidian:
         reasons.append("sync.allow_code_to_obsidian=true")
     if record.allow_secrets:
@@ -422,10 +426,37 @@ def format_console_summary(plan: ObsidianSyncPlan) -> str:
     )
 
 
+def write_blocked_sync_report(report_name: str, slug: str, error: OSError | ValueError) -> Path:
+    report_path = repository_artifacts_root() / normalize_report_name(report_name)
+    report_path.write_text(
+        "\n".join(
+            [
+                "# Obsidian Sync Report",
+                "",
+                f"- Mode: `dry-run`",
+                f"- Slug: `{slug}`",
+                "- Final status: `blocked`",
+                f"- Evidence: `{error}`",
+                "- Real Obsidian vault modified: `0`",
+                "- External project folders modified: `0`",
+                "- Exact protected paths touched: `no`",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    return report_path
+
+
 def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
-    plan = create_sync_plan_from_args(args, parser)
+    try:
+        plan = create_sync_plan_from_args(args, parser)
+    except (OSError, ValueError) as exc:
+        write_blocked_sync_report(args.report_name, args.slug, exc)
+        print(f"project-forge-obsidian-sync blocked: {exc}", file=sys.stderr)
+        return 1
 
     plan.report_path.parent.mkdir(parents=True, exist_ok=True)
     if plan.mode == "apply":

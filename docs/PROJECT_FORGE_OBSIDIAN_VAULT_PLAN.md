@@ -39,7 +39,7 @@ The planner writes only these Project Forge artifacts:
 The default proposed vault folder is:
 
 ```text
-/mnt/storage/Cole/main_vault/10 Projects/Project Forge/
+/home/cole/main_vault/10 Projects/project_forge_registry/
 ```
 
 This path is a proposed target only in Phase 11B. The planner does not create

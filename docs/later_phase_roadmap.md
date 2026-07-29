@@ -1,5 +1,9 @@
 # Later Phase Roadmap
 
+> Historical roadmap. Cerberus-specific note and sync rules below are
+> superseded by the 2026-07-23 protection reversal. Current work must use
+> evidence-based safeguards and the two exact protected-path exclusions.
+
 This repository intentionally starts with discovery and proposal generation only.
 
 ## Planned Phases

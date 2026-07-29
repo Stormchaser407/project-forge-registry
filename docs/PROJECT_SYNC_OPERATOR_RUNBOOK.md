@@ -53,8 +53,12 @@ It does not:
 - add remotes
 - push or fetch
 - contact GitHub or Codeberg
-- touch Cerberus
+- access either exact protected path: `/home/cole/cerberus` or
+  `/mnt/storage/Cole/cerberus`
 - write to external project folders
+
+Other Cerberus-branded repositories receive the same evidence-based dry-run
+eligibility treatment as any other repository.
 
 ## Reports
 

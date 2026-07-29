@@ -4,19 +4,19 @@ project:
   category: active_project
   status: active
   registry_action: register_full
-  local_path: /mnt/storage/Cole/Projects/project-forge-registry
+  local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry
   created_by: project-forge-registry
   schema_version: 0.1
 paths:
-  local: /mnt/storage/Cole/Projects/project-forge-registry
-  workspace: /home/cole/.config/Code/User/workspaces/project_forge_registry.code-workspace
+  local: /run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry
+  workspace: /home/cash/.config/Code/User/workspaces/project_forge_registry.code-workspace
   obsidian: /home/cole/main_vault/10 Projects/project_forge_registry
 launch:
   command: code-project_forge_registry
 git:
   default_branch: main
   github: https://github.com/Stormchaser407/project-forge-registry
-  codeberg: null
+  codeberg: https://codeberg.org/stormchaser/project-forge-registry
   mirror_mode: disabled_for_now
 sync:
   obsidian_to_repo: export_only
@@ -44,3 +44,4 @@ safety:
     - lifecycle_status=active
     - universal_planner_mission=superseded
     - command_center_means_technical_operator_surface_only
+    - remote_state_reconciled=2026-07-29

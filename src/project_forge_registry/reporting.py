@@ -7,6 +7,7 @@ from pathlib import Path
 from .models import ProjectScanResult
 
 OBSIDIAN_PROJECT_ROOT = "/home/cole/main_vault/10 Projects"
+WORKSPACE_PROJECT_ROOT = Path.home() / ".config/Code/User/workspaces"
 
 
 def ensure_artifact_dir(path: Path) -> None:
@@ -24,7 +25,7 @@ def build_registry_record(result: ProjectScanResult) -> dict[str, object]:
         "local_path": result.path,
         "canonical_path": result.canonical_path,
         "paths": {
-            "workspace": f"/home/cole/.config/Code/User/workspaces/{slug}.code-workspace",
+            "workspace": str(WORKSPACE_PROJECT_ROOT / f"{slug}.code-workspace"),
             "obsidian": f"{OBSIDIAN_PROJECT_ROOT}/{slug}",
         },
         "registry_action": result.recommended_action,
@@ -209,7 +210,7 @@ def write_command_board(path: Path, results: list[ProjectScanResult]) -> None:
                 f"- Status: `{result.recommended_status}`",
                 f"- Recommended action: `{result.recommended_action}`",
                 f"- Suggested launcher: `code-{result.safe_slug}`",
-                f"- Workspace target: `/home/cole/.config/Code/User/workspaces/{result.safe_slug}.code-workspace`",
+                f"- Workspace target: `{WORKSPACE_PROJECT_ROOT / f'{result.safe_slug}.code-workspace'}`",
                 f"- Obsidian target: `{OBSIDIAN_PROJECT_ROOT}/{result.safe_slug}`",
                 f"- Canonical path: `{result.canonical_path or result.path}`",
                 f"- Constraints: do_not_move={str(result.do_not_move).lower()}, do_not_delete={str(result.do_not_delete).lower()}, do_not_sync={str(result.do_not_sync).lower()}, exclude_from_bulk_sync={str(result.exclude_from_bulk_sync).lower()}, obsidian_note_policy={result.obsidian_note_policy}",

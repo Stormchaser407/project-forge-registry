@@ -152,7 +152,7 @@ def derive_final_status(items: list[EmbedPlanItem]) -> str:
 def write_csv(csv_path: Path, items: list[EmbedPlanItem]) -> None:
     csv_path.parent.mkdir(parents=True, exist_ok=True)
     with csv_path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.writer(handle)
+        writer = csv.writer(handle, lineterminator="\n")
         writer.writerow(
             [
                 "slug",

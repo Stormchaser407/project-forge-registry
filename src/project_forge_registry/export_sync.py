@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import shutil
+import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -14,6 +15,10 @@ from .export_sync_models import (
 )
 from .export_sync_reporting import write_export_sync_report
 from .obsidian_mirror_generation import parse_simple_yaml
+from .path_policy import (
+    is_protected_filesystem_path,
+    normalize_path_without_access,
+)
 
 DEFAULT_PASSPORT_DIR = "artifacts/project_passports"
 DEFAULT_VAULT_PROJECT_ROOT = "/home/cole/main_vault/10 Projects"
@@ -211,6 +216,8 @@ def determine_skip_reasons(record: ExportSyncPassportRecord) -> list[str]:
     reasons: list[str] = []
     if record.do_not_sync:
         reasons.append("safety.do_not_sync=true")
+    if is_protected_filesystem_path(Path(record.local_path)):
+        reasons.append("protected_filesystem_path")
     if record.allow_code_to_obsidian:
         reasons.append("sync.allow_code_to_obsidian=true")
     if record.allow_secrets:
@@ -224,6 +231,9 @@ def determine_skip_reasons(record: ExportSyncPassportRecord) -> list[str]:
 
 
 def determine_destination_docs_root(record: ExportSyncPassportRecord, repo_root_override: str | None) -> Path:
+    if is_protected_filesystem_path(Path(record.local_path)):
+        return normalize_path_without_access(Path(record.local_path)) / "docs"
+
     local_root = Path(record.local_path).expanduser().resolve()
     destination_docs_root = (local_root / "docs").resolve()
     ensure_path_within(local_root, destination_docs_root, "destination docs root")
@@ -397,11 +407,12 @@ def build_sync_plan(
     source_docs_root = (source_export_root / "docs").resolve()
     ensure_path_within(source_export_root, source_docs_root, "source docs root")
 
-    destination_docs_root = determine_destination_docs_root(record, repo_root_override)
-    local_root = Path(record.local_path).expanduser().resolve()
-    ensure_path_within(local_root, destination_docs_root, "destination docs root")
-
     reasons = determine_skip_reasons(record)
+    destination_docs_root = determine_destination_docs_root(record, repo_root_override)
+    if "protected_filesystem_path" not in reasons:
+        local_root = Path(record.local_path).expanduser().resolve()
+        ensure_path_within(local_root, destination_docs_root, "destination docs root")
+
     selected, excluded, notes = determine_candidates(
         source_export_root=source_export_root,
         source_docs_root=source_docs_root,
@@ -415,7 +426,7 @@ def build_sync_plan(
         or reason.startswith("sync.")
         or reason.startswith("classification=")
         or reason.startswith("registry_action=")
-        or reason == "cerberus_protected"
+        or reason == "protected_filesystem_path"
         for reason in reasons
     )
 
@@ -513,10 +524,37 @@ def format_console_summary(plan: ExportSyncPlan) -> str:
     )
 
 
+def write_blocked_export_report(report_name: str, slug: str, error: OSError | ValueError) -> Path:
+    report_path = repository_artifacts_root() / normalize_report_name(report_name)
+    report_path.write_text(
+        "\n".join(
+            [
+                "# Export Sync Report",
+                "",
+                f"- Mode: `dry-run`",
+                f"- Slug: `{slug}`",
+                "- Final status: `blocked`",
+                f"- Evidence: `{error}`",
+                "- Real Obsidian vault modified: `0`",
+                "- External project folders modified: `0`",
+                "- Exact protected paths touched: `no`",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    return report_path
+
+
 def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
-    plan = create_sync_plan_from_args(args, parser)
+    try:
+        plan = create_sync_plan_from_args(args, parser)
+    except (OSError, ValueError) as exc:
+        write_blocked_export_report(args.report_name, args.slug, exc)
+        print(f"project-forge-export-sync blocked: {exc}", file=sys.stderr)
+        return 1
 
     plan.report_path.parent.mkdir(parents=True, exist_ok=True)
     if plan.mode == "apply":
