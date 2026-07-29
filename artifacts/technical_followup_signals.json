@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-29T05:03:41-04:00",
+  "generated_at": "2026-07-29T05:32:42-04:00",
   "authority_contract": {
     "detection": "Project Forge",
     "action_decision": "Master Scheduler or operator",
@@ -10,17 +10,17 @@
     {
       "signal_id": "PF-20260729-001",
       "project_slug": "project_forge_registry",
-      "technical_condition": "Codeberg main is 26 commits behind the synchronized local and GitHub main.",
+      "technical_condition": "The initial 26-commit Codeberg lag was resolved during closeout publication.",
       "severity": "medium",
       "evidence": [
-        "local/origin main: 0fc0defbd65e18923b38534c854d314112bf8b85",
-        "codeberg/main: f9a2a6a592aacc306d8eb4f3ccc39a82c4535ffe",
-        "git rev-list --left-right --count codeberg/main...HEAD: 0 26"
+        "initial local/origin main: 0fc0defbd65e18923b38534c854d314112bf8b85",
+        "initial codeberg/main: f9a2a6a592aacc306d8eb4f3ccc39a82c4535ffe",
+        "verified post-publication GitHub and Codeberg main: 16ae5ee8eaa082d3f25586b77e2d82712e3353d5"
       ],
-      "suggested_next_action": "After closeout validation and the GitHub push, fast-forward Codeberg main and verify both remote heads.",
+      "suggested_next_action": "No current action; verify both remote heads again if future Project Forge mirror drift is detected.",
       "authority_destination": "Project Forge operator",
       "detected_at": "2026-07-29T05:03:41-04:00",
-      "status": "acknowledged"
+      "status": "resolved"
     },
     {
       "signal_id": "PF-20260729-002",
@@ -115,12 +115,12 @@
     {
       "signal_id": "PF-20260729-008",
       "project_slug": null,
-      "technical_condition": "Twelve local repositories differ from their configured Codeberg mirror head.",
+      "technical_condition": "Ten external repositories differ from their configured Codeberg mirror head.",
       "severity": "medium",
       "evidence": [
         "51 Codeberg remotes were reachable in the 2026-07-29 sweep",
-        "divergent names: argus, cerberus-recon, cerberus_case_workspace, chaos-control-bridge, DJ_request_system, djfiddlesticks-radio-tracker, djfiddlesticks-website, media-dedupe, project-forge-registry, recon-nixos-config, SpiderFoot_PeopleSearch",
-        "project-forge-registry appeared twice because its second worktree shares the same remote"
+        "divergent names: argus, cerberus-recon, cerberus_case_workspace, chaos-control-bridge, DJ_request_system, djfiddlesticks-radio-tracker, djfiddlesticks-website, media-dedupe, recon-nixos-config, SpiderFoot_PeopleSearch",
+        "Project Forge was removed from this list after its GitHub and Codeberg main heads were synchronized"
       ],
       "suggested_next_action": "Reconcile each repository independently after reviewing its local/GitHub relationship; do not bulk-push mirror state.",
       "authority_destination": "Fleet operator via Master Scheduler",
