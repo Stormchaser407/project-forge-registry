@@ -4,20 +4,16 @@
 
 - Mode: `dry-run`
 - Slug: `project_forge_registry`
-- Passport dir: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports`
-- Passport file: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/project_forge_registry.project.yml`
-- Local repo path: `/mnt/storage/Cole/Projects/project-forge-registry`
+- Passport dir: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/artifacts/project_passports`
+- Passport file: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/artifacts/project_passports/project_forge_registry.project.yml`
+- Local repo path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry`
 
 ## Eligibility
 
 - Eligible: true
-- Policy status: `needs_approval`
+- Policy status: `eligible`
 - Final aggregate status: `ready_for_operator_review`
 - Operator approval still required: true
-
-## Eligibility Notes
-
-- operator_approval_required
 
 ## Local Git State
 
@@ -27,7 +23,10 @@
 
 ## Remote Snapshot
 
-- No configured remotes detected.
+- `codeberg` `fetch` -> `git@codeberg.org:stormchaser/project-forge-registry.git`
+- `codeberg` `push` -> `git@codeberg.org:stormchaser/project-forge-registry.git`
+- `origin` `fetch` -> `git@github.com:Stormchaser407/project-forge-registry.git`
+- `origin` `push` -> `git@github.com:Stormchaser407/project-forge-registry.git`
 
 ## Gate Checks
 
@@ -40,8 +39,8 @@
 
 ## Docs Report Evidence
 
-- Obsidian sync report: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/obsidian_sync_report.md` exists=true slug_mentioned=true detail=present_with_slug_mention
-- Export sync report: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/export_sync_report.md` exists=true slug_mentioned=true detail=present_with_slug_mention
+- Obsidian sync report: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/artifacts/obsidian_sync_report.md` exists=true slug_mentioned=true detail=present_with_slug_mention
+- Export sync report: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/artifacts/export_sync_report.md` exists=true slug_mentioned=true detail=present_with_slug_mention
 
 ## Secret Scan Summary
 

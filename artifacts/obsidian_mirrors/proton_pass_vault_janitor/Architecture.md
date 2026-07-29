@@ -1,9 +1,9 @@
 ---
-title: "AgentZero - Architecture"
+title: "proton-pass-vault-janitor - Architecture"
 aliases:
-  - "AgentZero - Architecture"
+  - "proton-pass-vault-janitor - Architecture"
 ---
-# AgentZero - Architecture
+# proton-pass-vault-janitor - Architecture
 
 ## Overview
 

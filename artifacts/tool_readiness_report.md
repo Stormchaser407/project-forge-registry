@@ -1,6 +1,6 @@
 # Project Forge Tool Readiness Report
 
-- platform: `Linux-7.0.6-zen1-x86_64-with-glibc2.40`
+- platform: `Linux-7.1.2-zen1-x86_64-with-glibc2.40`
 - final_status: `ready_with_optional_gaps`
 - mode: `read-only`
 
@@ -16,7 +16,7 @@
 |---|---:|---|---|---|
 | Git | yes | ready | `git` | git version 2.51.2 |
 | Python 3 | yes | ready | `python3` | Python 3.13.12 |
-| VS Code / Codium | no | ready | `code` | 1.119.0 |
+| VS Code / Codium | no | ready | `code` | 1.106.2 |
 | Obsidian | no | ready | `obsidian` | n/a |
 | GitHub CLI | no | ready | `gh` | gh version 2.83.2 (nixpkgs) |
 | xdg-open | no | ready | `xdg-open` | xdg-open 1.2.1 |
@@ -51,7 +51,7 @@
 - available: `true`
 - status: `ready`
 - command_found: `code`
-- version: `1.119.0`
+- version: `1.106.2`
 - purpose: Open project folders from the future dashboard.
 - setup_guidance: Install VS Code or VSCodium.
 

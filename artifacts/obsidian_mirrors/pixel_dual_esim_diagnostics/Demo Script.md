@@ -1,9 +1,9 @@
 ---
-title: "AgentZero - Demo Script"
+title: "pixel-dual-esim-diagnostics - Demo Script"
 aliases:
-  - "AgentZero - Demo Script"
+  - "pixel-dual-esim-diagnostics - Demo Script"
 ---
-# AgentZero - Demo Script
+# pixel-dual-esim-diagnostics - Demo Script
 
 ## Thirty-Second Version
 

@@ -2,9 +2,10 @@
 
 - mode: `dry-run`
 - authorization: `operator-provided scan roots`
-- final_status: `ready_with_protected_reviews`
-- repos_found: `81`
+- final_status: `ready_for_operator_review`
+- repos_found: `82`
 - csv: `artifacts/repo_discovery_inventory.csv`
+- classification_policy: `observable technical state; no project-name protection`
 
 ## Scan Roots
 
@@ -12,25 +13,13 @@
 
 ## Category Summary
 
-- clean_candidate: `57`
+- clean_candidate: `68`
 - control_repo: `1`
 - dirty_candidate_review_first: `6`
-- known_embedded: `2`
-- protected_manual_review: `12`
+- known_embedded: `4`
 - unknown_structure: `3`
 
 ## Discovered Repos
-
-### nixos
-
-- path: `/etc/nixos`
-- git_status: `dirty`
-- has_readme: `false`
-- has_agents: `false`
-- has_code_workspace: `false`
-- has_project_forge_marker: `false`
-- remote_count: `1`
-- category: `dirty_candidate_review_first`
 
 ### 01-website-brand
 
@@ -74,7 +63,7 @@
 - has_code_workspace: `false`
 - has_project_forge_marker: `false`
 - remote_count: `2`
-- category: `protected_manual_review`
+- category: `clean_candidate`
 
 ### commandboard
 
@@ -261,7 +250,7 @@
 - has_code_workspace: `false`
 - has_project_forge_marker: `false`
 - remote_count: `2`
-- category: `protected_manual_review`
+- category: `clean_candidate`
 
 ### cerberus-agents
 
@@ -272,7 +261,7 @@
 - has_code_workspace: `false`
 - has_project_forge_marker: `false`
 - remote_count: `2`
-- category: `protected_manual_review`
+- category: `clean_candidate`
 
 ### cerberus-command
 
@@ -283,7 +272,7 @@
 - has_code_workspace: `false`
 - has_project_forge_marker: `false`
 - remote_count: `2`
-- category: `protected_manual_review`
+- category: `clean_candidate`
 
 ### cerberus-eyes-on
 
@@ -294,7 +283,7 @@
 - has_code_workspace: `false`
 - has_project_forge_marker: `false`
 - remote_count: `1`
-- category: `protected_manual_review`
+- category: `clean_candidate`
 
 ### cerberus-mgm-boot
 
@@ -305,7 +294,7 @@
 - has_code_workspace: `false`
 - has_project_forge_marker: `false`
 - remote_count: `1`
-- category: `protected_manual_review`
+- category: `clean_candidate`
 
 ### cerberus-project
 
@@ -316,7 +305,7 @@
 - has_code_workspace: `false`
 - has_project_forge_marker: `false`
 - remote_count: `2`
-- category: `protected_manual_review`
+- category: `clean_candidate`
 
 ### cerberus-recon
 
@@ -327,7 +316,7 @@
 - has_code_workspace: `false`
 - has_project_forge_marker: `false`
 - remote_count: `2`
-- category: `protected_manual_review`
+- category: `clean_candidate`
 
 ### cerberus-vault
 
@@ -338,7 +327,7 @@
 - has_code_workspace: `false`
 - has_project_forge_marker: `false`
 - remote_count: `2`
-- category: `protected_manual_review`
+- category: `clean_candidate`
 
 ### cerberus-watch
 
@@ -349,18 +338,29 @@
 - has_code_workspace: `false`
 - has_project_forge_marker: `false`
 - remote_count: `2`
-- category: `protected_manual_review`
+- category: `clean_candidate`
 
 ### cerberus_case_workspace
 
 - path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus_case_workspace`
-- git_status: `clean`
+- git_status: `dirty`
 - has_readme: `true`
 - has_agents: `false`
 - has_code_workspace: `false`
 - has_project_forge_marker: `false`
 - remote_count: `2`
-- category: `protected_manual_review`
+- category: `dirty_candidate_review_first`
+
+### chaos-control-bridge
+
+- path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/chaos-control-bridge`
+- git_status: `clean`
+- has_readme: `true`
+- has_agents: `true`
+- has_code_workspace: `false`
+- has_project_forge_marker: `false`
+- remote_count: `2`
+- category: `clean_candidate`
 
 ### chashgram.nicegram
 
@@ -580,7 +580,7 @@
 - has_code_workspace: `false`
 - has_project_forge_marker: `false`
 - remote_count: `2`
-- category: `protected_manual_review`
+- category: `clean_candidate`
 
 ### endgame-website
 
@@ -758,17 +758,6 @@
 - remote_count: `0`
 - category: `dirty_candidate_review_first`
 
-### nothing-sm8735-6.6
-
-- path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/nothing-phone-3-nethunter/vendor/kernel-source/nothing-sm8735-6.6`
-- git_status: `clean`
-- has_readme: `true`
-- has_agents: `false`
-- has_code_workspace: `false`
-- has_project_forge_marker: `false`
-- remote_count: `1`
-- category: `clean_candidate`
-
 ### openclaw-workspace
 
 - path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/openclaw-workspace`
@@ -802,10 +791,21 @@
 - remote_count: `2`
 - category: `clean_candidate`
 
+### pixel-dual-esim-diagnostics
+
+- path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/pixel-dual-esim-diagnostics`
+- git_status: `clean`
+- has_readme: `true`
+- has_agents: `true`
+- has_code_workspace: `false`
+- has_project_forge_marker: `false`
+- remote_count: `1`
+- category: `clean_candidate`
+
 ### project-forge-registry
 
 - path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry`
-- git_status: `clean`
+- git_status: `dirty`
 - has_readme: `true`
 - has_agents: `true`
 - has_code_workspace: `false`
@@ -823,6 +823,28 @@
 - has_project_forge_marker: `false`
 - remote_count: `2`
 - category: `dirty_candidate_review_first`
+
+### proton-pass-vault-janitor
+
+- path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/proton-pass-vault-janitor`
+- git_status: `clean`
+- has_readme: `true`
+- has_agents: `true`
+- has_code_workspace: `false`
+- has_project_forge_marker: `true`
+- remote_count: `0`
+- category: `known_embedded`
+
+### pwa-icon-organizer-creator
+
+- path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/pwa-icon-organizer-creator`
+- git_status: `clean`
+- has_readme: `true`
+- has_agents: `true`
+- has_code_workspace: `false`
+- has_project_forge_marker: `true`
+- remote_count: `1`
+- category: `known_embedded`
 
 ### recon
 
@@ -849,17 +871,6 @@
 ### secure-edit-flow
 
 - path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/secure-edit-flow`
-- git_status: `clean`
-- has_readme: `true`
-- has_agents: `false`
-- has_code_workspace: `false`
-- has_project_forge_marker: `false`
-- remote_count: `2`
-- category: `clean_candidate`
-
-### test-repo-from-agent
-
-- path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/test-repo-from-agent`
 - git_status: `clean`
 - has_readme: `true`
 - has_agents: `false`
@@ -918,6 +929,7 @@
 - No files were written to discovered repos.
 - No file content indexing was performed.
 - No secret scanning was performed.
+- No repository is hidden or blocked because its name contains Cerberus.
 - No remotes were added or modified.
 - No push/fetch occurred.
 - No package installs were performed.

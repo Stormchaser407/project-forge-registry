@@ -109,9 +109,34 @@
       "category": "repo_launcher",
       "matched_terms": [
         "Project Forge",
+        "project-forge",
+        "project-forge-dashboard"
+      ],
+      "path": "scripts/project-forge-install-dashboard-desktop",
+      "preflight_classification": "repo-local command candidate; not a file target for apply",
+      "source_status": "review_only",
+      "target": "repo_scripts"
+    },
+    {
+      "approved_target_class": false,
+      "category": "repo_launcher",
+      "matched_terms": [
+        "Project Forge",
         "project-forge"
       ],
       "path": "scripts/project-forge-open-project",
+      "preflight_classification": "repo-local command candidate; not a file target for apply",
+      "source_status": "review_only",
+      "target": "repo_scripts"
+    },
+    {
+      "approved_target_class": false,
+      "category": "repo_launcher",
+      "matched_terms": [
+        "Project Forge",
+        "project-forge"
+      ],
+      "path": "scripts/project-forge-scan-dashboard",
       "preflight_classification": "repo-local command candidate; not a file target for apply",
       "source_status": "review_only",
       "target": "repo_scripts"
@@ -144,10 +169,9 @@
       "approved_target_class": true,
       "category": "user_desktop_entry",
       "matched_terms": [
-        "Project Forge",
-        "project-forge"
+        "Project Forge"
       ],
-      "path": "~/.local/share/applications/project-forge-cold-start.desktop",
+      "path": "~/.local/share/applications/legion-code-forge.desktop",
       "preflight_classification": "related desktop entry candidate; review only",
       "source_status": "review_only",
       "target": "user_applications"
@@ -157,121 +181,10 @@
       "category": "user_desktop_entry",
       "matched_terms": [
         "Project Forge",
-        "project-forge"
+        "project-forge",
+        "project-forge-dashboard"
       ],
-      "path": "~/.local/share/applications/project-forge-command-board.desktop",
-      "preflight_classification": "primary operator-reviewed old launcher candidate",
-      "source_status": "review_only",
-      "target": "user_applications"
-    },
-    {
-      "approved_target_class": true,
-      "category": "user_desktop_entry",
-      "matched_terms": [
-        "Project Forge",
-        "project-forge"
-      ],
-      "path": "~/.local/share/applications/project-forge-operator-runbook.desktop",
-      "preflight_classification": "related desktop entry candidate; review only",
-      "source_status": "review_only",
-      "target": "user_applications"
-    },
-    {
-      "approved_target_class": true,
-      "category": "user_desktop_entry",
-      "matched_terms": [
-        "Project Forge",
-        "project-forge"
-      ],
-      "path": "~/.local/share/applications/project-forge-safe-sync.desktop",
-      "preflight_classification": "related desktop entry candidate; review only",
-      "source_status": "review_only",
-      "target": "user_applications"
-    },
-    {
-      "approved_target_class": true,
-      "category": "user_desktop_entry",
-      "matched_terms": [
-        "Recon"
-      ],
-      "path": "~/.local/share/applications/recon-container-restart.desktop",
-      "preflight_classification": "related desktop entry candidate; review only",
-      "source_status": "review_only",
-      "target": "user_applications"
-    },
-    {
-      "approved_target_class": true,
-      "category": "user_desktop_entry",
-      "matched_terms": [
-        "Recon"
-      ],
-      "path": "~/.local/share/applications/recon-container-status.desktop",
-      "preflight_classification": "related desktop entry candidate; review only",
-      "source_status": "review_only",
-      "target": "user_applications"
-    },
-    {
-      "approved_target_class": true,
-      "category": "user_desktop_entry",
-      "matched_terms": [
-        "Recon"
-      ],
-      "path": "~/.local/share/applications/recon-flake-build.desktop",
-      "preflight_classification": "related desktop entry candidate; review only",
-      "source_status": "review_only",
-      "target": "user_applications"
-    },
-    {
-      "approved_target_class": true,
-      "category": "user_desktop_entry",
-      "matched_terms": [
-        "Recon"
-      ],
-      "path": "~/.local/share/applications/recon-flake-switch.desktop",
-      "preflight_classification": "related desktop entry candidate; review only",
-      "source_status": "review_only",
-      "target": "user_applications"
-    },
-    {
-      "approved_target_class": true,
-      "category": "user_desktop_entry",
-      "matched_terms": [
-        "Recon"
-      ],
-      "path": "~/.local/share/applications/recon-flake-test.desktop",
-      "preflight_classification": "related desktop entry candidate; review only",
-      "source_status": "review_only",
-      "target": "user_applications"
-    },
-    {
-      "approved_target_class": true,
-      "category": "user_desktop_entry",
-      "matched_terms": [
-        "Recon"
-      ],
-      "path": "~/.local/share/applications/recon-ops-dashboard.desktop",
-      "preflight_classification": "related desktop entry candidate; review only",
-      "source_status": "review_only",
-      "target": "user_applications"
-    },
-    {
-      "approved_target_class": true,
-      "category": "user_desktop_entry",
-      "matched_terms": [
-        "Recon"
-      ],
-      "path": "~/.local/share/applications/recon-span-screensaver.desktop",
-      "preflight_classification": "related desktop entry candidate; review only",
-      "source_status": "review_only",
-      "target": "user_applications"
-    },
-    {
-      "approved_target_class": true,
-      "category": "user_desktop_entry",
-      "matched_terms": [
-        "Recon"
-      ],
-      "path": "~/.local/share/applications/recon-update-all.desktop",
+      "path": "~/.local/share/applications/project-forge-dashboard.desktop",
       "preflight_classification": "related desktop entry candidate; review only",
       "source_status": "review_only",
       "target": "user_applications"

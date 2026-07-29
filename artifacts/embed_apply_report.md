@@ -1,5 +1,9 @@
 # Project Forge Embed Apply Report
 
+> Historical 2026-05-17 apply evidence from the retired mount layout. Current
+> discovery and current dry-run decisions are in `embed_plan_report.md`; this
+> report must not be replayed as an apply plan.
+
 - date: `2026-05-17T06:47:11`
 - mode: `approved-apply`
 - final_status: `applied_for_operator_review`

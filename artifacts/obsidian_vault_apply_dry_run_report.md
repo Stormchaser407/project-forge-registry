@@ -3,13 +3,13 @@
 ## Preflight Summary
 
 - mode: `dry-run`
-- vault root: `/mnt/storage/Cole/main_vault/10 Projects/Project Forge`
+- vault root: `/home/cole/main_vault/10 Projects/project_forge_registry`
 - apply requested: `false`
 - guard flag present: `false`
 - entries reviewed: `5`
 - would_create count: `0`
-- would_skip_identical count: `4`
-- blocked: `1`
+- would_skip_identical count: `0`
+- blocked: `5`
 - plan path: `artifacts/obsidian_vault_apply_plan.json`
 - source root: `artifacts/obsidian_mirror`
 - json path: `artifacts/obsidian_vault_apply_dry_run.json`
@@ -20,11 +20,11 @@ Review this report before running any apply command.
 
 | Source | Target | Action | Target exists | Reason |
 |---|---|---|---|---|
-| `artifacts/obsidian_mirror/Project Forge - Command Center.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Command Center.md` | `blocked_existing_different` | `true` | `target exists and differs; create-only apply does not overwrite` |
-| `artifacts/obsidian_mirror/Project Forge - Dashboard Summary.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Dashboard Summary.md` | `would_skip_identical` | `true` | `target exists with identical content` |
-| `artifacts/obsidian_mirror/Project Forge - Deferred Items.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Deferred Items.md` | `would_skip_identical` | `true` | `target exists with identical content` |
-| `artifacts/obsidian_mirror/Project Forge - Known Embedded Repos.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Known Embedded Repos.md` | `would_skip_identical` | `true` | `target exists with identical content` |
-| `artifacts/obsidian_mirror/Project Forge - Phase 11 Planning.md` | `/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Phase 11 Planning.md` | `would_skip_identical` | `true` | `target exists with identical content` |
+| `artifacts/obsidian_mirror/Project Forge - Command Center.md` | `/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Command Center.md` | `blocked_target_unavailable` | `false` | `target path unavailable: [Errno 13] Permission denied: '/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Command Center.md'` |
+| `artifacts/obsidian_mirror/Project Forge - Dashboard Summary.md` | `/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Dashboard Summary.md` | `blocked_target_unavailable` | `false` | `target path unavailable: [Errno 13] Permission denied: '/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Dashboard Summary.md'` |
+| `artifacts/obsidian_mirror/Project Forge - Deferred Items.md` | `/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Deferred Items.md` | `blocked_target_unavailable` | `false` | `target path unavailable: [Errno 13] Permission denied: '/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Deferred Items.md'` |
+| `artifacts/obsidian_mirror/Project Forge - Known Embedded Repos.md` | `/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Known Embedded Repos.md` | `blocked_target_unavailable` | `false` | `target path unavailable: [Errno 13] Permission denied: '/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Known Embedded Repos.md'` |
+| `artifacts/obsidian_mirror/Project Forge - Phase 11 Planning.md` | `/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Phase 11 Planning.md` | `blocked_target_unavailable` | `false` | `target path unavailable: [Errno 13] Permission denied: '/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Phase 11 Planning.md'` |
 
 ## Safety Statement
 

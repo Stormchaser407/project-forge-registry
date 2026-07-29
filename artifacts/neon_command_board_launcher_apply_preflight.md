@@ -46,21 +46,13 @@ is recorded but not accepted as authorization. A real apply remains future phase
 - `scripts/project-forge-cold-start` - `repo_launcher`; not an apply target class; repo-local command candidate; not a file target for apply
 - `scripts/project-forge-dashboard` - `repo_launcher`; not an apply target class; repo-local command candidate; not a file target for apply
 - `scripts/project-forge-install-cold-start-desktop` - `repo_launcher`; not an apply target class; repo-local command candidate; not a file target for apply
+- `scripts/project-forge-install-dashboard-desktop` - `repo_launcher`; not an apply target class; repo-local command candidate; not a file target for apply
 - `scripts/project-forge-open-project` - `repo_launcher`; not an apply target class; repo-local command candidate; not a file target for apply
+- `scripts/project-forge-scan-dashboard` - `repo_launcher`; not an apply target class; repo-local command candidate; not a file target for apply
 - `scripts/project-sync-safe` - `repo_launcher`; not an apply target class; repo-local command candidate; not a file target for apply
 - `pyproject.toml` - `repo_launcher`; not an apply target class; repo-local command candidate; not a file target for apply
-- `~/.local/share/applications/project-forge-cold-start.desktop` - `user_desktop_entry`; approved class; related desktop entry candidate; review only
-- `~/.local/share/applications/project-forge-command-board.desktop` - `user_desktop_entry`; approved class; primary operator-reviewed old launcher candidate
-- `~/.local/share/applications/project-forge-operator-runbook.desktop` - `user_desktop_entry`; approved class; related desktop entry candidate; review only
-- `~/.local/share/applications/project-forge-safe-sync.desktop` - `user_desktop_entry`; approved class; related desktop entry candidate; review only
-- `~/.local/share/applications/recon-container-restart.desktop` - `user_desktop_entry`; approved class; related desktop entry candidate; review only
-- `~/.local/share/applications/recon-container-status.desktop` - `user_desktop_entry`; approved class; related desktop entry candidate; review only
-- `~/.local/share/applications/recon-flake-build.desktop` - `user_desktop_entry`; approved class; related desktop entry candidate; review only
-- `~/.local/share/applications/recon-flake-switch.desktop` - `user_desktop_entry`; approved class; related desktop entry candidate; review only
-- `~/.local/share/applications/recon-flake-test.desktop` - `user_desktop_entry`; approved class; related desktop entry candidate; review only
-- `~/.local/share/applications/recon-ops-dashboard.desktop` - `user_desktop_entry`; approved class; related desktop entry candidate; review only
-- `~/.local/share/applications/recon-span-screensaver.desktop` - `user_desktop_entry`; approved class; related desktop entry candidate; review only
-- `~/.local/share/applications/recon-update-all.desktop` - `user_desktop_entry`; approved class; related desktop entry candidate; review only
+- `~/.local/share/applications/legion-code-forge.desktop` - `user_desktop_entry`; approved class; related desktop entry candidate; review only
+- `~/.local/share/applications/project-forge-dashboard.desktop` - `user_desktop_entry`; approved class; related desktop entry candidate; review only
 
 ## Proposed Target Review
 

@@ -1,9 +1,9 @@
 ---
-title: "Extension-Blip - Roadmap"
+title: "pixel-dual-esim-diagnostics - Roadmap"
 aliases:
-  - "Extension-Blip - Roadmap"
+  - "pixel-dual-esim-diagnostics - Roadmap"
 ---
-# Extension-Blip - Roadmap
+# pixel-dual-esim-diagnostics - Roadmap
 
 ## Near Term
 

@@ -3,57 +3,9 @@
   "mode": "read-only",
   "projects": [
     {
-      "category": "dirty_candidate_review_first",
-      "docs_light": "gray",
-      "embed_decision": null,
-      "git_status": "dirty",
-      "has_agents": false,
-      "has_code_workspace": false,
-      "has_project_forge_marker": false,
-      "has_readme": false,
-      "launch_commands": {
-        "business": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug nixos --profile business --dry-run",
-        "personal": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug nixos --profile personal --dry-run",
-        "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug nixos --profile plain --dry-run"
-      },
-      "launch_policy": {
-        "message": "Launch blocked by policy: dirty candidate requires review first.",
-        "status": "blocked"
-      },
-      "marker_doc_path": "/etc/nixos/docs/PROJECT_FORGE.md",
-      "marker_yaml_path": "/etc/nixos/.project-forge.yml",
-      "overall_status": "dirty_review_first",
-      "path": "/etc/nixos",
-      "recommended_action": "dirty_review_first",
-      "remote_count": 1,
-      "repo_light": "amber",
-      "report_links": [
-        "artifacts/repo_discovery_report.md",
-        "artifacts/repo_discovery_inventory.csv",
-        "artifacts/embed_plan_report.md",
-        "artifacts/embed_plan_inventory.csv",
-        "artifacts/tool_readiness_report.md",
-        "artifacts/project_sync_report.md"
-      ],
-      "review_commands": {
-        "commit_preflight": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-review-project --slug nixos --commit-dry-run",
-        "commit_template": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-review-project --slug nixos --commit --confirm-slug nixos --yes-commit-reviewed --message \"describe reviewed changes\"",
-        "diff": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-review-project --slug nixos --diff",
-        "log": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-review-project --slug nixos --log",
-        "status": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-review-project --slug nixos --status"
-      },
-      "review_policy": {
-        "message": "Review commands available. Commit requires explicit terminal confirmation.",
-        "status": "review_available"
-      },
-      "risk_light": "amber",
-      "slug": "nixos",
-      "vscode_target": "/etc/nixos"
-    },
-    {
       "category": "clean_candidate",
       "docs_light": "gray",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -95,7 +47,7 @@
     {
       "category": "known_embedded",
       "docs_light": "green",
-      "embed_decision": null,
+      "embed_decision": "already_embedded",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -137,7 +89,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -177,9 +129,9 @@
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/Argus"
     },
     {
-      "category": "protected_manual_review",
+      "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -191,16 +143,16 @@
         "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug cerberus --profile plain --dry-run"
       },
       "launch_policy": {
-        "message": "Launch blocked by policy: protected project requires manual review.",
-        "status": "blocked"
+        "message": "Dry-run launch commands available for personal, business, and plain.",
+        "status": "eligible"
       },
       "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/Cerberus/docs/PROJECT_FORGE.md",
       "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/Cerberus/.project-forge.yml",
-      "overall_status": "protected_manual_review",
+      "overall_status": "candidate_review",
       "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/Cerberus",
-      "recommended_action": "protected_manual_review",
+      "recommended_action": "candidate_review",
       "remote_count": 2,
-      "repo_light": "red",
+      "repo_light": "green",
       "report_links": [
         "artifacts/repo_discovery_report.md",
         "artifacts/repo_discovery_inventory.csv",
@@ -211,17 +163,17 @@
       ],
       "review_commands": {},
       "review_policy": {
-        "message": "Protected project remains manual review only.",
-        "status": "manual_only"
+        "message": "No dirty-review command shortcuts required for this project.",
+        "status": "not_required"
       },
-      "risk_light": "red",
+      "risk_light": "amber",
       "slug": "cerberus",
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/Cerberus"
     },
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -263,7 +215,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -305,7 +257,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "gray",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -389,7 +341,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -431,7 +383,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -473,7 +425,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -515,7 +467,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": true,
       "has_code_workspace": false,
@@ -557,7 +509,7 @@
     {
       "category": "dirty_candidate_review_first",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "blocked_dirty",
       "git_status": "dirty",
       "has_agents": true,
       "has_code_workspace": false,
@@ -605,7 +557,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -647,7 +599,7 @@
     {
       "category": "unknown_structure",
       "docs_light": "gray",
-      "embed_decision": null,
+      "embed_decision": "blocked_dirty",
       "git_status": "unknown",
       "has_agents": false,
       "has_code_workspace": false,
@@ -773,7 +725,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -815,7 +767,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -857,7 +809,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": true,
       "has_code_workspace": false,
@@ -897,9 +849,9 @@
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/agent-zero"
     },
     {
-      "category": "protected_manual_review",
+      "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -911,16 +863,16 @@
         "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug cerberus-aegis --profile plain --dry-run"
       },
       "launch_policy": {
-        "message": "Launch blocked by policy: protected project requires manual review.",
-        "status": "blocked"
+        "message": "Dry-run launch commands available for personal, business, and plain.",
+        "status": "eligible"
       },
       "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-aegis/docs/PROJECT_FORGE.md",
       "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-aegis/.project-forge.yml",
-      "overall_status": "protected_manual_review",
+      "overall_status": "candidate_review",
       "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-aegis",
-      "recommended_action": "protected_manual_review",
+      "recommended_action": "candidate_review",
       "remote_count": 2,
-      "repo_light": "red",
+      "repo_light": "green",
       "report_links": [
         "artifacts/repo_discovery_report.md",
         "artifacts/repo_discovery_inventory.csv",
@@ -931,17 +883,17 @@
       ],
       "review_commands": {},
       "review_policy": {
-        "message": "Protected project remains manual review only.",
-        "status": "manual_only"
+        "message": "No dirty-review command shortcuts required for this project.",
+        "status": "not_required"
       },
-      "risk_light": "red",
+      "risk_light": "amber",
       "slug": "cerberus-aegis",
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-aegis"
     },
     {
-      "category": "protected_manual_review",
+      "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -953,16 +905,16 @@
         "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug cerberus-agents --profile plain --dry-run"
       },
       "launch_policy": {
-        "message": "Launch blocked by policy: protected project requires manual review.",
-        "status": "blocked"
+        "message": "Dry-run launch commands available for personal, business, and plain.",
+        "status": "eligible"
       },
       "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-agents/docs/PROJECT_FORGE.md",
       "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-agents/.project-forge.yml",
-      "overall_status": "protected_manual_review",
+      "overall_status": "candidate_review",
       "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-agents",
-      "recommended_action": "protected_manual_review",
+      "recommended_action": "candidate_review",
       "remote_count": 2,
-      "repo_light": "red",
+      "repo_light": "green",
       "report_links": [
         "artifacts/repo_discovery_report.md",
         "artifacts/repo_discovery_inventory.csv",
@@ -973,17 +925,17 @@
       ],
       "review_commands": {},
       "review_policy": {
-        "message": "Protected project remains manual review only.",
-        "status": "manual_only"
+        "message": "No dirty-review command shortcuts required for this project.",
+        "status": "not_required"
       },
-      "risk_light": "red",
+      "risk_light": "amber",
       "slug": "cerberus-agents",
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-agents"
     },
     {
-      "category": "protected_manual_review",
+      "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -995,16 +947,16 @@
         "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug cerberus-command --profile plain --dry-run"
       },
       "launch_policy": {
-        "message": "Launch blocked by policy: protected project requires manual review.",
-        "status": "blocked"
+        "message": "Dry-run launch commands available for personal, business, and plain.",
+        "status": "eligible"
       },
       "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-command/docs/PROJECT_FORGE.md",
       "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-command/.project-forge.yml",
-      "overall_status": "protected_manual_review",
+      "overall_status": "candidate_review",
       "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-command",
-      "recommended_action": "protected_manual_review",
+      "recommended_action": "candidate_review",
       "remote_count": 2,
-      "repo_light": "red",
+      "repo_light": "green",
       "report_links": [
         "artifacts/repo_discovery_report.md",
         "artifacts/repo_discovery_inventory.csv",
@@ -1015,17 +967,17 @@
       ],
       "review_commands": {},
       "review_policy": {
-        "message": "Protected project remains manual review only.",
-        "status": "manual_only"
+        "message": "No dirty-review command shortcuts required for this project.",
+        "status": "not_required"
       },
-      "risk_light": "red",
+      "risk_light": "amber",
       "slug": "cerberus-command",
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-command"
     },
     {
-      "category": "protected_manual_review",
+      "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1037,16 +989,16 @@
         "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug cerberus-eyes-on --profile plain --dry-run"
       },
       "launch_policy": {
-        "message": "Launch blocked by policy: protected project requires manual review.",
-        "status": "blocked"
+        "message": "Dry-run launch commands available for personal, business, and plain.",
+        "status": "eligible"
       },
       "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-eyes-on/docs/PROJECT_FORGE.md",
       "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-eyes-on/.project-forge.yml",
-      "overall_status": "protected_manual_review",
+      "overall_status": "candidate_review",
       "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-eyes-on",
-      "recommended_action": "protected_manual_review",
+      "recommended_action": "candidate_review",
       "remote_count": 1,
-      "repo_light": "red",
+      "repo_light": "green",
       "report_links": [
         "artifacts/repo_discovery_report.md",
         "artifacts/repo_discovery_inventory.csv",
@@ -1057,17 +1009,17 @@
       ],
       "review_commands": {},
       "review_policy": {
-        "message": "Protected project remains manual review only.",
-        "status": "manual_only"
+        "message": "No dirty-review command shortcuts required for this project.",
+        "status": "not_required"
       },
-      "risk_light": "red",
+      "risk_light": "amber",
       "slug": "cerberus-eyes-on",
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-eyes-on"
     },
     {
-      "category": "protected_manual_review",
+      "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": "blocked_protected",
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1079,16 +1031,16 @@
         "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug cerberus-mgm-boot --profile plain --dry-run"
       },
       "launch_policy": {
-        "message": "Launch blocked by policy: protected project requires manual review.",
-        "status": "blocked"
+        "message": "Dry-run launch commands available for personal, business, and plain.",
+        "status": "eligible"
       },
       "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-mgm-boot/docs/PROJECT_FORGE.md",
       "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-mgm-boot/.project-forge.yml",
-      "overall_status": "protected_manual_review",
+      "overall_status": "candidate_review",
       "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-mgm-boot",
-      "recommended_action": "protected_manual_review",
+      "recommended_action": "candidate_review",
       "remote_count": 1,
-      "repo_light": "red",
+      "repo_light": "green",
       "report_links": [
         "artifacts/repo_discovery_report.md",
         "artifacts/repo_discovery_inventory.csv",
@@ -1099,17 +1051,17 @@
       ],
       "review_commands": {},
       "review_policy": {
-        "message": "Protected project remains manual review only.",
-        "status": "manual_only"
+        "message": "No dirty-review command shortcuts required for this project.",
+        "status": "not_required"
       },
-      "risk_light": "red",
+      "risk_light": "amber",
       "slug": "cerberus-mgm-boot",
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-mgm-boot"
     },
     {
-      "category": "protected_manual_review",
+      "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1121,16 +1073,16 @@
         "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug cerberus-project --profile plain --dry-run"
       },
       "launch_policy": {
-        "message": "Launch blocked by policy: protected project requires manual review.",
-        "status": "blocked"
+        "message": "Dry-run launch commands available for personal, business, and plain.",
+        "status": "eligible"
       },
       "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-project/docs/PROJECT_FORGE.md",
       "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-project/.project-forge.yml",
-      "overall_status": "protected_manual_review",
+      "overall_status": "candidate_review",
       "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-project",
-      "recommended_action": "protected_manual_review",
+      "recommended_action": "candidate_review",
       "remote_count": 2,
-      "repo_light": "red",
+      "repo_light": "green",
       "report_links": [
         "artifacts/repo_discovery_report.md",
         "artifacts/repo_discovery_inventory.csv",
@@ -1141,17 +1093,17 @@
       ],
       "review_commands": {},
       "review_policy": {
-        "message": "Protected project remains manual review only.",
-        "status": "manual_only"
+        "message": "No dirty-review command shortcuts required for this project.",
+        "status": "not_required"
       },
-      "risk_light": "red",
+      "risk_light": "amber",
       "slug": "cerberus-project",
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-project"
     },
     {
-      "category": "protected_manual_review",
+      "category": "clean_candidate",
       "docs_light": "gray",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1163,16 +1115,16 @@
         "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug cerberus-recon --profile plain --dry-run"
       },
       "launch_policy": {
-        "message": "Launch blocked by policy: protected project requires manual review.",
-        "status": "blocked"
+        "message": "Dry-run launch commands available for personal, business, and plain.",
+        "status": "eligible"
       },
       "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-recon/docs/PROJECT_FORGE.md",
       "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-recon/.project-forge.yml",
-      "overall_status": "protected_manual_review",
+      "overall_status": "candidate_review",
       "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-recon",
-      "recommended_action": "protected_manual_review",
+      "recommended_action": "candidate_review",
       "remote_count": 2,
-      "repo_light": "red",
+      "repo_light": "green",
       "report_links": [
         "artifacts/repo_discovery_report.md",
         "artifacts/repo_discovery_inventory.csv",
@@ -1183,17 +1135,17 @@
       ],
       "review_commands": {},
       "review_policy": {
-        "message": "Protected project remains manual review only.",
-        "status": "manual_only"
+        "message": "No dirty-review command shortcuts required for this project.",
+        "status": "not_required"
       },
-      "risk_light": "red",
+      "risk_light": "amber",
       "slug": "cerberus-recon",
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-recon"
     },
     {
-      "category": "protected_manual_review",
+      "category": "clean_candidate",
       "docs_light": "gray",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1205,16 +1157,16 @@
         "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug cerberus-vault --profile plain --dry-run"
       },
       "launch_policy": {
-        "message": "Launch blocked by policy: protected project requires manual review.",
-        "status": "blocked"
+        "message": "Dry-run launch commands available for personal, business, and plain.",
+        "status": "eligible"
       },
       "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-vault/docs/PROJECT_FORGE.md",
       "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-vault/.project-forge.yml",
-      "overall_status": "protected_manual_review",
+      "overall_status": "candidate_review",
       "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-vault",
-      "recommended_action": "protected_manual_review",
+      "recommended_action": "candidate_review",
       "remote_count": 2,
-      "repo_light": "red",
+      "repo_light": "green",
       "report_links": [
         "artifacts/repo_discovery_report.md",
         "artifacts/repo_discovery_inventory.csv",
@@ -1225,17 +1177,17 @@
       ],
       "review_commands": {},
       "review_policy": {
-        "message": "Protected project remains manual review only.",
-        "status": "manual_only"
+        "message": "No dirty-review command shortcuts required for this project.",
+        "status": "not_required"
       },
-      "risk_light": "red",
+      "risk_light": "amber",
       "slug": "cerberus-vault",
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-vault"
     },
     {
-      "category": "protected_manual_review",
+      "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1247,16 +1199,16 @@
         "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug cerberus-watch --profile plain --dry-run"
       },
       "launch_policy": {
-        "message": "Launch blocked by policy: protected project requires manual review.",
-        "status": "blocked"
+        "message": "Dry-run launch commands available for personal, business, and plain.",
+        "status": "eligible"
       },
       "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-watch/docs/PROJECT_FORGE.md",
       "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-watch/.project-forge.yml",
-      "overall_status": "protected_manual_review",
+      "overall_status": "candidate_review",
       "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-watch",
-      "recommended_action": "protected_manual_review",
+      "recommended_action": "candidate_review",
       "remote_count": 2,
-      "repo_light": "red",
+      "repo_light": "green",
       "report_links": [
         "artifacts/repo_discovery_report.md",
         "artifacts/repo_discovery_inventory.csv",
@@ -1267,18 +1219,18 @@
       ],
       "review_commands": {},
       "review_policy": {
-        "message": "Protected project remains manual review only.",
-        "status": "manual_only"
+        "message": "No dirty-review command shortcuts required for this project.",
+        "status": "not_required"
       },
-      "risk_light": "red",
+      "risk_light": "amber",
       "slug": "cerberus-watch",
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-watch"
     },
     {
-      "category": "protected_manual_review",
+      "category": "dirty_candidate_review_first",
       "docs_light": "amber",
-      "embed_decision": "blocked_protected",
-      "git_status": "clean",
+      "embed_decision": "blocked_dirty",
+      "git_status": "dirty",
       "has_agents": false,
       "has_code_workspace": false,
       "has_project_forge_marker": false,
@@ -1289,16 +1241,64 @@
         "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug cerberus_case_workspace --profile plain --dry-run"
       },
       "launch_policy": {
-        "message": "Launch blocked by policy: protected project requires manual review.",
+        "message": "Launch blocked by policy: dirty candidate requires review first.",
         "status": "blocked"
       },
       "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus_case_workspace/docs/PROJECT_FORGE.md",
       "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus_case_workspace/.project-forge.yml",
-      "overall_status": "protected_manual_review",
+      "overall_status": "dirty_review_first",
       "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus_case_workspace",
-      "recommended_action": "protected_manual_review",
+      "recommended_action": "dirty_review_first",
       "remote_count": 2,
-      "repo_light": "red",
+      "repo_light": "amber",
+      "report_links": [
+        "artifacts/repo_discovery_report.md",
+        "artifacts/repo_discovery_inventory.csv",
+        "artifacts/embed_plan_report.md",
+        "artifacts/embed_plan_inventory.csv",
+        "artifacts/tool_readiness_report.md",
+        "artifacts/project_sync_report.md"
+      ],
+      "review_commands": {
+        "commit_preflight": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-review-project --slug cerberus_case_workspace --commit-dry-run",
+        "commit_template": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-review-project --slug cerberus_case_workspace --commit --confirm-slug cerberus_case_workspace --yes-commit-reviewed --message \"describe reviewed changes\"",
+        "diff": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-review-project --slug cerberus_case_workspace --diff",
+        "log": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-review-project --slug cerberus_case_workspace --log",
+        "status": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-review-project --slug cerberus_case_workspace --status"
+      },
+      "review_policy": {
+        "message": "Review commands available. Commit requires explicit terminal confirmation.",
+        "status": "review_available"
+      },
+      "risk_light": "amber",
+      "slug": "cerberus_case_workspace",
+      "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus_case_workspace"
+    },
+    {
+      "category": "clean_candidate",
+      "docs_light": "amber",
+      "embed_decision": "candidate_not_selected",
+      "git_status": "clean",
+      "has_agents": true,
+      "has_code_workspace": false,
+      "has_project_forge_marker": false,
+      "has_readme": true,
+      "launch_commands": {
+        "business": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug chaos-control-bridge --profile business --dry-run",
+        "personal": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug chaos-control-bridge --profile personal --dry-run",
+        "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug chaos-control-bridge --profile plain --dry-run"
+      },
+      "launch_policy": {
+        "message": "Dry-run launch commands available for personal, business, and plain.",
+        "status": "eligible"
+      },
+      "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/chaos-control-bridge/docs/PROJECT_FORGE.md",
+      "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/chaos-control-bridge/.project-forge.yml",
+      "overall_status": "candidate_review",
+      "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/chaos-control-bridge",
+      "recommended_action": "candidate_review",
+      "remote_count": 2,
+      "repo_light": "green",
       "report_links": [
         "artifacts/repo_discovery_report.md",
         "artifacts/repo_discovery_inventory.csv",
@@ -1309,17 +1309,17 @@
       ],
       "review_commands": {},
       "review_policy": {
-        "message": "Protected project remains manual review only.",
-        "status": "manual_only"
+        "message": "No dirty-review command shortcuts required for this project.",
+        "status": "not_required"
       },
-      "risk_light": "red",
-      "slug": "cerberus_case_workspace",
-      "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus_case_workspace"
+      "risk_light": "amber",
+      "slug": "chaos-control-bridge",
+      "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/chaos-control-bridge"
     },
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1361,7 +1361,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1403,7 +1403,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "gray",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1445,7 +1445,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1487,7 +1487,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "gray",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1529,7 +1529,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "gray",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1571,7 +1571,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1613,7 +1613,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "gray",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1655,7 +1655,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1697,7 +1697,7 @@
     {
       "category": "unknown_structure",
       "docs_light": "gray",
-      "embed_decision": null,
+      "embed_decision": "blocked_dirty",
       "git_status": "unknown",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1739,7 +1739,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1781,7 +1781,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1823,7 +1823,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1865,7 +1865,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1907,7 +1907,7 @@
     {
       "category": "dirty_candidate_review_first",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "blocked_dirty",
       "git_status": "dirty",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1955,7 +1955,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -1997,7 +1997,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "gray",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2039,7 +2039,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2081,7 +2081,7 @@
     {
       "category": "dirty_candidate_review_first",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "blocked_dirty",
       "git_status": "dirty",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2127,9 +2127,9 @@
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/endgame-health-bridge"
     },
     {
-      "category": "protected_manual_review",
+      "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2141,16 +2141,16 @@
         "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug endgame-solutions__cerberus-recon --profile plain --dry-run"
       },
       "launch_policy": {
-        "message": "Launch blocked by policy: protected project requires manual review.",
-        "status": "blocked"
+        "message": "Dry-run launch commands available for personal, business, and plain.",
+        "status": "eligible"
       },
       "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/endgame-solutions__cerberus-recon/docs/PROJECT_FORGE.md",
       "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/endgame-solutions__cerberus-recon/.project-forge.yml",
-      "overall_status": "protected_manual_review",
+      "overall_status": "candidate_review",
       "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/endgame-solutions__cerberus-recon",
-      "recommended_action": "protected_manual_review",
+      "recommended_action": "candidate_review",
       "remote_count": 2,
-      "repo_light": "red",
+      "repo_light": "green",
       "report_links": [
         "artifacts/repo_discovery_report.md",
         "artifacts/repo_discovery_inventory.csv",
@@ -2161,17 +2161,17 @@
       ],
       "review_commands": {},
       "review_policy": {
-        "message": "Protected project remains manual review only.",
-        "status": "manual_only"
+        "message": "No dirty-review command shortcuts required for this project.",
+        "status": "not_required"
       },
-      "risk_light": "red",
+      "risk_light": "amber",
       "slug": "endgame-solutions__cerberus-recon",
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/endgame-solutions__cerberus-recon"
     },
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2213,7 +2213,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2255,7 +2255,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2297,7 +2297,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2339,7 +2339,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2381,7 +2381,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2423,7 +2423,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2465,7 +2465,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2507,7 +2507,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "gray",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2549,7 +2549,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "gray",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2591,7 +2591,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2633,7 +2633,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2675,7 +2675,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": "already_embedded",
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2717,7 +2717,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2801,7 +2801,7 @@
     {
       "category": "dirty_candidate_review_first",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "blocked_dirty",
       "git_status": "dirty",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2848,48 +2848,6 @@
     },
     {
       "category": "clean_candidate",
-      "docs_light": "amber",
-      "embed_decision": null,
-      "git_status": "clean",
-      "has_agents": false,
-      "has_code_workspace": false,
-      "has_project_forge_marker": false,
-      "has_readme": true,
-      "launch_commands": {
-        "business": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug nothing-sm8735-6.6 --profile business --dry-run",
-        "personal": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug nothing-sm8735-6.6 --profile personal --dry-run",
-        "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug nothing-sm8735-6.6 --profile plain --dry-run"
-      },
-      "launch_policy": {
-        "message": "Dry-run launch commands available for personal, business, and plain.",
-        "status": "eligible"
-      },
-      "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/nothing-phone-3-nethunter/vendor/kernel-source/nothing-sm8735-6.6/docs/PROJECT_FORGE.md",
-      "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/nothing-phone-3-nethunter/vendor/kernel-source/nothing-sm8735-6.6/.project-forge.yml",
-      "overall_status": "candidate_review",
-      "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/nothing-phone-3-nethunter/vendor/kernel-source/nothing-sm8735-6.6",
-      "recommended_action": "candidate_review",
-      "remote_count": 1,
-      "repo_light": "green",
-      "report_links": [
-        "artifacts/repo_discovery_report.md",
-        "artifacts/repo_discovery_inventory.csv",
-        "artifacts/embed_plan_report.md",
-        "artifacts/embed_plan_inventory.csv",
-        "artifacts/tool_readiness_report.md",
-        "artifacts/project_sync_report.md"
-      ],
-      "review_commands": {},
-      "review_policy": {
-        "message": "No dirty-review command shortcuts required for this project.",
-        "status": "not_required"
-      },
-      "risk_light": "amber",
-      "slug": "nothing-sm8735-6.6",
-      "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/nothing-phone-3-nethunter/vendor/kernel-source/nothing-sm8735-6.6"
-    },
-    {
-      "category": "clean_candidate",
       "docs_light": "gray",
       "embed_decision": "candidate_not_selected",
       "git_status": "clean",
@@ -2933,7 +2891,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -2975,7 +2933,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -3015,10 +2973,52 @@
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/pixel-9-pro-xl-TWRP-experiment"
     },
     {
+      "category": "clean_candidate",
+      "docs_light": "amber",
+      "embed_decision": "candidate_not_selected",
+      "git_status": "clean",
+      "has_agents": true,
+      "has_code_workspace": false,
+      "has_project_forge_marker": false,
+      "has_readme": true,
+      "launch_commands": {
+        "business": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug pixel-dual-esim-diagnostics --profile business --dry-run",
+        "personal": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug pixel-dual-esim-diagnostics --profile personal --dry-run",
+        "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug pixel-dual-esim-diagnostics --profile plain --dry-run"
+      },
+      "launch_policy": {
+        "message": "Dry-run launch commands available for personal, business, and plain.",
+        "status": "eligible"
+      },
+      "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/pixel-dual-esim-diagnostics/docs/PROJECT_FORGE.md",
+      "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/pixel-dual-esim-diagnostics/.project-forge.yml",
+      "overall_status": "candidate_review",
+      "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/pixel-dual-esim-diagnostics",
+      "recommended_action": "candidate_review",
+      "remote_count": 1,
+      "repo_light": "green",
+      "report_links": [
+        "artifacts/repo_discovery_report.md",
+        "artifacts/repo_discovery_inventory.csv",
+        "artifacts/embed_plan_report.md",
+        "artifacts/embed_plan_inventory.csv",
+        "artifacts/tool_readiness_report.md",
+        "artifacts/project_sync_report.md"
+      ],
+      "review_commands": {},
+      "review_policy": {
+        "message": "No dirty-review command shortcuts required for this project.",
+        "status": "not_required"
+      },
+      "risk_light": "amber",
+      "slug": "pixel-dual-esim-diagnostics",
+      "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/pixel-dual-esim-diagnostics"
+    },
+    {
       "category": "control_repo",
       "docs_light": "amber",
       "embed_decision": "skip_control_repo",
-      "git_status": "clean",
+      "git_status": "dirty",
       "has_agents": true,
       "has_code_workspace": false,
       "has_project_forge_marker": false,
@@ -3059,7 +3059,7 @@
     {
       "category": "dirty_candidate_review_first",
       "docs_light": "gray",
-      "embed_decision": "candidate_not_selected",
+      "embed_decision": "blocked_dirty",
       "git_status": "dirty",
       "has_agents": false,
       "has_code_workspace": true,
@@ -3105,9 +3105,93 @@
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project_katrina/Projects.code-workspace"
     },
     {
+      "category": "known_embedded",
+      "docs_light": "green",
+      "embed_decision": "already_embedded",
+      "git_status": "clean",
+      "has_agents": true,
+      "has_code_workspace": false,
+      "has_project_forge_marker": true,
+      "has_readme": true,
+      "launch_commands": {
+        "business": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug proton-pass-vault-janitor --profile business --dry-run",
+        "personal": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug proton-pass-vault-janitor --profile personal --dry-run",
+        "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug proton-pass-vault-janitor --profile plain --dry-run"
+      },
+      "launch_policy": {
+        "message": "Dry-run launch commands available for personal, business, and plain.",
+        "status": "eligible"
+      },
+      "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/proton-pass-vault-janitor/docs/PROJECT_FORGE.md",
+      "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/proton-pass-vault-janitor/.project-forge.yml",
+      "overall_status": "embedded_ready",
+      "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/proton-pass-vault-janitor",
+      "recommended_action": "embedded_ready",
+      "remote_count": 0,
+      "repo_light": "green",
+      "report_links": [
+        "artifacts/repo_discovery_report.md",
+        "artifacts/repo_discovery_inventory.csv",
+        "artifacts/embed_plan_report.md",
+        "artifacts/embed_plan_inventory.csv",
+        "artifacts/tool_readiness_report.md",
+        "artifacts/project_sync_report.md"
+      ],
+      "review_commands": {},
+      "review_policy": {
+        "message": "No dirty-review command shortcuts required for this project.",
+        "status": "not_required"
+      },
+      "risk_light": "green",
+      "slug": "proton-pass-vault-janitor",
+      "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/proton-pass-vault-janitor"
+    },
+    {
+      "category": "known_embedded",
+      "docs_light": "green",
+      "embed_decision": "already_embedded",
+      "git_status": "clean",
+      "has_agents": true,
+      "has_code_workspace": false,
+      "has_project_forge_marker": true,
+      "has_readme": true,
+      "launch_commands": {
+        "business": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug pwa-icon-organizer-creator --profile business --dry-run",
+        "personal": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug pwa-icon-organizer-creator --profile personal --dry-run",
+        "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug pwa-icon-organizer-creator --profile plain --dry-run"
+      },
+      "launch_policy": {
+        "message": "Dry-run launch commands available for personal, business, and plain.",
+        "status": "eligible"
+      },
+      "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/pwa-icon-organizer-creator/docs/PROJECT_FORGE.md",
+      "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/pwa-icon-organizer-creator/.project-forge.yml",
+      "overall_status": "embedded_ready",
+      "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/pwa-icon-organizer-creator",
+      "recommended_action": "embedded_ready",
+      "remote_count": 1,
+      "repo_light": "green",
+      "report_links": [
+        "artifacts/repo_discovery_report.md",
+        "artifacts/repo_discovery_inventory.csv",
+        "artifacts/embed_plan_report.md",
+        "artifacts/embed_plan_inventory.csv",
+        "artifacts/tool_readiness_report.md",
+        "artifacts/project_sync_report.md"
+      ],
+      "review_commands": {},
+      "review_policy": {
+        "message": "No dirty-review command shortcuts required for this project.",
+        "status": "not_required"
+      },
+      "risk_light": "green",
+      "slug": "pwa-icon-organizer-creator",
+      "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/pwa-icon-organizer-creator"
+    },
+    {
       "category": "unknown_structure",
       "docs_light": "gray",
-      "embed_decision": null,
+      "embed_decision": "blocked_dirty",
       "git_status": "unknown",
       "has_agents": false,
       "has_code_workspace": false,
@@ -3149,7 +3233,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "gray",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -3191,7 +3275,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -3229,48 +3313,6 @@
       "risk_light": "amber",
       "slug": "secure-edit-flow",
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/secure-edit-flow"
-    },
-    {
-      "category": "clean_candidate",
-      "docs_light": "amber",
-      "embed_decision": null,
-      "git_status": "clean",
-      "has_agents": false,
-      "has_code_workspace": false,
-      "has_project_forge_marker": false,
-      "has_readme": true,
-      "launch_commands": {
-        "business": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug test-repo-from-agent --profile business --dry-run",
-        "personal": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug test-repo-from-agent --profile personal --dry-run",
-        "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug test-repo-from-agent --profile plain --dry-run"
-      },
-      "launch_policy": {
-        "message": "Dry-run launch commands available for personal, business, and plain.",
-        "status": "eligible"
-      },
-      "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/test-repo-from-agent/docs/PROJECT_FORGE.md",
-      "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/test-repo-from-agent/.project-forge.yml",
-      "overall_status": "candidate_review",
-      "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/test-repo-from-agent",
-      "recommended_action": "candidate_review",
-      "remote_count": 2,
-      "repo_light": "green",
-      "report_links": [
-        "artifacts/repo_discovery_report.md",
-        "artifacts/repo_discovery_inventory.csv",
-        "artifacts/embed_plan_report.md",
-        "artifacts/embed_plan_inventory.csv",
-        "artifacts/tool_readiness_report.md",
-        "artifacts/project_sync_report.md"
-      ],
-      "review_commands": {},
-      "review_policy": {
-        "message": "No dirty-review command shortcuts required for this project.",
-        "status": "not_required"
-      },
-      "risk_light": "amber",
-      "slug": "test-repo-from-agent",
-      "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/test-repo-from-agent"
     },
     {
       "category": "clean_candidate",
@@ -3317,7 +3359,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -3359,7 +3401,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -3401,7 +3443,7 @@
     {
       "category": "clean_candidate",
       "docs_light": "amber",
-      "embed_decision": null,
+      "embed_decision": "candidate_not_selected",
       "git_status": "clean",
       "has_agents": false,
       "has_code_workspace": false,
@@ -3451,33 +3493,32 @@
   ],
   "summary": {
     "count_by_category": {
-      "clean_candidate": 57,
+      "clean_candidate": 68,
       "control_repo": 1,
       "dirty_candidate_review_first": 6,
-      "known_embedded": 2,
-      "protected_manual_review": 12,
+      "known_embedded": 4,
       "unknown_structure": 3
     },
     "count_by_docs_light": {
       "amber": 61,
-      "gray": 18,
-      "green": 2
+      "gray": 17,
+      "green": 4
     },
     "count_by_repo_light": {
       "amber": 6,
       "blue": 1,
-      "green": 59,
-      "red": 15
+      "green": 72,
+      "red": 3
     },
     "count_by_risk_light": {
-      "amber": 63,
+      "amber": 74,
       "blue": 1,
-      "green": 2,
-      "red": 15
+      "green": 4,
+      "red": 3
     },
     "dirty_review_count": 6,
-    "known_embedded_count": 2,
-    "protected_review_count": 12,
-    "total_projects": 81
+    "known_embedded_count": 4,
+    "protected_review_count": 0,
+    "total_projects": 82
   }
 }

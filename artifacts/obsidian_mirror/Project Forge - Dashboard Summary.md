@@ -15,19 +15,19 @@ Back to [[Project Forge - Command Center]].
 
 ## Counts
 
-- total projects: `74`
+- total projects: `82`
 - known embedded repos: `4`
-- candidate review repos: `54`
-- dirty review repos: `3`
-- protected review repos: `12`
+- candidate review repos: `68`
+- dirty review repos: `6`
+- protected review repos: `0`
 
 ## Category Summary
 
-- clean_candidate: `54`
+- clean_candidate: `68`
 - control_repo: `1`
-- dirty_candidate_review_first: `3`
+- dirty_candidate_review_first: `6`
 - known_embedded: `4`
-- protected_manual_review: `12`
+- unknown_structure: `3`
 
 ## Related Notes
 

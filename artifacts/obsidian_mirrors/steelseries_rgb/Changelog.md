@@ -5,8 +5,6 @@ aliases:
 ---
 # SteelSeries_RGB - Changelog
 
-## 2026-05-14
+## Changes
 
-- Replaced template mirror docs with practical showroom-level documentation.
-- Added conservative hardware-context wording with explicit `needs review` markers.
-- Added handoff/runbook updates aligned to dry-run-only sync behavior.
+- Track operator-facing changes here.

@@ -8,24 +8,18 @@ aliases:
 ## Open Project
 
 ```bash
-code "/home/cole/.config/Code/User/workspaces/steelseries_rgb.code-workspace"
+code "/home/cash/.config/Code/User/workspaces/steelseries_rgb.code-workspace"
 code-steelseries_rgb
 ```
 
 ## Common Commands
 
-```bash
-PYTHONPATH=src python3 -m unittest discover -s tests
-PYTHONPATH=src python3 -m project_forge_registry.obsidian_sync --dry-run --slug steelseries_rgb
-```
+- Add the safest daily commands here.
 
 ## Test Commands
 
-- Run full test suite before any sync-related changes.
-- Keep docs sync in dry-run mode during this phase.
+- Add non-destructive verification commands here.
 
 ## Recovery Notes
 
-- If a capability statement is uncertain, mark it `needs review` immediately.
-- If generated docs are replaced, regenerate then re-apply verified enrichment.
-- Keep scope constrained to repository mirror artifacts only.
+- Record rollback or reset guidance that does not rely on destructive shortcuts.

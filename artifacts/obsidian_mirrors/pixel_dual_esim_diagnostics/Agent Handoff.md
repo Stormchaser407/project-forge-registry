@@ -1,25 +1,25 @@
 ---
-title: "AgentZero - Agent Handoff"
+title: "pixel-dual-esim-diagnostics - Agent Handoff"
 aliases:
-  - "AgentZero - Agent Handoff"
+  - "pixel-dual-esim-diagnostics - Agent Handoff"
 ---
-# AgentZero - Agent Handoff
+# pixel-dual-esim-diagnostics - Agent Handoff
 
 ## Scope
 
-- Project slug: `agentzero`
-- Local path: `/mnt/storage/Cole/Projects/AgentZero`
+- Project slug: `pixel_dual_esim_diagnostics`
+- Local path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/pixel-dual-esim-diagnostics`
 
 ## Current State
 
-- Status: `review`
+- Status: `active`
 - Category: `active_project`
 
 ## Safe Commands
 
 ```bash
-code "/home/cole/.config/Code/User/workspaces/agentzero.code-workspace"
-code-agentzero
+code "/home/cash/.config/Code/User/workspaces/pixel_dual_esim_diagnostics.code-workspace"
+code-pixel_dual_esim_diagnostics
 ```
 
 ## Do Not Touch

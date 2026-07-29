@@ -4,9 +4,9 @@
 
 - Mode: `dry-run`
 - Slug: `project_forge_registry`
-- Passport dir: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports`
-- Passport file: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/project_forge_registry.project.yml`
-- Local path: `/mnt/storage/Cole/Projects/project-forge-registry`
+- Passport dir: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/artifacts/project_passports`
+- Passport file: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/artifacts/project_passports/project_forge_registry.project.yml`
+- Local path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry`
 
 ## Policy Defaults
 
@@ -20,11 +20,11 @@
 ## Eligibility
 
 - Eligible: true
-- Policy status: `needs_approval`
+- Policy status: `eligible`
 
 ## Notes
 
-- operator_approval_required
+- passport_github_visibility=public
 
 ## Safety Confirmation
 

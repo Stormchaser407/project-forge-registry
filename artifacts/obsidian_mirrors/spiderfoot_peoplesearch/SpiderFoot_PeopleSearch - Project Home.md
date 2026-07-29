@@ -1,10 +1,10 @@
 ---
 project_slug: "spiderfoot_peoplesearch"
 category: "active_project"
-status: "review"
-local_path: "/mnt/storage/Cole/Projects/SpiderFoot_PeopleSearch"
+status: "active"
+local_path: "/run/media/cash/WD_BLACK_4TB/Cole/Projects/SpiderFoot_PeopleSearch"
 launcher_command: "code-spiderfoot_peoplesearch"
-workspace_path: "/home/cole/.config/Code/User/workspaces/spiderfoot_peoplesearch.code-workspace"
+workspace_path: "/home/cash/.config/Code/User/workspaces/spiderfoot_peoplesearch.code-workspace"
 sync_policy: "docs_only / export_only"
 ---
 
@@ -25,7 +25,7 @@ Placeholder planning note for the `spiderfoot_peoplesearch` mirror proposal.
 
 ## Current Status
 
-- Registry status: `review`
+- Registry status: `active`
 - Category: `active_project`
 - Proposed mirror path: `/home/cole/main_vault/10 Projects/spiderfoot_peoplesearch`
 
@@ -53,12 +53,12 @@ Gives operators a clean project-facing surface for demos, status, handoff, and r
 
 ## Links and Commands
 
-- Local path: `/mnt/storage/Cole/Projects/SpiderFoot_PeopleSearch`
-- Workspace path: `/home/cole/.config/Code/User/workspaces/spiderfoot_peoplesearch.code-workspace`
+- Local path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/SpiderFoot_PeopleSearch`
+- Workspace path: `/home/cash/.config/Code/User/workspaces/spiderfoot_peoplesearch.code-workspace`
 - Launcher command: `code-spiderfoot_peoplesearch`
 - Sync policy: `docs_only / export_only`
 
 ```bash
-code "/home/cole/.config/Code/User/workspaces/spiderfoot_peoplesearch.code-workspace"
+code "/home/cash/.config/Code/User/workspaces/spiderfoot_peoplesearch.code-workspace"
 code-spiderfoot_peoplesearch
 ```

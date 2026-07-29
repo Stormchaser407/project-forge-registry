@@ -8,17 +8,17 @@ aliases:
 ## Scope
 
 - Project slug: `spiderfoot_peoplesearch`
-- Local path: `/mnt/storage/Cole/Projects/SpiderFoot_PeopleSearch`
+- Local path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/SpiderFoot_PeopleSearch`
 
 ## Current State
 
-- Status: `review`
+- Status: `active`
 - Category: `active_project`
 
 ## Safe Commands
 
 ```bash
-code "/home/cole/.config/Code/User/workspaces/spiderfoot_peoplesearch.code-workspace"
+code "/home/cash/.config/Code/User/workspaces/spiderfoot_peoplesearch.code-workspace"
 code-spiderfoot_peoplesearch
 ```
 

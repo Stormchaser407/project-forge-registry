@@ -1,9 +1,9 @@
 ---
-title: "Extension-Blip - Architecture"
+title: "pixel-dual-esim-diagnostics - Architecture"
 aliases:
-  - "Extension-Blip - Architecture"
+  - "pixel-dual-esim-diagnostics - Architecture"
 ---
-# Extension-Blip - Architecture
+# pixel-dual-esim-diagnostics - Architecture
 
 ## Overview
 

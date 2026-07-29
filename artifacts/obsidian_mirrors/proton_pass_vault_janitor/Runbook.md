@@ -1,15 +1,15 @@
 ---
-title: "AgentZero - Runbook"
+title: "proton-pass-vault-janitor - Runbook"
 aliases:
-  - "AgentZero - Runbook"
+  - "proton-pass-vault-janitor - Runbook"
 ---
-# AgentZero - Runbook
+# proton-pass-vault-janitor - Runbook
 
 ## Open Project
 
 ```bash
-code "/home/cole/.config/Code/User/workspaces/agentzero.code-workspace"
-code-agentzero
+code "/home/cash/.config/Code/User/workspaces/proton_pass_vault_janitor.code-workspace"
+code-proton_pass_vault_janitor
 ```
 
 ## Common Commands

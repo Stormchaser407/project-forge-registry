@@ -1,4 +1,4 @@
-# Extension-Blip Export Staging
+# proton-pass-vault-janitor Export Staging
 
 This folder is reserved for docs-only export material.
 

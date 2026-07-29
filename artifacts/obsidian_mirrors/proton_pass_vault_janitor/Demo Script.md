@@ -1,9 +1,9 @@
 ---
-title: "Extension-Blip - Demo Script"
+title: "proton-pass-vault-janitor - Demo Script"
 aliases:
-  - "Extension-Blip - Demo Script"
+  - "proton-pass-vault-janitor - Demo Script"
 ---
-# Extension-Blip - Demo Script
+# proton-pass-vault-janitor - Demo Script
 
 ## Thirty-Second Version
 

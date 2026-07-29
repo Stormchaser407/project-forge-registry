@@ -13,14 +13,20 @@ tags:
 
 Back to [[Project Forge - Command Center]]. Review [[Project Forge - Deferred Items]] before expanding scope.
 
-## Candidate Lanes
+## Bounded Follow-Up
 
-- Obsidian integration: keep artifact mirror deterministic before real vault sync.
-- Repo action policies: define allowed, blocked, and review-only actions per category.
-- Remote strategy: map local, GitHub, Codeberg, and mirror policy without contacting remotes by default.
-- Codex/VS Code isolation research: test user-data, extension-dir, profile, and environment boundaries.
+- canonical Obsidian root availability and no-clobber sync verification
+- repository and Codeberg discrepancies recorded in the technical follow-up signal artifact
+- canonical live host/deployment-node source and the separate fleet-panel branch
+- real vault apply remains blocked until the canonical root is available and a dry-run is reviewed
 
-## Phase 11A Boundary
+## Authority Boundary
+
+- Project Forge detects and reports technical evidence.
+- Master Scheduler or the operator decides whether it becomes actionable.
+- Todoist owns any resulting actionable commitment.
+
+## Generated Mirror Boundary
 
 - Generate Markdown notes under `artifacts/obsidian_mirror/` only.
 - Generate `artifacts/obsidian_mirror_report.md`.

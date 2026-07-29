@@ -1,9 +1,9 @@
 ---
-title: "AgentZero - Decisions"
+title: "proton-pass-vault-janitor - Decisions"
 aliases:
-  - "AgentZero - Decisions"
+  - "proton-pass-vault-janitor - Decisions"
 ---
-# AgentZero - Decisions
+# proton-pass-vault-janitor - Decisions
 
 ## Decision Log
 

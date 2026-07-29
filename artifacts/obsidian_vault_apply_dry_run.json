@@ -1,41 +1,41 @@
 {
   "apply_requested": false,
-  "blocked": 1,
+  "blocked": 5,
   "entries": [
     {
-      "action": "blocked_existing_different",
-      "reason": "target exists and differs; create-only apply does not overwrite",
+      "action": "blocked_target_unavailable",
+      "reason": "target path unavailable: [Errno 13] Permission denied: '/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Command Center.md'",
       "source_path": "artifacts/obsidian_mirror/Project Forge - Command Center.md",
-      "target_exists": true,
-      "target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Command Center.md"
+      "target_exists": false,
+      "target_path": "/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Command Center.md"
     },
     {
-      "action": "would_skip_identical",
-      "reason": "target exists with identical content",
+      "action": "blocked_target_unavailable",
+      "reason": "target path unavailable: [Errno 13] Permission denied: '/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Dashboard Summary.md'",
       "source_path": "artifacts/obsidian_mirror/Project Forge - Dashboard Summary.md",
-      "target_exists": true,
-      "target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Dashboard Summary.md"
+      "target_exists": false,
+      "target_path": "/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Dashboard Summary.md"
     },
     {
-      "action": "would_skip_identical",
-      "reason": "target exists with identical content",
+      "action": "blocked_target_unavailable",
+      "reason": "target path unavailable: [Errno 13] Permission denied: '/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Deferred Items.md'",
       "source_path": "artifacts/obsidian_mirror/Project Forge - Deferred Items.md",
-      "target_exists": true,
-      "target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Deferred Items.md"
+      "target_exists": false,
+      "target_path": "/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Deferred Items.md"
     },
     {
-      "action": "would_skip_identical",
-      "reason": "target exists with identical content",
+      "action": "blocked_target_unavailable",
+      "reason": "target path unavailable: [Errno 13] Permission denied: '/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Known Embedded Repos.md'",
       "source_path": "artifacts/obsidian_mirror/Project Forge - Known Embedded Repos.md",
-      "target_exists": true,
-      "target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Known Embedded Repos.md"
+      "target_exists": false,
+      "target_path": "/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Known Embedded Repos.md"
     },
     {
-      "action": "would_skip_identical",
-      "reason": "target exists with identical content",
+      "action": "blocked_target_unavailable",
+      "reason": "target path unavailable: [Errno 13] Permission denied: '/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Phase 11 Planning.md'",
       "source_path": "artifacts/obsidian_mirror/Project Forge - Phase 11 Planning.md",
-      "target_exists": true,
-      "target_path": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge/Project Forge - Phase 11 Planning.md"
+      "target_exists": false,
+      "target_path": "/home/cole/main_vault/10 Projects/project_forge_registry/Project Forge - Phase 11 Planning.md"
     }
   ],
   "entries_reviewed": 5,
@@ -60,8 +60,8 @@
     "vs_code_launch": false
   },
   "source_root": "artifacts/obsidian_mirror",
-  "vault_root": "/mnt/storage/Cole/main_vault/10 Projects/Project Forge",
+  "vault_root": "/home/cole/main_vault/10 Projects/project_forge_registry",
   "would_create": 0,
-  "would_skip": 4,
-  "would_skip_identical": 4
+  "would_skip": 0,
+  "would_skip_identical": 0
 }

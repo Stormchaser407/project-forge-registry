@@ -1,47 +1,48 @@
 # Project Forge Dashboard Inventory Report
 
 - mode: `read-only`
-- total_projects: `81`
+- total_projects: `82`
 - json: `artifacts/dashboard_inventory.json`
 
 ## Category Summary
 
-- clean_candidate: `57`
+- clean_candidate: `68`
 - control_repo: `1`
 - dirty_candidate_review_first: `6`
-- known_embedded: `2`
-- protected_manual_review: `12`
+- known_embedded: `4`
 - unknown_structure: `3`
 
 ## Repo Light Summary
 
 - amber: `6`
 - blue: `1`
-- green: `59`
-- red: `15`
+- green: `72`
+- red: `3`
 
 ## Docs Light Summary
 
 - amber: `61`
-- gray: `18`
-- green: `2`
+- gray: `17`
+- green: `4`
 
 ## Risk Light Summary
 
-- amber: `63`
+- amber: `74`
 - blue: `1`
-- green: `2`
-- red: `15`
+- green: `4`
+- red: `3`
 
 ## Known Embedded Projects
 
 - `archived-notevil-neon-district` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/ARCHIVED-NotEvil-neon-district`
 - `neon-district` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/neon-district`
+- `proton-pass-vault-janitor` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/proton-pass-vault-janitor`
+- `pwa-icon-organizer-creator` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/pwa-icon-organizer-creator`
 
 ## Dirty Review Projects
 
-- `nixos` - `/etc/nixos`
 - `oracle-codex-lab` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/NotEvil/oracle-codex-lab`
+- `cerberus_case_workspace` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus_case_workspace`
 - `emergency-audio-transcriber` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/emergency-audio-transcriber`
 - `endgame-health-bridge` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/endgame-health-bridge`
 - `nothing-phone-3-nethunter` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/nothing-phone-3-nethunter`
@@ -49,18 +50,7 @@
 
 ## Protected Review Projects
 
-- `cerberus` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/Cerberus`
-- `cerberus-aegis` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-aegis`
-- `cerberus-agents` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-agents`
-- `cerberus-command` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-command`
-- `cerberus-eyes-on` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-eyes-on`
-- `cerberus-mgm-boot` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-mgm-boot`
-- `cerberus-project` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-project`
-- `cerberus-recon` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-recon`
-- `cerberus-vault` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-vault`
-- `cerberus-watch` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-watch`
-- `cerberus_case_workspace` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus_case_workspace`
-- `endgame-solutions__cerberus-recon` - `/run/media/cash/WD_BLACK_4TB/Cole/Projects/endgame-solutions__cerberus-recon`
+- none
 
 ## Safety Statement
 

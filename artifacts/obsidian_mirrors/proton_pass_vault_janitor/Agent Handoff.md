@@ -1,25 +1,25 @@
 ---
-title: "Extension-Blip - Agent Handoff"
+title: "proton-pass-vault-janitor - Agent Handoff"
 aliases:
-  - "Extension-Blip - Agent Handoff"
+  - "proton-pass-vault-janitor - Agent Handoff"
 ---
-# Extension-Blip - Agent Handoff
+# proton-pass-vault-janitor - Agent Handoff
 
 ## Scope
 
-- Project slug: `extension_blip`
-- Local path: `/mnt/storage/Cole/Projects/Extension-Blip`
+- Project slug: `proton_pass_vault_janitor`
+- Local path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/proton-pass-vault-janitor`
 
 ## Current State
 
-- Status: `review`
+- Status: `active`
 - Category: `active_project`
 
 ## Safe Commands
 
 ```bash
-code "/home/cole/.config/Code/User/workspaces/extension_blip.code-workspace"
-code-extension_blip
+code "/home/cash/.config/Code/User/workspaces/proton_pass_vault_janitor.code-workspace"
+code-proton_pass_vault_janitor
 ```
 
 ## Do Not Touch

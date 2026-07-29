@@ -15,17 +15,9 @@ Back to [[Project Forge - Command Center]]. See also [[Project Forge - Dashboard
 
 ## Repos
 
-### lifesaver-ledger
+### archived-notevil-neon-district
 
-- path: `/mnt/storage/Cole/Projects/lifesaver-ledger`
-- category: `known_embedded`
-- git status: `clean`
-- recommended action: `embedded_ready`
-- launch policy: `eligible`
-
-### media-dedupe
-
-- path: `/mnt/storage/Cole/Projects/media-dedupe`
+- path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/ARCHIVED-NotEvil-neon-district`
 - category: `known_embedded`
 - git status: `clean`
 - recommended action: `embedded_ready`
@@ -33,15 +25,23 @@ Back to [[Project Forge - Command Center]]. See also [[Project Forge - Dashboard
 
 ### neon-district
 
-- path: `/mnt/storage/Cole/Projects/neon-district`
+- path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/neon-district`
 - category: `known_embedded`
 - git status: `clean`
 - recommended action: `embedded_ready`
 - launch policy: `eligible`
 
-### recon_housekeeping
+### proton-pass-vault-janitor
 
-- path: `/mnt/storage/Cole/Projects/recon_housekeeping`
+- path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/proton-pass-vault-janitor`
+- category: `known_embedded`
+- git status: `clean`
+- recommended action: `embedded_ready`
+- launch policy: `eligible`
+
+### pwa-icon-organizer-creator
+
+- path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/pwa-icon-organizer-creator`
 - category: `known_embedded`
 - git status: `clean`
 - recommended action: `embedded_ready`

@@ -5,8 +5,6 @@ aliases:
 ---
 # media-dedupe - Changelog
 
-## 2026-05-14
+## Changes
 
-- Replaced templates with practical showroom documentation.
-- Added conservative project framing with explicit `needs review` boundaries.
-- Added dry-run-focused handoff and runbook guidance.
+- Track operator-facing changes here.

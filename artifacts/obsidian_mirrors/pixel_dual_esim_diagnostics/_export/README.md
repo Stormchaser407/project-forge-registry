@@ -1,4 +1,4 @@
-# AgentZero Export Staging
+# pixel-dual-esim-diagnostics Export Staging
 
 This folder is reserved for docs-only export material.
 

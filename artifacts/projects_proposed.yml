@@ -1,17 +1,17 @@
 projects:
-  - slug: agentzero
-    name: AgentZero
+  - slug: 01_website_brand
+    name: 01-website-brand
     status: review
-    classification: active_project
-    category: active_project
-    local_path: /mnt/storage/Cole/Projects/AgentZero
+    classification: unknown
+    category: unknown
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/01-website-brand
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/agentzero.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/agentzero
-    registry_action: register_full
+      workspace: /home/cash/.config/Code/User/workspaces/01_website_brand.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/01_website_brand
+    registry_action: review_required
     launch:
-      command: code-agentzero
+      command: code-01_website_brand
     git:
       default_branch: main
       github: null
@@ -38,21 +38,219 @@ projects:
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
     safety_warnings: []
-  - slug: andclaw_comms
-    name: andclaw-comms
+  - slug: workspaces
+    name: _workspaces
     status: review
     classification: unknown
     category: unknown
-    local_path: /mnt/storage/Cole/Projects/andclaw-comms
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/_workspaces
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/andclaw_comms.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/andclaw_comms
+      workspace: /home/cash/.config/Code/User/workspaces/workspaces.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/workspaces
     registry_action: review_required
     launch:
-      command: code-andclaw_comms
+      command: code-workspaces
     git:
       default_branch: null
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - not_a_git_repo
+  - slug: aegis
+    name: aegis
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/aegis
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/aegis.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/aegis
+    registry_action: register_full
+    launch:
+      command: code-aegis
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: agent_zero
+    name: agent-zero
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/agent-zero
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/agent_zero.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/agent_zero
+    registry_action: register_full
+    launch:
+      command: code-agent_zero
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: apache_harvester
+    name: apache-harvester
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/apache-harvester
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/apache_harvester.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/apache_harvester
+    registry_action: review_required
+    launch:
+      command: code-apache_harvester
+    git:
+      default_branch: null
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - not_a_git_repo
+  - slug: archived_notevil_neon_district
+    name: ARCHIVED-NotEvil-neon-district
+    status: review
+    classification: archive
+    category: archive
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/ARCHIVED-NotEvil-neon-district
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/archived_notevil_neon_district.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/archived_notevil_neon_district
+    registry_action: ignore
+    launch:
+      command: code-archived_notevil_neon_district
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - name_suggests_archive_or_duplicate
+  - slug: argus
+    name: Argus
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/Argus
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/argus.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/argus
+    registry_action: review_required
+    launch:
+      command: code-argus
+    git:
+      default_branch: main
       github: null
       codeberg: null
       mirror_mode: dual_push
@@ -78,103 +276,21 @@ projects:
       obsidian_note_policy: docs_only
     safety_warnings:
       - contains_env_files
-      - not_a_git_repo
-  - slug: archive
-    name: archive
-    status: review
-    classification: archive
-    category: archive
-    local_path: /mnt/storage/Cole/Projects/archive
-    canonical_path: null
-    paths:
-      workspace: /home/cole/.config/Code/User/workspaces/archive.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/archive
-    registry_action: ignore
-    launch:
-      command: code-archive
-    git:
-      default_branch: null
-      github: null
-      codeberg: null
-      mirror_mode: dual_push
-    sync:
-      obsidian_to_repo: export_only
-      repo_to_obsidian: docs_only
-      allow_code_to_obsidian: false
-      allow_secrets: false
-      do_not_sync: false
-    visibility:
-      github: private
-      codeberg: private
-      public_ready: false
-    automation:
-      auto_doc_sync: false
-      auto_git_sync: false
-      require_safety_check_before_push: true
-    constraints:
-      do_not_move: false
-      do_not_delete: false
-      do_not_sync: false
-      exclude_from_bulk_sync: false
-      obsidian_note_policy: docs_only
-    safety_warnings:
-      - not_a_git_repo
-      - name_suggests_archive_or_duplicate
-  - slug: casebot_public_record_checks
-    name: casebot_public_record_checks
-    status: review
-    classification: unknown
-    category: unknown
-    local_path: /mnt/storage/Cole/Projects/casebot_public_record_checks
-    canonical_path: null
-    paths:
-      workspace: /home/cole/.config/Code/User/workspaces/casebot_public_record_checks.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/casebot_public_record_checks
-    registry_action: review_required
-    launch:
-      command: code-casebot_public_record_checks
-    git:
-      default_branch: null
-      github: null
-      codeberg: null
-      mirror_mode: dual_push
-    sync:
-      obsidian_to_repo: export_only
-      repo_to_obsidian: docs_only
-      allow_code_to_obsidian: false
-      allow_secrets: false
-      do_not_sync: false
-    visibility:
-      github: private
-      codeberg: private
-      public_ready: false
-    automation:
-      auto_doc_sync: false
-      auto_git_sync: false
-      require_safety_check_before_push: true
-    constraints:
-      do_not_move: false
-      do_not_delete: false
-      do_not_sync: false
-      exclude_from_bulk_sync: false
-      obsidian_note_policy: docs_only
-    safety_warnings:
-      - not_a_git_repo
   - slug: cerberus
     name: Cerberus
     status: review
-    classification: reconciliation_required
-    category: reconciliation_required
-    local_path: /mnt/storage/Cole/Projects/Cerberus
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/Cerberus
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/cerberus.code-workspace
+      workspace: /home/cash/.config/Code/User/workspaces/cerberus.code-workspace
       obsidian: /home/cole/main_vault/10 Projects/cerberus
     registry_action: review_required
     launch:
       command: code-cerberus
     git:
-      default_branch: null
+      default_branch: main
       github: null
       codeberg: null
       mirror_mode: dual_push
@@ -183,7 +299,7 @@ projects:
       repo_to_obsidian: docs_only
       allow_code_to_obsidian: false
       allow_secrets: false
-      do_not_sync: true
+      do_not_sync: false
     visibility:
       github: private
       codeberg: private
@@ -195,25 +311,181 @@ projects:
     constraints:
       do_not_move: false
       do_not_delete: false
-      do_not_sync: true
-      exclude_from_bulk_sync: true
+      do_not_sync: false
+      exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
     safety_warnings:
-      - not_a_git_repo
-      - cerberus_special_case_candidate
-      - do_not_sync
-      - cerberus_name_requires_manual_reconciliation_review
+      - contains_env_files
+  - slug: cerberus_aegis
+    name: cerberus-aegis
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-aegis
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/cerberus_aegis.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/cerberus_aegis
+    registry_action: review_required
+    launch:
+      command: code-cerberus_aegis
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - contains_env_files
+  - slug: cerberus_agents
+    name: cerberus-agents
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-agents
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/cerberus_agents.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/cerberus_agents
+    registry_action: register_full
+    launch:
+      command: code-cerberus_agents
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: cerberus_command
+    name: cerberus-command
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-command
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/cerberus_command.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/cerberus_command
+    registry_action: review_required
+    launch:
+      command: code-cerberus_command
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - contains_env_files
+  - slug: cerberus_eyes_on
+    name: cerberus-eyes-on
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-eyes-on
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/cerberus_eyes_on.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/cerberus_eyes_on
+    registry_action: review_required
+    launch:
+      command: code-cerberus_eyes_on
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - contains_env_files
   - slug: cerberus_mgm_boot
     name: cerberus-mgm-boot
     status: review
-    classification: unknown
-    category: unknown
-    local_path: /mnt/storage/Cole/Projects/cerberus-mgm-boot
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-mgm-boot
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/cerberus_mgm_boot.code-workspace
+      workspace: /home/cash/.config/Code/User/workspaces/cerberus_mgm_boot.code-workspace
       obsidian: /home/cole/main_vault/10 Projects/cerberus_mgm_boot
-    registry_action: review_required
+    registry_action: register_full
     launch:
       command: code-cerberus_mgm_boot
     git:
@@ -226,7 +498,7 @@ projects:
       repo_to_obsidian: docs_only
       allow_code_to_obsidian: false
       allow_secrets: false
-      do_not_sync: true
+      do_not_sync: false
     visibility:
       github: private
       codeberg: private
@@ -238,22 +510,175 @@ projects:
     constraints:
       do_not_move: false
       do_not_delete: false
-      do_not_sync: true
-      exclude_from_bulk_sync: true
+      do_not_sync: false
+      exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
-    safety_warnings:
-      - cerberus_special_case_candidate
-      - do_not_sync
-      - cerberus_related_project_requires_manual_review
-  - slug: cerberus_case_workspace
-    name: cerberus_case_workspace
+    safety_warnings: []
+  - slug: cerberus_project
+    name: cerberus-project
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-project
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/cerberus_project.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/cerberus_project
+    registry_action: register_full
+    launch:
+      command: code-cerberus_project
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: cerberus_recon
+    name: cerberus-recon
     status: review
     classification: unknown
     category: unknown
-    local_path: /mnt/storage/Cole/Projects/cerberus_case_workspace
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-recon
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/cerberus_case_workspace.code-workspace
+      workspace: /home/cash/.config/Code/User/workspaces/cerberus_recon.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/cerberus_recon
+    registry_action: review_required
+    launch:
+      command: code-cerberus_recon
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: cerberus_vault
+    name: cerberus-vault
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-vault
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/cerberus_vault.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/cerberus_vault
+    registry_action: review_required
+    launch:
+      command: code-cerberus_vault
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: cerberus_watch
+    name: cerberus-watch
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus-watch
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/cerberus_watch.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/cerberus_watch
+    registry_action: register_full
+    launch:
+      command: code-cerberus_watch
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: cerberus_case_workspace
+    name: cerberus_case_workspace
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/cerberus_case_workspace
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/cerberus_case_workspace.code-workspace
       obsidian: /home/cole/main_vault/10 Projects/cerberus_case_workspace
     registry_action: review_required
     launch:
@@ -268,7 +693,7 @@ projects:
       repo_to_obsidian: docs_only
       allow_code_to_obsidian: false
       allow_secrets: false
-      do_not_sync: true
+      do_not_sync: false
     visibility:
       github: private
       codeberg: private
@@ -280,25 +705,335 @@ projects:
     constraints:
       do_not_move: false
       do_not_delete: false
-      do_not_sync: true
-      exclude_from_bulk_sync: true
+      do_not_sync: false
+      exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
     safety_warnings:
       - contains_env_files
-      - cerberus_special_case_candidate
-      - do_not_sync
-      - cerberus_related_project_requires_manual_review
+  - slug: chaos_control_bridge
+    name: chaos-control-bridge
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/chaos-control-bridge
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/chaos_control_bridge.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/chaos_control_bridge
+    registry_action: register_full
+    launch:
+      command: code-chaos_control_bridge
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: chashgram_nicegram
+    name: chashgram.nicegram
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/chashgram.nicegram
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/chashgram_nicegram.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/chashgram_nicegram
+    registry_action: register_full
+    launch:
+      command: code-chashgram_nicegram
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: cloudfuse
+    name: cloudfuse
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/cloudfuse
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/cloudfuse.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/cloudfuse
+    registry_action: register_full
+    launch:
+      command: code-cloudfuse
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: commandboard
+    name: CommandBoard
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/CommandBoard
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/commandboard.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/commandboard
+    registry_action: register_full
+    launch:
+      command: code-commandboard
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: corecivic_ops
+    name: CoreCivic-Ops
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/CoreCivic-Ops
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/corecivic_ops.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/corecivic_ops
+    registry_action: register_full
+    launch:
+      command: code-corecivic_ops
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: crdroid
+    name: crdroid
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/crdroid
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/crdroid.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/crdroid
+    registry_action: review_required
+    launch:
+      command: code-crdroid
+    git:
+      default_branch: null
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - not_a_git_repo
+  - slug: creeperbot5000
+    name: CreeperBot5000
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/CreeperBot5000
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/creeperbot5000.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/creeperbot5000
+    registry_action: review_required
+    launch:
+      command: code-creeperbot5000
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: desktop_tutorial
+    name: desktop-tutorial
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/desktop-tutorial
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/desktop_tutorial.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/desktop_tutorial
+    registry_action: review_required
+    launch:
+      command: code-desktop_tutorial
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
   - slug: dj_request_system
     name: DJ_request_system
     status: review
-    classification: active_project
-    category: active_project
-    local_path: /mnt/storage/Cole/Projects/DJ_request_system
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/DJ_request_system
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/dj_request_system.code-workspace
+      workspace: /home/cash/.config/Code/User/workspaces/dj_request_system.code-workspace
       obsidian: /home/cole/main_vault/10 Projects/dj_request_system
-    registry_action: review_required
+    registry_action: register_full
     launch:
       command: code-dj_request_system
     git:
@@ -326,23 +1061,22 @@ projects:
       do_not_sync: false
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
-    safety_warnings:
-      - contains_env_files
-  - slug: endgame_solutions
-    name: endgame-solutions
+    safety_warnings: []
+  - slug: djfiddlesticks_music_console
+    name: djfiddlesticks-music-console
     status: review
-    classification: unknown
-    category: unknown
-    local_path: /mnt/storage/Cole/Projects/endgame-solutions
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/djfiddlesticks-music-console
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/endgame_solutions.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/endgame_solutions
+      workspace: /home/cash/.config/Code/User/workspaces/djfiddlesticks_music_console.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/djfiddlesticks_music_console
     registry_action: review_required
     launch:
-      command: code-endgame_solutions
+      command: code-djfiddlesticks_music_console
     git:
-      default_branch: null
+      default_branch: main
       github: null
       codeberg: null
       mirror_mode: dual_push
@@ -367,20 +1101,570 @@ projects:
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
     safety_warnings:
-      - not_a_git_repo
-  - slug: extension_blip
-    name: Extension-Blip
+      - contains_env_files
+  - slug: djfiddlesticks_ops
+    name: djfiddlesticks-ops
     status: review
-    classification: active_project
-    category: active_project
-    local_path: /mnt/storage/Cole/Projects/Extension-Blip
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/djfiddlesticks-ops
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/extension_blip.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/extension_blip
+      workspace: /home/cash/.config/Code/User/workspaces/djfiddlesticks_ops.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/djfiddlesticks_ops
     registry_action: register_full
     launch:
-      command: code-extension_blip
+      command: code-djfiddlesticks_ops
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: djfiddlesticks_radio_tracker
+    name: djfiddlesticks-radio-tracker
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/djfiddlesticks-radio-tracker
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/djfiddlesticks_radio_tracker.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/djfiddlesticks_radio_tracker
+    registry_action: review_required
+    launch:
+      command: code-djfiddlesticks_radio_tracker
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: djfiddlesticks_website
+    name: djfiddlesticks-website
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/djfiddlesticks-website
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/djfiddlesticks_website.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/djfiddlesticks_website
+    registry_action: review_required
+    launch:
+      command: code-djfiddlesticks_website
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: emergency_audio_transcriber
+    name: emergency-audio-transcriber
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/emergency-audio-transcriber
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/emergency_audio_transcriber.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/emergency_audio_transcriber
+    registry_action: review_required
+    launch:
+      command: code-emergency_audio_transcriber
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - contains_env_files
+      - contains_node_modules
+  - slug: endgame
+    name: endgame
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/endgame
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/endgame.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/endgame
+    registry_action: register_full
+    launch:
+      command: code-endgame
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: endgame_arcade
+    name: endgame-arcade
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/endgame-arcade
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/endgame_arcade.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/endgame_arcade
+    registry_action: review_required
+    launch:
+      command: code-endgame_arcade
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: endgame_consultation
+    name: Endgame-Consultation
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/Endgame-Consultation
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/endgame_consultation.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/endgame_consultation
+    registry_action: register_full
+    launch:
+      command: code-endgame_consultation
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: endgame_diagrams
+    name: endgame-diagrams
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/endgame-diagrams
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/endgame_diagrams.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/endgame_diagrams
+    registry_action: register_full
+    launch:
+      command: code-endgame_diagrams
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: endgame_health_bridge
+    name: endgame-health-bridge
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/endgame-health-bridge
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/endgame_health_bridge.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/endgame_health_bridge
+    registry_action: review_required
+    launch:
+      command: code-endgame_health_bridge
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - contains_env_files
+  - slug: endgame_solutions_cerberus_recon
+    name: endgame-solutions__cerberus-recon
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/endgame-solutions__cerberus-recon
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/endgame_solutions_cerberus_recon.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/endgame_solutions_cerberus_recon
+    registry_action: review_required
+    launch:
+      command: code-endgame_solutions_cerberus_recon
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - contains_env_files
+  - slug: endgame_website
+    name: endgame-website
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/endgame-website
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/endgame_website.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/endgame_website
+    registry_action: register_full
+    launch:
+      command: code-endgame_website
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: endgametraining
+    name: endgametraining
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/endgametraining
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/endgametraining.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/endgametraining
+    registry_action: register_full
+    launch:
+      command: code-endgametraining
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: espanso_snippets
+    name: espanso-snippets
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/espanso-snippets
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/espanso_snippets.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/espanso_snippets
+    registry_action: register_full
+    launch:
+      command: code-espanso_snippets
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: fiddlesticks_stage
+    name: fiddlesticks-stage
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/fiddlesticks-stage
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/fiddlesticks_stage.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/fiddlesticks_stage
+    registry_action: register_full
+    launch:
+      command: code-fiddlesticks_stage
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: forge_os_endgame_edition
+    name: forge-os-endgame-edition
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/forge-os-endgame-edition
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/forge_os_endgame_edition.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/forge_os_endgame_edition
+    registry_action: register_full
+    launch:
+      command: code-forge_os_endgame_edition
     git:
       default_branch: main
       github: null
@@ -410,12 +1694,12 @@ projects:
   - slug: foundations_of_git_exercise_repo
     name: foundations-of-git-exercise-repo
     status: review
-    classification: active_project
-    category: active_project
-    local_path: /mnt/storage/Cole/Projects/foundations-of-git-exercise-repo
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/foundations-of-git-exercise-repo
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/foundations_of_git_exercise_repo.code-workspace
+      workspace: /home/cash/.config/Code/User/workspaces/foundations_of_git_exercise_repo.code-workspace
       obsidian: /home/cole/main_vault/10 Projects/foundations_of_git_exercise_repo
     registry_action: register_full
     launch:
@@ -446,19 +1730,214 @@ projects:
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
     safety_warnings: []
-  - slug: hermes_agent
-    name: hermes-agent
+  - slug: gradle
+    name: gradle
     status: review
-    classification: active_project
-    category: active_project
-    local_path: /mnt/storage/Cole/Projects/hermes-agent
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/gradle
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/hermes_agent.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/hermes_agent
+      workspace: /home/cash/.config/Code/User/workspaces/gradle.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/gradle
+    registry_action: register_full
+    launch:
+      command: code-gradle
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: hello_world
+    name: hello-world
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/hello-world
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/hello_world.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/hello_world
+    registry_action: register_full
+    launch:
+      command: code-hello_world
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: homelab_nixos_config
+    name: homelab-nixos-config
+    status: review
+    classification: lab
+    category: lab
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/homelab-nixos-config
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/homelab_nixos_config.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/homelab_nixos_config
+    registry_action: obsidian_notes_only
+    launch:
+      command: code-homelab_nixos_config
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: ig_detective
+    name: IG-Detective
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/IG-Detective
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/ig_detective.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/ig_detective
+    registry_action: register_full
+    launch:
+      command: code-ig_detective
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: main_vault
+    name: main-vault
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/main-vault
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/main_vault.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/main_vault
     registry_action: review_required
     launch:
-      command: code-hermes_agent
+      command: code-main_vault
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: marioncounty_weather_wise
+    name: marioncounty-weather-wise
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/marioncounty-weather-wise
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/marioncounty_weather_wise.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/marioncounty_weather_wise
+    registry_action: review_required
+    launch:
+      command: code-marioncounty_weather_wise
     git:
       default_branch: main
       github: null
@@ -486,60 +1965,19 @@ projects:
       obsidian_note_policy: docs_only
     safety_warnings:
       - contains_env_files
-      - contains_node_modules
-  - slug: homeassistant
-    name: HomeAssistant
+  - slug: mavrakis
+    name: mavrakis
     status: review
-    classification: unknown
-    category: unknown
-    local_path: /mnt/storage/Cole/Projects/HomeAssistant
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/mavrakis
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/homeassistant.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/homeassistant
-    registry_action: review_required
-    launch:
-      command: code-homeassistant
-    git:
-      default_branch: null
-      github: null
-      codeberg: null
-      mirror_mode: dual_push
-    sync:
-      obsidian_to_repo: export_only
-      repo_to_obsidian: docs_only
-      allow_code_to_obsidian: false
-      allow_secrets: false
-      do_not_sync: false
-    visibility:
-      github: private
-      codeberg: private
-      public_ready: false
-    automation:
-      auto_doc_sync: false
-      auto_git_sync: false
-      require_safety_check_before_push: true
-    constraints:
-      do_not_move: false
-      do_not_delete: false
-      do_not_sync: false
-      exclude_from_bulk_sync: false
-      obsidian_note_policy: docs_only
-    safety_warnings:
-      - not_a_git_repo
-  - slug: lifesaver_ledger
-    name: lifesaver-ledger
-    status: review
-    classification: active_project
-    category: active_project
-    local_path: /mnt/storage/Cole/Projects/lifesaver-ledger
-    canonical_path: null
-    paths:
-      workspace: /home/cole/.config/Code/User/workspaces/lifesaver_ledger.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/lifesaver_ledger
+      workspace: /home/cash/.config/Code/User/workspaces/mavrakis.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/mavrakis
     registry_action: register_full
     launch:
-      command: code-lifesaver_ledger
+      command: code-mavrakis
     git:
       default_branch: main
       github: null
@@ -566,55 +2004,15 @@ projects:
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
     safety_warnings: []
-  - slug: maltego
-    name: Maltego
-    status: review
-    classification: unknown
-    category: unknown
-    local_path: /mnt/storage/Cole/Projects/Maltego
-    canonical_path: null
-    paths:
-      workspace: /home/cole/.config/Code/User/workspaces/maltego.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/maltego
-    registry_action: review_required
-    launch:
-      command: code-maltego
-    git:
-      default_branch: null
-      github: null
-      codeberg: null
-      mirror_mode: dual_push
-    sync:
-      obsidian_to_repo: export_only
-      repo_to_obsidian: docs_only
-      allow_code_to_obsidian: false
-      allow_secrets: false
-      do_not_sync: false
-    visibility:
-      github: private
-      codeberg: private
-      public_ready: false
-    automation:
-      auto_doc_sync: false
-      auto_git_sync: false
-      require_safety_check_before_push: true
-    constraints:
-      do_not_move: false
-      do_not_delete: false
-      do_not_sync: false
-      exclude_from_bulk_sync: false
-      obsidian_note_policy: docs_only
-    safety_warnings:
-      - not_a_git_repo
   - slug: media_dedupe
     name: media-dedupe
     status: review
-    classification: active_project
-    category: active_project
-    local_path: /mnt/storage/Cole/Projects/media-dedupe
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/media-dedupe
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/media_dedupe.code-workspace
+      workspace: /home/cash/.config/Code/User/workspaces/media_dedupe.code-workspace
       obsidian: /home/cole/main_vault/10 Projects/media_dedupe
     registry_action: register_full
     launch:
@@ -645,15 +2043,94 @@ projects:
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
     safety_warnings: []
+  - slug: my_tools
+    name: my-tools
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/my-tools
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/my_tools.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/my_tools
+    registry_action: register_full
+    launch:
+      command: code-my_tools
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: mygirlgpt
+    name: MyGirlGPT
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/MyGirlGPT
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/mygirlgpt.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/mygirlgpt
+    registry_action: review_required
+    launch:
+      command: code-mygirlgpt
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings:
+      - contains_env_files
   - slug: neon_district
     name: neon-district
     status: review
-    classification: active_project
-    category: active_project
-    local_path: /mnt/storage/Cole/Projects/neon-district
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/neon-district
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/neon_district.code-workspace
+      workspace: /home/cash/.config/Code/User/workspaces/neon_district.code-workspace
       obsidian: /home/cole/main_vault/10 Projects/neon_district
     registry_action: register_full
     launch:
@@ -684,19 +2161,19 @@ projects:
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
     safety_warnings: []
-  - slug: notevil_inc
-    name: NOTEvil-Inc
+  - slug: notevil
+    name: NotEvil
     status: review
     classification: unknown
     category: unknown
-    local_path: /mnt/storage/Cole/Projects/NOTEvil-Inc
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/NotEvil
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/notevil_inc.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/notevil_inc
+      workspace: /home/cash/.config/Code/User/workspaces/notevil.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/notevil
     registry_action: review_required
     launch:
-      command: code-notevil_inc
+      command: code-notevil
     git:
       default_branch: null
       github: null
@@ -724,15 +2201,54 @@ projects:
       obsidian_note_policy: docs_only
     safety_warnings:
       - not_a_git_repo
+  - slug: nothing_phone_3_nethunter
+    name: nothing-phone-3-nethunter
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/nothing-phone-3-nethunter
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/nothing_phone_3_nethunter.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/nothing_phone_3_nethunter
+    registry_action: register_full
+    launch:
+      command: code-nothing_phone_3_nethunter
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
   - slug: openclaw_workspace
     name: openclaw-workspace
     status: review
     classification: unknown
     category: unknown
-    local_path: /mnt/storage/Cole/Projects/openclaw-workspace
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/openclaw-workspace
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/openclaw_workspace.code-workspace
+      workspace: /home/cash/.config/Code/User/workspaces/openclaw_workspace.code-workspace
       obsidian: /home/cole/main_vault/10 Projects/openclaw_workspace
     registry_action: review_required
     launch:
@@ -763,99 +2279,19 @@ projects:
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
     safety_warnings: []
-  - slug: pixel_root_lab
-    name: pixel-root-lab
+  - slug: oren
+    name: oren
     status: review
-    classification: lab
-    category: lab
-    local_path: /mnt/storage/Cole/Projects/pixel-root-lab
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/oren
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/pixel_root_lab.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/pixel_root_lab
-    registry_action: review_required
+      workspace: /home/cash/.config/Code/User/workspaces/oren.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/oren
+    registry_action: register_full
     launch:
-      command: code-pixel_root_lab
-    git:
-      default_branch: null
-      github: null
-      codeberg: null
-      mirror_mode: dual_push
-    sync:
-      obsidian_to_repo: export_only
-      repo_to_obsidian: docs_only
-      allow_code_to_obsidian: false
-      allow_secrets: false
-      do_not_sync: false
-    visibility:
-      github: private
-      codeberg: private
-      public_ready: false
-    automation:
-      auto_doc_sync: false
-      auto_git_sync: false
-      require_safety_check_before_push: true
-    constraints:
-      do_not_move: false
-      do_not_delete: false
-      do_not_sync: false
-      exclude_from_bulk_sync: false
-      obsidian_note_policy: docs_only
-    safety_warnings:
-      - not_a_git_repo
-  - slug: primal
-    name: Primal
-    status: review
-    classification: unknown
-    category: unknown
-    local_path: /mnt/storage/Cole/Projects/Primal
-    canonical_path: null
-    paths:
-      workspace: /home/cole/.config/Code/User/workspaces/primal.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/primal
-    registry_action: review_required
-    launch:
-      command: code-primal
-    git:
-      default_branch: null
-      github: null
-      codeberg: null
-      mirror_mode: dual_push
-    sync:
-      obsidian_to_repo: export_only
-      repo_to_obsidian: docs_only
-      allow_code_to_obsidian: false
-      allow_secrets: false
-      do_not_sync: false
-    visibility:
-      github: private
-      codeberg: private
-      public_ready: false
-    automation:
-      auto_doc_sync: false
-      auto_git_sync: false
-      require_safety_check_before_push: true
-    constraints:
-      do_not_move: false
-      do_not_delete: false
-      do_not_sync: false
-      exclude_from_bulk_sync: false
-      obsidian_note_policy: docs_only
-    safety_warnings:
-      - not_a_git_repo
-  - slug: primal_web_app
-    name: primal-web-app
-    status: review
-    classification: active_project
-    category: active_project
-    local_path: /mnt/storage/Cole/Projects/primal-web-app
-    canonical_path: null
-    paths:
-      workspace: /home/cole/.config/Code/User/workspaces/primal_web_app.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/primal_web_app
-    registry_action: review_required
-    launch:
-      command: code-primal_web_app
+      command: code-oren
     git:
       default_branch: main
       github: null
@@ -881,22 +2317,176 @@ projects:
       do_not_sync: false
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
-    safety_warnings:
-      - contains_env_files
-      - contains_node_modules
+    safety_warnings: []
+  - slug: osint_framework
+    name: OSINT-Framework
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/OSINT-Framework
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/osint_framework.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/osint_framework
+    registry_action: register_full
+    launch:
+      command: code-osint_framework
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: pixel_9_pro_xl_twrp_experiment
+    name: pixel-9-pro-xl-TWRP-experiment
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/pixel-9-pro-xl-TWRP-experiment
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/pixel_9_pro_xl_twrp_experiment.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/pixel_9_pro_xl_twrp_experiment
+    registry_action: register_full
+    launch:
+      command: code-pixel_9_pro_xl_twrp_experiment
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: pixel_dual_esim_diagnostics
+    name: pixel-dual-esim-diagnostics
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/pixel-dual-esim-diagnostics
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/pixel_dual_esim_diagnostics.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/pixel_dual_esim_diagnostics
+    registry_action: register_full
+    launch:
+      command: code-pixel_dual_esim_diagnostics
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
   - slug: project_forge_registry
     name: project-forge-registry
     status: review
-    classification: active_project
-    category: active_project
-    local_path: /mnt/storage/Cole/Projects/project-forge-registry
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/project_forge_registry.code-workspace
+      workspace: /home/cash/.config/Code/User/workspaces/project_forge_registry.code-workspace
       obsidian: /home/cole/main_vault/10 Projects/project_forge_registry
     registry_action: register_full
     launch:
       command: code-project_forge_registry
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: project_forge_registry_homelab_fleet_panel
+    name: project-forge-registry-homelab-fleet-panel
+    status: review
+    classification: lab
+    category: lab
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry-homelab-fleet-panel
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/project_forge_registry_homelab_fleet_panel.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/project_forge_registry_homelab_fleet_panel
+    registry_action: obsidian_notes_only
+    launch:
+      command: code-project_forge_registry_homelab_fleet_panel
     git:
       default_branch: main
       github: null
@@ -928,10 +2518,10 @@ projects:
     status: review
     classification: unknown
     category: unknown
-    local_path: /mnt/storage/Cole/Projects/project_katrina
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/project_katrina
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/project_katrina.code-workspace
+      workspace: /home/cash/.config/Code/User/workspaces/project_katrina.code-workspace
       obsidian: /home/cole/main_vault/10 Projects/project_katrina
     registry_action: review_required
     launch:
@@ -962,19 +2552,19 @@ projects:
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
     safety_warnings: []
-  - slug: recon_housekeeping
-    name: recon_housekeeping
+  - slug: proton_pass_vault_janitor
+    name: proton-pass-vault-janitor
     status: review
-    classification: active_project
-    category: active_project
-    local_path: /mnt/storage/Cole/Projects/recon_housekeeping
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/proton-pass-vault-janitor
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/recon_housekeeping.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/recon_housekeeping
+      workspace: /home/cash/.config/Code/User/workspaces/proton_pass_vault_janitor.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/proton_pass_vault_janitor
     registry_action: register_full
     launch:
-      command: code-recon_housekeeping
+      command: code-proton_pass_vault_janitor
     git:
       default_branch: main
       github: null
@@ -1001,19 +2591,175 @@ projects:
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
     safety_warnings: []
-  - slug: sillytavern
-    name: SillyTavern
+  - slug: pwa_icon_organizer_creator
+    name: pwa-icon-organizer-creator
     status: review
-    classification: active_project
-    category: active_project
-    local_path: /mnt/storage/Cole/Projects/SillyTavern
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/pwa-icon-organizer-creator
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/sillytavern.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/sillytavern
+      workspace: /home/cash/.config/Code/User/workspaces/pwa_icon_organizer_creator.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/pwa_icon_organizer_creator
+    registry_action: register_full
+    launch:
+      command: code-pwa_icon_organizer_creator
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: recon
+    name: recon
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/recon
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/recon.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/recon
     registry_action: review_required
     launch:
-      command: code-sillytavern
+      command: code-recon
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: recon_nixos_config
+    name: recon-nixos-config
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/recon-nixos-config
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/recon_nixos_config.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/recon_nixos_config
+    registry_action: review_required
+    launch:
+      command: code-recon_nixos_config
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: redditbeacon
+    name: RedditBeacon
+    status: review
+    classification: unknown
+    category: unknown
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/RedditBeacon
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/redditbeacon.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/redditbeacon
+    registry_action: review_required
+    launch:
+      command: code-redditbeacon
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: secure_edit_flow
+    name: secure-edit-flow
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/secure-edit-flow
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/secure_edit_flow.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/secure_edit_flow
+    registry_action: review_required
+    launch:
+      command: code-secure_edit_flow
     git:
       default_branch: main
       github: null
@@ -1040,16 +2786,16 @@ projects:
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
     safety_warnings:
-      - contains_node_modules
+      - contains_env_files
   - slug: spiderfoot_peoplesearch
     name: SpiderFoot_PeopleSearch
     status: review
-    classification: active_project
-    category: active_project
-    local_path: /mnt/storage/Cole/Projects/SpiderFoot_PeopleSearch
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/SpiderFoot_PeopleSearch
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/spiderfoot_peoplesearch.code-workspace
+      workspace: /home/cash/.config/Code/User/workspaces/spiderfoot_peoplesearch.code-workspace
       obsidian: /home/cole/main_vault/10 Projects/spiderfoot_peoplesearch
     registry_action: register_full
     launch:
@@ -1083,12 +2829,12 @@ projects:
   - slug: steelseries_rgb
     name: SteelSeries_RGB
     status: review
-    classification: active_project
-    category: active_project
-    local_path: /mnt/storage/Cole/Projects/SteelSeries_RGB
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/SteelSeries_RGB
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/steelseries_rgb.code-workspace
+      workspace: /home/cash/.config/Code/User/workspaces/steelseries_rgb.code-workspace
       obsidian: /home/cole/main_vault/10 Projects/steelseries_rgb
     registry_action: register_full
     launch:
@@ -1119,21 +2865,21 @@ projects:
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
     safety_warnings: []
-  - slug: stormchaser407
-    name: Stormchaser407
+  - slug: technical_documents
+    name: Technical_Documents
     status: review
-    classification: unknown
-    category: unknown
-    local_path: /mnt/storage/Cole/Projects/Stormchaser407
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/Technical_Documents
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/stormchaser407.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/stormchaser407
-    registry_action: review_required
+      workspace: /home/cash/.config/Code/User/workspaces/technical_documents.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/technical_documents
+    registry_action: register_full
     launch:
-      command: code-stormchaser407
+      command: code-technical_documents
     git:
-      default_branch: null
+      default_branch: main
       github: null
       codeberg: null
       mirror_mode: dual_push
@@ -1157,17 +2903,16 @@ projects:
       do_not_sync: false
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
-    safety_warnings:
-      - not_a_git_repo
+    safety_warnings: []
   - slug: this_was_avoidable
     name: this-was-avoidable
     status: review
-    classification: active_project
-    category: active_project
-    local_path: /mnt/storage/Cole/Projects/this-was-avoidable
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/this-was-avoidable
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/this_was_avoidable.code-workspace
+      workspace: /home/cash/.config/Code/User/workspaces/this_was_avoidable.code-workspace
       obsidian: /home/cole/main_vault/10 Projects/this_was_avoidable
     registry_action: register_full
     launch:
@@ -1201,14 +2946,14 @@ projects:
   - slug: tidal_hifi
     name: tidal-hifi
     status: review
-    classification: active_project
-    category: active_project
-    local_path: /mnt/storage/Cole/Projects/tidal-hifi
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/tidal-hifi
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/tidal_hifi.code-workspace
+      workspace: /home/cash/.config/Code/User/workspaces/tidal_hifi.code-workspace
       obsidian: /home/cole/main_vault/10 Projects/tidal_hifi
-    registry_action: review_required
+    registry_action: register_full
     launch:
       command: code-tidal_hifi
     git:
@@ -1236,23 +2981,61 @@ projects:
       do_not_sync: false
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
-    safety_warnings:
-      - contains_node_modules
-  - slug: tidal_scrobble_cop
-    name: tidal-scrobble-cop
+    safety_warnings: []
+  - slug: wraith
+    name: wraith
     status: review
-    classification: unknown
-    category: unknown
-    local_path: /mnt/storage/Cole/Projects/tidal-scrobble-cop
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/wraith
     canonical_path: null
     paths:
-      workspace: /home/cole/.config/Code/User/workspaces/tidal_scrobble_cop.code-workspace
-      obsidian: /home/cole/main_vault/10 Projects/tidal_scrobble_cop
+      workspace: /home/cash/.config/Code/User/workspaces/wraith.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/wraith
+    registry_action: register_full
+    launch:
+      command: code-wraith
+    git:
+      default_branch: main
+      github: null
+      codeberg: null
+      mirror_mode: dual_push
+    sync:
+      obsidian_to_repo: export_only
+      repo_to_obsidian: docs_only
+      allow_code_to_obsidian: false
+      allow_secrets: false
+      do_not_sync: false
+    visibility:
+      github: private
+      codeberg: private
+      public_ready: false
+    automation:
+      auto_doc_sync: false
+      auto_git_sync: false
+      require_safety_check_before_push: true
+    constraints:
+      do_not_move: false
+      do_not_delete: false
+      do_not_sync: false
+      exclude_from_bulk_sync: false
+      obsidian_note_policy: docs_only
+    safety_warnings: []
+  - slug: your_video_guru
+    name: your-video-guru
+    status: review
+    classification: project_candidate
+    category: project_candidate
+    local_path: /run/media/cash/WD_BLACK_4TB/Cole/Projects/your-video-guru
+    canonical_path: null
+    paths:
+      workspace: /home/cash/.config/Code/User/workspaces/your_video_guru.code-workspace
+      obsidian: /home/cole/main_vault/10 Projects/your_video_guru
     registry_action: review_required
     launch:
-      command: code-tidal_scrobble_cop
+      command: code-your_video_guru
     git:
-      default_branch: null
+      default_branch: main
       github: null
       codeberg: null
       mirror_mode: dual_push
@@ -1277,4 +3060,4 @@ projects:
       exclude_from_bulk_sync: false
       obsidian_note_policy: docs_only
     safety_warnings:
-      - not_a_git_repo
+      - contains_env_files

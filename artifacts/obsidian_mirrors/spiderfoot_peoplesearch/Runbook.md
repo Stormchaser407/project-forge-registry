@@ -8,7 +8,7 @@ aliases:
 ## Open Project
 
 ```bash
-code "/home/cole/.config/Code/User/workspaces/spiderfoot_peoplesearch.code-workspace"
+code "/home/cash/.config/Code/User/workspaces/spiderfoot_peoplesearch.code-workspace"
 code-spiderfoot_peoplesearch
 ```
 

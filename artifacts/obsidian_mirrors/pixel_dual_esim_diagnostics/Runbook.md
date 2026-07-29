@@ -1,15 +1,15 @@
 ---
-title: "Extension-Blip - Runbook"
+title: "pixel-dual-esim-diagnostics - Runbook"
 aliases:
-  - "Extension-Blip - Runbook"
+  - "pixel-dual-esim-diagnostics - Runbook"
 ---
-# Extension-Blip - Runbook
+# pixel-dual-esim-diagnostics - Runbook
 
 ## Open Project
 
 ```bash
-code "/home/cole/.config/Code/User/workspaces/extension_blip.code-workspace"
-code-extension_blip
+code "/home/cash/.config/Code/User/workspaces/pixel_dual_esim_diagnostics.code-workspace"
+code-pixel_dual_esim_diagnostics
 ```
 
 ## Common Commands

@@ -1,18 +1,8 @@
 # SteelSeries_RGB Export Staging
 
-This folder is for controlled docs-only export staging.
+This folder is reserved for docs-only export material.
 
-## Allowed
-
-- Markdown documentation and approved summary notes.
-
-## Not Allowed
-
-- Source code
-- Secrets or env values
-- Logs, databases, binaries, caches
-
-## Policy
-
-- Keep `_export/docs/` empty until an approved export phase exists.
-- Treat this folder as docs staging, not hardware operational output storage.
+- No source code copies.
+- No secrets or env files.
+- No operational database or log material.
+- `docs/` stays empty until a later approved export phase.

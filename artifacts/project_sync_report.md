@@ -3,21 +3,21 @@
 - mode: `dry-run`
 - slug: `project_forge_registry`
 - lane_selection: `default_profile`
-- passport: `/mnt/storage/Cole/Projects/project-forge-registry/artifacts/project_passports/project_forge_registry.project.yml`
-- final_status: `ready_for_operator_review`
+- passport: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/artifacts/project_passports/project_forge_registry.project.yml`
+- final_status: `blocked`
 
 ## Lane Summary
 
 - selection_note: `safe default dry-run profile`
 - requested_lanes: `5`
 - unrequested_skipped_lanes: `4`
-- passed_lanes: `5`
-- failed_or_incomplete_lanes: `0`
+- passed_lanes: `3`
+- failed_or_incomplete_lanes: `2`
 
 ## Requested Lanes
 
-- sync_obsidian: `passed`
-- export_docs: `passed`
+- sync_obsidian: `failed`
+- export_docs: `failed`
 - remote_plan: `passed`
 - remote_verify: `passed`
 - push_ready: `passed`
@@ -31,15 +31,14 @@
 
 ## Passed Lanes
 
-- sync_obsidian
-- export_docs
 - remote_plan
 - remote_verify
 - push_ready
 
 ## Failed Or Incomplete Lanes
 
-- none
+- sync_obsidian: `failed` (project-forge-obsidian-sync blocked: [Errno 13] Permission denied: '/home/cole/main_vault/10 Projects/project_forge_registry/Agent Handoff.md')
+- export_docs: `failed` (project-forge-export-sync blocked: [Errno 13] Permission denied: '/home/cole/main_vault/10 Projects/project_forge_registry/_export/docs')
 
 ## Child Lane Reports
 
@@ -64,7 +63,7 @@
 - key: `refresh_workspace`
 - requested: `false`
 - status: `skipped`
-- command: `/etc/profiles/per-user/cole/bin/python3 -m project_forge_registry.workspace_generation --dry-run --include-slug project_forge_registry --report-name project_sync_workspace_generation_report.md`
+- command: `/run/current-system/sw/bin/python3 -m project_forge_registry.workspace_generation --dry-run --include-slug project_forge_registry --report-name project_sync_workspace_generation_report.md`
 - child_report: `n/a`
 - return_code: `n/a`
 - note: `not requested`
@@ -73,7 +72,7 @@
 - key: `refresh_passport`
 - requested: `false`
 - status: `skipped`
-- command: `/etc/profiles/per-user/cole/bin/python3 -m project_forge_registry.passport_generation --dry-run --include-slug project_forge_registry --report-name project_sync_passport_generation_report.md`
+- command: `/run/current-system/sw/bin/python3 -m project_forge_registry.passport_generation --dry-run --include-slug project_forge_registry --report-name project_sync_passport_generation_report.md`
 - child_report: `n/a`
 - return_code: `n/a`
 - note: `not requested`
@@ -82,7 +81,7 @@
 - key: `refresh_mirror`
 - requested: `false`
 - status: `skipped`
-- command: `/etc/profiles/per-user/cole/bin/python3 -m project_forge_registry.obsidian_mirror_generation --dry-run --include-slug project_forge_registry --report-name project_sync_obsidian_mirror_generation_report.md`
+- command: `/run/current-system/sw/bin/python3 -m project_forge_registry.obsidian_mirror_generation --dry-run --include-slug project_forge_registry --report-name project_sync_obsidian_mirror_generation_report.md`
 - child_report: `n/a`
 - return_code: `n/a`
 - note: `not requested`
@@ -90,26 +89,26 @@
 ### Obsidian Sync
 - key: `sync_obsidian`
 - requested: `true`
-- status: `passed`
-- command: `/etc/profiles/per-user/cole/bin/python3 -m project_forge_registry.obsidian_sync --dry-run --slug project_forge_registry --report-name project_sync_obsidian_sync_report.md`
+- status: `failed`
+- command: `/run/current-system/sw/bin/python3 -m project_forge_registry.obsidian_sync --dry-run --slug project_forge_registry --report-name project_sync_obsidian_sync_report.md`
 - child_report: `artifacts/project_sync_obsidian_sync_report.md`
-- return_code: `0`
-- note: `ok`
+- return_code: `1`
+- note: `project-forge-obsidian-sync blocked: [Errno 13] Permission denied: '/home/cole/main_vault/10 Projects/project_forge_registry/Agent Handoff.md'`
 
 ### Export Docs
 - key: `export_docs`
 - requested: `true`
-- status: `passed`
-- command: `/etc/profiles/per-user/cole/bin/python3 -m project_forge_registry.export_sync --dry-run --slug project_forge_registry --report-name project_sync_export_sync_report.md`
+- status: `failed`
+- command: `/run/current-system/sw/bin/python3 -m project_forge_registry.export_sync --dry-run --slug project_forge_registry --report-name project_sync_export_sync_report.md`
 - child_report: `artifacts/project_sync_export_sync_report.md`
-- return_code: `0`
-- note: `ok`
+- return_code: `1`
+- note: `project-forge-export-sync blocked: [Errno 13] Permission denied: '/home/cole/main_vault/10 Projects/project_forge_registry/_export/docs'`
 
 ### Remote Plan
 - key: `remote_plan`
 - requested: `true`
 - status: `passed`
-- command: `/etc/profiles/per-user/cole/bin/python3 -m project_forge_registry.remote_policy plan --dry-run --slug project_forge_registry --report-name project_sync_remote_plan_report.md`
+- command: `/run/current-system/sw/bin/python3 -m project_forge_registry.remote_policy plan --dry-run --slug project_forge_registry --report-name project_sync_remote_plan_report.md`
 - child_report: `artifacts/project_sync_remote_plan_report.md`
 - return_code: `0`
 - note: `ok`
@@ -118,7 +117,7 @@
 - key: `remote_verify`
 - requested: `true`
 - status: `passed`
-- command: `/etc/profiles/per-user/cole/bin/python3 -m project_forge_registry.remote_policy verify --dry-run --slug project_forge_registry --report-name project_sync_remote_verify_report.md`
+- command: `/run/current-system/sw/bin/python3 -m project_forge_registry.remote_policy verify --dry-run --slug project_forge_registry --report-name project_sync_remote_verify_report.md`
 - child_report: `artifacts/project_sync_remote_verify_report.md`
 - return_code: `0`
 - note: `ok`
@@ -127,7 +126,7 @@
 - key: `push_ready`
 - requested: `true`
 - status: `passed`
-- command: `/etc/profiles/per-user/cole/bin/python3 -m project_forge_registry.remote_policy push-ready --dry-run --slug project_forge_registry --report-name project_sync_push_ready_report.md`
+- command: `/run/current-system/sw/bin/python3 -m project_forge_registry.remote_policy push-ready --dry-run --slug project_forge_registry --report-name project_sync_push_ready_report.md`
 - child_report: `artifacts/project_sync_push_ready_report.md`
 - return_code: `0`
 - note: `ok`

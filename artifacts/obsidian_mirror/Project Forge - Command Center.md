@@ -1,28 +1,19 @@
 ---
 title: "Project Forge - Command Center"
 project: "Project Forge"
-status: "historical dry-run artifact"
+status: "dry-run artifact"
 tags:
   - project-forge
   - phase-11
   - command-center
   - dry-run
-  - superseded-scope-qualified
 ---
 
 # Project Forge - Command Center
 
-> **Governance note:** This is a preserved Phase 11A dry-run artifact. The
-> canonical current mission and authority boundary are defined by repository
-> `PROJECT_CHARTER.md` and `PROJECT_STATUS.md`.
+Project Forge is the technical project and fleet operational registry. This technical operator mirror is generated under repository artifacts only.
 
-Project Forge is a dry-run-first local **technical** command center. It inventories
-and reports technical project, repository, mirror, launcher, workspace, and
-readiness state. It does not own personal planning, weekly prioritization,
-calendars, or the complete roadmaps of other projects.
-
-The older universal-planner interpretation of “command center” is superseded.
-The term here refers only to a technical operator surface.
+Repositories and verified runtime state own technical truth. Obsidian owns durable context. Master Scheduler or the operator decides whether a Project Forge follow-up signal becomes actionable, and Todoist owns the resulting commitment.
 
 ## Navigation
 
@@ -42,7 +33,7 @@ The term here refers only to a technical operator surface.
 ## Dashboard
 
 - artifact: `artifacts/dashboard.html`
-- total projects: `74`
+- total projects: `82`
 - known embedded repos: `4`
 
 ## Safety

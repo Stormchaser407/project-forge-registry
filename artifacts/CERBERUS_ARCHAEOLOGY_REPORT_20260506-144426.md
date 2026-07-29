@@ -1,5 +1,10 @@
 # Cerberus Archaeology Report
 
+> Historical 2026-05-06 evidence. Its path-existence and blanket-protection
+> conclusions are superseded. On 2026-07-29 both named paths were absent by
+> exact-path `stat`; current policy excludes them without inspecting contents
+> and treats every other Cerberus-branded repository normally.
+
 Generated: Wed May  6 02:44:26 PM EDT 2026
 
 ## Purpose

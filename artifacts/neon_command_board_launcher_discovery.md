@@ -13,13 +13,13 @@ replacement.
 
 ## Discovery Targets Inspected
 
-- `scripts` - present; files read: `11`; scope: repo-local launcher candidates
+- `scripts` - present; files read: `16`; scope: repo-local launcher candidates
 - `pyproject.toml` - present; files read: `1`; scope: repo-local entrypoints
-- `docs` - present; files read: `36`; scope: docs inside this repo
-- `artifacts` - present; files read: `111`; scope: artifacts inside this repo
-- `~/.config/autostart` - present; files read: `2`; scope: approved user-local autostart path
-- `~/.config/systemd/user` - present; files read: `9`; scope: approved user-local systemd path
-- `~/.local/share/applications` - present; files read: `82`; scope: approved user-local desktop application path
+- `docs` - present; files read: `46`; scope: docs inside this repo
+- `artifacts` - present; files read: `113`; scope: artifacts inside this repo
+- `~/.config/autostart` - present; files read: `1`; scope: approved user-local autostart path
+- `~/.config/systemd/user` - present; files read: `7`; scope: approved user-local systemd path
+- `~/.local/share/applications` - present; files read: `45`; scope: approved user-local desktop application path
 
 ## Repo-Local Launcher Candidates
 
@@ -29,7 +29,9 @@ replacement.
 - `scripts/project-forge-cold-start` - `review_only` - matched terms: Project Forge, project-forge, project-forge-dashboard
 - `scripts/project-forge-dashboard` - `review_only` - matched terms: Project Forge, project-forge, project-forge-dashboard
 - `scripts/project-forge-install-cold-start-desktop` - `review_only` - matched terms: Project Forge, project-forge
+- `scripts/project-forge-install-dashboard-desktop` - `review_only` - matched terms: Project Forge, project-forge, project-forge-dashboard
 - `scripts/project-forge-open-project` - `review_only` - matched terms: Project Forge, project-forge
+- `scripts/project-forge-scan-dashboard` - `review_only` - matched terms: Project Forge, project-forge
 - `scripts/project-sync-safe` - `review_only` - matched terms: Project Forge
 - `pyproject.toml` - `review_neon_candidate` - matched terms: project-forge, project-forge-dashboard, project-forge-neon-command-board
 
@@ -43,18 +45,8 @@ replacement.
 
 ## User-Local Desktop Entry Candidates
 
-- `~/.local/share/applications/project-forge-cold-start.desktop` - `review_only` - matched terms: Project Forge, project-forge
-- `~/.local/share/applications/project-forge-command-board.desktop` - `review_only` - matched terms: Project Forge, project-forge
-- `~/.local/share/applications/project-forge-operator-runbook.desktop` - `review_only` - matched terms: Project Forge, project-forge
-- `~/.local/share/applications/project-forge-safe-sync.desktop` - `review_only` - matched terms: Project Forge, project-forge
-- `~/.local/share/applications/recon-container-restart.desktop` - `review_only` - matched terms: Recon
-- `~/.local/share/applications/recon-container-status.desktop` - `review_only` - matched terms: Recon
-- `~/.local/share/applications/recon-flake-build.desktop` - `review_only` - matched terms: Recon
-- `~/.local/share/applications/recon-flake-switch.desktop` - `review_only` - matched terms: Recon
-- `~/.local/share/applications/recon-flake-test.desktop` - `review_only` - matched terms: Recon
-- `~/.local/share/applications/recon-ops-dashboard.desktop` - `review_only` - matched terms: Recon
-- `~/.local/share/applications/recon-span-screensaver.desktop` - `review_only` - matched terms: Recon
-- `~/.local/share/applications/recon-update-all.desktop` - `review_only` - matched terms: Recon
+- `~/.local/share/applications/legion-code-forge.desktop` - `review_only` - matched terms: Project Forge
+- `~/.local/share/applications/project-forge-dashboard.desktop` - `review_only` - matched terms: Project Forge, project-forge, project-forge-dashboard
 
 ## References Found
 
@@ -98,11 +90,37 @@ replacement.
 - `scripts/project-forge-install-cold-start-desktop` line 105: `Project Forge`
 - `scripts/project-forge-install-cold-start-desktop` line 106: `Project Forge`
 - `scripts/project-forge-install-cold-start-desktop` line 116: `Project Forge`
+- `scripts/project-forge-install-dashboard-desktop` line 7: `project-forge`
+- `scripts/project-forge-install-dashboard-desktop` line 10: `Project Forge`
+- `scripts/project-forge-install-dashboard-desktop` line 51: `project-forge`
+- `scripts/project-forge-install-dashboard-desktop` line 61: `project-forge`
+- `scripts/project-forge-install-dashboard-desktop` line 64: `project-forge`
+- `scripts/project-forge-install-dashboard-desktop` line 64: `project-forge-dashboard`
+- `scripts/project-forge-install-dashboard-desktop` line 65: `project-forge`
+- `scripts/project-forge-install-dashboard-desktop` line 65: `project-forge-dashboard`
+- `scripts/project-forge-install-dashboard-desktop` line 66: `project-forge`
+- `scripts/project-forge-install-dashboard-desktop` line 66: `project-forge-dashboard`
+- `scripts/project-forge-install-dashboard-desktop` line 71: `project-forge`
+- `scripts/project-forge-install-dashboard-desktop` line 71: `project-forge-dashboard`
+- `scripts/project-forge-install-dashboard-desktop` line 77: `Project Forge`
+- `scripts/project-forge-install-dashboard-desktop` line 113: `Project Forge`
+- `scripts/project-forge-install-dashboard-desktop` line 114: `Project Forge`
+- `scripts/project-forge-install-dashboard-desktop` line 144: `project-forge`
+- `scripts/project-forge-install-dashboard-desktop` line 144: `project-forge-dashboard`
+- `scripts/project-forge-install-dashboard-desktop` line 145: `project-forge`
+- `scripts/project-forge-install-dashboard-desktop` line 145: `project-forge-dashboard`
+- `scripts/project-forge-install-dashboard-desktop` line 150: `Project Forge`
 - `scripts/project-forge-open-project` line 16: `project-forge`
 - `scripts/project-forge-open-project` line 17: `project-forge`
 - `scripts/project-forge-open-project` line 18: `project-forge`
 - `scripts/project-forge-open-project` line 19: `project-forge`
-- `scripts/project-forge-open-project` line 230: `Project Forge`
+- `scripts/project-forge-open-project` line 253: `Project Forge`
+- `scripts/project-forge-scan-dashboard` line 7: `project-forge`
+- `scripts/project-forge-scan-dashboard` line 8: `project-forge`
+- `scripts/project-forge-scan-dashboard` line 18: `Project Forge`
+- `scripts/project-forge-scan-dashboard` line 27: `Project Forge`
+- `scripts/project-forge-scan-dashboard` line 83: `project-forge`
+- `scripts/project-forge-scan-dashboard` line 101: `Project Forge`
 - `scripts/project-sync-safe` line 13: `Project Forge`
 - `pyproject.toml` line 6: `project-forge`
 - `pyproject.toml` line 14: `project-forge`
@@ -112,33 +130,7 @@ replacement.
 - `pyproject.toml` line 18: `project-forge`
 - `pyproject.toml` line 19: `project-forge`
 - `pyproject.toml` line 20: `project-forge`
-- `pyproject.toml` line 21: `project-forge`
-- `pyproject.toml` line 22: `project-forge`
-- `pyproject.toml` line 24: `project-forge`
-- `pyproject.toml` line 24: `project-forge-dashboard`
-- `pyproject.toml` line 25: `project-forge`
-- `pyproject.toml` line 25: `project-forge-dashboard`
-- `pyproject.toml` line 26: `project-forge`
-- `pyproject.toml` line 27: `project-forge`
-- `pyproject.toml` line 28: `project-forge`
-- `pyproject.toml` line 29: `project-forge`
-- `pyproject.toml` line 29: `project-forge-neon-command-board`
-- `pyproject.toml` line 30: `project-forge`
-- `pyproject.toml` line 30: `project-forge-neon-command-board`
-- `docs/PROJECT_FORGE_CHECKPOINTS.md` line 1: `Project Forge`
-- `docs/PROJECT_FORGE_CHECKPOINTS.md` line 19: `project-forge`
-- `docs/PROJECT_FORGE_CHECKPOINTS.md` line 23: `project-forge`
-- `docs/PROJECT_FORGE_CHECKPOINTS.md` line 65: `project-forge`
-- `docs/PROJECT_FORGE_CODEX_PROFILES.md` line 1: `Project Forge`
-- `docs/PROJECT_FORGE_CODEX_PROFILES.md` line 5: `Project Forge`
-- `docs/PROJECT_FORGE_CODEX_PROFILES.md` line 16: `project-forge`
-- `docs/PROJECT_FORGE_CODEX_PROFILES.md` line 20: `project-forge`
-- `docs/PROJECT_FORGE_CODEX_PROFILES.md` line 24: `project-forge`
-- `docs/PROJECT_FORGE_CODEX_PROFILES.md` line 28: `project-forge`
-- `docs/PROJECT_FORGE_CODEX_PROFILES.md` line 32: `project-forge`
-- `docs/PROJECT_FORGE_CODEX_PROFILE_BOOTSTRAP.md` line 1: `Project Forge`
-- `docs/PROJECT_FORGE_CODEX_PROFILE_BOOTSTRAP.md` line 15: `project-forge`
-- 1247 additional references omitted from markdown; see JSON artifact
+- 1692 additional references omitted from markdown; see JSON artifact
 
 ## Skipped / Missing
 
