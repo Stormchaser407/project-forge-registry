@@ -13,11 +13,11 @@
 
 ## Category Summary
 
-- clean_candidate: `68`
+- clean_candidate: `67`
 - control_repo: `1`
 - dirty_candidate_review_first: `6`
 - known_embedded: `4`
-- unknown_structure: `3`
+- unknown_structure: `4`
 
 ## Discovered Repos
 
@@ -510,7 +510,7 @@
 - path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/djfiddlesticks-website`
 - git_status: `clean`
 - has_readme: `true`
-- has_agents: `false`
+- has_agents: `true`
 - has_code_workspace: `false`
 - has_project_forge_marker: `false`
 - remote_count: `2`
@@ -651,13 +651,13 @@
 ### gradle
 
 - path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/gradle`
-- git_status: `clean`
+- git_status: `unknown`
 - has_readme: `true`
 - has_agents: `false`
 - has_code_workspace: `false`
 - has_project_forge_marker: `false`
 - remote_count: `2`
-- category: `clean_candidate`
+- category: `unknown_structure`
 
 ### hello-world
 
@@ -805,7 +805,7 @@
 ### project-forge-registry
 
 - path: `/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry`
-- git_status: `dirty`
+- git_status: `clean`
 - has_readme: `true`
 - has_agents: `true`
 - has_code_workspace: `false`

@@ -1867,7 +1867,7 @@
       "docs_light": "amber",
       "embed_decision": "candidate_not_selected",
       "git_status": "clean",
-      "has_agents": false,
+      "has_agents": true,
       "has_code_workspace": false,
       "has_project_forge_marker": false,
       "has_readme": true,
@@ -2421,10 +2421,10 @@
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/foundations-of-git-exercise-repo"
     },
     {
-      "category": "clean_candidate",
+      "category": "unknown_structure",
       "docs_light": "amber",
       "embed_decision": "candidate_not_selected",
-      "git_status": "clean",
+      "git_status": "unknown",
       "has_agents": false,
       "has_code_workspace": false,
       "has_project_forge_marker": false,
@@ -2435,16 +2435,16 @@
         "plain": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug gradle --profile plain --dry-run"
       },
       "launch_policy": {
-        "message": "Dry-run launch commands available for personal, business, and plain.",
-        "status": "eligible"
+        "message": "Launch blocked by policy: unsupported category unknown_structure.",
+        "status": "blocked"
       },
       "marker_doc_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/gradle/docs/PROJECT_FORGE.md",
       "marker_yaml_path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/gradle/.project-forge.yml",
-      "overall_status": "candidate_review",
+      "overall_status": "unknown_review",
       "path": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/gradle",
-      "recommended_action": "candidate_review",
+      "recommended_action": "unknown_review",
       "remote_count": 2,
-      "repo_light": "green",
+      "repo_light": "red",
       "report_links": [
         "artifacts/repo_discovery_report.md",
         "artifacts/repo_discovery_inventory.csv",
@@ -2458,7 +2458,7 @@
         "message": "No dirty-review command shortcuts required for this project.",
         "status": "not_required"
       },
-      "risk_light": "amber",
+      "risk_light": "red",
       "slug": "gradle",
       "vscode_target": "/run/media/cash/WD_BLACK_4TB/Cole/Projects/gradle"
     },
@@ -3018,7 +3018,7 @@
       "category": "control_repo",
       "docs_light": "amber",
       "embed_decision": "skip_control_repo",
-      "git_status": "dirty",
+      "git_status": "clean",
       "has_agents": true,
       "has_code_workspace": false,
       "has_project_forge_marker": false,
@@ -3493,11 +3493,11 @@
   ],
   "summary": {
     "count_by_category": {
-      "clean_candidate": 68,
+      "clean_candidate": 67,
       "control_repo": 1,
       "dirty_candidate_review_first": 6,
       "known_embedded": 4,
-      "unknown_structure": 3
+      "unknown_structure": 4
     },
     "count_by_docs_light": {
       "amber": 61,
@@ -3507,14 +3507,14 @@
     "count_by_repo_light": {
       "amber": 6,
       "blue": 1,
-      "green": 72,
-      "red": 3
+      "green": 71,
+      "red": 4
     },
     "count_by_risk_light": {
-      "amber": 74,
+      "amber": 73,
       "blue": 1,
       "green": 4,
-      "red": 3
+      "red": 4
     },
     "dirty_review_count": 6,
     "known_embedded_count": 4,

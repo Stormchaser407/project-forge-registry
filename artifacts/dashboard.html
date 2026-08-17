@@ -818,7 +818,7 @@
 </button>
 <button class="summary-card accent-cyan" type="button" data-summary-filter="candidate_review">
   <span><span class="term-inline" data-explain="candidate_review" title="Candidate review means the project looks promising but still needs operator review before deeper automation.">candidate review</span></span>
-  <strong>68</strong>
+  <strong>67</strong>
 </button>
 <button class="summary-card accent-cyan" type="button" data-summary-filter="control_repo_no_embed">
   <span><span class="term-inline" data-explain="control_repo_no_embed" title="Control repo means this Project Forge repository itself. It stays restricted so the control plane does not accidentally manage itself.">control repo</span></span>
@@ -826,7 +826,7 @@
 </button>
 <button class="summary-card accent-amber" type="button" data-summary-filter="unknown_review">
   <span><span class="term-inline" data-explain="unknown_review" title="Unknown review means Project Forge does not have enough safe context yet. Treat it as blocked until a human reviews it.">blocked other</span></span>
-  <strong>3</strong>
+  <strong>4</strong>
 </button>
     </section>
 
@@ -863,7 +863,7 @@
     </select>
   </label>
   <div class="filter-strip" aria-label="Project filters">
-    <button class="filter-button" type="button" data-filter="all" aria-pressed="true">All <span>82</span></button><button class="filter-button" type="button" data-filter="embedded_ready" aria-pressed="false">Embedded <span>4</span></button><button class="filter-button" type="button" data-filter="candidate_review" aria-pressed="false">Candidates <span>68</span></button><button class="filter-button" type="button" data-filter="dirty_review_first" aria-pressed="false">Dirty <span>6</span></button><button class="filter-button" type="button" data-filter="protected_manual_review" aria-pressed="false">Protected <span>0</span></button><button class="filter-button" type="button" data-filter="control_repo_no_embed" aria-pressed="false">Control <span>1</span></button><button class="filter-button" type="button" data-filter="unknown_review" aria-pressed="false">Blocked <span>3</span></button>
+    <button class="filter-button" type="button" data-filter="all" aria-pressed="true">All <span>82</span></button><button class="filter-button" type="button" data-filter="embedded_ready" aria-pressed="false">Embedded <span>4</span></button><button class="filter-button" type="button" data-filter="candidate_review" aria-pressed="false">Candidates <span>67</span></button><button class="filter-button" type="button" data-filter="dirty_review_first" aria-pressed="false">Dirty <span>6</span></button><button class="filter-button" type="button" data-filter="protected_manual_review" aria-pressed="false">Protected <span>0</span></button><button class="filter-button" type="button" data-filter="control_repo_no_embed" aria-pressed="false">Control <span>1</span></button><button class="filter-button" type="button" data-filter="unknown_review" aria-pressed="false">Blocked <span>4</span></button>
   </div>
   <button class="clear-button" type="button" data-clear-dashboard>Reset</button>
 </section>
@@ -1340,7 +1340,7 @@
   <div class="section-heading">
     <button class="section-toggle" type="button" data-section-toggle aria-expanded="true">
       <span>Candidate Review Projects</span>
-      <strong>68</strong>
+      <strong>67</strong>
     </button>
   </div>
   <div class="project-grid">
@@ -3094,41 +3094,6 @@
 </section>
   </div>
 </article>
-<article class="project-card card-candidate_review" data-action="candidate_review" data-slug="gradle" data-risk="amber" data-docs="amber" data-repo="green" data-search="gradle candidate_review clean_candidate /run/media/cash/wd_black_4tb/cole/projects/gradle">
-  <div class="card-topline">
-    <h3>gradle</h3>
-    <div class="card-actions">
-      <span class="status-chip"><button class="term-button" type="button" data-explain="candidate_review" title="Candidate review means the project looks promising but still needs operator review before deeper automation." aria-label="Explain candidate_review">candidate_review</button></span>
-      <button class="card-toggle" type="button" data-card-toggle aria-expanded="true">Details</button>
-    </div>
-  </div>
-  <div class="card-body" data-card-body>
-    <div class="light-strip">
-      <span class="light-pair"><span class="status-light light-green" aria-hidden="true"></span><span><button class="term-button" type="button" data-explain="repo_light" title="Repo light summarizes git/project state. Green is clean or embedded, amber needs review, red is blocked or unknown, and blue marks the control repo lane." aria-label="Explain repo">repo</button>: green</span></span>
-<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span><button class="term-button" type="button" data-explain="docs_light" title="Docs light summarizes documentation readiness. Green means a Project Forge marker exists, amber means README-only, and gray means docs were not detected." aria-label="Explain docs">docs</button>: amber</span></span>
-<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span><button class="term-button" type="button" data-explain="risk_light" title="Risk light is the conservative operator warning level. Red and amber mean review before action." aria-label="Explain risk">risk</button>: amber</span></span>
-    </div>
-    <div class="detail-grid">
-      <div class="detail-row"><span class="detail-label"><button class="term-button" type="button" data-explain="path" title="Path is the local filesystem location Project Forge discovered for the project." aria-label="Explain path">path</button></span><span class="detail-value">/run/media/cash/WD_BLACK_4TB/Cole/Projects/gradle</span></div>
-<div class="detail-row"><span class="detail-label"><button class="term-button" type="button" data-explain="category" title="Category is the scanner&#x27;s conservative bucket for the project, such as known embedded, clean candidate, protected, or control repo." aria-label="Explain category">category</button></span><span class="detail-value">clean_candidate</span></div>
-<div class="detail-row"><span class="detail-label"><button class="term-button" type="button" data-explain="overall_status" title="Overall is the current summarized readiness state for the project in this dashboard feed." aria-label="Explain overall">overall</button></span><span class="detail-value">candidate_review</span></div>
-<div class="detail-row"><span class="detail-label"><button class="term-button" type="button" data-explain="recommended_action" title="Action is the next safe operator posture Project Forge recommends for this project." aria-label="Explain action">action</button></span><span class="detail-value">candidate_review</span></div>
-<div class="detail-row"><span class="detail-label"><button class="term-button" type="button" data-explain="vscode_target" title="VS Code target is the folder or workspace file Project Forge would use for a planned editor launch." aria-label="Explain vscode target">vscode target</button></span><span class="detail-value">/run/media/cash/WD_BLACK_4TB/Cole/Projects/gradle</span></div>
-<div class="detail-row"><span class="detail-label"><button class="term-button" type="button" data-explain="marker_yaml" title="Marker YAML is the machine-readable Project Forge marker proposed or detected for a project." aria-label="Explain marker yaml">marker yaml</button></span><span class="detail-value">/run/media/cash/WD_BLACK_4TB/Cole/Projects/gradle/.project-forge.yml</span></div>
-<div class="detail-row"><span class="detail-label"><button class="term-button" type="button" data-explain="marker_doc" title="Marker doc is the human-readable Project Forge marker note proposed or detected for a project." aria-label="Explain marker doc">marker doc</button></span><span class="detail-value">/run/media/cash/WD_BLACK_4TB/Cole/Projects/gradle/docs/PROJECT_FORGE.md</span></div>
-    </div>
-
-    <section class="launch-panel">
-  <h4>Copy-Paste Launch Commands</h4>
-  <p class="launch-note"><button class="term-button" type="button" data-explain="dry_run" title="Dry-run means report and preview only. It should not mutate project folders, remotes, vault files, or desktop entries." aria-label="Explain dry-run">dry-run</button> only. Review output before manual open.</p>
-  <div class="launch-grid">
-    <div class="launch-row"><div class="launch-row-top"><span class="launch-label">Personal / <button class="term-button" type="button" data-explain="codex_home" title="CODEX_HOME points Codex profile-aware launches at a specific local profile home. Profile isolation is still treated as a research boundary." aria-label="Explain CODEX_HOME">CODEX_HOME</button> ~/.codex-personal</span><button class="copy-button" type="button" data-copy="/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug gradle --profile personal --dry-run" title="Copy Personal dry-run command" aria-label="Copy Personal dry-run command">Copy</button></div><code>/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug gradle --profile personal --dry-run</code></div>
-<div class="launch-row"><div class="launch-row-top"><span class="launch-label">Business / <button class="term-button" type="button" data-explain="codex_home" title="CODEX_HOME points Codex profile-aware launches at a specific local profile home. Profile isolation is still treated as a research boundary." aria-label="Explain CODEX_HOME">CODEX_HOME</button> ~/.codex-business</span><button class="copy-button" type="button" data-copy="/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug gradle --profile business --dry-run" title="Copy Business dry-run command" aria-label="Copy Business dry-run command">Copy</button></div><code>/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug gradle --profile business --dry-run</code></div>
-<div class="launch-row"><div class="launch-row-top"><span class="launch-label">Plain / no <button class="term-button" type="button" data-explain="codex_home" title="CODEX_HOME points Codex profile-aware launches at a specific local profile home. Profile isolation is still treated as a research boundary." aria-label="Explain CODEX_HOME">CODEX_HOME</button></span><button class="copy-button" type="button" data-copy="/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug gradle --profile plain --dry-run" title="Copy Plain dry-run command" aria-label="Copy Plain dry-run command">Copy</button></div><code>/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry/scripts/project-forge-open-project --slug gradle --profile plain --dry-run</code></div>
-  </div>
-</section>
-  </div>
-</article>
 <article class="project-card card-candidate_review" data-action="candidate_review" data-slug="hello-world" data-risk="amber" data-docs="amber" data-repo="green" data-search="hello-world candidate_review clean_candidate /run/media/cash/wd_black_4tb/cole/projects/hello-world">
   <div class="card-topline">
     <h3>hello-world</h3>
@@ -3770,7 +3735,7 @@
   <div class="section-heading">
     <button class="section-toggle" type="button" data-section-toggle aria-expanded="true">
       <span>Blocked Other</span>
-      <strong>3</strong>
+      <strong>4</strong>
     </button>
   </div>
   <div class="project-grid">
@@ -3826,6 +3791,36 @@
 <div class="detail-row"><span class="detail-label"><button class="term-button" type="button" data-explain="vscode_target" title="VS Code target is the folder or workspace file Project Forge would use for a planned editor launch." aria-label="Explain vscode target">vscode target</button></span><span class="detail-value">/run/media/cash/WD_BLACK_4TB/Cole/Projects/desktop-tutorial</span></div>
 <div class="detail-row"><span class="detail-label"><button class="term-button" type="button" data-explain="marker_yaml" title="Marker YAML is the machine-readable Project Forge marker proposed or detected for a project." aria-label="Explain marker yaml">marker yaml</button></span><span class="detail-value">/run/media/cash/WD_BLACK_4TB/Cole/Projects/desktop-tutorial/.project-forge.yml</span></div>
 <div class="detail-row"><span class="detail-label"><button class="term-button" type="button" data-explain="marker_doc" title="Marker doc is the human-readable Project Forge marker note proposed or detected for a project." aria-label="Explain marker doc">marker doc</button></span><span class="detail-value">/run/media/cash/WD_BLACK_4TB/Cole/Projects/desktop-tutorial/docs/PROJECT_FORGE.md</span></div>
+    </div>
+
+    <section class="launch-panel">
+  <h4>Copy-Paste Launch Commands</h4>
+  <p class="launch-blocked">Launch blocked by policy: unsupported category unknown_structure.</p>
+</section>
+  </div>
+</article>
+<article class="project-card card-unknown_review" data-action="unknown_review" data-slug="gradle" data-risk="red" data-docs="amber" data-repo="red" data-search="gradle unknown_review unknown_structure /run/media/cash/wd_black_4tb/cole/projects/gradle">
+  <div class="card-topline">
+    <h3>gradle</h3>
+    <div class="card-actions">
+      <span class="status-chip"><button class="term-button" type="button" data-explain="unknown_review" title="Unknown review means Project Forge does not have enough safe context yet. Treat it as blocked until a human reviews it." aria-label="Explain unknown_review">unknown_review</button></span>
+      <button class="card-toggle" type="button" data-card-toggle aria-expanded="true">Details</button>
+    </div>
+  </div>
+  <div class="card-body" data-card-body>
+    <div class="light-strip">
+      <span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span><button class="term-button" type="button" data-explain="repo_light" title="Repo light summarizes git/project state. Green is clean or embedded, amber needs review, red is blocked or unknown, and blue marks the control repo lane." aria-label="Explain repo">repo</button>: red</span></span>
+<span class="light-pair"><span class="status-light light-amber" aria-hidden="true"></span><span><button class="term-button" type="button" data-explain="docs_light" title="Docs light summarizes documentation readiness. Green means a Project Forge marker exists, amber means README-only, and gray means docs were not detected." aria-label="Explain docs">docs</button>: amber</span></span>
+<span class="light-pair"><span class="status-light light-red" aria-hidden="true"></span><span><button class="term-button" type="button" data-explain="risk_light" title="Risk light is the conservative operator warning level. Red and amber mean review before action." aria-label="Explain risk">risk</button>: red</span></span>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-row"><span class="detail-label"><button class="term-button" type="button" data-explain="path" title="Path is the local filesystem location Project Forge discovered for the project." aria-label="Explain path">path</button></span><span class="detail-value">/run/media/cash/WD_BLACK_4TB/Cole/Projects/gradle</span></div>
+<div class="detail-row"><span class="detail-label"><button class="term-button" type="button" data-explain="category" title="Category is the scanner&#x27;s conservative bucket for the project, such as known embedded, clean candidate, protected, or control repo." aria-label="Explain category">category</button></span><span class="detail-value">unknown_structure</span></div>
+<div class="detail-row"><span class="detail-label"><button class="term-button" type="button" data-explain="overall_status" title="Overall is the current summarized readiness state for the project in this dashboard feed." aria-label="Explain overall">overall</button></span><span class="detail-value">unknown_review</span></div>
+<div class="detail-row"><span class="detail-label"><button class="term-button" type="button" data-explain="recommended_action" title="Action is the next safe operator posture Project Forge recommends for this project." aria-label="Explain action">action</button></span><span class="detail-value">unknown_review</span></div>
+<div class="detail-row"><span class="detail-label"><button class="term-button" type="button" data-explain="vscode_target" title="VS Code target is the folder or workspace file Project Forge would use for a planned editor launch." aria-label="Explain vscode target">vscode target</button></span><span class="detail-value">/run/media/cash/WD_BLACK_4TB/Cole/Projects/gradle</span></div>
+<div class="detail-row"><span class="detail-label"><button class="term-button" type="button" data-explain="marker_yaml" title="Marker YAML is the machine-readable Project Forge marker proposed or detected for a project." aria-label="Explain marker yaml">marker yaml</button></span><span class="detail-value">/run/media/cash/WD_BLACK_4TB/Cole/Projects/gradle/.project-forge.yml</span></div>
+<div class="detail-row"><span class="detail-label"><button class="term-button" type="button" data-explain="marker_doc" title="Marker doc is the human-readable Project Forge marker note proposed or detected for a project." aria-label="Explain marker doc">marker doc</button></span><span class="detail-value">/run/media/cash/WD_BLACK_4TB/Cole/Projects/gradle/docs/PROJECT_FORGE.md</span></div>
     </div>
 
     <section class="launch-panel">

@@ -43,7 +43,7 @@ desktop-tutorial,/run/media/cash/WD_BLACK_4TB/Cole/Projects/desktop-tutorial,unk
 djfiddlesticks-music-console,/run/media/cash/WD_BLACK_4TB/Cole/Projects/djfiddlesticks-music-console,clean,true,false,false,false,1,clean_candidate
 djfiddlesticks-ops,/run/media/cash/WD_BLACK_4TB/Cole/Projects/djfiddlesticks-ops,clean,true,false,false,false,1,clean_candidate
 djfiddlesticks-radio-tracker,/run/media/cash/WD_BLACK_4TB/Cole/Projects/djfiddlesticks-radio-tracker,clean,true,false,false,false,2,clean_candidate
-djfiddlesticks-website,/run/media/cash/WD_BLACK_4TB/Cole/Projects/djfiddlesticks-website,clean,true,false,false,false,2,clean_candidate
+djfiddlesticks-website,/run/media/cash/WD_BLACK_4TB/Cole/Projects/djfiddlesticks-website,clean,true,true,false,false,2,clean_candidate
 emergency-audio-transcriber,/run/media/cash/WD_BLACK_4TB/Cole/Projects/emergency-audio-transcriber,dirty,true,false,false,false,0,dirty_candidate_review_first
 endgame,/run/media/cash/WD_BLACK_4TB/Cole/Projects/endgame,clean,true,false,false,false,2,clean_candidate
 endgame-arcade,/run/media/cash/WD_BLACK_4TB/Cole/Projects/endgame-arcade,clean,false,false,false,false,1,clean_candidate
@@ -56,7 +56,7 @@ espanso-snippets,/run/media/cash/WD_BLACK_4TB/Cole/Projects/espanso-snippets,cle
 fiddlesticks-stage,/run/media/cash/WD_BLACK_4TB/Cole/Projects/fiddlesticks-stage,clean,true,false,false,false,1,clean_candidate
 forge-os-endgame-edition,/run/media/cash/WD_BLACK_4TB/Cole/Projects/forge-os-endgame-edition,clean,true,false,false,false,2,clean_candidate
 foundations-of-git-exercise-repo,/run/media/cash/WD_BLACK_4TB/Cole/Projects/foundations-of-git-exercise-repo,clean,true,false,false,false,1,clean_candidate
-gradle,/run/media/cash/WD_BLACK_4TB/Cole/Projects/gradle,clean,true,false,false,false,2,clean_candidate
+gradle,/run/media/cash/WD_BLACK_4TB/Cole/Projects/gradle,unknown,true,false,false,false,2,unknown_structure
 hello-world,/run/media/cash/WD_BLACK_4TB/Cole/Projects/hello-world,clean,true,false,false,false,2,clean_candidate
 homelab-nixos-config,/run/media/cash/WD_BLACK_4TB/Cole/Projects/homelab-nixos-config,clean,false,false,false,false,1,clean_candidate
 main-vault,/run/media/cash/WD_BLACK_4TB/Cole/Projects/main-vault,clean,false,false,false,false,1,clean_candidate
@@ -70,7 +70,7 @@ openclaw-workspace,/run/media/cash/WD_BLACK_4TB/Cole/Projects/openclaw-workspace
 oren,/run/media/cash/WD_BLACK_4TB/Cole/Projects/oren,clean,true,false,false,false,2,clean_candidate
 pixel-9-pro-xl-twrp-experiment,/run/media/cash/WD_BLACK_4TB/Cole/Projects/pixel-9-pro-xl-TWRP-experiment,clean,true,false,false,false,2,clean_candidate
 pixel-dual-esim-diagnostics,/run/media/cash/WD_BLACK_4TB/Cole/Projects/pixel-dual-esim-diagnostics,clean,true,true,false,false,1,clean_candidate
-project-forge-registry,/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry,dirty,true,true,false,false,2,control_repo
+project-forge-registry,/run/media/cash/WD_BLACK_4TB/Cole/Projects/project-forge-registry,clean,true,true,false,false,2,control_repo
 project_katrina,/run/media/cash/WD_BLACK_4TB/Cole/Projects/project_katrina,dirty,false,false,true,false,2,dirty_candidate_review_first
 proton-pass-vault-janitor,/run/media/cash/WD_BLACK_4TB/Cole/Projects/proton-pass-vault-janitor,clean,true,true,false,true,0,known_embedded
 pwa-icon-organizer-creator,/run/media/cash/WD_BLACK_4TB/Cole/Projects/pwa-icon-organizer-creator,clean,true,true,false,true,1,known_embedded

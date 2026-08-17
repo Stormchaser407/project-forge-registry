@@ -9,6 +9,7 @@
 **Canonical charter:** [`PROJECT_CHARTER.md`](PROJECT_CHARTER.md)  
 **Lifecycle standard:** [`docs/REPOSITORY_LIFECYCLE_STANDARD.md`](docs/REPOSITORY_LIFECYCLE_STANDARD.md)  
 **Cerberus policy decision:** [`docs/decisions/2026-07-23-retire-cerberus-blanket-protection.md`](docs/decisions/2026-07-23-retire-cerberus-blanket-protection.md)
+**Endgame OS component boundary:** [`docs/PROJECT_FORGE_ENDGAME_OS_COMPONENT.md`](docs/PROJECT_FORGE_ENDGAME_OS_COMPONENT.md)
 
 ## Current Mission
 
@@ -20,6 +21,36 @@ It does not own personal planning, weekly prioritization, calendars, or the full
 roadmaps of other projects. It may report technical follow-up signals, but
 Master Scheduler or the operator decides whether they become actionable and
 Todoist owns any resulting commitment.
+
+## Endgame OS Component Relationship
+
+Project Forge remains the independent `project-forge-registry` repository. It
+is the registry/fleet/control-plane component in the Endgame OS architecture;
+that relationship does not transfer ownership of operator command grammar,
+provider machinery, execution discipline, workstation UX, Todoist, calendars,
+weekly planning, or another repository's internal roadmap. The canonical
+charter remains intact.
+
+The relationship and current interface boundary are recorded in
+[`docs/PROJECT_FORGE_ENDGAME_OS_COMPONENT.md`](docs/PROJECT_FORGE_ENDGAME_OS_COMPONENT.md).
+
+## 2026-08-16 Generated Evidence Review
+
+Five previously modified generated artifacts were reviewed as one coherent
+dry-run/read-only snapshot delta and retained for commit:
+
+- `artifacts/repo_discovery_inventory.csv`
+- `artifacts/repo_discovery_report.md`
+- `artifacts/dashboard_inventory.json`
+- `artifacts/dashboard_inventory_report.md`
+- `artifacts/dashboard.html`
+
+The delta conservatively reclassifies `gradle` from a clean candidate to an
+unknown structure with launch blocked, recognizes an `AGENTS.md` for
+`djfiddlesticks-website`, and records Project Forge as clean at the scan point.
+Counts and rendered dashboard state move together across all five artifacts.
+These are generated evidence, not continuous live truth or authority over the
+inventoried repositories.
 
 ## Current Phase
 

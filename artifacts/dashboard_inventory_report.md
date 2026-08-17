@@ -6,18 +6,18 @@
 
 ## Category Summary
 
-- clean_candidate: `68`
+- clean_candidate: `67`
 - control_repo: `1`
 - dirty_candidate_review_first: `6`
 - known_embedded: `4`
-- unknown_structure: `3`
+- unknown_structure: `4`
 
 ## Repo Light Summary
 
 - amber: `6`
 - blue: `1`
-- green: `72`
-- red: `3`
+- green: `71`
+- red: `4`
 
 ## Docs Light Summary
 
@@ -27,10 +27,10 @@
 
 ## Risk Light Summary
 
-- amber: `74`
+- amber: `73`
 - blue: `1`
 - green: `4`
-- red: `3`
+- red: `4`
 
 ## Known Embedded Projects
 
