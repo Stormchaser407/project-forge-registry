@@ -1,12 +1,12 @@
 # GitHub Archive Queue — 2026-08-19
 
-**Status:** preservation notices prepared; repository-level archive flag remains to be applied  
+**Status:** Batch One complete — 42/42 repository archive flags applied and independently verified `archived=true`  
 **Policy:** archive, do not delete  
 **Authority:** `docs/GITHUB_ESTATE_LEDGER.md` and `docs/REPOSITORY_LIFECYCLE_STANDARD.md`
 
-Each repository below has been given a README-level archive/supersession/reference notice during the 2026-08-19 estate closeout. Git history and source remain preserved. GitHub archival is intentionally used as cold/read-only storage rather than destruction.
+Each repository below received a README-level archive/supersession/reference notice during the 2026-08-19 estate closeout before the GitHub archive flag was applied. Git history and source remain preserved. GitHub archival is being used as reversible cold/read-only storage rather than destruction.
 
-## Prepared archive queue
+## Verified archived — Batch One
 
 ### Trivial / training / retired operating-system shells
 
@@ -47,7 +47,7 @@ Each repository below has been given a README-level archive/supersession/referen
 29. `endgame-solutions/cerberus-project`
 30. `endgame-solutions/cerberus-insights`
 
-These repositories remain valid selective-harvest sources after archival. `Stormchaser407/CreeperBot5000` is deliberately excluded because current Cerberus lineage evidence identifies an uninspected local ancestor copy that must be reconciled by the future fleet census first.
+These repositories remain valid selective-harvest sources after archival. `Stormchaser407/CreeperBot5000` remains deliberately excluded because current Cerberus lineage evidence identifies an uninspected local ancestor copy that must be reconciled by the future fleet census first.
 
 ### Endgame / web / architecture predecessors
 
@@ -69,31 +69,28 @@ The published ChatGPT Sites are current public-web authority for Endgame and DJ 
 41. `Stormchaser407/secure-edit-flow`
 42. `Stormchaser407/your-video-guru`
 
-These are archived as preserved incubation/reference sources. Their ideas may be harvested later by Endgame Librarian/Intake or Endgame Studios when real implementation reactivates those areas.
+These remain preserved incubation/reference sources after archival. Their ideas may be harvested later by Endgame Librarian/Intake or Endgame Studios when real implementation reactivates those areas.
 
-## Explicitly not in this archive queue
+## Verification evidence
+
+The authenticated GitHub CLI archive transaction reported all 42 repositories `READY` in preflight, applied all 42 archive flags successfully, and then queried every repository individually. Every verification result returned `archived=true`.
+
+Post-batch estate state observed through the connected GitHub inventory:
+
+- 87 repositories in the scoped estate;
+- 45 archived total, including 3 that were already archived before this transaction;
+- 42 repositories remain visible/unarchived for survivor review.
+
+## Explicitly not in Batch One
 
 The following categories remain unarchived for a named reason:
 
 - canonical/active or maintenance systems;
 - legitimate incubators with independent future identity;
-- vendor/reference forks awaiting local-delta or runtime-dependency audit;
+- vendor/reference forks requiring a second evidence pass;
 - `CreeperBot5000`, awaiting fleet/local lineage inspection;
-- `openclaw-workspace`, awaiting live OpenClaw dependency check;
 - `Technical_Documents`, awaiting N5/Librarian migration;
-- the Marion County weather personal duplicate, awaiting confirmation that no deployment/Lovable binding depends on that remote even though the current Git history matches the preferred organization-owned repo.
-
-## Archive application
-
-The current ChatGPT GitHub connector does not expose GitHub's repository-archive switch. The archive flag must therefore be applied through GitHub UI or an authenticated GitHub CLI/API session.
-
-Example for one repository:
-
-```bash
-gh api --method PATCH repos/Stormchaser407/hello-world -f archived=true
-```
-
-Do not use `gh repo delete` as part of this cleanup.
+- the Marion County weather personal duplicate, awaiting final external deployment/Lovable-binding disposition even though current Git history matches the preferred organization-owned repo.
 
 ## Reversibility
 
