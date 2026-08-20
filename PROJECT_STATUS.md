@@ -4,18 +4,20 @@
 **Operating mode:** Technical registry and guarded operator surface  
 **Canonical repository:** `Stormchaser407/project-forge-registry`  
 **Default branch:** `main`  
-**Last operational verification:** 2026-07-29 (America/New_York)
-**Compliance state:** Operational closeout validated on Legion
+**Last remote-estate verification:** 2026-08-19 (America/New_York)  
+**Last local operational verification:** 2026-07-29 (America/New_York)  
+**Compliance state:** GitHub estate reconciliation active; local runtime closeout previously validated on Legion  
 **Canonical charter:** [`PROJECT_CHARTER.md`](PROJECT_CHARTER.md)  
 **Lifecycle standard:** [`docs/REPOSITORY_LIFECYCLE_STANDARD.md`](docs/REPOSITORY_LIFECYCLE_STANDARD.md)  
-**Cerberus policy decision:** [`docs/decisions/2026-07-23-retire-cerberus-blanket-protection.md`](docs/decisions/2026-07-23-retire-cerberus-blanket-protection.md)
+**GitHub estate ledger:** [`docs/GITHUB_ESTATE_LEDGER.md`](docs/GITHUB_ESTATE_LEDGER.md)  
+**Cerberus policy decision:** [`docs/decisions/2026-07-23-retire-cerberus-blanket-protection.md`](docs/decisions/2026-07-23-retire-cerberus-blanket-protection.md)  
 **Endgame OS component boundary:** [`docs/PROJECT_FORGE_ENDGAME_OS_COMPONENT.md`](docs/PROJECT_FORGE_ENDGAME_OS_COMPONENT.md)
 
 ## Current Mission
 
 Project Forge inventories and reports the condition of technical projects,
-repositories, mirrors, deployment nodes, workspaces, launchers, and fleet
-readiness. It supports dry-run-first and guarded technical workflows.
+repositories, mirrors, deployment nodes, workspaces, launchers, remote estates,
+and fleet readiness. It supports dry-run-first and guarded technical workflows.
 
 It does not own personal planning, weekly prioritization, calendars, or the full
 roadmaps of other projects. It may report technical follow-up signals, but
@@ -33,6 +35,50 @@ charter remains intact.
 
 The relationship and current interface boundary are recorded in
 [`docs/PROJECT_FORGE_ENDGAME_OS_COMPONENT.md`](docs/PROJECT_FORGE_ENDGAME_OS_COMPONENT.md).
+
+## 2026-08-19 GitHub Estate Reconciliation
+
+A preservation-first remote-estate census was performed across all GitHub
+accounts currently exposed to the connected GitHub installation:
+
+- `Stormchaser407`
+- `endgame-solutions`
+- `NOTEvil-Inc`
+
+The census identified 87 accessible repositories and established
+[`docs/GITHUB_ESTATE_LEDGER.md`](docs/GITHUB_ESTATE_LEDGER.md) as the durable
+cross-account lifecycle, lineage, canonical-relationship, and disposition map.
+
+The transaction:
+
+- assigns an explicit lifecycle/disposition to materially reviewed repositories;
+- records Endgame and DJ Fiddlesticks published ChatGPT Sites as public-web
+  authority rather than inferring production authority from website repos;
+- preserves `Stormchaser407/endgame` as family architecture authority and
+  individual implementation repos as their own technical authorities;
+- identifies a first preservation-cleared manual GitHub archive queue;
+- classifies Cerberus predecessors under preservation-first lineage rules rather
+  than mass-archiving by name;
+- records Librarian/Intake and Studios harvest lineages without spawning new
+  implementation repos;
+- records vendor/reference forks as local-delta-audit candidates rather than
+  active obligations;
+- defines the future Remote Estate Census -> Fleet Repository Census ->
+  Reconciliation Engine -> Lifecycle Advisor -> Guarded Actions progression;
+- explicitly forbids treating matching names or paths as sufficient evidence for
+  destructive cleanup.
+
+No repository was deleted. GitHub's repository-level archive switch is not
+available through the current connector, so archive-ready repositories receive
+preservation notices first and the final GitHub archive flag remains an explicit
+manual operator action.
+
+### Organization freeze
+
+After this estate reconciliation closes, nonessential architecture gardening and
+organizer reorganization are frozen through **2026-11-19**. Exceptions are
+actual breakage, security/safety work, or organization directly required by real
+implementation. New ideas may be captured without restructuring the estate.
 
 ## 2026-08-16 Generated Evidence Review
 
@@ -55,7 +101,8 @@ inventoried repositories.
 ## Current Phase
 
 The repository has a mature local registry, dashboard, launcher, workspace,
-project-passport, Obsidian mirror, and guarded operator workflow history.
+project-passport, Obsidian mirror, guarded operator workflow history, and a
+canonical remote GitHub estate ledger.
 
 The current governance phase is **mission narrowing and lifecycle compliance**:
 
@@ -66,7 +113,9 @@ The current governance phase is **mission narrowing and lifecycle compliance**:
 - enforce the retrofit-or-archive gate for materially reviewed repositories;
 - remove project-name-based Cerberus secrecy and protection;
 - preserve ordinary evidence- and content-based safeguards;
-- classify future scope additions against the charter before implementation.
+- classify future scope additions against the charter before implementation;
+- reconcile remote repository lifecycle without confusing that snapshot with
+  continuous live fleet truth.
 
 ## Cerberus Policy Migration
 
@@ -132,6 +181,7 @@ The condition and all other external estate discrepancies are bounded in
 | `PROJECT_STATUS.md` | Current lifecycle, phase, and compliance record |
 | `AGENTS.md` | Required behavior for agents working in the repository |
 | `docs/REPOSITORY_LIFECYCLE_STANDARD.md` | Compliance and archive gate for reviewed repositories |
+| `docs/GITHUB_ESTATE_LEDGER.md` | Canonical remote GitHub lifecycle/lineage/disposition map |
 | Cerberus policy decision | Evidence-based security and reconciliation rule |
 | `docs/` | Architecture, phase history, runbooks, and decisions |
 | verified repository/runtime evidence | Technical truth |
@@ -164,6 +214,7 @@ evolution. They are not current operational authority.
 - [x] Superseded universal-planner doctrine is preserved and labeled.
 - [x] Cross-system authority boundaries are explicit.
 - [x] Repository lifecycle and archive standard is explicit.
+- [x] GitHub remote-estate ledger exists across all currently connected accounts.
 - [x] Agent instructions enforce the charter and retrofit-or-archive rule.
 - [x] Cerberus name-based protection is formally retired.
 - [x] Scanner and discovery expose Cerberus repository state normally.
@@ -178,15 +229,16 @@ evolution. They are not current operational authority.
 
 ### Local synchronization and verification
 
-- [x] Local Legion checkout fast-forwarded to the GitHub governance and policy commits.
-- [x] Local full scan regenerated bounded discovery and dashboard artifacts.
-- [x] Current passports and docs-only mirror artifacts were reconciled.
-- [x] Local tests, validators, launch dry-runs, and sync dry-runs were rerun.
+- [x] Local Legion checkout fast-forwarded to the GitHub governance and policy commits as of the 2026-07-29 closeout.
+- [x] Local full scan regenerated bounded discovery and dashboard artifacts as of the 2026-07-29 closeout.
+- [x] Current passports and docs-only mirror artifacts were reconciled as of the 2026-07-29 closeout.
+- [x] Local tests, validators, launch dry-runs, and sync dry-runs were rerun as of the 2026-07-29 closeout.
 - [x] Exact protected-path behavior is covered across discovery and downstream tools.
 - [ ] Real Obsidian Project Forge hub review is blocked until the canonical root is available.
+- [ ] Cross-host fleet repository census and local-vs-remote reconciliation are future engineering work, not part of the 2026-08-19 remote-estate transaction.
 
-The remaining unchecked item is a bounded operator-access condition, not
-unresolved architecture or permission to use another vault path.
+The remaining unchecked items are bounded conditions, not unresolved remote
+repository identity and not permission to improvise destructive cleanup.
 
 ## Archive Gate
 
