@@ -12,6 +12,7 @@ readiness.
 
 - [Project Charter](PROJECT_CHARTER.md) — canonical mission, scope, and authority boundaries
 - [Project Status](PROJECT_STATUS.md) — lifecycle, current phase, and compliance state
+- [GitHub Estate Ledger](docs/GITHUB_ESTATE_LEDGER.md) — canonical remote-repository lifecycle, lineage, disposition, and archive map
 - [Agent Instructions](AGENTS.md) — required behavior for agents working in this repository
 - [Repository Lifecycle Standard](docs/REPOSITORY_LIFECYCLE_STANDARD.md) — retrofit-or-archive gate for reviewed repositories
 - [Cerberus Protection Reversal](docs/decisions/2026-07-23-retire-cerberus-blanket-protection.md) — project names are not security boundaries
@@ -39,7 +40,7 @@ technical operator surfaces.
 
 | System | Authority |
 |---|---|
-| Project Forge | Technical project, repository, mirror, deployment-node, and fleet condition |
+| Project Forge | Technical project, repository, mirror, deployment-node, remote-estate, and fleet condition |
 | Individual repositories and verified runtime state | Technical roadmap, implementation, and operational truth |
 | Todoist | Actionable-work truth and execution commitments |
 | Google Calendar | Fixed time commitments, travel, wake requirements, and protected sleep |
@@ -55,6 +56,7 @@ Project Forge currently supports or preserves mature work for:
 - technical lifecycle and safety classification;
 - repository, dirty-tree, mirror, launcher, and workspace reporting;
 - evidence-based handling for system-bound and reconciliation-required projects;
+- remote GitHub estate lifecycle, lineage, and disposition mapping;
 - VS Code workspace and launcher generation;
 - project passport generation;
 - controlled Obsidian technical mirrors;
@@ -65,6 +67,24 @@ Project Forge currently supports or preserves mature work for:
 
 Detailed phase history remains in `docs/`, `CODEX_HANDOFF.md`, generated
 `artifacts/`, `CHANGELOG.md`, and Git history.
+
+## Fleet Reconciliation Direction
+
+The GitHub Estate Ledger is the durable remote-estate authority. Future Forge
+engineering may extend the same evidence-first model across authorized hosts:
+
+1. read-only fleet repository census;
+2. Git-history-based matching of local repositories to remotes and one another;
+3. detection of unique/unpushed commits, dirty state, untracked material, and divergent histories;
+4. lifecycle recommendations such as promote, sync, reconcile, supersede, archive, cold-store, or quarantine;
+5. guarded actions only after explicit authorization and preservation proof.
+
+A local repository must never be considered safe to delete merely because its
+name or path resembles another copy. Destructive recommendations require proof
+that unique Git history and meaningful uncommitted material are preserved.
+
+This direction is recorded architecture, not permission to implement the fleet
+scanner during the 2026-08-19 estate closeout.
 
 ## Quick Start
 
@@ -207,6 +227,11 @@ The 2026-07-29 Legion closeout synchronized current GitHub governance, rebuilt
 the bounded registry surfaces, and recorded remaining technical discrepancies as
 follow-up signals. The canonical Obsidian root was unavailable on Legion, so no
 vault content was read or changed.
+
+The 2026-08-19 GitHub estate reconciliation added a durable cross-account remote
+repository ledger. That transaction classifies repository lineage and lifecycle
+without claiming continuous live fleet state; local/fleet reconciliation remains
+a later, read-only-first engineering gate.
 
 ## Historical Documentation
 
