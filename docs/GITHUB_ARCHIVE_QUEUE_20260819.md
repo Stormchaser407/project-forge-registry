@@ -1,97 +1,64 @@
 # GitHub Archive Queue — 2026-08-19
 
-**Status:** Batch One complete — 42/42 repository archive flags applied and independently verified `archived=true`  
+**Status:** **closed**  
 **Policy:** archive, do not delete  
-**Authority:** `docs/GITHUB_ESTATE_LEDGER.md` and `docs/REPOSITORY_LIFECYCLE_STANDARD.md`
+**Final estate state:** **87 total — 54 archived / 33 visible**  
+**Unresolved classification count:** **0**
 
-Each repository below received a README-level archive/supersession/reference notice during the 2026-08-19 estate closeout before the GitHub archive flag was applied. Git history and source remain preserved. GitHub archival is being used as reversible cold/read-only storage rather than destruction.
+This file is now a closeout index rather than an active queue. The canonical current lifecycle map is [`GITHUB_ESTATE_LEDGER.md`](GITHUB_ESTATE_LEDGER.md).
 
-## Verified archived — Batch One
+## Completed archive transactions
 
-### Trivial / training / retired operating-system shells
+### Pre-existing archives — 3
 
-1. `Stormchaser407/hello-world`
-2. `Stormchaser407/recon`
-3. `Stormchaser407/cerberus-vault`
-4. `Stormchaser407/RedditBeacon`
-5. `Stormchaser407/my-tools`
-6. `Stormchaser407/desktop-tutorial`
-7. `Stormchaser407/espanso-snippets`
-8. `Stormchaser407/foundations-of-git-exercise-repo`
-9. `Stormchaser407/CommandBoard`
-10. `Stormchaser407/chaos-control-bridge`
-11. `NOTEvil-Inc/notevil-c2-obsidian-bridge`
-12. `endgame-solutions/obsidian-council`
+These were already archived before the 2026-08-19/20 cleanup:
 
-### Historical mobile / Experience predecessors
+- `Stormchaser407/CoreCivic-Ops`
+- `Stormchaser407/test-repo-from-agent`
+- `Stormchaser407/chashgram.nicegram`
 
-13. `Stormchaser407/pixel-9-pro-xl-TWRP-experiment`
-14. `Stormchaser407/cerberus-mgm-boot`
-15. `Stormchaser407/NotEvil-neon-district`
-16. `Stormchaser407/pixel-dual-esim-diagnostics`
+### Batch One — 42/42 complete
 
-### Cerberus preservation sources
+Preservation notices written, archive flags applied, and every repository independently verified `archived=true`.
 
-17. `Stormchaser407/Cerberus`
-18. `Stormchaser407/wraith`
-19. `Stormchaser407/aegis`
-20. `Stormchaser407/mavrakis`
-21. `Stormchaser407/oren`
-22. `Stormchaser407/cerberus-command`
-23. `Stormchaser407/cerberus-recon`
-24. `Stormchaser407/cerberus-eyes-on`
-25. `endgame-solutions/cerberus-aegis`
-26. `endgame-solutions/cerberus-recon`
-27. `endgame-solutions/cerberus-watch`
-28. `endgame-solutions/cerberus-agents`
-29. `endgame-solutions/cerberus-project`
-30. `endgame-solutions/cerberus-insights`
+Evidence remains in repository notices, Git history, and the original Batch One closeout history of this file.
 
-These repositories remain valid selective-harvest sources after archival. `Stormchaser407/CreeperBot5000` remains deliberately excluded because current Cerberus lineage evidence identifies an uninspected local ancestor copy that must be reconciled by the future fleet census first.
+### Batch Two — 6/6 complete
 
-### Endgame / web / architecture predecessors
+See [`GITHUB_ARCHIVE_BATCH_TWO_20260819.md`](GITHUB_ARCHIVE_BATCH_TWO_20260819.md).
 
-31. `Stormchaser407/forge-os-endgame-edition`
-32. `Stormchaser407/endgame-diagrams`
-33. `Stormchaser407/endgametraining`
-34. `Stormchaser407/endgame-website`
-35. `Stormchaser407/01-website-brand`
-36. `endgame-solutions/Endgame-Consultation`
-37. `Stormchaser407/djfiddlesticks-website`
-38. `endgame-solutions/Forge-Doctrine`
+Archived after vendor/reference delta and runtime-dependency review:
 
-The published ChatGPT Sites are current public-web authority for Endgame and DJ Fiddlesticks. `djfiddlesticks-ops` remains DJ Fiddlesticks ecosystem coordination authority.
+- `Stormchaser407/OSINT-Framework`
+- `Stormchaser407/cloudfuse`
+- `Stormchaser407/gradle`
+- `Stormchaser407/agent-zero`
+- `Stormchaser407/IG-Detective`
+- `Stormchaser407/openclaw-workspace`
 
-### Librarian / Intake / Studios parked sources
+### Batch Three — 1/1 complete
 
-39. `Stormchaser407/media-dedupe`
-40. `NOTEvil-Inc/notevil-total-evac`
-41. `Stormchaser407/secure-edit-flow`
-42. `Stormchaser407/your-video-guru`
+See [`GITHUB_ARCHIVE_BATCH_THREE_20260819.md`](GITHUB_ARCHIVE_BATCH_THREE_20260819.md).
 
-These remain preserved incubation/reference sources after archival. Their ideas may be harvested later by Endgame Librarian/Intake or Endgame Studios when real implementation reactivates those areas.
+- `Stormchaser407/CreeperBot5000`
 
-## Verification evidence
+The original local/GitHub/Codeberg lineage was verified first. The historical commit used Git's canonical empty tree, so no implementation payload was waiting to be harvested.
 
-The authenticated GitHub CLI archive transaction reported all 42 repositories `READY` in preflight, applied all 42 archive flags successfully, and then queried every repository individually. Every verification result returned `archived=true`.
+### Batch Four — 2/2 complete
 
-Post-batch estate state observed through the connected GitHub inventory:
+See [`GITHUB_ARCHIVE_BATCH_FOUR_20260819.md`](GITHUB_ARCHIVE_BATCH_FOUR_20260819.md).
 
-- 87 repositories in the scoped estate;
-- 45 archived total, including 3 that were already archived before this transaction;
-- 42 repositories remain visible/unarchived for survivor review.
+- `endgame-solutions/marion-county-weather-hub` — redundant mirror of the canonical live Lovable-linked weather repo.
+- `Stormchaser407/argus-reference` — preserved static research/reference tree with no current runtime dependency.
 
-## Explicitly not in Batch One
+## Survivor result
 
-The following categories remain unarchived for a named reason:
+The remaining **33 visible repositories** all have explicit lifecycle and retention reasons in the canonical estate ledger. No further archive batch is pending from this cleanup.
 
-- canonical/active or maintenance systems;
-- legitimate incubators with independent future identity;
-- vendor/reference forks requiring a second evidence pass;
-- `CreeperBot5000`, awaiting fleet/local lineage inspection;
-- `Technical_Documents`, awaiting N5/Librarian migration;
-- the Marion County weather personal duplicate, awaiting final external deployment/Lovable-binding disposition even though current Git history matches the preferred organization-owned repo.
+`waiting`, `dormant`, `incubator`, and `reference` are resolved lifecycle states. They are not instructions to keep organizing tonight or during the quarter freeze.
 
 ## Reversibility
 
-GitHub archival is reversible. If a later implementation mission genuinely needs to resume one of these repositories, unarchive it deliberately, record the reason in Project Forge, perform the bounded work, and return it to an explicit lifecycle state afterward.
+GitHub archival is reversible. If real implementation work later needs an archived repository, deliberately unarchive it, record the reason in Project Forge, perform the bounded work, and return it to an explicit lifecycle state afterward.
+
+No repository was deleted in this cleanup.
