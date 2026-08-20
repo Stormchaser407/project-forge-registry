@@ -28,7 +28,8 @@ Final verified state:
 - **54** archived, including 3 that were already archived before the cleanup;
 - **33** intentionally visible survivors;
 - **0** repositories lacking an explicit lifecycle/disposition;
-- **0** repositories deleted.
+- **0** repositories deleted;
+- an independent authenticated GitHub CLI census from Termux on 2026-08-20 returned **PASS** for `87 total / 54 archived / 33 visible`.
 
 The archive transactions and evidence are preserved in the batch records under `docs/GITHUB_ARCHIVE_BATCH_*_20260819.md` and the closed archive index in `docs/GITHUB_ARCHIVE_QUEUE_20260819.md`.
 
